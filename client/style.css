@@ -1,0 +1,169 @@
+body{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif !important;
+    overflow: hidden;
+}
+
+ /* DIV */
+
+ #div_Sign {
+    color: #030;
+    background-color: rgb(194, 214, 245);
+    border: 1px solid #000000;
+}
+
+.tab{
+    width: 100%;
+    height: 95%;
+    display: none;
+    color: #030;
+    background-color: rgb(194, 214, 245);
+    border: 1px solid #000000;
+    overflow: hidden;
+}
+
+/* TAB PERSONAL INFO*/
+#div_PersonalInfo{
+    width: 100%;
+    height: 10%;
+}
+
+#div_addWorkout{
+    width: 100%;
+    height: 20%;
+    
+}
+
+#div_exerciseHistory{
+    background-color: rgb(194, 214, 245);
+    width: 100%;
+    height: 70%;
+    top:20%;
+    overflow-y: scroll;
+}
+
+
+/********************/
+
+/* TAB EXERCISE OVERVIEW */
+#div_addNewExercise{
+    background-color: rgb(194, 214, 245);
+    height: 20%;
+    width:100%;
+}
+
+#div_exerciseTable{
+    background-color: rgb(194, 214, 245);
+    width: 100%;
+    height: 80%;
+    top:20%;
+    overflow-y: scroll;
+}
+
+/********************/
+
+#div_navigation{
+    width: 100%;
+    height:5%;
+    display: none;
+    color: #030;
+    background-color: rgb(194, 214, 245);
+    border: 1px solid #000000;
+    overflow: hidden;
+}
+
+
+/* INPUTS, SELECTS, BUTTONS */
+
+.tab input,.tab select{
+    width: 200px;
+    height: 20px;
+}
+
+.tab label{
+    display: inline-block;
+    height: 10px;
+    width: 200px;
+}
+
+.tab button{
+    background-color: rgb(215, 224, 238);
+    text-align: center;
+    font-size: 10;
+    width: 70;
+    height: 30;
+}
+
+#div_navigation button{
+    background-color: rgb(215, 224, 238);
+    text-align: center;
+    font-size: 10;
+    margin: 0.1%;
+    width: 8%;
+    height: 90%;
+    padding: 1px;
+}
+
+
+
+ /* TABLES */
+
+.std_table{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.std_table td,.std_table th{
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.std_table.floatThead-table {
+    border-top: none;
+    border-bottom: none;
+    background-color: #fff;
+}
+
+.std_table td:first-child{
+
+    text-align: left;
+}
+
+.std_table tr:nth-child(even){background-color: #f2f2f2;}
+
+.std_table thead tr{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(38, 78, 39);
+    color: white;
+}
+
+ /* OTHER CLASSES */
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    width: 10%;
+    padding: 5px 0;
+    right: 10%;
+    top: 10%;
+    opacity: 0.90;
+    font-size: 15;
+    border-radius: 6px;
+    position: fixed;
+    z-index: 1;
+    overflow: auto;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif !important;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.hiddenCell{
+    visibility: hidden;
+    position: absolute;
+}

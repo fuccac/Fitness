@@ -1,0 +1,6 @@
+{
+    "build": "readme.md",
+    "files": [
+        "docs/readme.md"
+    ]
+}
