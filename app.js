@@ -135,13 +135,20 @@ var OnPlayerConnection = function (socket) {
 
 	socket.on("addExercise", function (data) {
 		var usesWeight;
-		if (data.baseWeight > 0) {
-			usesWeight = true;
-		}
-		else {
-			usesWeight = false;
+		if(data.baseWeight === ""){
 			data.baseWeight = 0;
+			usesWeight = false;
 		}
+		else{
+			if (data.baseWeight > 0) {
+				usesWeight = true;
+			}
+			else {
+				usesWeight = false;
+				data.baseWeight = 0;
+			}
+		}
+		
 
 		var creator = PLAYER_LIST[newPlayer.id].name;
 		var id = FITNESS_MANAGER.existExercise(data.name, data.equipment);
@@ -150,7 +157,7 @@ var OnPlayerConnection = function (socket) {
 			PLAYER_LIST[newPlayer.id].addedExercises++;
 		}
 		else {
-			FITNESS_MANAGER.editExercise(id, creator, data.difficulty, data.difficulty10, data.difficulty100, data.baseWeight, data.comment);
+			FITNESS_MANAGER.editExercise(id, creator, data.difficulty, data.difficulty10, data.difficulty100, data.unit,data.baseWeight, data.comment);
 			PLAYER_LIST[newPlayer.id].modifiedExercises++;
 		}
 
@@ -171,7 +178,7 @@ var OnPlayerConnection = function (socket) {
 
 	socket.on("addDoneExercise", function (data) {
 		var id = Math.random().toFixed(config.ID_LENGTH).slice(2);
-		var points = FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.date);
+		FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.date);
 		PLAYER_LIST[socket.id].points.total = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[socket.id].name);
 		saveAndRefresh();
 	});
