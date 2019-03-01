@@ -39,6 +39,8 @@ var input_doneExercise = document.getElementById('input_doneExercise');
 var input_doneExerciseWeight = document.getElementById('input_doneExerciseWeight');
 var input_historyFromDate = document.getElementById('input_historyFromDate');
 var input_historyToDate = document.getElementById('input_historyToDate');
+var input_sumSelection = document.getElementById('input_sumSelection');
+var input_avgSelection = document.getElementById('input_avgSelection');
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
@@ -77,31 +79,39 @@ function getDateFormat(date, format, fromFormat) {
     if (typeof fromFormat === 'undefined') { fromFormat = 'default'; }
 
     if (format === "YYYY-MM-DD") {
-        if (date.getMonth() < 10) {
-            addZeroMonth = "0";
+        if (fromFormat === "DD.MM.YYYY") {
+            var day = date.substring(0, 2);
+            var month = date.substring(3, 5);
+            var year = date.substring(6);
+            date = year + "-" + month + "-" + day;
         }
-        if (date.getDate() < 10) {
-            addZeroDay = "0";
+        else {
+            if (date.getMonth() < 9) {
+                addZeroMonth = "0";
+            }
+            if (date.getDate() < 10) {
+                addZeroDay = "0";
+            }
+            date = date.getFullYear() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + addZeroDay + date.getDate();
         }
-        date = date.getFullYear() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + addZeroDay + date.getDate();
     }
     if (format === "DD-MM-YYYY") {
-        if (date.getMonth() < 10) {
+        if (date.getMonth() < 9) {
             addZeroMonth = "0";
         }
         if (date.getDate() < 10) {
             addZeroDay = "0";
         }
-        date =  addZeroDay + date.getDate() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + date.getFullYear();
+        date = addZeroDay + date.getDate() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + date.getFullYear();
     }
     if (format === "DD.MM.YYYY") {
-        if (date.getMonth() < 10) {
+        if (date.getMonth() < 9) {
             addZeroMonth = "0";
         }
         if (date.getDate() < 10) {
             addZeroDay = "0";
         }
-        date =  addZeroDay + date.getDate() + "." + addZeroMonth + (date.getMonth() + 1) + "." + date.getFullYear();
+        date = addZeroDay + date.getDate() + "." + addZeroMonth + (date.getMonth() + 1) + "." + date.getFullYear();
     }
 
     return date;
@@ -163,6 +173,10 @@ input_historyToDate.onchange = function () {
     }
 };
 
+select_historyShowName.onchange = function () {
+    button_updateHistory.onclick();
+};
+
 function isValidDate(d) {
     return d instanceof Date && !isNaN(d);
 }
@@ -212,11 +226,18 @@ button_createExercise.onclick = function () {
 };
 
 socket.on("refresh", function (data) {
+    var selIndex = select_historyShowName.selectedIndex;
+    select_historyShowName.innerHTML = "";
+    for (var names in data.registeredPlayers) {
+        addOption(select_historyShowName, names, names);
+    }
+    select_historyShowName.selectedIndex = selIndex;
+
     generateExerciseList(data);
     generatePlayerInfoTable(data);
     fromDate = new Date(input_historyFromDate.value);
     toDate = new Date(input_historyToDate.value);
-    generateHistoryList(data, table_exerciseHistory, true, Name, fromDate, toDate);
+    generateHistoryList(data, table_exerciseHistory, true, select_historyShowName.value, fromDate, toDate);
 });
 
 function setTime(d, h, m, s) {
@@ -272,6 +293,7 @@ function generateExerciseList(data) {
     var rowNumber = 0;
     var selIndex = select_doneExercise.selectedIndex;
     select_doneExercise.innerHTML = "";
+
 
     for (var exerciseId in data.exercises) {
         exercise = data.exercises[exerciseId];
@@ -342,7 +364,10 @@ function generateExerciseList(data) {
 function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) {
     setTime(fromDate, 0, 0, 0);
     setTime(toDate, 0, 0, 0);
-
+    name = name.toUpperCase();
+    input_sumSelection.value = 0;
+    input_avgSelection.value = 0;
+    var selectionSum = 0;
     var theadTable = table.tHead;
     var tBodyTable = table.tBodies[0];
     tBodyTable.innerHTML = "";
@@ -351,20 +376,26 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
     var cell;
     var rowNumber = 0;
     var rowNotUsed = false;
+    var cellNumber = 0;
+
+    var maxDate = fromDate;
+    var minDate = toDate;
 
     for (var historyId in data.history) {
         entryDate = new Date(historyId);
+
         setTime(entryDate, 0, 0, 0);
         if (entryDate < fromDate || entryDate > toDate) {
             continue;
         }
+        
         var historyEntry = data.history[historyId];
         var toolTipText = "No Text";
         for (var iterator = 0; iterator < historyEntry.id.length; iterator++) {
             if (!rowNotUsed) {
                 bodyRow = tBodyTable.insertRow(rowNumber);
                 rowNumber++;
-                var cellNumber = 0;
+                cellNumber = 0;
             }
 
             rowNotUsed = false;
@@ -373,26 +404,34 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                 key = historyEntry[historyKeys];
                 entryDate = new Date(historyEntry.date[iterator]);
                 if (nameSpecific) {
-                    if (historyEntry.playerName[iterator] != name) {
+                    if (historyEntry.playerName[iterator].toUpperCase() != name) {
                         rowNotUsed = true;
                         break;
                     }
                     else {
-                        if (historyKeys === "exerciseId" || historyKeys === "playerName" || historyKeys === "id") {
+                        if (historyKeys === "exerciseId" || historyKeys === "playerName") {
                             continue;
                         }
                     }
                 }
                 else {
-                    if (historyKeys === "exerciseId" || historyKeys === "id") {
+                    if (historyKeys === "exerciseId") {
                         continue;
                     }
                 }
 
+
                 var value = "";
                 if (historyKeys === "date") {
                     value = new Date(key[iterator]);
+                    if (value < minDate){
+                        minDate = value;
+                    }
+                    if (maxDate < value){
+                        maxDate = value;
+                    }
                     value = getDateFormat(value, "DD.MM.YYYY");
+                    
                 }
                 else {
                     value = key[iterator];
@@ -400,15 +439,25 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                 if (rowNumber == 1) {
                     headerArray.push(historyKeys);
                 }
+
                 cell = bodyRow.insertCell(cellNumber);
                 cell.innerHTML = translate(value);
+                if (historyKeys === "id") {
+                    cell.classList.add("hiddenCell");
+                }
+                if (historyKeys === "points") {
+                    selectionSum += Number(value);
+                   
+                }
 
                 cellNumber++;
             }
             if (!rowNotUsed) {
                 addToolTip(toolTipText, "tooltip", bodyRow);
                 bodyRow.onclick = function () {
-                    alert("no click");
+                    var id = this.getElementsByTagName("td")[0].innerHTML;
+                    var dialogResult = confirm(id);
+
                 };
             }
         }
@@ -429,6 +478,15 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
             sortTable(this, table);
         };
     }
+    input_sumSelection.value = translate(selectionSum);
+    var selectionCount = dateDiff(minDate,maxDate);
+    input_avgSelection.value = translate(Number(selectionSum) / (selectionCount+1));
+    
+    
+}
+
+function dateDiff(date1,date2){
+    return Math.floor((date2 - date1) / (1000*60*60*24));
 }
 
 function addOption(select, key, Name) {
@@ -492,7 +550,7 @@ function modifyExercise(emitString) {
 
 
 function checkIfString(value) {
-    return Object.prototype.toString.call(playerKeyContent) === "[object String]";
+    return Object.prototype.toString.call(value) === "[object String]";
 }
 
 function checkIfDate(value) {
@@ -613,6 +671,8 @@ function dragElement(elmnt) {
 function sortTable(n, table) {
     table.style.cursor = "wait";
     m = n.cellIndex;
+    matcher = /(\d{2}).(\d{2}).(\d{4})/;
+
     var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     var valX, valY = "";
     switching = true;
@@ -625,9 +685,9 @@ function sortTable(n, table) {
             x = rows[i].getElementsByTagName("td")[m];
             y = rows[i + 1].getElementsByTagName("td")[m];
             if (dir == "asc") {
-                if (isValidDate(new Date(x.innerHTML))) {
-                    valX = new Date(x.innerHTML);
-                    valY = new Date(y.innerHTML);
+                if (x.innerHTML.match(matcher) != null) {
+                    valX = new Date(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                    valY = new Date(getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
                 }
                 else if (!isNaN(Number(x.innerHTML))) {
                     valX = Number(x.innerHTML);
@@ -642,7 +702,11 @@ function sortTable(n, table) {
                     break;
                 }
             } else if (dir == "desc") {
-                if (!isNaN(Number(x.innerHTML))) {
+                if (x.innerHTML.match(matcher) != null) {
+                    valX = new Date(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                    valY = new Date(getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                }
+                else if (!isNaN(Number(x.innerHTML))) {
                     valX = Number(x.innerHTML);
                     valY = Number(y.innerHTML);
                 }
@@ -758,6 +822,8 @@ function translate(word) {
             return "Anzahl";
         case "weight":
             return "Benutztes Gewicht";
+        case "dailyMax":
+            return "Tagesbestleistung";
         default:
             return word;
     }

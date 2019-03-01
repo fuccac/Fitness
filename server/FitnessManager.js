@@ -2,8 +2,13 @@
 /*jshint esversion: 6 */
 Exercise = require("./Exercise");
 Calc = require("./calc");
-googleSheetList = require("../saves/exercisesGoogle.json");
-googleSheetHistory = require("../saves/cafGoogle.json");
+googleSheetList = require("../saves/googleJSON/exercisesGoogle.json");
+googleSheetHistoryCaf = require("../saves/googleJSON/cafGoogle.json");
+googleSheetHistoryGjf = require("../saves/googleJSON/gjfGoogle.json");
+googleSheetHistoryJonny = require("../saves/googleJSON/jonnyGoogle.json");
+googleSheetHistoryMuch = require("../saves/googleJSON/muchGoogle.json");
+googleSheetHistoryPhilipp = require("../saves/googleJSON/philippGoogle.json");
+
 calc = new Calc();
 
 class FitnessManager {
@@ -13,9 +18,8 @@ class FitnessManager {
         this.exerciseList = {};
         var today = new Date();
         this.today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-        this.history = {
-
-        };
+        this.history = { };
+        this.registeredPlayers = {};
 
         this.importExercisesFromGoogle();
 
@@ -36,32 +40,37 @@ class FitnessManager {
             else {
                 usesWeight = false;
             }
-            var exercise = new Exercise(entry.exname, entry.diff, entry.diff, entry.diff, entry.equip, usesWeight, entry.baseWeight, entry.exname + " Import from GS", "caf", entry.type, entry.unit);
+            var exercise = new Exercise(entry.exname, entry.diff, entry.diff, entry.diff, entry.equip, usesWeight, entry.baseWeight, entry.exname + " Import from GS", "JsonImporter", entry.type, entry.unit);
             this.addExercise(exercise);
         }
-
+        console.log("Exercises from JSON imported.");
         this.importHistoryFromGoogle();
 
     }
 
     importHistoryFromGoogle() {
+        var historyData = [googleSheetHistoryCaf, googleSheetHistoryGjf, googleSheetHistoryJonny, googleSheetHistoryMuch, googleSheetHistoryPhilipp];
+        var nameData = ["caf","gjf","jonny","much","philipp"];
         var date;
         var id;
-        for (var dayEntryNo in googleSheetHistory.JSONExportHistory) {
-            var dayEntry = googleSheetHistory.JSONExportHistory[dayEntryNo];
-            date = new Date(dayEntry.Datum);
-            for (var dayEntryKeyName in dayEntry) {
-                var dayEntryKeyValue = dayEntry[dayEntryKeyName];
-                var exerciseId = this.existExerciseName(dayEntryKeyName);
-                if (exerciseId > 0) {
-                    id = Math.random().toFixed(16).slice(2);
-                    var weight = this.exerciseList[exerciseId].baseWeight;
-                    this.addToHistory(id, "caf", exerciseId, weight, dayEntryKeyValue, date);
+        for (var i = 0; i < historyData.length; i++) {
+            for (var dayEntryNo in historyData[i].JSONExportHistory) {
+                var dayEntry = historyData[i].JSONExportHistory[dayEntryNo];
+                date = new Date(dayEntry.Datum);
+                for (var dayEntryKeyName in dayEntry) {
+                    var dayEntryKeyValue = dayEntry[dayEntryKeyName];
+                    var exerciseId = this.existExerciseName(dayEntryKeyName);
+                    if (exerciseId > 0) {
+                        id = Math.random().toFixed(16).slice(2);
+                        var weight = this.exerciseList[exerciseId].baseWeight;
+                        this.addToHistory(id, nameData[i], exerciseId, weight, dayEntryKeyValue, date);
+                    }
+
+
                 }
-
-
             }
         }
+        console.log("Histories from JSON imported.");
 
     }
 
@@ -117,15 +126,21 @@ class FitnessManager {
         delete this.exerciseList[id];
     }
 
+    deleteHistory(id){
+
+
+    }
+
     addToHistory(id, playerName, exerciseId, weight, count, date) {
         if (weight === "" || this.exerciseList[exerciseId].usesWeight === false) {
             weight = 0;
         }
+        this.setTime(date,0,0,0);
         var points = calc.calculatePoints(this.exerciseList[exerciseId], weight, count);
         if (this.history[date] != undefined) {
             for (var iterator in this.history[date].exerciseId) {
                 var exId = this.history[date].exerciseId[iterator];
-                if (exId === exerciseId && this.history[date].weight[iterator] == weight) {
+                if (exId === exerciseId && this.history[date].weight[iterator] == weight && this.history[date].playerName[iterator] == playerName) {
                     this.history[date].count[iterator] += Number(count);
                     this.history[date].points[iterator] += Number(points);
                     return;
@@ -152,6 +167,7 @@ class FitnessManager {
             newPoints.push(Number(points));
             newWeight.push(Number(weight));
             newExerciseId.push(exerciseId);
+
 
             var newHistoryEntry = {
                 id: newId,
@@ -196,14 +212,14 @@ class FitnessManager {
         var sumPointsLastMonth = 0;
         var thisMonthEntries = 0;
         var thisYear = new Date().getFullYear();
-        var lastYear = new Date().getFullYear() - 1;
         var todayDate = new Date();
         todayDate.setMonth(todayDate.getMonth() - 1);
         var lastMonth = todayDate.getMonth();
         var lastMonthYear = todayDate.getFullYear();
         var thisMonth = new Date().getMonth();
         var dateMinus5Days = new Date();
-
+        var dailyMax = 0;
+        var resultingMaxPerDay = 0;
         todayDate = new Date();
         this.setTime(todayDate, 0, 0, 0);
         this.setTime(dateMinus5Days, 0, 0, 0);
@@ -215,11 +231,12 @@ class FitnessManager {
             currentDate = new Date(dates);
             this.setTime(currentDate, 0, 0, 0);
             var historyEntry = this.history[dates];
-            
+            dailyMax = 0;
             for (var iterator in historyEntry.playerName) {
                 var historyName = historyEntry.playerName[iterator];
-                if (historyName === name) {
+                if (historyName.toUpperCase() === name.toUpperCase()) {
                     sumPointsTotal += Number(historyEntry.points[iterator]);
+                    dailyMax += Number(historyEntry.points[iterator]);
                     if (currentDate > dateMinus5Days) {
                         sumPoints5Days += Number(historyEntry.points[iterator]);
                     }
@@ -238,21 +255,26 @@ class FitnessManager {
                     }
                 }
             }
+            if(dailyMax > resultingMaxPerDay){
+                resultingMaxPerDay = dailyMax;
+            }
         }
         var averageThisMonth = 0;
         if (thisMonthEntries > 0) {
             averageThisMonth = sumPointsThisMonth / thisMonthEntries;
         }
-
         var points = {
-            today: sumPointsToday,
-            negative: sumPointsNegative,
-            thisMonth: sumPointsThisMonth,
-            diffLastMonth: sumPointsLastMonth - sumPointsThisMonth,
-            averageThisMonth: averageThisMonth,
-            last5Days: sumPoints5Days,
             total: sumPointsTotal,
+            negative: sumPointsNegative,
+            today: sumPointsToday,
+            diffLastMonth: sumPointsLastMonth - sumPointsThisMonth,
+            last5Days: sumPoints5Days,
+            thisMonth: sumPointsThisMonth,
+            dailyMax:resultingMaxPerDay,
+            averageThisMonth: averageThisMonth,
         };
+
+        this.registeredPlayers[name] = sumPointsTotal;
         return points;
 
     }

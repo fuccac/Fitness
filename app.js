@@ -205,6 +205,7 @@ function saveAndRefresh() {
 				exercises: FITNESS_MANAGER.exerciseList,
 				history: FITNESS_MANAGER.history,
 				player: player,
+				registeredPlayers:FITNESS_MANAGER.registeredPlayers,
 			});
 
 		}
