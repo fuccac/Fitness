@@ -10,10 +10,9 @@ var button_deleteExercise = document.getElementById('button_deleteExercise');
 var button_tabExerciseOverview = document.getElementById('button_tabExerciseOverview');
 var button_tabPersonalOverview = document.getElementById('button_tabPersonalOverview');
 var button_doneExerciseSend = document.getElementById('button_doneExerciseSend');
+var button_updateHistory = document.getElementById('button_updateHistory');
 //CANVAS
-
 //CTX
-
 //DIVS
 var div_Sign = document.getElementById('div_Sign');
 var div_ExerciseOverview = document.getElementById('div_ExerciseOverview');
@@ -23,7 +22,7 @@ var div_PersonalOverview = document.getElementById('div_PersonalOverview');
 var div_addWorkout = document.getElementById('div_addWorkout');
 var div_PersonalInfo = document.getElementById('div_PersonalInfo');
 var div_exerciseHistory = document.getElementById('div_exerciseHistory');
-
+var div_exerciseHistoryControl = document.getElementById('div_exerciseHistoryControl');
 //FONTS
 var font_Courier = "Courier New";
 //INPUTS
@@ -38,11 +37,14 @@ var input_exerciseComment = document.getElementById('input_exerciseComment');
 var input_doneExerciseDate = document.getElementById('input_doneExerciseDate');
 var input_doneExercise = document.getElementById('input_doneExercise');
 var input_doneExerciseWeight = document.getElementById('input_doneExerciseWeight');
+var input_historyFromDate = document.getElementById('input_historyFromDate');
+var input_historyToDate = document.getElementById('input_historyToDate');
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
 var select_exerciseEquipment = document.getElementById('select_exerciseEquipment');
 var select_doneExercise = document.getElementById('select_doneExercise');
+var select_historyShowName = document.getElementById('select_historyShowName');
 //TABLES
 var table_exerciseTable = document.getElementById('table_exerciseTable');
 var table_personalTable = document.getElementById('table_personalTable');
@@ -53,6 +55,75 @@ var socket = io();
 var screenLog = document.querySelector('#screen-log');
 document.addEventListener('mousemove', logKey);
 
+
+
+var thisMonth = function () {
+    var today = new Date();
+    var thisMonthBegin = new Date(today.getFullYear(), today.getMonth(), 1);
+    var thisMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    thisMonthEnd.setDate(thisMonthEnd.getDate() - 1);
+
+
+
+    return {
+        thisMonthBegin: thisMonthBegin,
+        thisMonthEnd: thisMonthEnd,
+    };
+};
+
+function getDateFormat(date, format, fromFormat) {
+    var addZeroMonth = "";
+    var addZeroDay = "";
+    if (typeof fromFormat === 'undefined') { fromFormat = 'default'; }
+
+    if (format === "YYYY-MM-DD") {
+        if (date.getMonth() < 10) {
+            addZeroMonth = "0";
+        }
+        if (date.getDate() < 10) {
+            addZeroDay = "0";
+        }
+        date = date.getFullYear() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + addZeroDay + date.getDate();
+    }
+    if (format === "DD-MM-YYYY") {
+        if (date.getMonth() < 10) {
+            addZeroMonth = "0";
+        }
+        if (date.getDate() < 10) {
+            addZeroDay = "0";
+        }
+        date =  addZeroDay + date.getDate() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + date.getFullYear();
+    }
+    if (format === "DD.MM.YYYY") {
+        if (date.getMonth() < 10) {
+            addZeroMonth = "0";
+        }
+        if (date.getDate() < 10) {
+            addZeroDay = "0";
+        }
+        date =  addZeroDay + date.getDate() + "." + addZeroMonth + (date.getMonth() + 1) + "." + date.getFullYear();
+    }
+
+    return date;
+
+
+}
+
+
+//this month
+thisMonthBegin = thisMonth().thisMonthBegin;
+thisMonthEnd = thisMonth().thisMonthEnd;
+thisMonthBegin = getDateFormat(thisMonthBegin, "YYYY-MM-DD");
+thisMonthEnd = getDateFormat(thisMonthEnd, "YYYY-MM-DD");
+
+input_historyFromDate.value = thisMonthBegin;
+input_historyToDate.value = thisMonthEnd;
+
+
+
+//Today
+today = new Date();
+input_doneExerciseDate.value = getDateFormat(today, "YYYY-MM-DD");
 
 //sign in code
 button_SignIn.onclick = function () {
@@ -79,6 +150,27 @@ socket.on('signUpResponse', function (data) {
     else
         alert("Sign Up unsuccessful");
 });
+
+input_historyFromDate.onchange = function () {
+    if (!isValidDate(new Date(input_historyFromDate.value))) {
+        input_historyFromDate.value = getDateFormat(new Date(), "YYYY-MM-DD");
+    }
+};
+
+input_historyToDate.onchange = function () {
+    if (!isValidDate(new Date(input_historyToDate.value))) {
+        input_historyToDate.value = getDateFormat(new Date(), "YYYY-MM-DD");
+    }
+};
+
+function isValidDate(d) {
+    return d instanceof Date && !isNaN(d);
+}
+
+
+button_updateHistory.onclick = function () {
+    socket.emit("requestUpdate", true);
+};
 
 button_doneExerciseSend.onclick = function () {
     if (checkForEmptyBoxesDoneExercise()) {
@@ -122,8 +214,17 @@ button_createExercise.onclick = function () {
 socket.on("refresh", function (data) {
     generateExerciseList(data);
     generatePlayerInfoTable(data);
-    generateHistoryList(data, table_exerciseHistory, true, Name);
+    fromDate = new Date(input_historyFromDate.value);
+    toDate = new Date(input_historyToDate.value);
+    generateHistoryList(data, table_exerciseHistory, true, Name, fromDate, toDate);
 });
+
+function setTime(d, h, m, s) {
+    d.setHours(h);
+    d.setMinutes(m);
+    d.setSeconds(s);
+    return d;
+}
 
 function generatePlayerInfoTable(data) {
     var theadPersonalTable = table_personalTable.tHead;
@@ -139,7 +240,7 @@ function generatePlayerInfoTable(data) {
         playerKeyContent = data.player[playerKeyName];
         if (playerKeyName === "regDate") {
             playerKeyContent = new Date(playerKeyContent);
-            playerKeyContent = playerKeyContent.toLocaleDateString();
+            playerKeyContent = getDateFormat(playerKeyContent, "DD.MM.YYYY");
         }
         if (Object.keys(playerKeyContent).length > 0 && !checkIfString(playerKeyContent)) {
             for (var objectKeyName in playerKeyContent) {
@@ -174,7 +275,7 @@ function generateExerciseList(data) {
 
     for (var exerciseId in data.exercises) {
         exercise = data.exercises[exerciseId];
-        addOption(select_doneExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + exercise.factor);
+        addOption(select_doneExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + translate(exercise.factor));
 
         bodyRow = tBodyExerciseTable.insertRow(rowNumber);
         rowNumber++;
@@ -192,7 +293,7 @@ function generateExerciseList(data) {
                     toolTipText += voters + ": <br>";
                     for (var contentItemNum in content) {
                         contentItem = content[contentItemNum];
-                        toolTipText += translate(contentItemNum) + ": " + contentItem.toString() + "<br>";
+                        toolTipText += translate(contentItemNum) + ": " + translate(contentItem) + "<br>";
                     }
                 }
                 continue;
@@ -238,7 +339,10 @@ function generateExerciseList(data) {
     }
 }
 
-function generateHistoryList(data, table, nameSpecific, name) {
+function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) {
+    setTime(fromDate, 0, 0, 0);
+    setTime(toDate, 0, 0, 0);
+
     var theadTable = table.tHead;
     var tBodyTable = table.tBodies[0];
     tBodyTable.innerHTML = "";
@@ -249,6 +353,11 @@ function generateHistoryList(data, table, nameSpecific, name) {
     var rowNotUsed = false;
 
     for (var historyId in data.history) {
+        entryDate = new Date(historyId);
+        setTime(entryDate, 0, 0, 0);
+        if (entryDate < fromDate || entryDate > toDate) {
+            continue;
+        }
         var historyEntry = data.history[historyId];
         var toolTipText = "No Text";
         for (var iterator = 0; iterator < historyEntry.id.length; iterator++) {
@@ -258,10 +367,11 @@ function generateHistoryList(data, table, nameSpecific, name) {
                 var cellNumber = 0;
             }
 
-            rowNotUsed=false;
+            rowNotUsed = false;
 
             for (var historyKeys in historyEntry) {
                 key = historyEntry[historyKeys];
+                entryDate = new Date(historyEntry.date[iterator]);
                 if (nameSpecific) {
                     if (historyEntry.playerName[iterator] != name) {
                         rowNotUsed = true;
@@ -279,16 +389,19 @@ function generateHistoryList(data, table, nameSpecific, name) {
                     }
                 }
 
-
+                var value = "";
                 if (historyKeys === "date") {
-                    key[iterator] = new Date(key[iterator]);
-                    key[iterator] = key[iterator].toLocaleDateString();
+                    value = new Date(key[iterator]);
+                    value = getDateFormat(value, "DD.MM.YYYY");
+                }
+                else {
+                    value = key[iterator];
                 }
                 if (rowNumber == 1) {
                     headerArray.push(historyKeys);
                 }
                 cell = bodyRow.insertCell(cellNumber);
-                cell.innerHTML = translate(key[iterator]);
+                cell.innerHTML = translate(value);
 
                 cellNumber++;
             }
@@ -299,6 +412,10 @@ function generateHistoryList(data, table, nameSpecific, name) {
                 };
             }
         }
+
+    }
+    if (rowNotUsed) {
+        table.deleteRow(rowNumber - 1);
     }
 
     headerRow = theadTable.insertRow(0);
@@ -494,8 +611,10 @@ function dragElement(elmnt) {
 }
 
 function sortTable(n, table) {
+    table.style.cursor = "wait";
     m = n.cellIndex;
     var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    var valX, valY = "";
     switching = true;
     dir = "asc";
     while (switching) {
@@ -506,12 +625,32 @@ function sortTable(n, table) {
             x = rows[i].getElementsByTagName("td")[m];
             y = rows[i + 1].getElementsByTagName("td")[m];
             if (dir == "asc") {
-                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                if (isValidDate(new Date(x.innerHTML))) {
+                    valX = new Date(x.innerHTML);
+                    valY = new Date(y.innerHTML);
+                }
+                else if (!isNaN(Number(x.innerHTML))) {
+                    valX = Number(x.innerHTML);
+                    valY = Number(y.innerHTML);
+                }
+                else {
+                    valX = x.innerHTML.toLowerCase();
+                    valY = y.innerHTML.toLowerCase();
+                }
+                if (valX > valY) {
                     shouldSwitch = true;
                     break;
                 }
             } else if (dir == "desc") {
-                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                if (!isNaN(Number(x.innerHTML))) {
+                    valX = Number(x.innerHTML);
+                    valY = Number(y.innerHTML);
+                }
+                else {
+                    valX = x.innerHTML.toLowerCase();
+                    valY = y.innerHTML.toLowerCase();
+                }
+                if (valX < valY) {
                     shouldSwitch = true;
                     break;
                 }
@@ -528,6 +667,7 @@ function sortTable(n, table) {
             }
         }
     }
+    table.style.cursor = "default";
 }
 
 function addSpaces(count) {

@@ -70,10 +70,17 @@ function Calc() {
 		
 		var result = Number(exercise.factor) * Number(count) * Number(weightFactor);
 
-		exercise.points += result;
+		exercise.points += Number(result);
 
 		return result;
 	};
+
+	this.sortByKey = function(array, key) {
+		return array.sort(function(a, b) {
+			var x = a[key]; var y = b[key];
+			return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+		});
+	}
 
 
 }

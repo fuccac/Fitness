@@ -5,25 +5,28 @@
 var express = require('express');
 var app = express();
 var http = require("http");
-var serv = new http.Server(app);
 var JSONFileStorage = require('jsonfile-storage');
 var pwHash = require('password-hash');
 var Config = require("./server/Config");
-var config = new Config();
 var Player = require("./server/Player");
 var FitnessManager = require("./server/FitnessManager");
 
 
 //MODULE INITS
-
 var storageManager = new JSONFileStorage('./saves');
-
+var config = new Config();
+var serv = new http.Server(app);
 
 //GLOBALS
 var USERS = {};
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var FITNESS_MANAGER = new FitnessManager();
+
+var tomorrow = new Date("01.01.2010");
+tomorrow.setDate(tomorrow.getDate() + 1);
+
+console.log(tomorrow);
 
 loadUsers();
 loadFitnessManager();
@@ -71,12 +74,12 @@ function loadFitnessManager() {
 			console.log("exerciseList file missing or corrupted");
 		});
 	storageManager.get("history").then(result => {
-			FITNESS_MANAGER.history = result.history;
-			console.log("history Loaded");
-		})
-			.catch((err) => {
-				console.log("history file missing or corrupted");
-			});
+		FITNESS_MANAGER.history = result.history;
+		console.log("history Loaded");
+	})
+		.catch((err) => {
+			console.log("history file missing or corrupted");
+		});
 }
 
 function loadUsers() {
@@ -135,11 +138,11 @@ var OnPlayerConnection = function (socket) {
 
 	socket.on("addExercise", function (data) {
 		var usesWeight;
-		if(data.baseWeight === ""){
+		if (data.baseWeight === "") {
 			data.baseWeight = 0;
 			usesWeight = false;
 		}
-		else{
+		else {
 			if (data.baseWeight > 0) {
 				usesWeight = true;
 			}
@@ -148,7 +151,7 @@ var OnPlayerConnection = function (socket) {
 				data.baseWeight = 0;
 			}
 		}
-		
+
 
 		var creator = PLAYER_LIST[newPlayer.id].name;
 		var id = FITNESS_MANAGER.existExercise(data.name, data.equipment);
@@ -157,7 +160,7 @@ var OnPlayerConnection = function (socket) {
 			PLAYER_LIST[newPlayer.id].addedExercises++;
 		}
 		else {
-			FITNESS_MANAGER.editExercise(id, creator, data.difficulty, data.difficulty10, data.difficulty100, data.unit,data.baseWeight, data.comment);
+			FITNESS_MANAGER.editExercise(id, creator, data.difficulty, data.difficulty10, data.difficulty100, data.unit, data.baseWeight, data.comment);
 			PLAYER_LIST[newPlayer.id].modifiedExercises++;
 		}
 
@@ -179,18 +182,25 @@ var OnPlayerConnection = function (socket) {
 	socket.on("addDoneExercise", function (data) {
 		var id = Math.random().toFixed(config.ID_LENGTH).slice(2);
 		FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.date);
-		PLAYER_LIST[socket.id].points.total = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[socket.id].name);
 		saveAndRefresh();
 	});
 
+	socket.on("requestUpdate", function(data) {
+		saveAndRefresh();
+	});
+
+	
+
 };
+
+
 
 function saveAndRefresh() {
 	saveFitnessManager();
 	for (var iPlayer in PLAYER_LIST) {
 		var player = PLAYER_LIST[iPlayer];
+		player.points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[iPlayer].name);
 		if (SOCKET_LIST[player.id] != undefined) {
-
 			SOCKET_LIST[player.id].emit('refresh', {
 				exercises: FITNESS_MANAGER.exerciseList,
 				history: FITNESS_MANAGER.history,

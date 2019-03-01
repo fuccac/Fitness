@@ -35,6 +35,15 @@
 			<input id="input_doneExerciseWeight" type="number"></input><br>
 			<button id="button_doneExerciseSend">Absenden</button>
 		</div>
+		<div id="div_exerciseHistoryControl">
+			<label for="select_historyShowName">Name :</label>
+			<select id="select_historyShowName"></select><br>
+			<label for="input_historyFromDate" >Von :</label>
+			<input id="input_historyFromDate" type="date"></input>
+			<label for="input_historyToDate" >Bis :</label>
+			<input id="input_historyToDate" type="date"></input><br>
+			<button id="button_updateHistory">Update</button>
+		</div>
 		<div id="div_exerciseHistory">
 			<table id="table_exerciseHistory" class="std_table">
 				<thead></thead>
@@ -85,6 +94,11 @@
 				<option value="Körpergewicht">Körpergewicht</option>
 				<option value="Rudergerät">Rudergerät</option>
 				<option value="Fahrrad">Fahrrad</option>
+				<option value="Gewichtball">Fahrrad</option>
+				<option value="LegPress Maschine">Fahrrad</option>
+				<option value="Legextension">Fahrrad</option>
+				<option value="Lat Pull Down">Fahrrad</option>
+				
 			</select><br>
 			<label for="input_exerciseComment">Kommentar :</label>
 			<input id="input_exerciseComment" type="text"></input><br>
