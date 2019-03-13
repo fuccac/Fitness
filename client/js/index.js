@@ -1,5 +1,12 @@
 // @ts-nocheck
 /*jshint esversion: 6 */
+
+/******************************************************************************************************************
+*******************************************************************************************************************
+*                                               HTML OBJECTS, INITS 
+*******************************************************************************************************************
+*******************************************************************************************************************
+******************************************************************************************************************/
 var Name = "";
 
 //BUTTONS
@@ -11,8 +18,13 @@ var button_tabExerciseOverview = document.getElementById('button_tabExerciseOver
 var button_tabPersonalOverview = document.getElementById('button_tabPersonalOverview');
 var button_doneExerciseSend = document.getElementById('button_doneExerciseSend');
 var button_updateHistory = document.getElementById('button_updateHistory');
+var button_tabStatistics = document.getElementById('button_tabStatistics');
+var button_updateGraph = document.getElementById('button_updateGraph');
 //CANVAS
+var canvas_graphHistory = document.getElementById('canvas_graphHistory');
+
 //CTX
+var ctx_graphHistory = canvas_graphHistory.getContext("2d");
 //DIVS
 var div_Sign = document.getElementById('div_Sign');
 var div_ExerciseOverview = document.getElementById('div_ExerciseOverview');
@@ -23,6 +35,9 @@ var div_addWorkout = document.getElementById('div_addWorkout');
 var div_PersonalInfo = document.getElementById('div_PersonalInfo');
 var div_exerciseHistory = document.getElementById('div_exerciseHistory');
 var div_exerciseHistoryControl = document.getElementById('div_exerciseHistoryControl');
+var div_statistics = document.getElementById('div_statistics');
+var div_graph = document.getElementById('div_graph');
+
 //FONTS
 var font_Courier = "Courier New";
 //INPUTS
@@ -41,99 +56,35 @@ var input_historyFromDate = document.getElementById('input_historyFromDate');
 var input_historyToDate = document.getElementById('input_historyToDate');
 var input_sumSelection = document.getElementById('input_sumSelection');
 var input_avgSelection = document.getElementById('input_avgSelection');
+var input_graphFromDate = document.getElementById('input_graphFromDate');
+var input_graphToDate = document.getElementById('input_graphToDate');
+var input_graphXSections = document.getElementById('input_graphXSections');
+var input_graphYSections = document.getElementById('input_graphYSections');
+var input_graphXMax = document.getElementById('input_graphXMax');
+var input_deletionMode = document.getElementById('input_deletionMode');
+
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
 var select_exerciseEquipment = document.getElementById('select_exerciseEquipment');
 var select_doneExercise = document.getElementById('select_doneExercise');
 var select_historyShowName = document.getElementById('select_historyShowName');
+var select_bothSides = document.getElementById('select_bothSides');
 //TABLES
 var table_exerciseTable = document.getElementById('table_exerciseTable');
 var table_personalTable = document.getElementById('table_personalTable');
 var table_exerciseHistory = document.getElementById('table_exerciseHistory');
 var socket = io();
 
-
-var screenLog = document.querySelector('#screen-log');
-document.addEventListener('mousemove', logKey);
+initialize();
 
 
-
-var thisMonth = function () {
-    var today = new Date();
-    var thisMonthBegin = new Date(today.getFullYear(), today.getMonth(), 1);
-    var thisMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-    thisMonthEnd.setDate(thisMonthEnd.getDate() - 1);
-
-
-
-    return {
-        thisMonthBegin: thisMonthBegin,
-        thisMonthEnd: thisMonthEnd,
-    };
-};
-
-function getDateFormat(date, format, fromFormat) {
-    var addZeroMonth = "";
-    var addZeroDay = "";
-    if (typeof fromFormat === 'undefined') { fromFormat = 'default'; }
-
-    if (format === "YYYY-MM-DD") {
-        if (fromFormat === "DD.MM.YYYY") {
-            var day = date.substring(0, 2);
-            var month = date.substring(3, 5);
-            var year = date.substring(6);
-            date = year + "-" + month + "-" + day;
-        }
-        else {
-            if (date.getMonth() < 9) {
-                addZeroMonth = "0";
-            }
-            if (date.getDate() < 10) {
-                addZeroDay = "0";
-            }
-            date = date.getFullYear() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + addZeroDay + date.getDate();
-        }
-    }
-    if (format === "DD-MM-YYYY") {
-        if (date.getMonth() < 9) {
-            addZeroMonth = "0";
-        }
-        if (date.getDate() < 10) {
-            addZeroDay = "0";
-        }
-        date = addZeroDay + date.getDate() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + date.getFullYear();
-    }
-    if (format === "DD.MM.YYYY") {
-        if (date.getMonth() < 9) {
-            addZeroMonth = "0";
-        }
-        if (date.getDate() < 10) {
-            addZeroDay = "0";
-        }
-        date = addZeroDay + date.getDate() + "." + addZeroMonth + (date.getMonth() + 1) + "." + date.getFullYear();
-    }
-
-    return date;
-
-
-}
-
-
-//this month
-thisMonthBegin = thisMonth().thisMonthBegin;
-thisMonthEnd = thisMonth().thisMonthEnd;
-thisMonthBegin = getDateFormat(thisMonthBegin, "YYYY-MM-DD");
-thisMonthEnd = getDateFormat(thisMonthEnd, "YYYY-MM-DD");
-
-input_historyFromDate.value = thisMonthBegin;
-input_historyToDate.value = thisMonthEnd;
-
-
-
-//Today
-today = new Date();
-input_doneExerciseDate.value = getDateFormat(today, "YYYY-MM-DD");
+/******************************************************************************************************************
+*******************************************************************************************************************
+*                                               ONCLICK, ONCHANGE 
+*******************************************************************************************************************
+*******************************************************************************************************************
+******************************************************************************************************************/
 
 //sign in code
 button_SignIn.onclick = function () {
@@ -142,6 +93,124 @@ button_SignIn.onclick = function () {
 button_SignUp.onclick = function () {
     socket.emit('SignUp', { username: input_UserName.value, password: input_Password.value });
 };
+
+input_historyFromDate.onchange = function () {
+    if (!isValidDate(createZeroDate(input_historyFromDate.value))) {
+        input_historyFromDate.value = getDateFormat(createZeroDate(), "YYYY-MM-DD");
+    }
+};
+
+input_historyToDate.onchange = function () {
+    if (!isValidDate(createZeroDate(input_historyToDate.value))) {
+        input_historyToDate.value = getDateFormat(createZeroDate(), "YYYY-MM-DD");
+    }
+};
+
+select_historyShowName.onchange = function () {
+    button_updateHistory.onclick();
+};
+
+
+button_updateHistory.onclick = function () {
+    socket.emit("requestHistoryUpdate", { fromDate: input_historyFromDate.value, toDate: input_historyToDate.value });
+};
+
+button_updateGraph.onclick = function () {
+    socket.emit("requestGraphUpdate", { fromDate: input_graphFromDate.value, toDate: input_graphToDate.value });
+};
+
+button_doneExerciseSend.onclick = function () {
+    if (checkForEmptyBoxesDoneExercise()) {
+        exerciseDone('addDoneExercise');
+        button_updateHistory.onclick();
+    }
+    else {
+        alert("Nicht alle Inputboxen wurden ausgefüllt!");
+    }
+};
+
+button_tabPersonalOverview.onclick = function () {
+    div_ExerciseOverview.style.display = "none";
+    div_PersonalOverview.style.display = "inline-block";
+    div_statistics.style.display = "none";
+};
+
+button_tabStatistics.onclick = function () {
+    div_ExerciseOverview.style.display = "none";
+    div_PersonalOverview.style.display = "none";
+    div_statistics.style.display = "inline-block";
+    canvas_graphHistory.height = div_graph.clientHeight;
+    canvas_graphHistory.width = div_graph.clientWidth;
+};
+
+
+button_tabExerciseOverview.onclick = function () {
+    div_ExerciseOverview.style.display = "inline-block";
+    div_PersonalOverview.style.display = "none";
+    div_statistics.style.display = "none";
+};
+
+button_deleteExercise.onclick = function () {
+    if (checkForEmptyBoxesNewExercise()) {
+        modifyExercise('deleteExercise');
+        button_updateHistory.onclick();
+    }
+    else {
+        alert("Nicht alle Inputboxen wurden ausgefüllt!");
+    }
+};
+
+button_createExercise.onclick = function () {
+    if (checkForEmptyBoxesNewExercise()) {
+        modifyExercise('addExercise');
+        button_updateHistory.onclick();
+    }
+    else {
+        alert("Nicht alle Inputboxen wurden ausgefüllt!");
+    }
+
+};
+
+
+/******************************************************************************************************************
+*******************************************************************************************************************
+*                                               SOCKET ON 
+*******************************************************************************************************************
+*******************************************************************************************************************
+******************************************************************************************************************/
+
+socket.on("refreshHistory", function (data) {
+    fromDate = createZeroDate(input_historyFromDate.value);
+    toDate = createZeroDate(input_historyToDate.value);
+    generateHistoryList(data, table_exerciseHistory, true, select_historyShowName.value, fromDate, toDate);
+});
+
+socket.on("refreshGraph", function (data) {
+    generateGraph(data, canvas_graphHistory, ctx_graphHistory, input_graphXSections.value, input_graphYSections.value, input_graphXMax.value);
+});
+
+socket.on("refresh", function (data) {
+    var selIndex = select_historyShowName.selectedIndex;
+    select_historyShowName.innerHTML = "";
+    for (var names in data.registeredPlayers) {
+        addOption(select_historyShowName, names, names);
+    }
+    select_historyShowName.selectedIndex = selIndex;
+    if (select_historyShowName.value === "") {
+        select_historyShowName.value = data.player.name;
+    }
+
+    if (input_doneExerciseWeight.value === "") {
+        input_doneExerciseWeight.value = 0;
+    }
+
+    generateExerciseList(data);
+    generatePlayerInfoTable(data);
+
+
+
+});
+
 socket.on('signInResponse', function (data) {
     if (data.success) {
         Name = input_UserName.value;
@@ -161,92 +230,161 @@ socket.on('signUpResponse', function (data) {
         alert("Sign Up unsuccessful");
 });
 
-input_historyFromDate.onchange = function () {
-    if (!isValidDate(new Date(input_historyFromDate.value))) {
-        input_historyFromDate.value = getDateFormat(new Date(), "YYYY-MM-DD");
-    }
-};
 
-input_historyToDate.onchange = function () {
-    if (!isValidDate(new Date(input_historyToDate.value))) {
-        input_historyToDate.value = getDateFormat(new Date(), "YYYY-MM-DD");
-    }
-};
-
-select_historyShowName.onchange = function () {
+/******************************************************************************************************************
+*******************************************************************************************************************
+*                                               SOCKET EMIT 
+*******************************************************************************************************************
+*******************************************************************************************************************
+******************************************************************************************************************/
+function requestHistoryDeletion(id,date){
+    socket.emit("deleteHistory", data = {
+        id: id,
+        date: date,
+    });
     button_updateHistory.onclick();
-};
+}
+function exerciseDone(emitString) {
+    socket.emit(emitString, exPack = {
+        exId: select_doneExercise.value,
+        date: input_doneExerciseDate.value,
+        count: input_doneExercise.value,
+        weight: input_doneExerciseWeight.value,
+    });
+}
 
-function isValidDate(d) {
-    return d instanceof Date && !isNaN(d);
+function modifyExercise(emitString) {
+    socket.emit(emitString, exPack = {
+        name: input_exerciseName.value,
+        difficulty: input_exerciseDifficulty.value,
+        difficulty10: input_exerciseDifficulty10.value,
+        difficulty100: input_exerciseDifficulty100.value,
+        baseWeight: input_exerciseBaseWeight.value,
+        type: select_exerciseType.value,
+        unit: select_exerciseUnit.value,
+        equipment: select_exerciseEquipment.value,
+        bothSides:select_bothSides.value,
+        comment: input_exerciseComment.value,
+    });
 }
 
 
-button_updateHistory.onclick = function () {
-    socket.emit("requestUpdate", true);
-};
 
-button_doneExerciseSend.onclick = function () {
-    if (checkForEmptyBoxesDoneExercise()) {
-        exerciseDone('addDoneExercise');
+
+/******************************************************************************************************************
+*******************************************************************************************************************
+*                                               TABLE/CONTENT GENERATION 
+*******************************************************************************************************************
+*******************************************************************************************************************
+******************************************************************************************************************/
+function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
+    canvas.height = div_graph.clientHeight;
+    canvas.width = div_graph.clientWidth;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var maxHeight = canvas.height;
+    var maxWidth = canvas.width;
+    var minHeight = 0;
+    var minWidth = 0;
+    var maxValue = 0;
+    var heightSections = ySections;
+    var widthSections = xSections;
+    var pointAxisTextTuningHeight = 5;
+    var timeAxisTextTuningHeight = 10;
+    var rightLeft = 50;
+    var topBottom = 50;
+    var endDate;
+    var startDate;
+    var diagramNamesWidthSpace = 25;
+    maxHeight -= topBottom;
+    maxWidth -= rightLeft;
+    minHeight += topBottom;
+    minWidth += rightLeft;
+    var startWidthNames = minWidth;
+    var colors = ["red", "green", "blue", "yellow", "brown", "grey", "magenta", "orange"];
+
+    for (var playerName in data.graph) {
+        var maxPlayer = data.graph[playerName].xAxis[data.graph[playerName].xAxis.length - 1];
+        if (maxPlayer > maxValue) {
+            maxValue = maxPlayer;
+        }
+
+        endDate = createZeroDate(data.graph[playerName].yAxis[data.graph[playerName].yAxis.length - 1]);
+        startDate = createZeroDate(data.graph[playerName].yAxis[0]);
     }
-    else {
-        alert("Nicht alle Inputboxen wurden ausgefüllt!");
-    }
-};
-
-button_tabPersonalOverview.onclick = function () {
-    div_ExerciseOverview.style.display = "none";
-    div_PersonalOverview.style.display = "inline-block";
-};
-
-
-button_tabExerciseOverview.onclick = function () {
-    div_ExerciseOverview.style.display = "inline-block";
-    div_PersonalOverview.style.display = "none";
-};
-
-button_deleteExercise.onclick = function () {
-    if (checkForEmptyBoxesNewExercise()) {
-        modifyExercise('deleteExercise');
-    }
-    else {
-        alert("Nicht alle Inputboxen wurden ausgefüllt!");
-    }
-};
-
-button_createExercise.onclick = function () {
-    if (checkForEmptyBoxesNewExercise()) {
-        modifyExercise('addExercise');
-    }
-    else {
-        alert("Nicht alle Inputboxen wurden ausgefüllt!");
+    if (xMax > 0) {
+        maxValue = xMax;
     }
 
-};
+    endDate = endDate.getTime();
+    startDate = startDate.getTime();
 
-socket.on("refresh", function (data) {
-    var selIndex = select_historyShowName.selectedIndex;
-    select_historyShowName.innerHTML = "";
-    for (var names in data.registeredPlayers) {
-        addOption(select_historyShowName, names, names);
+    var conversionFactor = (maxHeight - minHeight) / maxValue;
+    var heightStep = (maxHeight - minHeight) / heightSections;
+
+    var currentHeight = minHeight;
+    for (var diaIterator = 0; diaIterator <= heightSections; diaIterator++) {
+        drawLine(ctx, "black", minWidth, currentHeight, maxWidth, currentHeight);
+        createText(ctx, "black", "Arial", 10, ((maxHeight - currentHeight) / conversionFactor).toFixed(2), minWidth, currentHeight - pointAxisTextTuningHeight);
+        currentHeight += heightStep;
     }
-    select_historyShowName.selectedIndex = selIndex;
 
-    generateExerciseList(data);
-    generatePlayerInfoTable(data);
-    fromDate = new Date(input_historyFromDate.value);
-    toDate = new Date(input_historyToDate.value);
-    generateHistoryList(data, table_exerciseHistory, true, select_historyShowName.value, fromDate, toDate);
-});
+    colorIterator = 0;
+    continueFlag = false;
+    for (var playerGraphName in data.graph) {
+        var widthSteps = (maxWidth - minWidth) / (data.graph[playerGraphName].xAxis.length - 1);
 
-function setTime(d, h, m, s) {
-    d.setHours(h);
-    d.setMinutes(m);
-    d.setSeconds(s);
-    return d;
+        var lastPoint = undefined;
+        var thisPoint = undefined;
+        var xPos = minWidth;
+
+        for (var pointIterator = 0; pointIterator < data.graph[playerGraphName].xAxis.length; pointIterator++) {
+            thisPoint = {
+                x: xPos,
+                y: maxHeight - data.graph[playerGraphName].xAxis[pointIterator] * conversionFactor,
+            };
+
+            if (lastPoint == undefined) {
+                lastPoint = {
+                    x: xPos,
+                    y: maxHeight - data.graph[playerGraphName].xAxis[pointIterator] * conversionFactor,
+                };
+            }
+
+            if (pointIterator % widthSections == 0) {
+                drawLine(ctx, "black", thisPoint.x, maxHeight, thisPoint.x, minHeight);
+                createText(ctx, "black", "Arial", 10, getDateFormat(createZeroDate(data.graph[playerGraphName].yAxis[pointIterator]), "DD.MM.YYYY"), thisPoint.x, maxHeight + timeAxisTextTuningHeight);
+            }
+
+            if (thisPoint.y <= minHeight) {
+                if (continueFlag) {
+                    lastPoint = thisPoint;
+                    xPos += widthSteps;
+                    continue;
+                }
+                else {
+                    thisPoint.y = minHeight;
+                    continueFlag = true;
+                }
+
+            }
+            else {
+                continueFlag = false;
+            }
+
+            drawLine(ctx, colors[colorIterator], lastPoint.x, lastPoint.y, thisPoint.x, thisPoint.y);
+
+            lastPoint = thisPoint;
+            xPos += widthSteps;
+
+        }
+
+        createText(ctx, colors[colorIterator], "Arial", 10, playerGraphName, startWidthNames, maxHeight + timeAxisTextTuningHeight * 3);
+        colorIterator++;
+        startWidthNames += diagramNamesWidthSpace;
+    }
+
+
 }
-
 function generatePlayerInfoTable(data) {
     var theadPersonalTable = table_personalTable.tHead;
     var tBodyPersonalTable = table_personalTable.tBodies[0];
@@ -260,8 +398,11 @@ function generatePlayerInfoTable(data) {
     for (var playerKeyName in data.player) {
         playerKeyContent = data.player[playerKeyName];
         if (playerKeyName === "regDate") {
-            playerKeyContent = new Date(playerKeyContent);
+            playerKeyContent = createZeroDate(playerKeyContent);
             playerKeyContent = getDateFormat(playerKeyContent, "DD.MM.YYYY");
+        }
+        if (playerKeyName === "earnedAchievements"|| playerKeyName === "notEarnedAchievements") {
+            continue;
         }
         if (Object.keys(playerKeyContent).length > 0 && !checkIfString(playerKeyContent)) {
             for (var objectKeyName in playerKeyContent) {
@@ -320,6 +461,32 @@ function generateExerciseList(data) {
                 }
                 continue;
             }
+            if (exerciseKeys === "pointsPerPlayer") {
+                var max = 0;
+                var bestPlayer = "Keiner";
+                for (var playerName in key) {
+                    var points = key[playerName];
+                    if (points > max) {
+                        max = points;
+                        bestPlayer = playerName;
+                    }
+
+                }
+                key = bestPlayer + ": " + translate(max);
+            }
+            if (exerciseKeys === "repsPerPlayer") {
+                var maxReps = 0;
+                var bestPlayer = "Keiner";
+                for (var playerName in key) {
+                    var reps = key[playerName];
+                    if (reps > maxReps) {
+                        maxReps = reps;
+                        bestPlayer = playerName;
+                    }
+
+                }
+                key = bestPlayer + ": " + translate(maxReps);
+            }
             if (rowNumber == 1) {
                 headerArray.push(exerciseKeys);
             }
@@ -343,6 +510,7 @@ function generateExerciseList(data) {
             select_exerciseEquipment.value = data.exercises[id].equipment;
             select_exerciseType.value = data.exercises[id].type;
             select_exerciseUnit.value = data.exercises[id].unit;
+            select_bothSides.value = data.exercises[id].bothSides;
         };
     }
     select_doneExercise.selectedIndex = selIndex;
@@ -362,8 +530,6 @@ function generateExerciseList(data) {
 }
 
 function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) {
-    setTime(fromDate, 0, 0, 0);
-    setTime(toDate, 0, 0, 0);
     name = name.toUpperCase();
     input_sumSelection.value = 0;
     input_avgSelection.value = 0;
@@ -381,17 +547,10 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
     var maxDate = fromDate;
     var minDate = toDate;
 
-    for (var historyId in data.history) {
-        entryDate = new Date(historyId);
-
-        setTime(entryDate, 0, 0, 0);
-        if (entryDate < fromDate || entryDate > toDate) {
-            continue;
-        }
-        
-        var historyEntry = data.history[historyId];
+    for (var historyIterator = 0; historyIterator < data.history.length; historyIterator++) {
+        var historyEntry = data.history[historyIterator];
         var toolTipText = "No Text";
-        for (var iterator = 0; iterator < historyEntry.id.length; iterator++) {
+        for (var historyItemsIterator = 0; historyItemsIterator < historyEntry.id.length; historyItemsIterator++) {
             if (!rowNotUsed) {
                 bodyRow = tBodyTable.insertRow(rowNumber);
                 rowNumber++;
@@ -399,12 +558,10 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
             }
 
             rowNotUsed = false;
-
             for (var historyKeys in historyEntry) {
                 key = historyEntry[historyKeys];
-                entryDate = new Date(historyEntry.date[iterator]);
                 if (nameSpecific) {
-                    if (historyEntry.playerName[iterator].toUpperCase() != name) {
+                    if (historyEntry.playerName[historyItemsIterator].toUpperCase() != name) {
                         rowNotUsed = true;
                         break;
                     }
@@ -419,22 +576,20 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                         continue;
                     }
                 }
-
-
                 var value = "";
                 if (historyKeys === "date") {
-                    value = new Date(key[iterator]);
-                    if (value < minDate){
+                    value = createZeroDate(key[historyItemsIterator]);
+                    if (value < minDate) {
                         minDate = value;
                     }
-                    if (maxDate < value){
+                    if (maxDate < value) {
                         maxDate = value;
                     }
                     value = getDateFormat(value, "DD.MM.YYYY");
-                    
+
                 }
                 else {
-                    value = key[iterator];
+                    value = key[historyItemsIterator];
                 }
                 if (rowNumber == 1) {
                     headerArray.push(historyKeys);
@@ -447,7 +602,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                 }
                 if (historyKeys === "points") {
                     selectionSum += Number(value);
-                   
+
                 }
 
                 cellNumber++;
@@ -456,8 +611,15 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                 addToolTip(toolTipText, "tooltip", bodyRow);
                 bodyRow.onclick = function () {
                     var id = this.getElementsByTagName("td")[0].innerHTML;
-                    var dialogResult = confirm(id);
-
+                    var date = getDateFormat(this.getElementsByTagName("td")[1].innerHTML,"YYYY-MM-DD","DD.MM.YYYY");
+                    if(input_deletionMode.checked){
+                        if(Name.toUpperCase() === select_historyShowName.value.toUpperCase()){
+                            requestHistoryDeletion(id,date);
+                        }
+                        else{
+                            alert("Du kannst ned die Sachen von die anderen löschen, Wirschtl");
+                        }
+                    }
                 };
             }
         }
@@ -479,14 +641,75 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
         };
     }
     input_sumSelection.value = translate(selectionSum);
-    var selectionCount = dateDiff(minDate,maxDate);
-    input_avgSelection.value = translate(Number(selectionSum) / (selectionCount+1));
-    
-    
+    var selectionCount = dateDiff(minDate, maxDate);
+    input_avgSelection.value = translate(Number(selectionSum) / (selectionCount + 1));
+
+
 }
 
-function dateDiff(date1,date2){
-    return Math.floor((date2 - date1) / (1000*60*60*24));
+
+
+/******************************************************************************************************************
+*******************************************************************************************************************
+*                                               HELPER FUNCTIONS
+*******************************************************************************************************************
+*******************************************************************************************************************
+******************************************************************************************************************/
+
+
+function getDateFormat(date, format, fromFormat) {
+    var addZeroMonth = "";
+    var addZeroDay = "";
+    if (typeof fromFormat === 'undefined') { fromFormat = 'default'; }
+
+    if (format === "YYYY-MM-DD") {
+        if (fromFormat === "DD.MM.YYYY") {
+            var day = date.substring(0, 2);
+            var month = date.substring(3, 5);
+            var year = date.substring(6);
+            date = year + "-" + month + "-" + day;
+        }
+        else {
+            if (date.getMonth() < 9) {
+                addZeroMonth = "0";
+            }
+            if (date.getDate() < 10) {
+                addZeroDay = "0";
+            }
+            date = date.getFullYear() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + addZeroDay + date.getDate();
+        }
+    }
+    if (format === "DD-MM-YYYY") {
+        if (date.getMonth() < 9) {
+            addZeroMonth = "0";
+        }
+        if (date.getDate() < 10) {
+            addZeroDay = "0";
+        }
+        date = addZeroDay + date.getDate() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + date.getFullYear();
+    }
+    if (format === "DD.MM.YYYY") {
+        if (date.getMonth() < 9) {
+            addZeroMonth = "0";
+        }
+        if (date.getDate() < 10) {
+            addZeroDay = "0";
+        }
+        date = addZeroDay + date.getDate() + "." + addZeroMonth + (date.getMonth() + 1) + "." + date.getFullYear();
+    }
+
+    return date;
+
+
+}
+
+function isValidDate(d) {
+    return d instanceof Date && !isNaN(d);
+}
+
+
+function dateDiff(date1, date2) {
+    return Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
 }
 
 function addOption(select, key, Name) {
@@ -516,6 +739,7 @@ function checkForEmptyBoxesNewExercise() {
         select_exerciseType.value != "" &&
         select_exerciseUnit.value != "" &&
         select_exerciseEquipment.value != "" &&
+        select_bothSides.value != "" &&
         input_exerciseComment.value != ""
     ) {
         return true;
@@ -524,30 +748,6 @@ function checkForEmptyBoxesNewExercise() {
         return false;
     }
 }
-
-function exerciseDone(emitString) {
-    socket.emit(emitString, exPack = {
-        exId: select_doneExercise.value,
-        date: input_doneExerciseDate.value,
-        count: input_doneExercise.value,
-        weight: input_doneExerciseWeight.value,
-    });
-}
-
-function modifyExercise(emitString) {
-    socket.emit(emitString, exPack = {
-        name: input_exerciseName.value,
-        difficulty: input_exerciseDifficulty.value,
-        difficulty10: input_exerciseDifficulty10.value,
-        difficulty100: input_exerciseDifficulty100.value,
-        baseWeight: input_exerciseBaseWeight.value,
-        type: select_exerciseType.value,
-        unit: select_exerciseUnit.value,
-        equipment: select_exerciseEquipment.value,
-        comment: input_exerciseComment.value,
-    });
-}
-
 
 function checkIfString(value) {
     return Object.prototype.toString.call(value) === "[object String]";
@@ -593,6 +793,14 @@ function createText(ctx, fillStyle, font, fontsize, text, x, y) {
     ctx.stroke();
     ctx.closePath();
 }
+
+function drawLine(ctx, strokeStyle, x0, y0, x, y) {
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = strokeStyle;
+    ctx.stroke();
+}
 //Creates rect (filled or unfilled) on a given canvas
 function createRect(ctx, fillStyle, fill, x, y, w, h) {
     ctx.beginPath();
@@ -605,19 +813,6 @@ function createRect(ctx, fillStyle, fill, x, y, w, h) {
     }
     ctx.stroke();
     ctx.closePath();
-}
-//checks if clients mousepos is on the side of the browser and if so, scrolls
-function logKey(e) {
-    var maxX = e.view.outerWidth;
-    var maxY = e.view.outerHeight;
-
-    xPercent = (e.clientX / maxX) * 100;
-    yPercent = (e.clientY / maxY) * 100;
-
-}
-//scrolls by x,y
-function scroll(x, y) {
-    div_Game.scrollBy(x, y);
 }
 
 document.onkeydown = function (event) {
@@ -686,8 +881,8 @@ function sortTable(n, table) {
             y = rows[i + 1].getElementsByTagName("td")[m];
             if (dir == "asc") {
                 if (x.innerHTML.match(matcher) != null) {
-                    valX = new Date(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
-                    valY = new Date(getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                    valX = createZeroDate(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                    valY = createZeroDate(getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
                 }
                 else if (!isNaN(Number(x.innerHTML))) {
                     valX = Number(x.innerHTML);
@@ -703,8 +898,8 @@ function sortTable(n, table) {
                 }
             } else if (dir == "desc") {
                 if (x.innerHTML.match(matcher) != null) {
-                    valX = new Date(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
-                    valY = new Date(getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                    valX = createZeroDate(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                    valY = createZeroDate(getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
                 }
                 else if (!isNaN(Number(x.innerHTML))) {
                     valX = Number(x.innerHTML);
@@ -741,6 +936,49 @@ function addSpaces(count) {
     }
     return spaces;
 }
+
+function initialize() {
+    //this month
+    var thisMonth = function () {
+        var today = createZeroDate();
+        var thisMonthBegin = createZeroDate(new Date(today.getFullYear(), today.getMonth(), 1));
+        var thisMonthEnd = createZeroDate(new Date(today.getFullYear(), today.getMonth() + 1, 1));
+        thisMonthEnd.setDate(thisMonthEnd.getDate() - 1);
+
+        return {
+            thisMonthBegin: thisMonthBegin,
+            thisMonthEnd: thisMonthEnd,
+        };
+    };
+
+    thisMonthBegin = thisMonth().thisMonthBegin;
+    thisMonthEnd = thisMonth().thisMonthEnd;
+    thisMonthBegin = getDateFormat(thisMonthBegin, "YYYY-MM-DD");
+    thisMonthEnd = getDateFormat(thisMonthEnd, "YYYY-MM-DD");
+
+    input_historyFromDate.value = thisMonthBegin;
+    input_historyToDate.value = thisMonthEnd;
+
+    //Today
+    today = createZeroDate();
+    input_doneExerciseDate.value = getDateFormat(today, "YYYY-MM-DD");
+}
+
+function createZeroDate(date) {
+    if (date == undefined) {
+        zeroDate = new Date();
+        zeroDate.setHours(0);
+        zeroDate.setMinutes(0);
+        zeroDate.setSeconds(0);
+    }
+    else {
+        zeroDate = new Date(date);
+        zeroDate.setHours(0);
+        zeroDate.setMinutes(0);
+        zeroDate.setSeconds(0);
+    }
+    return zeroDate;
+};
 
 function translate(word) {
     if (checkIfNumber(word)) {
@@ -824,6 +1062,12 @@ function translate(word) {
             return "Benutztes Gewicht";
         case "dailyMax":
             return "Tagesbestleistung";
+        case "pointsPerPlayer":
+            return "Bester (Punkte)";
+        case "repsPerPlayer":
+            return "Bester (Reps)";
+        case "bestExercises":
+            return "Best @ Übungen";
         default:
             return word;
     }

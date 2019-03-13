@@ -4,31 +4,47 @@
       "Datum": "2018-08-01"
     },
     {
-      "Datum": "2018-08-02",
-      "Kniebeugen": 1,
-      "Alkohol": 1
+      "Datum": "2018-08-02"
     },
     {
       "Datum": "2018-08-03"
     },
     {
-      "Datum": "2018-08-04",
-      "Vollrausch": 1
+      "Datum": "2018-08-04"
     },
     {
       "Datum": "2018-08-05"
     },
     {
       "Datum": "2018-08-06",
-      "Laufen": 30,
-      "Alkohol": 2
+      "Hampelmänner": 150,
+      "Jump Squats": 30,
+      "Einbeinige Squats mit Band": 72,
+      "Kniebeugen mit Band": 36,
+      "Jumping Split Squat": 72,
+      "Slides": 36,
+      "Frog Crunches": 36
     },
     {
-      "Datum": "2018-08-07"
+      "Datum": "2018-08-07",
+      "Hampelmänner": 250,
+      "Liegestütz": 30,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 36,
+      "Frog Crunches": 40,
+      "Overhead Triceps": 72,
+      "Back Rows": 36,
+      "Dead Lifts mit Band": 36,
+      "Reverse Flys": 36
     },
     {
       "Datum": "2018-08-08",
-      "Alkohol": 3
+      "Sit-Ups": 100,
+      "Kniebeugen": 30,
+      "Bergsteiger": 30,
+      "Radl-Crunches": 20,
+      "Burpees": 10,
+      "Beinheber": 10,
+      "Die Hundert [Pilates]": 100
     },
     {
       "Datum": "2018-08-09"
@@ -37,21 +53,16 @@
       "Datum": "2018-08-10"
     },
     {
-      "Datum": "2018-08-11"
+      "Datum": "2018-08-11",
+      "Junkfood": 1,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2018-08-12",
-      "Sit-Ups": 20,
-      "Crunches": 15,
-      "Hampelmänner": 120,
-      "Liegestütz": 10,
-      "Kniebeugen": 30,
-      "Planks": 60,
-      "Wipers": 20,
-      "Burpees": 10
+      "Datum": "2018-08-12"
     },
     {
-      "Datum": "2018-08-13"
+      "Datum": "2018-08-13",
+      "Wandern": 180
     },
     {
       "Datum": "2018-08-14"
@@ -60,98 +71,107 @@
       "Datum": "2018-08-15"
     },
     {
-      "Datum": "2018-08-16",
-      "Klettern": 120
+      "Datum": "2018-08-16"
     },
     {
       "Datum": "2018-08-17",
-      "Hampelmänner": 50,
-      "Kniebeugen": 50,
-      "Planks": 60,
-      "Curls": 30,
-      "Tischtennis": 60,
+      "Kniebeugen mit Band": 36,
+      "Dead Lifts mit Band": 36,
+      "Kick Backs": 72,
+      "Klappmesser": 36,
+      "Glute Bridge": 72,
+      "Dirty Dogs": 72,
+      "Junkfood": 1,
       "Vollrausch": 1
     },
     {
       "Datum": "2018-08-18",
-      "Planks": 60,
-      "Curls": 30,
-      "Volleyball": 240
+      "Sit-Ups": 100,
+      "Liegestütz": 30,
+      "Radfahren": 60,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 36,
+      "Overhead Triceps": 72,
+      "Back Rows": 36,
+      "Dead Lifts mit Band": 36,
+      "Reverse Flys": 36,
+      "Junkfood": 1
     },
     {
-      "Datum": "2018-08-19",
-      "Tischtennis": 30
+      "Datum": "2018-08-19"
     },
     {
       "Datum": "2018-08-20"
     },
     {
       "Datum": "2018-08-21",
-      "Hampelmänner": 100,
-      "Planks": 120,
-      "Wipers": 20,
-      "Wadenheber": 20,
-      "Burpees": 10,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 20,
-      "Beinheber": 10,
-      "Frog Crunches": 25
+      "Laufen": 60,
+      "Alkohol": 1
     },
     {
-      "Datum": "2018-08-22"
+      "Datum": "2018-08-22",
+      "Liegestütz": 30,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 36,
+      "Liegestütz [Arme erhöht]": 10,
+      "Einbeinige Squats mit Band": 90,
+      "Kniebeugen mit Band": 40,
+      "Slides": 36,
+      "Frog Crunches": 50,
+      "Overhead Triceps": 80,
+      "Back Rows": 36,
+      "Dead Lifts mit Band": 50,
+      "Reverse Flys": 40,
+      "Kick Backs": 100
     },
     {
       "Datum": "2018-08-23",
-      "Hampelmänner": 60,
-      "Planks": 120,
-      "Wipers": 30,
-      "Wadenheber": 30,
-      "Burpees": 10,
-      "Frog Crunches": 30,
-      "Alkohol": 1
+      "Alkohol": 4
     },
     {
       "Datum": "2018-08-24",
-      "Sit-Ups": 15,
-      "Crunches": 20,
-      "Hampelmänner": 180,
-      "Kniebeugen": 30,
-      "Planks": 120,
-      "Wipers": 10,
-      "Wadenheber": 40,
-      "Burpees": 10,
-      "Seilspringen": 200,
-      "Frog Crunches": 20,
-      "Curls": 30,
-      "Seitstütz mit Beinheben [Stütz]": 40,
-      "Commandos": 30,
+      "Sit-Ups": 100,
+      "Liegestütz [Arme erhöht]": 30,
+      "Kniebeugen mit Band": 40,
+      "Overhead Triceps": 100,
+      "Dead Lifts mit Band": 50,
       "Reverse Flys": 40,
-      "Karate Front Kicks": 12,
       "Kick Backs": 60,
-      "Klappmesser": 10,
-      "Glute Bridge": 20,
-      "Dirty Dogs": 40,
-      "Alkohol": 1
+      "Dirty Dogs": 30
     },
     {
-      "Datum": "2018-08-25"
+      "Datum": "2018-08-25",
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2018-08-26",
-      "Hampelmänner": 180,
-      "Planks": 180,
-      "Wadenheber": 90,
-      "Reverse Flys": 60
+      "Junkfood": 1,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2018-08-27"
+      "Datum": "2018-08-27",
+      "Sit-Ups": 80,
+      "Liegestütz": 30,
+      "Kniebeugen": 40,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 45,
+      "Jump Squats": 30,
+      "Kniebeugen mit Band": 75,
+      "Dead Lifts mit Band": 45,
+      "Kick Backs": 60,
+      "Klappmesser": 30,
+      "Dirty Dogs": 30
     },
     {
-      "Datum": "2018-08-28",
-      "Klettern": 0
+      "Datum": "2018-08-28"
     },
     {
       "Datum": "2018-08-29",
-      "Basketball": 60
+      "Kniebeugen": 30,
+      "Burpees": 20,
+      "Seilspringen": 1100,
+      "Jump Squats": 66,
+      "Kniebeugen mit Band": 30,
+      "Walking Lunges": 50,
+      "Step Ups": 30,
+      "Knee Ups": 30
     },
     {
       "Datum": "2018-08-30"
@@ -160,78 +180,128 @@
       "Datum": "2018-08-31"
     },
     {
-      "Datum": "2018-09-01"
+      "Datum": "2018-09-01",
+      "Sit-Ups": 30,
+      "Crunches": 30,
+      "Liegestütz": 30,
+      "Radl-Crunches": 60,
+      "Planks": 60,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 30,
+      "Beinheber": 30,
+      "Liegestütz [Arme erhöht]": 45,
+      "Junkfood": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-09-02",
-      "Kniebeugen": 90,
-      "Planks": 180,
-      "Wadenheber": 90,
-      "Burpees": 40,
-      "Laufen": 30
+      "Sit-Ups": 30,
+      "Liegestütz": 30,
+      "Radl-Crunches": 80,
+      "Burpees": 20,
+      "Seilspringen": 100,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 50,
+      "Kniebeugen mit Band": 30,
+      "Walking Lunges": 50,
+      "Knee Ups": 60,
+      "Junkfood": 1
     },
     {
       "Datum": "2018-09-03"
     },
     {
       "Datum": "2018-09-04",
-      "Basketball": 60,
+      "Kniebeugen": 30,
+      "Burpees": 20,
+      "Seilspringen": 200,
+      "Jump Squats": 30,
+      "Jumping Split Squat": 40,
+      "Walking Lunges": 50
+    },
+    {
+      "Datum": "2018-09-05",
+      "Vollrausch": 1
+    },
+    {
+      "Datum": "2018-09-06",
+      "Junkfood": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-09-05"
-    },
-    {
-      "Datum": "2018-09-06"
-    },
-    {
       "Datum": "2018-09-07",
-      "Junkfood": 1,
-      "Vollrausch": 1,
-      "Essen nach 20:00": 1
+      "Sit-Ups": 40,
+      "Liegestütz": 60,
+      "Bergsteiger": 120,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 35,
+      "Beinheber": 30,
+      "Kniebeugen mit Band": 30,
+      "Commandos": 48,
+      "Klappmesser": 40
     },
     {
       "Datum": "2018-09-08"
     },
     {
-      "Datum": "2018-09-09",
-      "Kniebeugen": 30,
-      "Seilspringen": 1200,
-      "Frog Crunches": 50,
-      "Commandos": 84
+      "Datum": "2018-09-09"
     },
     {
       "Datum": "2018-09-10"
     },
     {
-      "Datum": "2018-09-11",
-      "Klettern": 150,
-      "Alkohol": 1
+      "Datum": "2018-09-11"
     },
     {
       "Datum": "2018-09-12",
-      "Alkohol": 2
+      "Liegestütz": 45,
+      "Kniebeugen": 30,
+      "Bergsteiger": 120,
+      "Burpees": 20,
+      "Jumping Split Squat": 60,
+      "Commandos": 50,
+      "Klappmesser": 30
     },
     {
-      "Datum": "2018-09-13",
-      "Laufen": 30,
-      "Alkohol": 2
+      "Datum": "2018-09-13"
     },
     {
-      "Datum": "2018-09-14",
-      "Laufen": 45
+      "Datum": "2018-09-14"
     },
     {
-      "Datum": "2018-09-15"
+      "Datum": "2018-09-15",
+      "Sit-Ups": 100,
+      "Liegestütz": 60,
+      "Kniebeugen": 60,
+      "Bergsteiger": 80,
+      "Radl-Crunches": 80,
+      "Burpees": 20,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 30,
+      "Jump Squats": 60,
+      "Walking Lunges": 50,
+      "Knee Ups": 50
     },
     {
       "Datum": "2018-09-16"
     },
     {
-      "Datum": "2018-09-17"
+      "Datum": "2018-09-17",
+      "Sit-Ups": 30,
+      "Liegestütz": 30,
+      "Radl-Crunches": 80,
+      "Burpees": 20,
+      "Kniebeugen mit Band": 30,
+      "Overhead Triceps": 50,
+      "Kick Backs": 30,
+      "Walking Lunges": 50,
+      "Knee Ups": 60
     },
     {
-      "Datum": "2018-09-18"
+      "Datum": "2018-09-18",
+      "Kniebeugen": 30,
+      "Burpees": 20,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 30,
+      "Jump Squats": 30,
+      "Jumping Split Squat": 40,
+      "Walking Lunges": 50,
+      "Knee Ups": 30
     },
     {
       "Datum": "2018-09-19"
@@ -240,22 +310,28 @@
       "Datum": "2018-09-20"
     },
     {
-      "Datum": "2018-09-21"
+      "Datum": "2018-09-21",
+      "Wandern": 180
     },
     {
       "Datum": "2018-09-22"
     },
     {
       "Datum": "2018-09-23",
-      "Laufen": 30
+      "Sit-Ups": 40,
+      "Liegestütz": 60,
+      "Bergsteiger": 100,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 30,
+      "Beinheber": 30,
+      "Kniebeugen mit Band": 30,
+      "Commandos": 50,
+      "Klappmesser": 40
     },
     {
-      "Datum": "2018-09-24",
-      "Laufen": 30
+      "Datum": "2018-09-24"
     },
     {
-      "Datum": "2018-09-25",
-      "Laufen": 45
+      "Datum": "2018-09-25"
     },
     {
       "Datum": "2018-09-26"
@@ -267,20 +343,23 @@
       "Datum": "2018-09-28"
     },
     {
-      "Datum": "2018-09-29"
+      "Datum": "2018-09-29",
+      "Liegestütz": 30,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 30,
+      "Kniebeugen mit Band": 30,
+      "Commandos": 50,
+      "Wandern": 90,
+      "Klappmesser": 60,
+      "Liegestütz [Beine erhöht]": 30
     },
     {
-      "Datum": "2018-09-30",
-      "Wandern": 180,
-      "Junkfood": 1
+      "Datum": "2018-09-30"
     },
     {
       "Datum": "2018-10-01"
     },
     {
-      "Datum": "2018-10-02",
-      "Klettern": 130,
-      "Alkohol": 1
+      "Datum": "2018-10-02"
     },
     {
       "Datum": "2018-10-03"
@@ -289,7 +368,14 @@
       "Datum": "2018-10-04"
     },
     {
-      "Datum": "2018-10-05"
+      "Datum": "2018-10-05",
+      "Liegestütz": 30,
+      "Burpees": 30,
+      "Seilspringen": 100,
+      "Jump Squats": 30,
+      "Kniebeugen mit Band": 60,
+      "Jumping Split Squat": 30,
+      "Walking Lunges": 50
     },
     {
       "Datum": "2018-10-06"
@@ -298,10 +384,18 @@
       "Datum": "2018-10-07"
     },
     {
-      "Datum": "2018-10-08"
+      "Datum": "2018-10-08",
+      "Radl-Crunches": 180,
+      "Laufen": 60,
+      "Kniebeugen mit Band": 90,
+      "Commandos": 90
     },
     {
-      "Datum": "2018-10-09"
+      "Datum": "2018-10-09",
+      "Sit-Ups": 150,
+      "Burpees": 100,
+      "Back Rows": 150,
+      "Walking Lunges": 80
     },
     {
       "Datum": "2018-10-10"
@@ -313,22 +407,35 @@
       "Datum": "2018-10-12"
     },
     {
-      "Datum": "2018-10-13"
+      "Datum": "2018-10-13",
+      "Wandern": 105
     },
     {
-      "Datum": "2018-10-14"
+      "Datum": "2018-10-14",
+      "Wandern": 300
     },
     {
       "Datum": "2018-10-15"
     },
     {
-      "Datum": "2018-10-16"
+      "Datum": "2018-10-16",
+      "Einbeinige Squats mit Band": 100,
+      "Kniebeugen mit Band": 100,
+      "Glute Bridge": 100,
+      "Dead Lifts": 50,
+      "Superman [30sec halten]": 20
     },
     {
-      "Datum": "2018-10-17"
+      "Datum": "2018-10-17",
+      "Curls": 70,
+      "Reverse Flys": 140,
+      "Clean & Press": 100
     },
     {
-      "Datum": "2018-10-18"
+      "Datum": "2018-10-18",
+      "Burpees": 80,
+      "Commandos": 80,
+      "Kniebeuge [3 sec halten]": 80
     },
     {
       "Datum": "2018-10-19"
@@ -340,19 +447,38 @@
       "Datum": "2018-10-21"
     },
     {
-      "Datum": "2018-10-22"
+      "Datum": "2018-10-22",
+      "Radfahren": 10,
+      "Glute Bridge": 60,
+      "Clean & Press": 120
     },
     {
-      "Datum": "2018-10-23"
+      "Datum": "2018-10-23",
+      "Sit-Ups": 80,
+      "Radl-Crunches": 40,
+      "Planks": 90,
+      "Russian Twist": 30,
+      "Radfahren": 10,
+      "Kniebeugen mit Band": 80,
+      "Dead Lifts": 50,
+      "Clean & Press": 50
     },
     {
       "Datum": "2018-10-24"
     },
     {
-      "Datum": "2018-10-25"
+      "Datum": "2018-10-25",
+      "Sit-Ups": 60,
+      "Kniebeugen": 50,
+      "Bergsteiger": 30,
+      "Burpees": 30,
+      "Commandos": 30,
+      "Clean & Press": 110,
+      "Box Jump [Kniehöhe]": 90
     },
     {
-      "Datum": "2018-10-26"
+      "Datum": "2018-10-26",
+      "Wandern": 300
     },
     {
       "Datum": "2018-10-27"
@@ -361,10 +487,25 @@
       "Datum": "2018-10-28"
     },
     {
-      "Datum": "2018-10-29"
+      "Datum": "2018-10-29",
+      "Sit-Ups": 40,
+      "Kniebeugen": 60,
+      "Bergsteiger": 40,
+      "Burpees": 40,
+      "Radfahren": 10,
+      "Jumping Split Squat": 40,
+      "Dead Lifts": 40,
+      "Clean & Press": 40,
+      "Rudern (mit Langhantel + Gewicht)": 40
     },
     {
-      "Datum": "2018-10-30"
+      "Datum": "2018-10-30",
+      "Sit-Ups": 80,
+      "Liegestütz": 80,
+      "Kniebeugen": 80,
+      "Burpees": 50,
+      "Radfahren": 10,
+      "Deadlift High Pull (Langh. + Gewicht)": 80
     },
     {
       "Datum": "2018-10-31"
@@ -382,25 +523,54 @@
       "Datum": "2018-11-04"
     },
     {
-      "Datum": "2018-11-05"
+      "Datum": "2018-11-05",
+      "Sit-Ups": 80,
+      "Bergsteiger": 40,
+      "Wadenheber": 100,
+      "Burpees": 10,
+      "Seilspringen": 500,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 50,
+      "Enger Liegestütz": 20
     },
     {
       "Datum": "2018-11-06"
     },
     {
-      "Datum": "2018-11-07"
+      "Datum": "2018-11-07",
+      "Sit-Ups": 60,
+      "Kniebeugen": 50,
+      "Planks": 60,
+      "Laufen": 60,
+      "Overhead Triceps": 50,
+      "Superman [30sec halten]": 8,
+      "Box Jump [Kniehöhe]": 50,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-11-08"
     },
     {
-      "Datum": "2018-11-09"
+      "Datum": "2018-11-09",
+      "Planks": 960,
+      "Radfahren": 10,
+      "Liegestütz [Arme erhöht]": 120,
+      "Jumping Split Squat": 64,
+      "Dead Lifts": 64
     },
     {
-      "Datum": "2018-11-10"
+      "Datum": "2018-11-10",
+      "Sit-Ups": 180,
+      "Kniebeugen": 150,
+      "Bergsteiger": 170,
+      "Clean & Press": 115,
+      "Rudern (mit Langhantel + Gewicht)": 140
     },
     {
-      "Datum": "2018-11-11"
+      "Datum": "2018-11-11",
+      "Bergsteiger": 60,
+      "Wandern": 150,
+      "Clean & Press": 50,
+      "Box Jump [Kniehöhe]": 100
     },
     {
       "Datum": "2018-11-12"
@@ -412,16 +582,33 @@
       "Datum": "2018-11-14"
     },
     {
-      "Datum": "2018-11-15"
+      "Datum": "2018-11-15",
+      "Burpees": 55,
+      "Radfahren": 10,
+      "Umgekehrtes Bankdrücken": 55,
+      "Klappmesser": 55,
+      "Walking Lunges": 70,
+      "Clean & Press": 55
     },
     {
-      "Datum": "2018-11-16"
+      "Datum": "2018-11-16",
+      "Sit-Ups": 100,
+      "Kniebeugen": 100,
+      "Radfahren": 10,
+      "Umgekehrtes Bankdrücken": 100,
+      "Glute Bridge": 120,
+      "Arnold Presses": 250
     },
     {
       "Datum": "2018-11-17"
     },
     {
-      "Datum": "2018-11-18"
+      "Datum": "2018-11-18",
+      "Kniebeugen": 120,
+      "Burpees": 3,
+      "Radfahren": 30,
+      "Dead Lifts": 10,
+      "Clean & Press": 50
     },
     {
       "Datum": "2018-11-19"
@@ -436,30 +623,45 @@
       "Datum": "2018-11-22"
     },
     {
-      "Datum": "2018-11-23",
-      "Klettern": 120
+      "Datum": "2018-11-23"
     },
     {
       "Datum": "2018-11-24"
     },
     {
       "Datum": "2018-11-25",
-      "Planks": 60
+      "Seilspringen": 50
     },
     {
-      "Datum": "2018-11-26"
+      "Datum": "2018-11-26",
+      "Sit-Ups": 100,
+      "Liegestütz": 50,
+      "Radl-Crunches": 100,
+      "Seilspringen": 300,
+      "Radfahren": 20,
+      "Umgekehrtes Bankdrücken": 60,
+      "Clean & Press": 130,
+      "Deadlift High Pull (Langh. + Gewicht)": 70
     },
     {
       "Datum": "2018-11-27",
-      "Kniebeugen": 30,
-      "Planks": 60,
-      "Wadenheber": 30
+      "Sit-Ups": 20,
+      "Kniebeugen": 50,
+      "Planks": 240,
+      "Burpees": 50,
+      "Power-Rudern 10min": 2876,
+      "Box Jump [Kniehöhe]": 40,
+      "Aufwärmen": 1
     },
     {
       "Datum": "2018-11-28"
     },
     {
-      "Datum": "2018-11-29"
+      "Datum": "2018-11-29",
+      "Liegestütz": 30,
+      "Commandos": 30,
+      "Clean & Press": 130,
+      "Reverse Snow Angel": 30
     },
     {
       "Datum": "2018-11-30"
@@ -474,10 +676,30 @@
       "Datum": "2018-12-03"
     },
     {
-      "Datum": "2018-12-04"
+      "Datum": "2018-12-04",
+      "Sit-Ups": 60,
+      "Hampelmänner": 150,
+      "Kniebeugen": 130,
+      "Burpees": 40,
+      "Russian Twist": 30,
+      "Radfahren": 20,
+      "Umgekehrtes Bankdrücken": 90,
+      "Jump Squats": 40,
+      "Step Ups": 30,
+      "Dead Lifts": 80
     },
     {
-      "Datum": "2018-12-05"
+      "Datum": "2018-12-05",
+      "Hampelmänner": 20,
+      "Liegestütz": 65,
+      "Kniebeugen": 30,
+      "Burpees": 10,
+      "Seilspringen": 100,
+      "Ausfallschritt [v oder h]": 30,
+      "Arnold Presses": 40,
+      "Scapula Pull Up": 45,
+      "Push Jerks": 100,
+      "Handstand Plank an Wand (sec)": 120
     },
     {
       "Datum": "2018-12-06"
@@ -516,10 +738,20 @@
       "Datum": "2018-12-17"
     },
     {
-      "Datum": "2018-12-18"
+      "Datum": "2018-12-18",
+      "Kniebeugen": 70,
+      "Burpees": 60,
+      "Power-Rudern 10min": 4682,
+      "Wallballs": 85
     },
     {
-      "Datum": "2018-12-19"
+      "Datum": "2018-12-19",
+      "Kniebeugen": 40,
+      "Bergsteiger": 200,
+      "Planks": 240,
+      "Shoulderpress": 45,
+      "Abwärmen": 1,
+      "Aufwärmen": 1
     },
     {
       "Datum": "2018-12-20"
@@ -663,54 +895,25 @@
       "Datum": "2019-02-04"
     },
     {
-      "Datum": "2019-02-05",
-      "Sit-Ups": 10,
-      "Crunches": 45,
-      "Laufen": 15,
-      "Curls": 240,
-      "Arnold Presses": 72,
-      "Legpress": 45
+      "Datum": "2019-02-05"
     },
     {
-      "Datum": "2019-02-06",
-      "Sit-Ups": 45,
-      "Laufen": 15,
-      "Bankdrücken": 30,
-      "Hyperextension": 45,
-      "Legextension": 45
+      "Datum": "2019-02-06"
     },
     {
-      "Datum": "2019-02-07",
-      "Crunches": 45,
-      "Laufen": 18,
-      "Curls": 240,
-      "Arnold Presses": 72,
-      "Legpress": 45,
-      "Hyperextension": 45
+      "Datum": "2019-02-07"
     },
     {
-      "Datum": "2019-02-08",
-      "Alkohol": 2
+      "Datum": "2019-02-08"
     },
     {
-      "Datum": "2019-02-09",
-      "Vollrausch": 1
+      "Datum": "2019-02-09"
     },
     {
-      "Datum": "2019-02-10",
-      "Sit-Ups": 30,
-      "Laufen": 18,
-      "Bankdrücken": 30,
-      "Hyperextension": 45,
-      "Legextension": 45
+      "Datum": "2019-02-10"
     },
     {
-      "Datum": "2019-02-11",
-      "Crunches": 45,
-      "Laufen": 18,
-      "Curls": 240,
-      "Arnold Presses": 72,
-      "Hyperextension": 45
+      "Datum": "2019-02-11"
     },
     {
       "Datum": "2019-02-12"
@@ -728,9 +931,7 @@
       "Datum": "2019-02-16"
     },
     {
-      "Datum": "2019-02-17",
-      "Klettern": 90,
-      "Alkohol": 1
+      "Datum": "2019-02-17"
     },
     {
       "Datum": "2019-02-18"
@@ -745,9 +946,7 @@
       "Datum": "2019-02-21"
     },
     {
-      "Datum": "2019-02-22",
-      "Klettern": 120,
-      "Tischtennis": 60
+      "Datum": "2019-02-22"
     },
     {
       "Datum": "2019-02-23"

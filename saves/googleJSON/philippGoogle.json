@@ -1,19 +1,19 @@
 {
   "JSONExportHistory": [
     {
-      "Datum": "2018-07-31T22:00:00.000Z",
+      "Datum": "2018-08-01",
       "Hampelmänner": 100,
-      "Bergsteiger [BS]": 30,
+      "Bergsteiger": 30,
       "Fußball": 60
     },
     {
-      "Datum": "2018-08-01T22:00:00.000Z",
+      "Datum": "2018-08-02",
       "Crunches": 50,
       "Hampelmänner": 100,
       "Liegestütz": 50,
       "Klimmzüge": 50,
       "Kniebeugen": 50,
-      "Bergsteiger [BS]": 30,
+      "Bergsteiger": 30,
       "Radl-Crunches": 50,
       "Planks": 240,
       "Wipers": 20,
@@ -21,146 +21,146 @@
       "Wadenheber": 50,
       "Burpees": 50,
       "Türziehen": 50,
-      "Russian Twist [BS]": 100
+      "Russian Twist": 100
     },
     {
-      "Datum": "2018-08-02T22:00:00.000Z",
+      "Datum": "2018-08-03",
       "Hampelmänner": 100,
-      "Bergsteiger [BS]": 30,
+      "Bergsteiger": 30,
       "Seilspringen": 100,
       "Laufen": 30,
       "Dips mit einem Stuhl [Beine 90 Grad]": 60,
       "Beinheber": 60
     },
     {
-      "Datum": "2018-08-03T22:00:00.000Z",
+      "Datum": "2018-08-04",
       "Crunches": 60,
       "Hampelmänner": 100,
       "Liegestütz": 60,
       "Klimmzüge": 60,
       "Kniebeugen": 100,
-      "Bergsteiger [BS]": 30,
+      "Bergsteiger": 30,
       "Radl-Crunches": 60,
       "Planks": 240,
       "Superman": 60,
       "Wadenheber": 60,
       "Burpees": 60,
       "Türziehen": 60,
-      "Russian Twist [BS]": 60,
+      "Russian Twist": 60,
       "Seilspringen": 100,
-      "Vogel und Hund [BS]": 40,
+      "Vogel und Hund": 40,
       "Vollrausch": 1
     },
     {
-      "Datum": "2018-08-04T22:00:00.000Z",
+      "Datum": "2018-08-05",
       "Hampelmänner": 500,
-      "Bergsteiger [BS]": 30,
+      "Bergsteiger": 30,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-08-05T22:00:00.000Z",
+      "Datum": "2018-08-06",
       "Hampelmänner": 100,
       "Kniebeugen": 120,
       "Wadenheber": 100,
       "Liegestütz [Arme erhöht]": 100,
-      "Einbeiniges Kreuzheben [BS]": 60,
+      "Einbeiniges Kreuzheben": 60,
       "Umgekehrtes Bankdrücken": 100,
       "Die Hundert [Pilates]": 100,
       "Jump Squats": 50,
-      "Einbeinige Squats mit Band [BS]": 120,
+      "Einbeinige Squats mit Band": 120,
       "Jumping Split Squat": 50,
       "Slides": 50,
       "Frog Crunches": 50
     },
     {
-      "Datum": "2018-08-06T22:00:00.000Z",
+      "Datum": "2018-08-07",
       "Radl-Crunches": 180,
       "Superman": 60,
       "Dips mit einem Stuhl [Beine 90 Grad]": 60,
       "Beinheber": 60,
-      "Vogel und Hund [BS]": 60,
-      "Seitstütz mit Beinheben [Stütz] [BS]": 90,
+      "Vogel und Hund": 60,
+      "Seitstütz mit Beinheben [Stütz]": 90,
       "Junkfood": 1
     },
     {
-      "Datum": "2018-08-07T22:00:00.000Z",
+      "Datum": "2018-08-08",
       "Kniebeugen": 200,
       "Wadenheber": 100,
-      "Einbeinige Squats mit Band [BS]": 50
+      "Einbeinige Squats mit Band": 50
     },
     {
-      "Datum": "2018-08-08T22:00:00.000Z",
+      "Datum": "2018-08-09",
       "Kniebeugen": 140,
-      "Bergsteiger [BS]": 100,
+      "Bergsteiger": 100,
       "Radl-Crunches": 100,
       "Superman": 30,
       "Radfahren": 15,
       "Beinheber": 100,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Jump Squats": 160,
       "Jumping Split Squat": 60,
       "Slides": 90,
       "Frog Crunches": 90,
-      "Curls [BS]": 60,
-      "Seitstütz mit Beinheben [Stütz] [BS]": 60,
+      "Curls": 60,
+      "Seitstütz mit Beinheben [Stütz]": 60,
       "Commandos": 60,
       "Reverse Flys": 60,
       "Junkfood": 1
     },
     {
-      "Datum": "2018-08-09T22:00:00.000Z",
+      "Datum": "2018-08-10",
       "Kniebeugen": 40
     },
     {
-      "Datum": "2018-08-10T22:00:00.000Z"
+      "Datum": "2018-08-11"
     },
     {
-      "Datum": "2018-08-11T22:00:00.000Z"
+      "Datum": "2018-08-12"
     },
     {
-      "Datum": "2018-08-12T22:00:00.000Z",
+      "Datum": "2018-08-13",
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-08-13T22:00:00.000Z",
+      "Datum": "2018-08-14",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 2
     },
     {
-      "Datum": "2018-08-14T22:00:00.000Z",
+      "Datum": "2018-08-15",
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-08-15T22:00:00.000Z",
+      "Datum": "2018-08-16",
       "Liegestütz": 10,
       "Kniebeugen": 50,
       "Radfahren": 15,
-      "Karate Front Kicks [BS]": 100,
+      "Karate Front Kicks": 100,
       "Junkfood": 1
     },
     {
-      "Datum": "2018-08-16T22:00:00.000Z",
+      "Datum": "2018-08-17",
       "Junkfood": 1
     },
     {
-      "Datum": "2018-08-17T22:00:00.000Z",
+      "Datum": "2018-08-18",
       "Hampelmänner": 100,
       "Liegestütz": 5,
       "Fußball": 70,
-      "Karate Front Kicks [BS]": 200,
+      "Karate Front Kicks": 200,
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-08-18T22:00:00.000Z",
+      "Datum": "2018-08-19",
       "Junkfood": 1
     },
     {
-      "Datum": "2018-08-19T22:00:00.000Z",
+      "Datum": "2018-08-20",
       "Crunches": 100,
       "Hampelmänner": 100,
       "Kniebeugen": 100,
@@ -168,21 +168,21 @@
       "Dips mit einem Stuhl [Beine 90 Grad]": 100,
       "Beinheber": 100,
       "Jump Squats": 100,
-      "Curls [BS]": 150,
-      "Seitstütz mit Beinheben [Stütz] [BS]": 50
+      "Curls": 150,
+      "Seitstütz mit Beinheben [Stütz]": 50
     },
     {
-      "Datum": "2018-08-20T22:00:00.000Z",
+      "Datum": "2018-08-21",
       "Liegestütz": 60,
       "Planks": 200,
       "Wadenheber": 60,
       "Türziehen": 100,
       "Kniebeugen mit Band": 100,
-      "Kick Backs [BS]": 50,
+      "Kick Backs": 50,
       "Glute Bridge": 50
     },
     {
-      "Datum": "2018-08-21T22:00:00.000Z",
+      "Datum": "2018-08-22",
       "Laufen": 5,
       "Radfahren": 5,
       "Fußball": 45,
@@ -190,46 +190,46 @@
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-08-22T22:00:00.000Z",
+      "Datum": "2018-08-23",
       "Hampelmänner": 100,
       "Liegestütz": 1,
       "Klimmzüge": 50,
       "Kniebeugen": 100,
-      "Bergsteiger [BS]": 100,
+      "Bergsteiger": 100,
       "Superman": 50,
       "Burpees": 50,
       "Türziehen": 60,
-      "Russian Twist [BS]": 50,
+      "Russian Twist": 50,
       "Seilspringen": 500,
       "Dips mit einem Stuhl [Beine 90 Grad]": 60,
       "Beinheber": 100,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Liegestütz [Arme erhöht]": 60,
       "Die Hundert [Pilates]": 300,
       "Jump Squats": 100,
       "Slides": 50,
-      "Curls [BS]": 100,
-      "Seitstütz mit Beinheben [Stütz] [BS]": 50,
+      "Curls": 100,
+      "Seitstütz mit Beinheben [Stütz]": 50,
       "Reverse Flys": 50,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-08-23T22:00:00.000Z",
+      "Datum": "2018-08-24",
       "Junkfood": 1
     },
     {
-      "Datum": "2018-08-24T22:00:00.000Z",
+      "Datum": "2018-08-25",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-08-25T22:00:00.000Z",
+      "Datum": "2018-08-26",
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-08-26T22:00:00.000Z",
+      "Datum": "2018-08-27",
       "Crunches": 210,
       "Hampelmänner": 200,
       "Liegestütz": 105,
@@ -239,20 +239,20 @@
       "Türziehen": 100,
       "Dips mit einem Stuhl [Beine 90 Grad]": 100,
       "Beinheber": 200,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Slides": 60,
       "Reverse Flys": 50,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-08-27T22:00:00.000Z",
+      "Datum": "2018-08-28",
       "Seilspringen": 1000,
-      "Karate Front Kicks [BS]": 100,
+      "Karate Front Kicks": 100,
       "Junkfood": 1
     },
     {
-      "Datum": "2018-08-28T22:00:00.000Z",
+      "Datum": "2018-08-29",
       "Liegestütz": 50,
       "Klimmzüge": 50,
       "Kniebeugen": 100,
@@ -260,21 +260,21 @@
       "Fußball": 100,
       "Dips mit einem Stuhl [Beine 90 Grad]": 100,
       "Jump Squats": 100,
-      "Curls [BS]": 100
+      "Curls": 100
     },
     {
-      "Datum": "2018-08-29T22:00:00.000Z",
+      "Datum": "2018-08-30",
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-08-30T22:00:00.000Z",
+      "Datum": "2018-08-31",
       "Laufen": 15,
       "Fußball": 50,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-08-31T22:00:00.000Z",
+      "Datum": "2018-09-01",
       "Crunches": 250,
       "Kniebeugen": 200,
       "Radl-Crunches": 125,
@@ -283,177 +283,177 @@
       "Türziehen": 60,
       "Dips mit einem Stuhl [Beine 90 Grad]": 100,
       "Beinheber": 100,
-      "Vogel und Hund [BS]": 22,
+      "Vogel und Hund": 22,
       "Die Hundert [Pilates]": 300,
-      "Seitstütz mit Beinheben [Stütz] [BS]": 60,
+      "Seitstütz mit Beinheben [Stütz]": 60,
       "Junkfood": 1
     },
     {
-      "Datum": "2018-09-01T22:00:00.000Z",
+      "Datum": "2018-09-02",
       "Seilspringen": 1200,
       "Jump Squats": 100,
       "Overhead Triceps": 20,
-      "Dirty Dogs [BS]": 50,
+      "Dirty Dogs": 50,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-02T22:00:00.000Z",
+      "Datum": "2018-09-03",
       "Wandern": 120,
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-09-03T22:00:00.000Z",
+      "Datum": "2018-09-04",
       "Crunches": 200,
       "Kniebeugen": 100,
-      "Bergsteiger [BS]": 100,
+      "Bergsteiger": 100,
       "Radl-Crunches": 100,
       "Wadenheber": 100,
-      "Russian Twist [BS]": 100,
+      "Russian Twist": 100,
       "Dips mit einem Stuhl [Beine 90 Grad]": 60,
       "Beinheber": 200,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Die Hundert [Pilates]": 100,
-      "Einbeinige Squats mit Band [BS]": 100,
+      "Einbeinige Squats mit Band": 100,
       "Slides": 200,
-      "Curls [BS]": 100,
+      "Curls": 100,
       "Overhead Triceps": 100,
       "Back Rows": 200,
-      "Dead Lifts": 200,
-      "Kick Backs [BS]": 60,
+      "Dead Lifts mit Band": 200,
+      "Kick Backs": 60,
       "Walking Lunges": 30,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-04T22:00:00.000Z",
+      "Datum": "2018-09-05",
       "Fußball": 60,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-05T22:00:00.000Z",
+      "Datum": "2018-09-06",
       "Klettern": 180,
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-09-06T22:00:00.000Z",
+      "Datum": "2018-09-07",
       "Junkfood": 1,
       "Vollrausch": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-07T22:00:00.000Z",
+      "Datum": "2018-09-08",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-09-08T22:00:00.000Z",
+      "Datum": "2018-09-09",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 2
     },
     {
-      "Datum": "2018-09-09T22:00:00.000Z",
-      "Bergsteiger [BS]": 100,
-      "Curls [BS]": 100,
+      "Datum": "2018-09-10",
+      "Bergsteiger": 100,
+      "Curls": 100,
       "Overhead Triceps": 60,
       "Back Rows": 100,
-      "Dead Lifts": 100,
-      "Dirty Dogs [BS]": 50
+      "Dead Lifts mit Band": 100,
+      "Dirty Dogs": 50
     },
     {
-      "Datum": "2018-09-10T22:00:00.000Z",
+      "Datum": "2018-09-11",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-09-11T22:00:00.000Z",
+      "Datum": "2018-09-12",
       "Crunches": 150,
       "Kniebeugen": 150,
-      "Bergsteiger [BS]": 150,
+      "Bergsteiger": 150,
       "Dips mit einem Stuhl [Beine 90 Grad]": 2,
       "Beinheber": 150,
-      "Curls [BS]": 150,
+      "Curls": 150,
       "Overhead Triceps": 100,
-      "Dead Lifts": 50,
+      "Dead Lifts mit Band": 50,
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-09-12T22:00:00.000Z",
+      "Datum": "2018-09-13",
       "Kniebeugen": 10,
       "Burpees": 50,
       "Türziehen": 100,
-      "Seestern [BS]": 60,
+      "Seestern": 60,
       "Junkfood": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-09-13T22:00:00.000Z"
+      "Datum": "2018-09-14"
     },
     {
-      "Datum": "2018-09-14T22:00:00.000Z",
+      "Datum": "2018-09-15",
       "Crunches": 100,
       "Hampelmänner": 100,
       "Kniebeugen": 100,
-      "Bergsteiger [BS]": 100,
+      "Bergsteiger": 100,
       "Radl-Crunches": 100,
       "Burpees": 60,
       "Dips mit einem Stuhl [Beine 90 Grad]": 100,
       "Beinheber": 100,
       "Jump Squats": 100,
       "Slides": 100,
-      "Curls [BS]": 100,
+      "Curls": 100,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-15T22:00:00.000Z"
+      "Datum": "2018-09-16"
     },
     {
-      "Datum": "2018-09-16T22:00:00.000Z"
+      "Datum": "2018-09-17"
     },
     {
-      "Datum": "2018-09-17T22:00:00.000Z"
+      "Datum": "2018-09-18"
     },
     {
-      "Datum": "2018-09-18T22:00:00.000Z"
+      "Datum": "2018-09-19"
     },
     {
-      "Datum": "2018-09-19T22:00:00.000Z"
+      "Datum": "2018-09-20"
     },
     {
-      "Datum": "2018-09-20T22:00:00.000Z",
+      "Datum": "2018-09-21",
       "Junkfood": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-09-21T22:00:00.000Z",
+      "Datum": "2018-09-22",
       "Wandern": 240,
       "Junkfood": 1,
       "Vollrausch": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-22T22:00:00.000Z",
+      "Datum": "2018-09-23",
       "Junkfood": 1
     },
     {
-      "Datum": "2018-09-23T22:00:00.000Z",
+      "Datum": "2018-09-24",
       "Sit-Ups": 20,
       "Crunches": 20,
       "Hampelmänner": 20,
       "Liegestütz": 20,
       "Klimmzüge": 20,
       "Kniebeugen": 20,
-      "Bergsteiger [BS]": 20,
+      "Bergsteiger": 20,
       "Radl-Crunches": 20,
       "Planks": 100,
       "Wipers": 20,
@@ -461,52 +461,52 @@
       "Wadenheber": 20,
       "Burpees": 20,
       "Türziehen": 20,
-      "Russian Twist [BS]": 20,
+      "Russian Twist": 20,
       "Seilspringen": 20,
       "Dips mit einem Stuhl [Beine 90 Grad]": 20,
       "Beinheber": 20,
-      "Vogel und Hund [BS]": 20,
+      "Vogel und Hund": 20,
       "Liegestütz [Arme erhöht]": 20,
-      "Einbeiniges Kreuzheben [BS]": 20,
+      "Einbeiniges Kreuzheben": 20,
       "Umgekehrtes Bankdrücken": 20,
       "Die Hundert [Pilates]": 100,
       "Jump Squats": 20,
-      "Einbeinige Squats mit Band [BS]": 20,
+      "Einbeinige Squats mit Band": 20,
       "Kniebeugen mit Band": 20,
       "Jumping Split Squat": 20,
       "Slides": 50,
       "Frog Crunches": 20,
-      "Curls [BS]": 20,
-      "Seitstütz mit Beinheben [Stütz] [BS]": 20,
+      "Curls": 20,
+      "Seitstütz mit Beinheben [Stütz]": 20,
       "Commandos": 20,
       "Overhead Triceps": 20,
       "Back Rows": 100,
-      "Dead Lifts": 100,
+      "Dead Lifts mit Band": 100,
       "Reverse Flys": 20,
-      "Karate Front Kicks [BS]": 20,
-      "Kick Backs [BS]": 20,
+      "Karate Front Kicks": 20,
+      "Kick Backs": 20,
       "Klappmesser": 20,
       "Glute Bridge": 20,
-      "Dirty Dogs [BS]": 20,
+      "Dirty Dogs": 20,
       "Walking Lunges": 20,
-      "Step Ups [BS]": 20,
-      "Knee Ups [BS]": 20,
-      "Seestern [BS]": 55,
-      "Ausfallschritt [v oder h] [BS]": 20,
-      "Schwimmer [BS]": 20,
+      "Step Ups": 20,
+      "Knee Ups": 20,
+      "Seestern": 55,
+      "Ausfallschritt [v oder h]": 20,
+      "Schwimmer": 20,
       "Hand Release PushUp": 20,
       "Military Press [höher als Knie]": 20,
-      "Kniebeuge im Ausfallschritt [l,r] [BS]": 20,
-      "Seitlicher Ausfallschritt [l,r] [BS]": 20,
+      "Kniebeuge im Ausfallschritt [l,r]": 20,
+      "Seitlicher Ausfallschritt [l,r]": 20,
       "Kniebeuge [3 sec halten]": 20,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-24T22:00:00.000Z",
+      "Datum": "2018-09-25",
       "Liegestütz": 10,
       "Kniebeugen": 100,
-      "Bergsteiger [BS]": 150,
+      "Bergsteiger": 150,
       "Radl-Crunches": 50,
       "Dips mit einem Stuhl [Beine 90 Grad]": 30,
       "Beinheber": 30,
@@ -516,83 +516,83 @@
       "Kniebeugen mit Band": 100,
       "Slides": 100,
       "Frog Crunches": 100,
-      "Curls [BS]": 100,
+      "Curls": 100,
       "Overhead Triceps": 70,
       "Back Rows": 100,
-      "Dead Lifts": 100,
+      "Dead Lifts mit Band": 100,
       "Reverse Flys": 60,
-      "Seestern [BS]": 30,
-      "Kniebeuge im Ausfallschritt [l,r] [BS]": 30,
+      "Seestern": 30,
+      "Kniebeuge im Ausfallschritt [l,r]": 30,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-09-25T22:00:00.000Z",
+      "Datum": "2018-09-26",
       "Crunches": 100,
       "Liegestütz": 20,
       "Kniebeugen": 100,
       "Burpees": 5,
       "Fußball": 90,
       "Beinheber": 100,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Die Hundert [Pilates]": 200,
-      "Seitstütz mit Beinheben [Stütz] [BS]": 50,
-      "Knee Ups [BS]": 30,
+      "Seitstütz mit Beinheben [Stütz]": 50,
+      "Knee Ups": 30,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-26T22:00:00.000Z",
+      "Datum": "2018-09-27",
       "Liegestütz": 50,
-      "Bergsteiger [BS]": 100,
+      "Bergsteiger": 100,
       "Türziehen": 30,
-      "Russian Twist [BS]": 50,
+      "Russian Twist": 50,
       "Dips mit einem Stuhl [Beine 90 Grad]": 30,
       "Slides": 180,
       "Frog Crunches": 100,
-      "Curls [BS]": 200,
+      "Curls": 200,
       "Reverse Flys": 50,
-      "Kick Backs [BS]": 30,
-      "Schwimmer [BS]": 50,
-      "Kniebeuge im Ausfallschritt [l,r] [BS]": 60,
+      "Kick Backs": 30,
+      "Schwimmer": 50,
+      "Kniebeuge im Ausfallschritt [l,r]": 60,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-27T22:00:00.000Z",
+      "Datum": "2018-09-28",
       "Liegestütz": 10,
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 4
     },
     {
-      "Datum": "2018-09-28T22:00:00.000Z",
+      "Datum": "2018-09-29",
       "Liegestütz": 70,
       "Kniebeugen": 100,
-      "Bergsteiger [BS]": 200,
+      "Bergsteiger": 200,
       "Seilspringen": 1000,
       "Dips mit einem Stuhl [Beine 90 Grad]": 100,
       "Beinheber": 150,
       "Die Hundert [Pilates]": 200,
       "Jump Squats": 210,
-      "Einbeinige Squats mit Band [BS]": 50,
+      "Einbeinige Squats mit Band": 50,
       "Jumping Split Squat": 70,
       "Slides": 210,
       "Frog Crunches": 100,
-      "Curls [BS]": 100,
+      "Curls": 100,
       "Back Rows": 100,
-      "Dead Lifts": 100,
+      "Dead Lifts mit Band": 100,
       "Reverse Flys": 30,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-29T22:00:00.000Z",
+      "Datum": "2018-09-30",
       "Fußball": 30,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-09-30T22:00:00.000Z",
+      "Datum": "2018-10-01",
       "Crunches": 100,
       "Radl-Crunches": 100,
       "Planks": 120,
@@ -604,16 +604,16 @@
       "Junkfood": 1
     },
     {
-      "Datum": "2018-10-01T22:00:00.000Z",
+      "Datum": "2018-10-02",
       "Klettern": 130,
       "Jump Squats": 100,
       "Slides": 100,
-      "Kniebeuge im Ausfallschritt [l,r] [BS]": 50,
+      "Kniebeuge im Ausfallschritt [l,r]": 50,
       "Kniebeuge [3 sec halten]": 50,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-10-02T22:00:00.000Z",
+      "Datum": "2018-10-03",
       "Liegestütz": 50,
       "Fußball": 90,
       "Junkfood": 1,
@@ -621,133 +621,133 @@
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-03T22:00:00.000Z"
+      "Datum": "2018-10-04"
     },
     {
-      "Datum": "2018-10-04T22:00:00.000Z",
+      "Datum": "2018-10-05",
       "Fußball": 30,
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-05T22:00:00.000Z",
+      "Datum": "2018-10-06",
       "Wandern": 120,
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-06T22:00:00.000Z",
+      "Datum": "2018-10-07",
       "Liegestütz": 100,
       "Kniebeugen": 100,
-      "Bergsteiger [BS]": 100,
+      "Bergsteiger": 100,
       "Radl-Crunches": 100,
       "Dips mit einem Stuhl [Beine 90 Grad]": 100,
       "Beinheber": 100,
       "Die Hundert [Pilates]": 100,
       "Slides": 100,
-      "Curls [BS]": 110,
+      "Curls": 110,
       "Back Rows": 100,
-      "Dead Lifts": 100,
-      "Kniebeuge im Ausfallschritt [l,r] [BS]": 50,
+      "Dead Lifts mit Band": 100,
+      "Kniebeuge im Ausfallschritt [l,r]": 50,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-10-07T22:00:00.000Z",
+      "Datum": "2018-10-08",
       "Jump Squats": 500,
       "Frog Crunches": 100,
       "Junkfood": 1
     },
     {
-      "Datum": "2018-10-08T22:00:00.000Z"
+      "Datum": "2018-10-09"
     },
     {
-      "Datum": "2018-10-09T22:00:00.000Z",
+      "Datum": "2018-10-10",
       "Liegestütz": 10,
       "Kniebeugen": 50,
       "Fußball": 90,
-      "Seitstütz mit Beinheben [Stütz] [BS]": 10,
+      "Seitstütz mit Beinheben [Stütz]": 10,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-10-10T22:00:00.000Z",
+      "Datum": "2018-10-11",
       "Liegestütz": 45,
       "Kniebeugen": 100,
       "Türziehen": 60,
       "Beinheber": 120,
-      "Curls [BS]": 100,
+      "Curls": 100,
       "Overhead Triceps": 100,
-      "Seitlicher Ausfallschritt [l,r] [BS]": 60,
+      "Seitlicher Ausfallschritt [l,r]": 60,
       "Junkfood": 1
     },
     {
-      "Datum": "2018-10-11T22:00:00.000Z"
+      "Datum": "2018-10-12"
     },
     {
-      "Datum": "2018-10-12T22:00:00.000Z",
+      "Datum": "2018-10-13",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-13T22:00:00.000Z",
+      "Datum": "2018-10-14",
       "Liegestütz": 10,
       "Kniebeugen": 50,
       "Dips mit einem Stuhl [Beine 90 Grad]": 60,
       "Beinheber": 100,
       "Frog Crunches": 100,
-      "Seitstütz mit Beinheben [Stütz] [BS]": 100,
+      "Seitstütz mit Beinheben [Stütz]": 100,
       "Junkfood": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-14T22:00:00.000Z",
+      "Datum": "2018-10-15",
       "Liegestütz": 63,
       "Türziehen": 91,
       "Umgekehrtes Bankdrücken": 80,
-      "Curls [BS]": 100,
+      "Curls": 100,
       "Military Press [Kniehöhe]": 41,
       "Dips mit einem Stuhl [Beine gestreckt]": 100
     },
     {
-      "Datum": "2018-10-15T22:00:00.000Z",
-      "Bergsteiger [BS]": 200,
+      "Datum": "2018-10-16",
+      "Bergsteiger": 200,
       "Superman": 48,
       "Burpees": 50,
-      "Einbeiniges Kreuzheben [BS]": 43,
+      "Einbeiniges Kreuzheben": 43,
       "Jump Squats": 98,
       "Back Rows": 100,
-      "Ausfallschritt [v oder h] [BS]": 48
+      "Ausfallschritt [v oder h]": 48
     },
     {
-      "Datum": "2018-10-16T22:00:00.000Z"
+      "Datum": "2018-10-17"
     },
     {
-      "Datum": "2018-10-17T22:00:00.000Z"
+      "Datum": "2018-10-18"
     },
     {
-      "Datum": "2018-10-18T22:00:00.000Z",
+      "Datum": "2018-10-19",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-19T22:00:00.000Z",
+      "Datum": "2018-10-20",
       "Junkfood": 1
     },
     {
-      "Datum": "2018-10-20T22:00:00.000Z",
+      "Datum": "2018-10-21",
       "Junkfood": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-21T22:00:00.000Z",
+      "Datum": "2018-10-22",
       "Junkfood": 1
     },
     {
-      "Datum": "2018-10-22T22:00:00.000Z",
+      "Datum": "2018-10-23",
       "Liegestütz": 64,
       "Kniebeugen": 50,
       "Türziehen": 91,
@@ -759,34 +759,34 @@
       "Dips mit einem Stuhl [Beine gestreckt]": 100
     },
     {
-      "Datum": "2018-10-23T22:00:00.000Z"
+      "Datum": "2018-10-24"
     },
     {
-      "Datum": "2018-10-24T22:00:00.000Z",
+      "Datum": "2018-10-25",
       "Klimmzüge": 30,
-      "Bergsteiger [BS]": 120,
+      "Bergsteiger": 120,
       "Radl-Crunches": 200,
-      "Russian Twist [BS]": 66,
+      "Russian Twist": 66,
       "Beinheber": 100,
       "Jump Squats": 128,
       "Kniebeugen mit Band": 100,
       "Frog Crunches": 120,
-      "Curls [BS]": 100,
-      "Seitstütz mit Beinheben [Stütz] [BS]": 50,
+      "Curls": 100,
+      "Seitstütz mit Beinheben [Stütz]": 50,
       "Overhead Triceps": 100,
       "Back Rows": 100,
-      "Dead Lifts": 100,
+      "Dead Lifts mit Band": 100,
       "Liegestütz [Beine erhöht]": 20,
-      "Ausfallschritt [v oder h]  [4sec halten] [BS]": 28,
+      "Ausfallschritt [v oder h]  [4sec halten]": 28,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-25T22:00:00.000Z",
+      "Datum": "2018-10-26",
       "Fußball": 70
     },
     {
-      "Datum": "2018-10-26T22:00:00.000Z",
+      "Datum": "2018-10-27",
       "Türziehen": 100,
       "Beinheber": 200,
       "Kniebeugen mit Band": 200,
@@ -796,13 +796,13 @@
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-27T22:00:00.000Z",
+      "Datum": "2018-10-28",
       "Seilspringen": 2000,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-28T23:00:00.000Z",
+      "Datum": "2018-10-29",
       "Liegestütz": 35,
       "Türziehen": 100,
       "Beinheber": 200,
@@ -812,12 +812,12 @@
       "Junkfood": 1
     },
     {
-      "Datum": "2018-10-29T23:00:00.000Z",
+      "Datum": "2018-10-30",
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-10-30T23:00:00.000Z",
+      "Datum": "2018-10-31",
       "Liegestütz": 60,
       "Seilspringen": 2500,
       "Fußball": 35,
@@ -825,42 +825,42 @@
       "Alkohol": 1
     },
     {
-      "Datum": "2018-10-31T23:00:00.000Z"
+      "Datum": "2018-11-01"
     },
     {
-      "Datum": "2018-11-01T23:00:00.000Z"
+      "Datum": "2018-11-02"
     },
     {
-      "Datum": "2018-11-02T23:00:00.000Z",
+      "Datum": "2018-11-03",
       "Fußball": 15,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-11-03T23:00:00.000Z",
+      "Datum": "2018-11-04",
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-11-04T23:00:00.000Z",
+      "Datum": "2018-11-05",
       "Türziehen": 100,
       "Beinheber": 200,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Kniebeugen mit Band": 200,
       "Slides": 200,
       "Frog Crunches": 200,
-      "Karate Front Kicks [BS]": 30,
+      "Karate Front Kicks": 30,
       "Dips mit einem Stuhl [Beine gestreckt]": 100
     },
     {
-      "Datum": "2018-11-05T23:00:00.000Z",
+      "Datum": "2018-11-06",
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-11-06T23:00:00.000Z",
+      "Datum": "2018-11-07",
       "Liegestütz": 60,
       "Türziehen": 60,
       "Beinheber": 120,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Kniebeugen mit Band": 120,
       "Slides": 120,
       "Frog Crunches": 120,
@@ -869,16 +869,16 @@
       "Alkohol": 1
     },
     {
-      "Datum": "2018-11-07T23:00:00.000Z",
+      "Datum": "2018-11-08",
       "Seilspringen": 1000,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-11-08T23:00:00.000Z",
+      "Datum": "2018-11-09",
       "Liegestütz": 50,
       "Türziehen": 80,
       "Beinheber": 160,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Kniebeugen mit Band": 160,
       "Slides": 160,
       "Frog Crunches": 160,
@@ -887,20 +887,20 @@
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-11-09T23:00:00.000Z"
+      "Datum": "2018-11-10"
     },
     {
-      "Datum": "2018-11-10T23:00:00.000Z",
+      "Datum": "2018-11-11",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-11-11T23:00:00.000Z",
+      "Datum": "2018-11-12",
       "Liegestütz": 90,
       "Türziehen": 100,
       "Beinheber": 200,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Kniebeugen mit Band": 200,
       "Slides": 200,
       "Frog Crunches": 200,
@@ -908,16 +908,16 @@
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-11-12T23:00:00.000Z",
+      "Datum": "2018-11-13",
       "Seilspringen": 2010,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-11-13T23:00:00.000Z",
+      "Datum": "2018-11-14",
       "Liegestütz": 30,
       "Türziehen": 60,
       "Beinheber": 120,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Kniebeugen mit Band": 120,
       "Slides": 120,
       "Frog Crunches": 120,
@@ -925,16 +925,16 @@
       "Junkfood": 1
     },
     {
-      "Datum": "2018-11-14T23:00:00.000Z",
+      "Datum": "2018-11-15",
       "Seilspringen": 3000,
       "Junkfood": 1
     },
     {
-      "Datum": "2018-11-15T23:00:00.000Z",
+      "Datum": "2018-11-16",
       "Liegestütz": 50,
       "Türziehen": 60,
       "Beinheber": 120,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Kniebeugen mit Band": 120,
       "Slides": 120,
       "Frog Crunches": 120,
@@ -943,39 +943,39 @@
       "Alkohol": 3
     },
     {
-      "Datum": "2018-11-16T23:00:00.000Z",
+      "Datum": "2018-11-17",
       "Seilspringen": 2010
     },
     {
-      "Datum": "2018-11-17T23:00:00.000Z"
+      "Datum": "2018-11-18"
     },
     {
-      "Datum": "2018-11-18T23:00:00.000Z"
+      "Datum": "2018-11-19"
     },
     {
-      "Datum": "2018-11-19T23:00:00.000Z",
+      "Datum": "2018-11-20",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-11-20T23:00:00.000Z",
+      "Datum": "2018-11-21",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-11-21T23:00:00.000Z",
+      "Datum": "2018-11-22",
       "Seilspringen": 4010
     },
     {
-      "Datum": "2018-11-22T23:00:00.000Z",
+      "Datum": "2018-11-23",
       "Liegestütz": 50,
       "Kniebeugen": 200,
-      "Bergsteiger [BS]": 200,
+      "Bergsteiger": 200,
       "Türziehen": 110,
       "Beinheber": 200,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Slides": 200,
       "Frog Crunches": 200,
       "Dips mit einem Stuhl [Beine gestreckt]": 110,
@@ -984,19 +984,19 @@
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-11-23T23:00:00.000Z"
+      "Datum": "2018-11-24"
     },
     {
-      "Datum": "2018-11-24T23:00:00.000Z",
+      "Datum": "2018-11-25",
       "Planks": 1134,
       "Junkfood": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-11-25T23:00:00.000Z",
+      "Datum": "2018-11-26",
       "Hampelmänner": 300,
       "Liegestütz": 14,
-      "Bergsteiger [BS]": 300,
+      "Bergsteiger": 300,
       "Radl-Crunches": 150,
       "Planks": 360,
       "Türziehen": 75,
@@ -1004,94 +1004,94 @@
       "Kniebeugen mit Band": 120,
       "Slides": 120,
       "Frog Crunches": 120,
-      "Curls [BS]": 300,
+      "Curls": 300,
       "Overhead Triceps": 75,
       "Dips mit einem Stuhl [Beine gestreckt]": 75,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-11-26T23:00:00.000Z",
+      "Datum": "2018-11-27",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-11-27T23:00:00.000Z",
+      "Datum": "2018-11-28",
       "Seilspringen": 7510
     },
     {
-      "Datum": "2018-11-28T23:00:00.000Z"
+      "Datum": "2018-11-29"
     },
     {
-      "Datum": "2018-11-29T23:00:00.000Z"
+      "Datum": "2018-11-30"
     },
     {
-      "Datum": "2018-11-30T23:00:00.000Z"
+      "Datum": "2018-12-01"
     },
     {
-      "Datum": "2018-12-01T23:00:00.000Z"
+      "Datum": "2018-12-02"
     },
     {
-      "Datum": "2018-12-02T23:00:00.000Z"
+      "Datum": "2018-12-03"
     },
     {
-      "Datum": "2018-12-03T23:00:00.000Z"
+      "Datum": "2018-12-04"
     },
     {
-      "Datum": "2018-12-04T23:00:00.000Z"
+      "Datum": "2018-12-05"
     },
     {
-      "Datum": "2018-12-05T23:00:00.000Z",
+      "Datum": "2018-12-06",
       "Junkfood": 1
     },
     {
-      "Datum": "2018-12-06T23:00:00.000Z",
+      "Datum": "2018-12-07",
       "Junkfood": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-12-07T23:00:00.000Z",
+      "Datum": "2018-12-08",
       "Junkfood": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-12-08T23:00:00.000Z",
+      "Datum": "2018-12-09",
       "Junkfood": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-12-09T23:00:00.000Z",
+      "Datum": "2018-12-10",
       "Hampelmänner": 400,
       "Liegestütz": 50,
-      "Bergsteiger [BS]": 400,
+      "Bergsteiger": 400,
       "Radl-Crunches": 200,
       "Türziehen": 120,
       "Beinheber": 160,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Kniebeugen mit Band": 160,
       "Slides": 160,
       "Frog Crunches": 160,
-      "Curls [BS]": 400,
+      "Curls": 400,
       "Overhead Triceps": 120,
       "Dips mit einem Stuhl [Beine gestreckt]": 120
     },
     {
-      "Datum": "2018-12-10T23:00:00.000Z",
+      "Datum": "2018-12-11",
       "Seilspringen": 5010,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-12-11T23:00:00.000Z",
+      "Datum": "2018-12-12",
       "Crunches": 120,
-      "Bergsteiger [BS]": 300,
+      "Bergsteiger": 300,
       "Radl-Crunches": 150,
       "Burpees": 90,
       "Türziehen": 60,
       "Beinheber": 120,
       "Kniebeugen mit Band": 120,
       "Slides": 120,
-      "Curls [BS]": 300,
+      "Curls": 300,
       "Overhead Triceps": 90,
       "Dips mit einem Stuhl [Beine gestreckt]": 60,
       "Junkfood": 1,
@@ -1099,74 +1099,74 @@
       "Alkohol": 1
     },
     {
-      "Datum": "2018-12-12T23:00:00.000Z",
+      "Datum": "2018-12-13",
       "Seilspringen": 7010,
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-12-13T23:00:00.000Z",
+      "Datum": "2018-12-14",
       "Vollrausch": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-12-14T23:00:00.000Z",
+      "Datum": "2018-12-15",
       "Vollrausch": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-12-15T23:00:00.000Z"
+      "Datum": "2018-12-16"
     },
     {
-      "Datum": "2018-12-16T23:00:00.000Z",
+      "Datum": "2018-12-17",
       "Essen nach 20:00": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-12-17T23:00:00.000Z",
+      "Datum": "2018-12-18",
       "Junkfood": 1,
       "Alkohol": 1
     },
     {
-      "Datum": "2018-12-18T23:00:00.000Z",
+      "Datum": "2018-12-19",
       "Crunches": 160,
       "Hampelmänner": 400,
-      "Bergsteiger [BS]": 400,
+      "Bergsteiger": 400,
       "Radl-Crunches": 200,
       "Burpees": 40,
       "Türziehen": 120,
       "Beinheber": 160,
       "Kniebeugen mit Band": 160,
       "Slides": 160,
-      "Curls [BS]": 400,
+      "Curls": 400,
       "Overhead Triceps": 120,
       "Dips mit einem Stuhl [Beine gestreckt]": 120,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-12-19T23:00:00.000Z",
+      "Datum": "2018-12-20",
       "Seilspringen": 2020,
       "Junkfood": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-12-20T23:00:00.000Z",
+      "Datum": "2018-12-21",
       "Seilspringen": 10110
     },
     {
-      "Datum": "2018-12-21T23:00:00.000Z",
+      "Datum": "2018-12-22",
       "Crunches": 80,
       "Hampelmänner": 200,
-      "Bergsteiger [BS]": 200,
+      "Bergsteiger": 200,
       "Radl-Crunches": 100,
       "Burpees": 20,
       "Türziehen": 60,
       "Beinheber": 80,
       "Kniebeugen mit Band": 80,
       "Slides": 80,
-      "Curls [BS]": 200,
+      "Curls": 200,
       "Overhead Triceps": 60,
       "Dips mit einem Stuhl [Beine gestreckt]": 60,
       "Junkfood": 1,
@@ -1174,13 +1174,13 @@
       "Alkohol": 1
     },
     {
-      "Datum": "2018-12-22T23:00:00.000Z",
+      "Datum": "2018-12-23",
       "Seilspringen": 5010
     },
     {
-      "Datum": "2018-12-23T23:00:00.000Z",
+      "Datum": "2018-12-24",
       "Crunches": 50,
-      "Bergsteiger [BS]": 1000,
+      "Bergsteiger": 1000,
       "Beinheber": 50,
       "Kniebeugen mit Band": 50,
       "Slides": 50,
@@ -1188,550 +1188,562 @@
       "Alkohol": 1
     },
     {
-      "Datum": "2018-12-24T23:00:00.000Z",
+      "Datum": "2018-12-25",
       "Junkfood": 1,
       "Essen nach 20:00": 1,
       "Alkohol": 2
     },
     {
-      "Datum": "2018-12-25T23:00:00.000Z",
+      "Datum": "2018-12-26",
       "Seilspringen": 10110
     },
     {
-      "Datum": "2018-12-26T23:00:00.000Z"
+      "Datum": "2018-12-27"
     },
     {
-      "Datum": "2018-12-27T23:00:00.000Z"
+      "Datum": "2018-12-28"
     },
     {
-      "Datum": "2018-12-28T23:00:00.000Z"
+      "Datum": "2018-12-29"
     },
     {
-      "Datum": "2018-12-29T23:00:00.000Z"
+      "Datum": "2018-12-30"
     },
     {
-      "Datum": "2018-12-30T23:00:00.000Z",
+      "Datum": "2018-12-31",
       "Junkfood": 1,
       "Vollrausch": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-12-31T23:00:00.000Z",
+      "Datum": "2019-01-01",
       "Junkfood": 1
     },
     {
-      "Datum": "2019-01-01T23:00:00.000Z"
+      "Datum": "2019-01-02"
     },
     {
-      "Datum": "2019-01-02T23:00:00.000Z"
+      "Datum": "2019-01-03"
     },
     {
-      "Datum": "2019-01-03T23:00:00.000Z"
+      "Datum": "2019-01-04"
     },
     {
-      "Datum": "2019-01-04T23:00:00.000Z"
+      "Datum": "2019-01-05"
     },
     {
-      "Datum": "2019-01-05T23:00:00.000Z"
+      "Datum": "2019-01-06"
     },
     {
-      "Datum": "2019-01-06T23:00:00.000Z"
+      "Datum": "2019-01-07"
     },
     {
-      "Datum": "2019-01-07T23:00:00.000Z"
+      "Datum": "2019-01-08"
     },
     {
-      "Datum": "2019-01-08T23:00:00.000Z"
+      "Datum": "2019-01-09"
     },
     {
-      "Datum": "2019-01-09T23:00:00.000Z"
+      "Datum": "2019-01-10"
     },
     {
-      "Datum": "2019-01-10T23:00:00.000Z"
+      "Datum": "2019-01-11"
     },
     {
-      "Datum": "2019-01-11T23:00:00.000Z"
+      "Datum": "2019-01-12"
     },
     {
-      "Datum": "2019-01-12T23:00:00.000Z"
+      "Datum": "2019-01-13"
     },
     {
-      "Datum": "2019-01-13T23:00:00.000Z"
+      "Datum": "2019-01-14"
     },
     {
-      "Datum": "2019-01-14T23:00:00.000Z"
+      "Datum": "2019-01-15"
     },
     {
-      "Datum": "2019-01-15T23:00:00.000Z"
+      "Datum": "2019-01-16"
     },
     {
-      "Datum": "2019-01-16T23:00:00.000Z"
+      "Datum": "2019-01-17"
     },
     {
-      "Datum": "2019-01-17T23:00:00.000Z"
+      "Datum": "2019-01-18"
     },
     {
-      "Datum": "2019-01-18T23:00:00.000Z"
+      "Datum": "2019-01-19"
     },
     {
-      "Datum": "2019-01-19T23:00:00.000Z"
+      "Datum": "2019-01-20"
     },
     {
-      "Datum": "2019-01-20T23:00:00.000Z"
+      "Datum": "2019-01-21"
     },
     {
-      "Datum": "2019-01-21T23:00:00.000Z"
+      "Datum": "2019-01-22"
     },
     {
-      "Datum": "2019-01-22T23:00:00.000Z"
+      "Datum": "2019-01-23"
     },
     {
-      "Datum": "2019-01-23T23:00:00.000Z"
+      "Datum": "2019-01-24"
     },
     {
-      "Datum": "2019-01-24T23:00:00.000Z"
+      "Datum": "2019-01-25"
     },
     {
-      "Datum": "2019-01-25T23:00:00.000Z"
+      "Datum": "2019-01-26"
     },
     {
-      "Datum": "2019-01-26T23:00:00.000Z"
+      "Datum": "2019-01-27"
     },
     {
-      "Datum": "2019-01-27T23:00:00.000Z"
+      "Datum": "2019-01-28"
     },
     {
-      "Datum": "2019-01-28T23:00:00.000Z"
+      "Datum": "2019-01-29"
     },
     {
-      "Datum": "2019-01-29T23:00:00.000Z"
+      "Datum": "2019-01-30"
     },
     {
-      "Datum": "2019-01-30T23:00:00.000Z"
+      "Datum": "2019-01-31"
     },
     {
-      "Datum": "2019-01-31T23:00:00.000Z"
+      "Datum": "2019-02-01"
     },
     {
-      "Datum": "2019-02-01T23:00:00.000Z"
+      "Datum": "2019-02-02"
     },
     {
-      "Datum": "2019-02-02T23:00:00.000Z"
+      "Datum": "2019-02-03"
     },
     {
-      "Datum": "2019-02-03T23:00:00.000Z"
+      "Datum": "2019-02-04"
     },
     {
-      "Datum": "2019-02-04T23:00:00.000Z",
+      "Datum": "2019-02-05",
       "Kniebeugen": 100,
-      "Bergsteiger [BS]": 100,
-      "Vogel und Hund [BS]": 30,
-      "Curls [BS]": 100,
-      "Ausfallschritt [v oder h]  [4sec halten] [BS]": 10,
+      "Bergsteiger": 100,
+      "Vogel und Hund": 30,
+      "Curls": 100,
+      "Ausfallschritt [v oder h]  [4sec halten]": 10,
       "Dips mit einem Stuhl [Beine gestreckt]": 10
     },
     {
-      "Datum": "2019-02-05T23:00:00.000Z",
-      "Bergsteiger [BS]": 100,
+      "Datum": "2019-02-06",
+      "Bergsteiger": 100,
       "Beinheber": 100,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Liegestütz [Arme erhöht]": 30,
-      "Curls [BS]": 100,
+      "Curls": 100,
       "Back Rows": 100,
-      "Ausfallschritt [v oder h]  [4sec halten] [BS]": 10
+      "Ausfallschritt [v oder h]  [4sec halten]": 10
     },
     {
-      "Datum": "2019-02-06T23:00:00.000Z"
+      "Datum": "2019-02-07"
     },
     {
-      "Datum": "2019-02-07T23:00:00.000Z"
+      "Datum": "2019-02-08"
     },
     {
-      "Datum": "2019-02-08T23:00:00.000Z",
+      "Datum": "2019-02-09",
       "Klettern": 60,
       "Junkfood": 1,
       "Vollrausch": 1,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2019-02-09T23:00:00.000Z"
+      "Datum": "2019-02-10"
     },
     {
-      "Datum": "2019-02-10T23:00:00.000Z"
+      "Datum": "2019-02-11"
     },
     {
-      "Datum": "2019-02-11T23:00:00.000Z"
+      "Datum": "2019-02-12"
     },
     {
-      "Datum": "2019-02-12T23:00:00.000Z",
+      "Datum": "2019-02-13",
       "Crunches": 100,
       "Hampelmänner": 100,
       "Klimmzüge": 6,
-      "Bergsteiger [BS]": 200,
+      "Bergsteiger": 200,
       "Türziehen": 20,
       "Beinheber": 100,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Jump Squats": 100,
       "Kniebeugen mit Band": 100,
       "Slides": 100,
-      "Curls [BS]": 100,
+      "Curls": 100,
       "Overhead Triceps": 20,
-      "Ausfallschritt [v oder h]  [4sec halten] [BS]": 5,
+      "Ausfallschritt [v oder h]  [4sec halten]": 5,
       "Dips mit einem Stuhl [Beine gestreckt]": 60,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2019-02-13T23:00:00.000Z"
+      "Datum": "2019-02-14"
     },
     {
-      "Datum": "2019-02-14T23:00:00.000Z"
+      "Datum": "2019-02-15"
     },
     {
-      "Datum": "2019-02-15T23:00:00.000Z",
+      "Datum": "2019-02-16",
       "Junkfood": 1,
       "Vollrausch": 1
     },
     {
-      "Datum": "2019-02-16T23:00:00.000Z",
+      "Datum": "2019-02-17",
       "Crunches": 100,
       "Klimmzüge": 20,
       "Radl-Crunches": 100,
       "Türziehen": 40,
       "Beinheber": 100,
-      "Vogel und Hund [BS]": 30,
+      "Vogel und Hund": 30,
       "Kniebeugen mit Band": 100,
       "Slides": 100,
       "Overhead Triceps": 60,
-      "Ausfallschritt [v oder h]  [4sec halten] [BS]": 5,
+      "Ausfallschritt [v oder h]  [4sec halten]": 5,
       "Dips mit einem Stuhl [Beine gestreckt]": 30,
       "Essen nach 20:00": 1
     },
     {
-      "Datum": "2019-02-17T23:00:00.000Z",
+      "Datum": "2019-02-18",
       "Klimmzüge": 22,
-      "Vogel und Hund [BS]": 30
+      "Vogel und Hund": 30
     },
     {
-      "Datum": "2019-02-18T23:00:00.000Z"
+      "Datum": "2019-02-19"
     },
     {
-      "Datum": "2019-02-19T23:00:00.000Z",
+      "Datum": "2019-02-20",
       "Crunches": 100,
-      "Bergsteiger [BS]": 300,
-      "Vogel und Hund [BS]": 30,
+      "Bergsteiger": 300,
+      "Vogel und Hund": 30,
       "Liegestütz [Arme erhöht]": 40,
       "Dips mit einem Stuhl [Beine gestreckt]": 110
     },
     {
-      "Datum": "2019-02-20T23:00:00.000Z",
+      "Datum": "2019-02-21",
       "Klimmzüge": 30,
       "Seilspringen": 5010,
-      "Vogel und Hund [BS]": 30
+      "Vogel und Hund": 30
     },
     {
-      "Datum": "2019-02-21T23:00:00.000Z",
-      "Bergsteiger [BS]": 200,
+      "Datum": "2019-02-22",
+      "Bergsteiger": 200,
       "Planks": 1260
     },
     {
-      "Datum": "2019-02-22T23:00:00.000Z"
+      "Datum": "2019-02-23"
     },
     {
-      "Datum": "2019-02-23T23:00:00.000Z"
+      "Datum": "2019-02-24",
+      "Klettern": 120
     },
     {
-      "Datum": "2019-02-24T23:00:00.000Z"
+      "Datum": "2019-02-25"
     },
     {
-      "Datum": "2019-02-25T23:00:00.000Z"
+      "Datum": "2019-02-26"
     },
     {
-      "Datum": "2019-02-26T23:00:00.000Z"
+      "Datum": "2019-02-27"
     },
     {
-      "Datum": "2019-02-27T23:00:00.000Z"
+      "Datum": "2019-02-28"
     },
     {
-      "Datum": "2019-02-28T23:00:00.000Z"
+      "Datum": "2019-03-01",
+      "Liegestütz": 10,
+      "Seilspringen": 6310
     },
     {
-      "Datum": "2019-03-01T23:00:00.000Z"
+      "Datum": "2019-03-02",
+      "Liegestütz": 10,
+      "Bergsteiger": 400,
+      "Planks": 560,
+      "Seilspringen": 3510,
+      "Jump Squats": 120,
+      "Slides": 300,
+      "Junkfood": 1,
+      "Essen nach 20:00": 1,
+      "Alkohol": 2
     },
     {
-      "Datum": "2019-03-02T23:00:00.000Z"
+      "Datum": "2019-03-03"
     },
     {
-      "Datum": "2019-03-03T23:00:00.000Z"
+      "Datum": "2019-03-04"
     },
     {
-      "Datum": "2019-03-04T23:00:00.000Z"
+      "Datum": "2019-03-05"
     },
     {
-      "Datum": "2019-03-05T23:00:00.000Z"
+      "Datum": "2019-03-06"
     },
     {
-      "Datum": "2019-03-06T23:00:00.000Z"
+      "Datum": "2019-03-07"
     },
     {
-      "Datum": "2019-03-07T23:00:00.000Z"
+      "Datum": "2019-03-08"
     },
     {
-      "Datum": "2019-03-08T23:00:00.000Z"
+      "Datum": "2019-03-09"
     },
     {
-      "Datum": "2019-03-09T23:00:00.000Z"
+      "Datum": "2019-03-10"
     },
     {
-      "Datum": "2019-03-10T23:00:00.000Z"
+      "Datum": "2019-03-11"
     },
     {
-      "Datum": "2019-03-11T23:00:00.000Z"
+      "Datum": "2019-03-12"
     },
     {
-      "Datum": "2019-03-12T23:00:00.000Z"
+      "Datum": "2019-03-13"
     },
     {
-      "Datum": "2019-03-13T23:00:00.000Z"
+      "Datum": "2019-03-14"
     },
     {
-      "Datum": "2019-03-14T23:00:00.000Z"
+      "Datum": "2019-03-15"
     },
     {
-      "Datum": "2019-03-15T23:00:00.000Z"
+      "Datum": "2019-03-16"
     },
     {
-      "Datum": "2019-03-16T23:00:00.000Z"
+      "Datum": "2019-03-17"
     },
     {
-      "Datum": "2019-03-17T23:00:00.000Z"
+      "Datum": "2019-03-18"
     },
     {
-      "Datum": "2019-03-18T23:00:00.000Z"
+      "Datum": "2019-03-19"
     },
     {
-      "Datum": "2019-03-19T23:00:00.000Z"
+      "Datum": "2019-03-20"
     },
     {
-      "Datum": "2019-03-20T23:00:00.000Z"
+      "Datum": "2019-03-21"
     },
     {
-      "Datum": "2019-03-21T23:00:00.000Z"
+      "Datum": "2019-03-22"
     },
     {
-      "Datum": "2019-03-22T23:00:00.000Z"
+      "Datum": "2019-03-23"
     },
     {
-      "Datum": "2019-03-23T23:00:00.000Z"
+      "Datum": "2019-03-24"
     },
     {
-      "Datum": "2019-03-24T23:00:00.000Z"
+      "Datum": "2019-03-25"
     },
     {
-      "Datum": "2019-03-25T23:00:00.000Z"
+      "Datum": "2019-03-26"
     },
     {
-      "Datum": "2019-03-26T23:00:00.000Z"
+      "Datum": "2019-03-27"
     },
     {
-      "Datum": "2019-03-27T23:00:00.000Z"
+      "Datum": "2019-03-28"
     },
     {
-      "Datum": "2019-03-28T23:00:00.000Z"
+      "Datum": "2019-03-29"
     },
     {
-      "Datum": "2019-03-29T23:00:00.000Z"
+      "Datum": "2019-03-30"
     },
     {
-      "Datum": "2019-03-30T23:00:00.000Z"
+      "Datum": "2019-03-31"
     },
     {
-      "Datum": "2019-03-31T22:00:00.000Z"
+      "Datum": "2019-04-01"
     },
     {
-      "Datum": "2019-04-01T22:00:00.000Z"
+      "Datum": "2019-04-02"
     },
     {
-      "Datum": "2019-04-02T22:00:00.000Z"
+      "Datum": "2019-04-03"
     },
     {
-      "Datum": "2019-04-03T22:00:00.000Z"
+      "Datum": "2019-04-04"
     },
     {
-      "Datum": "2019-04-04T22:00:00.000Z"
+      "Datum": "2019-04-05"
     },
     {
-      "Datum": "2019-04-05T22:00:00.000Z"
+      "Datum": "2019-04-06"
     },
     {
-      "Datum": "2019-04-06T22:00:00.000Z"
+      "Datum": "2019-04-07"
     },
     {
-      "Datum": "2019-04-07T22:00:00.000Z"
+      "Datum": "2019-04-08"
     },
     {
-      "Datum": "2019-04-08T22:00:00.000Z"
+      "Datum": "2019-04-09"
     },
     {
-      "Datum": "2019-04-09T22:00:00.000Z"
+      "Datum": "2019-04-10"
     },
     {
-      "Datum": "2019-04-10T22:00:00.000Z"
+      "Datum": "2019-04-11"
     },
     {
-      "Datum": "2019-04-11T22:00:00.000Z"
+      "Datum": "2019-04-12"
     },
     {
-      "Datum": "2019-04-12T22:00:00.000Z"
+      "Datum": "2019-04-13"
     },
     {
-      "Datum": "2019-04-13T22:00:00.000Z"
+      "Datum": "2019-04-14"
     },
     {
-      "Datum": "2019-04-14T22:00:00.000Z"
+      "Datum": "2019-04-15"
     },
     {
-      "Datum": "2019-04-15T22:00:00.000Z"
+      "Datum": "2019-04-16"
     },
     {
-      "Datum": "2019-04-16T22:00:00.000Z"
+      "Datum": "2019-04-17"
     },
     {
-      "Datum": "2019-04-17T22:00:00.000Z"
+      "Datum": "2019-04-18"
     },
     {
-      "Datum": "2019-04-18T22:00:00.000Z"
+      "Datum": "2019-04-19"
     },
     {
-      "Datum": "2019-04-19T22:00:00.000Z"
+      "Datum": "2019-04-20"
     },
     {
-      "Datum": "2019-04-20T22:00:00.000Z"
+      "Datum": "2019-04-21"
     },
     {
-      "Datum": "2019-04-21T22:00:00.000Z"
+      "Datum": "2019-04-22"
     },
     {
-      "Datum": "2019-04-22T22:00:00.000Z"
+      "Datum": "2019-04-23"
     },
     {
-      "Datum": "2019-04-23T22:00:00.000Z"
+      "Datum": "2019-04-24"
     },
     {
-      "Datum": "2019-04-24T22:00:00.000Z"
+      "Datum": "2019-04-25"
     },
     {
-      "Datum": "2019-04-25T22:00:00.000Z"
+      "Datum": "2019-04-26"
     },
     {
-      "Datum": "2019-04-26T22:00:00.000Z"
+      "Datum": "2019-04-27"
     },
     {
-      "Datum": "2019-04-27T22:00:00.000Z"
+      "Datum": "2019-04-28"
     },
     {
-      "Datum": "2019-04-28T22:00:00.000Z"
+      "Datum": "2019-04-29"
     },
     {
-      "Datum": "2019-04-29T22:00:00.000Z"
+      "Datum": "2019-04-30"
     },
     {
-      "Datum": "2019-04-30T22:00:00.000Z"
+      "Datum": "2019-05-01"
     },
     {
-      "Datum": "2019-05-01T22:00:00.000Z"
+      "Datum": "2019-05-02"
     },
     {
-      "Datum": "2019-05-02T22:00:00.000Z"
+      "Datum": "2019-05-03"
     },
     {
-      "Datum": "2019-05-03T22:00:00.000Z"
+      "Datum": "2019-05-04"
     },
     {
-      "Datum": "2019-05-04T22:00:00.000Z"
+      "Datum": "2019-05-05"
     },
     {
-      "Datum": "2019-05-05T22:00:00.000Z"
+      "Datum": "2019-05-06"
     },
     {
-      "Datum": "2019-05-06T22:00:00.000Z"
+      "Datum": "2019-05-07"
     },
     {
-      "Datum": "2019-05-07T22:00:00.000Z"
+      "Datum": "2019-05-08"
     },
     {
-      "Datum": "2019-05-08T22:00:00.000Z"
+      "Datum": "2019-05-09"
     },
     {
-      "Datum": "2019-05-09T22:00:00.000Z"
+      "Datum": "2019-05-10"
     },
     {
-      "Datum": "2019-05-10T22:00:00.000Z"
+      "Datum": "2019-05-11"
     },
     {
-      "Datum": "2019-05-11T22:00:00.000Z"
+      "Datum": "2019-05-12"
     },
     {
-      "Datum": "2019-05-12T22:00:00.000Z"
+      "Datum": "2019-05-13"
     },
     {
-      "Datum": "2019-05-13T22:00:00.000Z"
+      "Datum": "2019-05-14"
     },
     {
-      "Datum": "2019-05-14T22:00:00.000Z"
+      "Datum": "2019-05-15"
     },
     {
-      "Datum": "2019-05-15T22:00:00.000Z"
+      "Datum": "2019-05-16"
     },
     {
-      "Datum": "2019-05-16T22:00:00.000Z"
+      "Datum": "2019-05-17"
     },
     {
-      "Datum": "2019-05-17T22:00:00.000Z"
+      "Datum": "2019-05-18"
     },
     {
-      "Datum": "2019-05-18T22:00:00.000Z"
+      "Datum": "2019-05-19"
     },
     {
-      "Datum": "2019-05-19T22:00:00.000Z"
+      "Datum": "2019-05-20"
     },
     {
-      "Datum": "2019-05-20T22:00:00.000Z"
+      "Datum": "2019-05-21"
     },
     {
-      "Datum": "2019-05-21T22:00:00.000Z"
+      "Datum": "2019-05-22"
     },
     {
-      "Datum": "2019-05-22T22:00:00.000Z"
+      "Datum": "2019-05-23"
     },
     {
-      "Datum": "2019-05-23T22:00:00.000Z"
+      "Datum": "2019-05-24"
     },
     {
-      "Datum": "2019-05-24T22:00:00.000Z"
+      "Datum": "2019-05-25"
     },
     {
-      "Datum": "2019-05-25T22:00:00.000Z"
+      "Datum": "2019-05-26"
     },
     {
-      "Datum": "2019-05-26T22:00:00.000Z"
+      "Datum": "2019-05-27"
     },
     {
-      "Datum": "2019-05-27T22:00:00.000Z"
+      "Datum": "2019-05-28"
     },
     {
-      "Datum": "2019-05-28T22:00:00.000Z"
+      "Datum": "2019-05-29"
     },
     {
-      "Datum": "2019-05-29T22:00:00.000Z"
+      "Datum": "2019-05-30"
     },
     {
-      "Datum": "2019-05-30T22:00:00.000Z"
+      "Datum": "2019-05-31"
     },
     {
-      "Datum": "2019-05-31T22:00:00.000Z"
+      "Datum": "2019-06-01"
     },
     {
-      "Datum": "2019-06-01T22:00:00.000Z"
+      "Datum": "2019-06-02"
     }
   ]
 }

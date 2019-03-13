@@ -1,1 +1,44 @@
-{"content":{"name":"philipp","points":{"total":61809.72673333335,"negative":2480,"today":0,"diffLastMonth":4510.255866666666,"last5Days":0,"thisMonth":0,"dailyMax":3201.5,"averageThisMonth":0},"active":true,"regDate":"2019-03-01T22:14:05.539Z","addedExercises":0,"deletedExercises":0,"modifiedExercises":0,"id":"5150375201960233"},"id":"philipp"}
+{
+    "content": {
+        "name": "philipp",
+        "points": {
+            "total": 65966.30513333336,
+            "negative": 2520,
+            "today": 0,
+            "diffLastMonth": 717.8342666666667,
+            "last5Days": 0,
+            "thisMonth": 3974.5,
+            "dailyMax": 3201.5,
+            "averageThisMonth": 361.3181818181818
+        },
+        "active": true,
+        "regDate": "2019-03-13T09:26:07.778Z",
+        "addedExercises": 0,
+        "deletedExercises": 0,
+        "modifiedExercises": 0,
+        "bestExercises": 20,
+        "id": "8987333756893132",
+        "earnedAchievements": {
+            "LiegestützOverall": "Liegestütz Achievement (Gesamt) Level 5/10 (1372/1200)",
+            "LiegestützDay": "Liegestütz Achievement (Täglich) Level 2/11 (105/100)",
+            "KniebeugenOverall": "Kniebeugen Achievement (Gesamt) Level 2/10 (2770/2000)",
+            "BurpeesOverall": "Burpees Achievement (Gesamt) Level 2/10 (595/400)",
+            "TürziehenOverall": "Türziehen Achievement (Gesamt) Level 2/10 (2087/2000)",
+            "TürziehenDay": "Türziehen Achievement (Täglich) Level 1/10 (120/100)",
+            "SeilspringenOverall": "Seilspringen Achievement (Gesamt) Level 7/9 (84360/64000)",
+            "Dips mit einem Stuhl [Beine 90 Grad]Overall": "Dips mit einem Stuhl [Beine 90 Grad] Achievement (Gesamt) Level 1/10 (1182/1000)"
+        },
+        "notEarnedAchievements": {
+            "LiegestützOverall": "Liegestütz Achievement (Gesamt) Level 6/10 (1372/1500)",
+            "LiegestützDay": "Liegestütz Achievement (Täglich) Level 3/11 (105/200)",
+            "KniebeugenOverall": "Kniebeugen Achievement (Gesamt) Level 3/10 (2770/3000)",
+            "BurpeesOverall": "Burpees Achievement (Gesamt) Level 3/10 (595/800)",
+            "TürziehenOverall": "Türziehen Achievement (Gesamt) Level 3/10 (2087/3000)",
+            "TürziehenDay": "Türziehen Achievement (Täglich) Level 2/10 (120/200)",
+            "SeilspringenOverall": "Seilspringen Achievement (Gesamt) Level 8/9 (84360/100000)",
+            "Dips mit einem Stuhl [Beine 90 Grad]Overall": "Dips mit einem Stuhl [Beine 90 Grad] Achievement (Gesamt) Level 2/10 (1182/2000)",
+            "V-UpsOverall": "V-Ups Achievement (Gesamt) Level 1/10 (0/200)"
+        }
+    },
+    "id": "philipp"
+}

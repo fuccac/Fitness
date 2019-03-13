@@ -58,16 +58,16 @@ function Calc() {
 			return exercise;
 		};
 
-		
+
 	this.calculatePoints = function (exercise, weight, count) {
 		var weightFactor = 0;
-		if (exercise.usesWeight){
+		if (exercise.usesWeight) {
 			weightFactor = Number(weight) / Number(exercise.baseWeight);
 		}
-		else{
+		else {
 			weightFactor = 1;
 		}
-		
+
 		var result = Number(exercise.factor) * Number(count) * Number(weightFactor);
 
 		exercise.points += Number(result);
@@ -75,12 +75,83 @@ function Calc() {
 		return result;
 	};
 
-	this.sortByKey = function(array, key) {
-		return array.sort(function(a, b) {
+	this.sortByKey = function (array, key) {
+		return array.sort(function (a, b) {
 			var x = a[key]; var y = b[key];
 			return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 		});
-	}
+	};
+
+	this.getDateFormat = function (date, format, fromFormat) {
+		var addZeroMonth = "";
+		var addZeroDay = "";
+		if (typeof fromFormat === 'undefined') { fromFormat = 'default'; }
+
+		if (format === "YYYY-MM-DD") {
+			if (fromFormat === "DD.MM.YYYY") {
+				var day = date.substring(0, 2);
+				var month = date.substring(3, 5);
+				var year = date.substring(6);
+				date = year + "-" + month + "-" + day;
+			}
+			else {
+				if (date.getMonth() < 9) {
+					addZeroMonth = "0";
+				}
+				if (date.getDate() < 10) {
+					addZeroDay = "0";
+				}
+				date = date.getFullYear() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + addZeroDay + date.getDate();
+			}
+		}
+		if (format === "DD-MM-YYYY") {
+			if (date.getMonth() < 9) {
+				addZeroMonth = "0";
+			}
+			if (date.getDate() < 10) {
+				addZeroDay = "0";
+			}
+			date = addZeroDay + date.getDate() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + date.getFullYear();
+		}
+		if (format === "DD.MM.YYYY") {
+			if (date.getMonth() < 9) {
+				addZeroMonth = "0";
+			}
+			if (date.getDate() < 10) {
+				addZeroDay = "0";
+			}
+			date = addZeroDay + date.getDate() + "." + addZeroMonth + (date.getMonth() + 1) + "." + date.getFullYear();
+		}
+
+		return date;
+
+	};
+
+	this.createZeroDate = function (date) {
+		if (typeof date === 'undefined') {
+			zeroDate = new Date();
+			zeroDate.setHours(0);
+			zeroDate.setMinutes(0);
+			zeroDate.setSeconds(0);
+		}
+		else {
+			zeroDate = new Date(date);
+			zeroDate.setHours(0);
+			zeroDate.setMinutes(0);
+			zeroDate.setSeconds(0);
+		}
+		return zeroDate;
+	};
+
+	this.getNonZeroValuesOfArray = function(array){
+		var result = 0;
+		for(var i = 0; i<array.length;i++){
+			if (array[i] > 0){
+				result++;
+			}
+		}
+		return result;
+	};
 
 
 }

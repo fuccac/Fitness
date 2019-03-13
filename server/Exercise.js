@@ -6,28 +6,41 @@ var Config = require("./Config");
 var config = new Config();
 
 class Exercise {
-    constructor(name, difficulty,difficulty10,difficulty100,equipment, usesWeight, baseWeight, comment, creator, type, unit) {
+    constructor(name, difficulty, difficulty10, difficulty100, equipment, usesWeight, baseWeight, comment, creator, type, unit,bothSides) {
         this.id = Math.random().toFixed(config.ID_LENGTH).slice(2);
         this.name = name;
-        this.factor = (Number(difficulty)+Number(difficulty10)+Number(difficulty100))/3;
+        this.factor = (Number(difficulty) + Number(difficulty10) + Number(difficulty100)) / 3;
         this.points = 0;
-        this.difficulty = difficulty;
-        this.difficulty10 = difficulty10;
-        this.difficulty100 = difficulty100;
+        this.difficulty = Number(difficulty);
+        this.difficulty10 = Number(difficulty10);
+        this.difficulty100 = Number(difficulty100);
         this.type = type;
+        this.bothSides = (bothSides.toUpperCase() === 'TRUE');
         this.unit = unit;
         this.equipment = equipment;
         this.usesWeight = usesWeight;
-        this.baseWeight = baseWeight;
+        this.baseWeight = Number(baseWeight);
         this.comment = comment;
         this.creator = creator;
+        this.pointsPerPlayer = {};
+        this.repsPerPlayer = {};
         this.votes = {};
-        
+        this.achievementInfo = {
+            achievementActive:false,
+            repsToGetOverall: [0],
+            repsToGetDaily: [0],
+            repsToGetMonthly: [0],
+            textOverall: "",
+            textDaily: "",
+            textMonthly: "",
+            achievementCategory: "none",
+        };
+
         var newVote = {
-            difficulty: difficulty,
-            difficulty10: difficulty10,
-            difficulty100: difficulty100,
-            baseWeight: baseWeight,
+            difficulty: Number(difficulty),
+            difficulty10: Number(difficulty10),
+            difficulty100: Number(difficulty100),
+            baseWeight: Number(baseWeight),
             comment: comment
         };
         this.votes[creator] = newVote;

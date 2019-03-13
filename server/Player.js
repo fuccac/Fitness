@@ -16,12 +16,16 @@ class Player {
             dailyMax:0,
             averageThisMonth: 0,
         };
+
         this.active = true;
         this.regDate = new Date();
         this.addedExercises = 0;
         this.deletedExercises = 0;
         this.modifiedExercises = 0;
+        this.bestExercises = 0;
         this.id = id;
+        this.earnedAchievements = {};
+        this.notEarnedAchievements = {};
         
 
         

@@ -35,13 +35,13 @@ body{
 
 #div_exerciseHistoryControl{
     width: 100%;
-    height: 10%;
+    height: 15%;
 }
 
 #div_exerciseHistory{
     background-color: rgb(194, 214, 245);
     width: 100%;
-    height: 60%;
+    height: 55%;
     overflow-y: scroll;
 }
 
@@ -51,17 +51,32 @@ body{
 /* TAB EXERCISE OVERVIEW */
 #div_addNewExercise{
     background-color: rgb(194, 214, 245);
-    height: 20%;
+    height: 25%;
     width:100%;
 }
 
 #div_exerciseTable{
     background-color: rgb(194, 214, 245);
     width: 100%;
-    height: 80%;
-    top:20%;
+    height: 75%;
+    top:25%;
     overflow-y: scroll;
 }
+
+/* TAB STATISTICS INFO*/
+
+#div_graph{
+    background-color: rgb(194, 214, 245);
+    height: 50%;
+    width:100%;
+}
+
+#div_GraphControl{
+    background-color: rgb(194, 214, 245);
+    height: 50%;
+    width:100%;
+}
+
 
 /********************/
 
@@ -107,6 +122,12 @@ body{
     padding: 1px;
 }
 
+ /* CANVAS */
+#canvas_graphHistory{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #000000;
+
+}
 
 
  /* TABLES */
