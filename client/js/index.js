@@ -294,7 +294,7 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
     var topBottom = 50;
     var endDate;
     var startDate;
-    var diagramNamesWidthSpace = 25;
+    var diagramNamesWidthSpace = 55;
     maxHeight -= topBottom;
     maxWidth -= rightLeft;
     minHeight += topBottom;
@@ -311,6 +311,7 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
         endDate = createZeroDate(data.graph[playerName].yAxis[data.graph[playerName].yAxis.length - 1]);
         startDate = createZeroDate(data.graph[playerName].yAxis[0]);
     }
+    maxValue = Math.ceil(maxValue/10000)*10000;
     if (xMax > 0) {
         maxValue = xMax;
     }
@@ -330,6 +331,7 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
 
     colorIterator = 0;
     continueFlag = false;
+    gridFinished = false;
     for (var playerGraphName in data.graph) {
         var widthSteps = (maxWidth - minWidth) / (data.graph[playerGraphName].xAxis.length - 1);
 
@@ -349,11 +351,13 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
                     y: maxHeight - data.graph[playerGraphName].xAxis[pointIterator] * conversionFactor,
                 };
             }
-
-            if (pointIterator % widthSections == 0) {
-                drawLine(ctx, "black", thisPoint.x, maxHeight, thisPoint.x, minHeight);
-                createText(ctx, "black", "Arial", 10, getDateFormat(createZeroDate(data.graph[playerGraphName].yAxis[pointIterator]), "DD.MM.YYYY"), thisPoint.x, maxHeight + timeAxisTextTuningHeight);
+            if(!gridFinished){
+                if (pointIterator % widthSections == 0) {
+                    drawLine(ctx, "black", thisPoint.x, maxHeight, thisPoint.x, minHeight);
+                    createText(ctx, "black", "Arial", 10, getDateFormat(createZeroDate(data.graph[playerGraphName].yAxis[pointIterator]), "DD.MM.YYYY"), thisPoint.x, maxHeight + timeAxisTextTuningHeight);
+                }
             }
+            
 
             if (thisPoint.y <= minHeight) {
                 if (continueFlag) {
@@ -377,12 +381,12 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
             xPos += widthSteps;
 
         }
-
+        gridFinished = true;
         createText(ctx, colors[colorIterator], "Arial", 10, playerGraphName, startWidthNames, maxHeight + timeAxisTextTuningHeight * 3);
         colorIterator++;
         startWidthNames += diagramNamesWidthSpace;
     }
-
+    
 
 }
 function generatePlayerInfoTable(data) {
@@ -447,7 +451,7 @@ function generateExerciseList(data) {
         for (var exerciseKeys in exercise) {
             key = exercise[exerciseKeys];
 
-            if (exerciseKeys === "comment") {
+            if (exerciseKeys === "comment" || exerciseKeys === "achievementInfo") {
                 continue;
             }
             if (exerciseKeys === "votes") {
@@ -497,7 +501,7 @@ function generateExerciseList(data) {
             }
             cellNumber++;
         }
-        addToolTip(toolTipText, "tooltip", bodyRow);
+        addToolTip(toolTipText, "tableTooltip", bodyRow);
 
         bodyRow.onclick = function () {
             var id = this.getElementsByTagName("td")[0].innerHTML;
@@ -608,7 +612,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                 cellNumber++;
             }
             if (!rowNotUsed) {
-                addToolTip(toolTipText, "tooltip", bodyRow);
+                addToolTip(toolTipText, "tableTooltip", bodyRow);
                 bodyRow.onclick = function () {
                     var id = this.getElementsByTagName("td")[0].innerHTML;
                     var date = getDateFormat(this.getElementsByTagName("td")[1].innerHTML,"YYYY-MM-DD","DD.MM.YYYY");
@@ -962,6 +966,8 @@ function initialize() {
     //Today
     today = createZeroDate();
     input_doneExerciseDate.value = getDateFormat(today, "YYYY-MM-DD");
+    input_graphFromDate.value = "2018-08-01";
+    input_graphToDate.value = getDateFormat(today, "YYYY-MM-DD");
 }
 
 function createZeroDate(date) {

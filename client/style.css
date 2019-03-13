@@ -1,7 +1,12 @@
 body{
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif !important;
+    font-family: Helvetica,"Trebuchet MS", Arial, sans-serif !important;
     overflow: hidden;
+    font-size:12;
 }
+
+button:hover {
+    border:2px solid #515151;
+  }
 
  /* DIV */
 
@@ -133,7 +138,7 @@ body{
  /* TABLES */
 
 .std_table{
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-family: Helvetica,"Trebuchet MS", Arial, sans-serif;
     font-size: 10;
     border-collapse: collapse;
     width: 100%;
@@ -167,9 +172,9 @@ body{
 
  /* OTHER CLASSES */
 
-.tooltip .tooltiptext {
+.tableTooltip .tooltiptext {
     visibility: hidden;
-    background-color: black;
+    background-color: rgb(112, 108, 107);
     color: #fff;
     text-align: left;
     width: 10%;
@@ -177,15 +182,37 @@ body{
     right: 10%;
     top: 10%;
     opacity: 0.90;
-    font-size: 15;
+    font-size: 10;
     border-radius: 6px;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     overflow: auto;
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif !important;
+    font-family: Helvetica,"Trebuchet MS", Arial, sans-serif;
 }
 
-.tooltip:hover .tooltiptext {
+.tableTooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.inputToolTip .tooltiptext {
+    visibility: hidden;
+    background-color: rgb(112, 108, 107);
+    color: #fff;
+    text-align: left;
+    width: 10%;
+    padding: 5px 0;
+    right: 10%;
+    top: 10%;
+    opacity: 0.90;
+    font-size: 10;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    overflow: auto;
+    font-family: Helvetica,"Trebuchet MS", Arial, sans-serif;
+}
+
+.inputToolTip:hover .tooltiptext {
     visibility: visible;
 }
 
