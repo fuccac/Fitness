@@ -880,13 +880,6 @@ function createRect(ctx, fillStyle, fill, x, y, w, h) {
     ctx.closePath();
 }
 
-document.onkeydown = function (event) {
-    if (event.keyCode === 49) //1
-        button_tabExerciseOverview.onclick();
-    else if (event.keyCode === 50) //2
-        button_tabPersonalOverview.onclick();
-};
-
 function dragElement(elmnt) {
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     if (document.getElementById(elmnt.id)) {
