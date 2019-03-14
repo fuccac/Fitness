@@ -20,6 +20,7 @@ var button_doneExerciseSend = document.getElementById('button_doneExerciseSend')
 var button_updateHistory = document.getElementById('button_updateHistory');
 var button_tabStatistics = document.getElementById('button_tabStatistics');
 var button_updateGraph = document.getElementById('button_updateGraph');
+var button_tabMainPage = document.getElementById('button_tabMainPage');
 //CANVAS
 var canvas_graphHistory = document.getElementById('canvas_graphHistory');
 
@@ -37,6 +38,7 @@ var div_exerciseHistory = document.getElementById('div_exerciseHistory');
 var div_exerciseHistoryControl = document.getElementById('div_exerciseHistoryControl');
 var div_statistics = document.getElementById('div_statistics');
 var div_graph = document.getElementById('div_graph');
+var div_MainPage = document.getElementById('div_MainPage');
 
 //FONTS
 var font_Courier = "Courier New";
@@ -74,6 +76,7 @@ var select_bothSides = document.getElementById('select_bothSides');
 var table_exerciseTable = document.getElementById('table_exerciseTable');
 var table_personalTable = document.getElementById('table_personalTable');
 var table_exerciseHistory = document.getElementById('table_exerciseHistory');
+var table_allPlayersTable = document.getElementById('table_allPlayersTable');
 var socket = io();
 
 initialize();
@@ -129,16 +132,28 @@ button_doneExerciseSend.onclick = function () {
     }
 };
 
+button_tabMainPage.onclick = function () {
+    div_ExerciseOverview.style.display = "none";
+    div_PersonalOverview.style.display = "none";
+    div_statistics.style.display = "none";
+    div_MainPage.style.display = "inline-block";
+    canvas_graphHistory.height = div_graph.clientHeight;
+    canvas_graphHistory.width = div_graph.clientWidth;
+    button_updateGraph.onclick();
+};
+
 button_tabPersonalOverview.onclick = function () {
     div_ExerciseOverview.style.display = "none";
     div_PersonalOverview.style.display = "inline-block";
     div_statistics.style.display = "none";
+    div_MainPage.style.display = "none";
 };
 
 button_tabStatistics.onclick = function () {
     div_ExerciseOverview.style.display = "none";
     div_PersonalOverview.style.display = "none";
     div_statistics.style.display = "inline-block";
+    div_MainPage.style.display = "none";
     canvas_graphHistory.height = div_graph.clientHeight;
     canvas_graphHistory.width = div_graph.clientWidth;
 };
@@ -148,6 +163,7 @@ button_tabExerciseOverview.onclick = function () {
     div_ExerciseOverview.style.display = "inline-block";
     div_PersonalOverview.style.display = "none";
     div_statistics.style.display = "none";
+    div_MainPage.style.display = "none";
 };
 
 button_deleteExercise.onclick = function () {
@@ -203,7 +219,7 @@ socket.on("refresh", function (data) {
     if (input_doneExerciseWeight.value === "") {
         input_doneExerciseWeight.value = 0;
     }
-
+    generatePlayerListTable(data);
     generateExerciseList(data);
     generatePlayerInfoTable(data);
 
@@ -237,7 +253,7 @@ socket.on('signUpResponse', function (data) {
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
-function requestHistoryDeletion(id,date){
+function requestHistoryDeletion(id, date) {
     socket.emit("deleteHistory", data = {
         id: id,
         date: date,
@@ -263,7 +279,7 @@ function modifyExercise(emitString) {
         type: select_exerciseType.value,
         unit: select_exerciseUnit.value,
         equipment: select_exerciseEquipment.value,
-        bothSides:select_bothSides.value,
+        bothSides: select_bothSides.value,
         comment: input_exerciseComment.value,
     });
 }
@@ -311,7 +327,7 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
         endDate = createZeroDate(data.graph[playerName].yAxis[data.graph[playerName].yAxis.length - 1]);
         startDate = createZeroDate(data.graph[playerName].yAxis[0]);
     }
-    maxValue = Math.ceil(maxValue/10000)*10000;
+    maxValue = Math.ceil(maxValue / 10000) * 10000;
     if (xMax > 0) {
         maxValue = xMax;
     }
@@ -351,13 +367,13 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
                     y: maxHeight - data.graph[playerGraphName].xAxis[pointIterator] * conversionFactor,
                 };
             }
-            if(!gridFinished){
+            if (!gridFinished) {
                 if (pointIterator % widthSections == 0) {
                     drawLine(ctx, "black", thisPoint.x, maxHeight, thisPoint.x, minHeight);
                     createText(ctx, "black", "Arial", 10, getDateFormat(createZeroDate(data.graph[playerGraphName].yAxis[pointIterator]), "DD.MM.YYYY"), thisPoint.x, maxHeight + timeAxisTextTuningHeight);
                 }
             }
-            
+
 
             if (thisPoint.y <= minHeight) {
                 if (continueFlag) {
@@ -386,9 +402,54 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
         colorIterator++;
         startWidthNames += diagramNamesWidthSpace;
     }
-    
+
 
 }
+function generatePlayerListTable(data) {
+    var playerIterator = 0;
+    var theadPlayersTable = table_allPlayersTable.tHead;
+    var tBodyPlayersTable = table_allPlayersTable.tBodies[0];
+
+    theadPlayersTable.innerHTML = "";
+    tBodyPlayersTable.innerHTML = "";
+    headerRow = theadPlayersTable.insertRow(0);
+
+
+    for (var playerid in data.playerList) {
+        bodyRow = tBodyPlayersTable.insertRow(0);
+        player = data.playerList[playerid];
+        var cellNumber = 0;
+        if (playerIterator == 0) {
+            cell = headerRow.insertCell(cellNumber);
+            cell.innerHTML += translate("Name");
+        }
+        cell = bodyRow.insertCell(cellNumber);
+        cell.innerHTML += translate(playerid);
+        
+        
+
+        cellNumber++;
+        for (var playerKeyName in player) {
+            playerKeyContent = player[playerKeyName];
+            if (playerIterator == 0) {
+                cell = headerRow.insertCell(cellNumber);
+                cell.innerHTML += translate(playerKeyName);
+                cell.onclick = function () {
+                    sortTable(this, table_allPlayersTable);
+                };
+            }
+
+            cell = bodyRow.insertCell(cellNumber);
+            cell.innerHTML += translate(playerKeyContent);
+            cell.classList.add(playerKeyName);
+            cellNumber++;
+
+        }
+        playerIterator++;
+    }
+
+}
+
 function generatePlayerInfoTable(data) {
     var theadPersonalTable = table_personalTable.tHead;
     var tBodyPersonalTable = table_personalTable.tBodies[0];
@@ -405,7 +466,7 @@ function generatePlayerInfoTable(data) {
             playerKeyContent = createZeroDate(playerKeyContent);
             playerKeyContent = getDateFormat(playerKeyContent, "DD.MM.YYYY");
         }
-        if (playerKeyName === "earnedAchievements"|| playerKeyName === "notEarnedAchievements") {
+        if (playerKeyName === "earnedAchievements" || playerKeyName === "notEarnedAchievements") {
             continue;
         }
         if (Object.keys(playerKeyContent).length > 0 && !checkIfString(playerKeyContent)) {
@@ -615,12 +676,12 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                 addToolTip(toolTipText, "tableTooltip", bodyRow);
                 bodyRow.onclick = function () {
                     var id = this.getElementsByTagName("td")[0].innerHTML;
-                    var date = getDateFormat(this.getElementsByTagName("td")[1].innerHTML,"YYYY-MM-DD","DD.MM.YYYY");
-                    if(input_deletionMode.checked){
-                        if(Name.toUpperCase() === select_historyShowName.value.toUpperCase()){
-                            requestHistoryDeletion(id,date);
+                    var date = getDateFormat(this.getElementsByTagName("td")[1].innerHTML, "YYYY-MM-DD", "DD.MM.YYYY");
+                    if (input_deletionMode.checked) {
+                        if (Name.toUpperCase() === select_historyShowName.value.toUpperCase()) {
+                            requestHistoryDeletion(id, date);
                         }
-                        else{
+                        else {
                             alert("Du kannst ned die Sachen von die anderen löschen, Wirschtl");
                         }
                     }
@@ -1074,6 +1135,10 @@ function translate(word) {
             return "Bester (Reps)";
         case "bestExercises":
             return "Best @ Übungen";
+        case "bothSides":
+            return "Beidseitig";
+            case "online":
+            return "Online";
         default:
             return word;
     }

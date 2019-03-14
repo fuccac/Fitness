@@ -22,8 +22,10 @@ class FitnessManager {
         this.registeredPlayers = {};
 
         this.importGoogleSheetStuff(function (result) {
-            console.log(result);
-        });
+            console.log(result);            
+        }.bind(this));
+
+
 
     }
 
@@ -207,6 +209,10 @@ class FitnessManager {
                 }
             }
         }
+        for(var nameIterator = 0;nameIterator<nameData.length;nameIterator++){
+            this.calculatePointsFromHistory(nameData[nameIterator]);
+        }
+        
         result("Histories from JSON imported.");
     }
 
@@ -224,7 +230,7 @@ class FitnessManager {
         this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides));
     }
 
-    editExercise(id, editor, difficulty, difficulty10, difficulty100, unit, baseWeight, comment, bothSides) {
+    editExercise(id, editor, difficulty, difficulty10, difficulty100, unit, baseWeight, comment, bothSides,result) {
         var newVote = {
             difficulty: difficulty,
             difficulty10: difficulty10,
@@ -236,8 +242,33 @@ class FitnessManager {
         this.exerciseList[id].votes[editor] = newVote;
         this.exerciseList[id].unit = unit;
         calc.calculateNewFactor(this.exerciseList[id]);
+        this.recalculateExercise(id,function(result){
+            console.log(result);
+        }.bind(this));
+        result("editExercise done");
     }
 
+    recalculateExercise(id,result){
+        var sumPoints = 0;
+        for(var historyDate in this.history){
+            var historyEntry = this.history[historyDate];
+            for(var historyIterator = 0;historyIterator<historyEntry.exerciseId.length;historyIterator++){
+                if(historyEntry.exerciseId[historyIterator] != id){
+                    continue;
+                }
+                var currentWeight = historyEntry.weight[historyIterator];
+                var currentCount = historyEntry.count[historyIterator];
+                var points = calc.calculatePoints(this.exerciseList[historyEntry.exerciseId[historyIterator]], currentWeight, currentCount);
+                historyEntry.points[historyIterator] = points;
+                sumPoints += Number(points);
+                console.log("recalculated " + historyEntry.exName[historyIterator]);
+            }
+            
+        }
+        this.exerciseList[id].points = sumPoints;
+        return result("recalculateExercise done");
+    }
+   
     existExercise(name, equipment) {
         for (var i in this.exerciseList) {
             var exercise = this.exerciseList[i];
@@ -347,23 +378,6 @@ class FitnessManager {
             this.history[date] = newHistoryEntry;
         }
 
-
-        var sortable = [];
-        for (var historyEntry in this.history) {
-            sortable.push([historyEntry, this.history[historyEntry]]);
-        }
-
-        sortable.sort(function (a, b) {
-            return a[1] - b[1];
-        });
-
-        this.history = {};
-
-        for (var entrys in sortable) {
-            var entry = sortable[entrys];
-            this.history[entry[0]] = entry[1];
-        }
-
         if (this.exerciseList[exerciseId].pointsPerPlayer[playerName] == undefined) {
             this.exerciseList[exerciseId].pointsPerPlayer[playerName] = Number(points);
         }
@@ -465,6 +479,7 @@ class FitnessManager {
         return sum;
     }
 
+   
     checkForAchievements(player, result) {
         //exercise Achievements
         for (var exId in this.exerciseList) {
@@ -527,6 +542,24 @@ class FitnessManager {
             }
         }
         result("checkForAchievements done");
+    }
+
+    getPlayerList(playerList,result){
+        var returnList = {};
+        for( var idPlayer in playerList){
+            returnList[playerList[idPlayer].name] = playerList[idPlayer].points;
+            returnList[playerList[idPlayer].name].online = true;
+        }
+        for (var name in this.registeredPlayers){
+          if(returnList[name] != undefined){
+              continue;
+          }
+          else{
+            returnList[name] = this.calculatePointsFromHistory(name);
+            returnList[name].online = false;
+          }
+        }
+        return result(returnList);
     }
 
     calculatePointsFromHistory(name, toDateNotIncluding) {

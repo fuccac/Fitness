@@ -73,11 +73,14 @@ var OnPlayerConnection = function (socket) {
 			PLAYER_LIST[newPlayer.id].addedExercises++;
 		}
 		else {
-			FITNESS_MANAGER.editExercise(id, creator, data.difficulty, data.difficulty10, data.difficulty100, data.unit, data.baseWeight, data.comment, data.bothSides);
-			PLAYER_LIST[newPlayer.id].modifiedExercises++;
+			FITNESS_MANAGER.editExercise(id, creator, data.difficulty, data.difficulty10, data.difficulty100, data.unit, data.baseWeight, data.comment, data.bothSides,function (result){
+				saveAndRefresh();
+				PLAYER_LIST[newPlayer.id].modifiedExercises++;
+			});
+			
 		}
 
-		saveAndRefresh();
+		
 	});
 
 	socket.on("deleteExercise", function (data) {
@@ -96,13 +99,13 @@ var OnPlayerConnection = function (socket) {
 		var id = Math.random().toFixed(config.ID_LENGTH).slice(2);
 		FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.date);
 		PLAYER_LIST[socket.id].points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[socket.id].name);
-		saveAndRefresh();
+		saveAndRefresh(newPlayer.id);
 	});
 
 	socket.on("deleteHistory", function (data) {
 		FITNESS_MANAGER.deleteHistory(data.id, data.date);
 		PLAYER_LIST[socket.id].points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[socket.id].name);
-		saveAndRefresh();
+		saveAndRefresh(newPlayer.id);
 	});
 
 
@@ -111,7 +114,7 @@ var OnPlayerConnection = function (socket) {
 		SOCKET_LIST[newPlayer.id].emit('refreshHistory', {
 			history: historyChunk,
 		});
-		saveAndRefresh();
+		saveAndRefresh(newPlayer.id);
 	});
 
 	socket.on("requestGraphUpdate", function (data) {
@@ -120,7 +123,7 @@ var OnPlayerConnection = function (socket) {
 			graph: graph,
 
 		});
-		saveAndRefresh();
+		saveAndRefresh(newPlayer.id);
 
 	});
 
@@ -143,7 +146,7 @@ var OnSocketConnection = function (socket) {
 				OnPlayerConnection(socket);
 				loadPlayer(data.username, socket.id, function (res) {
 					console.log(res);
-					saveAndRefresh();
+					saveAndRefresh(socket.id);
 				});
 				socket.emit('signInResponse', { success: true });
 			}
@@ -273,26 +276,65 @@ var addUser = function (data, cb) {
 	}, 10);
 };
 
-
-
-function saveAndRefresh() {
-	saveFitnessManager();
-
+function recalculateAllPoints(result){
 	for (var iPlayer in PLAYER_LIST) {
-		var player = PLAYER_LIST[iPlayer];
-		FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
+		player = PLAYER_LIST[iPlayer];
+		player.points = FITNESS_MANAGER.calculatePointsFromHistory(player.name);
+	}
+	result("recalculateAllPoints done");
+}
+
+
+function saveAndRefresh(playerId) {
+	saveFitnessManager();
+	var iPlayer;
+	var player;
+
+	
+	if(playerId == undefined){
+		recalculateAllPoints(function(result){
 			console.log(result);
-			if (SOCKET_LIST[player.id] != undefined) {
-				SOCKET_LIST[player.id].emit('refresh', {
-					exercises: FITNESS_MANAGER.exerciseList,
-					player: player,
-					registeredPlayers: FITNESS_MANAGER.registeredPlayers,
+			for (iPlayer in PLAYER_LIST) {
+				player = PLAYER_LIST[iPlayer];
+				FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
+					console.log(result);
+					FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (result) {
+						if (SOCKET_LIST[player.id] != undefined) {
+							SOCKET_LIST[player.id].emit('refresh', {
+								exercises: FITNESS_MANAGER.exerciseList,
+								player: player,
+								registeredPlayers: FITNESS_MANAGER.registeredPlayers,
+								playerList: result,
+							});
+						}
+					});
+		
 				});
+		
 			}
 		});
-
 	}
-
+	else{
+		FITNESS_MANAGER.checkPlayerStuff(PLAYER_LIST[playerId], function (result) {
+			console.log(result);
+			FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (result) {
+				for (iPlayer in PLAYER_LIST) {
+					player = PLAYER_LIST[iPlayer];
+					if (SOCKET_LIST[player.id] != undefined) {
+						SOCKET_LIST[player.id].emit('refresh', {
+							exercises: FITNESS_MANAGER.exerciseList,
+							player: player,
+							registeredPlayers: FITNESS_MANAGER.registeredPlayers,
+							playerList: result,
+						});
+					}
+			
+				}
+			});
+		});
+		
+	}
+	
 }
 
 
@@ -349,7 +391,7 @@ function loadPlayer(name, id, cb) {
 
 
 		PLAYER_LIST[id].points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[id].name);
-		saveAndRefresh();
+		saveAndRefresh(id);
 
 		cb("player " + PLAYER_LIST[id].name + " loaded");
 	})
@@ -357,7 +399,7 @@ function loadPlayer(name, id, cb) {
 
 			PLAYER_LIST[id].name = name;
 			PLAYER_LIST[id].points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[id].name);
-			saveAndRefresh();
+			saveAndRefresh(id);
 			cb("Player <" + name + ">: No Savestate.");
 		});
 

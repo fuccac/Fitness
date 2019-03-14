@@ -22,19 +22,42 @@ button:hover {
     display: none;
     color: #030;
     background-color: rgb(194, 214, 245);
-    border: 1px solid #000000;
+    
     overflow: hidden;
 }
+
+.tab div{
+    border-top: 1px solid #000000;
+    padding: 2px
+}
+/* TAB MAIN INFO*/
+#div_allPlayersTable{
+    width: 100%;
+    height: 30%;
+}
+
+#div_graph{
+    background-color: rgb(194, 214, 245);
+    height: 50%;
+    width:100%;
+}
+
+#div_GraphControl{
+    background-color: rgb(194, 214, 245);
+    height: 50%;
+    width:100%;
+}
+
 
 /* TAB PERSONAL INFO*/
 #div_PersonalInfo{
     width: 100%;
-    height: 10%;
+    height: 7%;
 }
 
 #div_addWorkout{
     width: 100%;
-    height: 20%;
+    height: 15%;
     
 }
 
@@ -46,7 +69,7 @@ button:hover {
 #div_exerciseHistory{
     background-color: rgb(194, 214, 245);
     width: 100%;
-    height: 55%;
+    height: 63%;
     overflow-y: scroll;
 }
 
@@ -70,17 +93,7 @@ button:hover {
 
 /* TAB STATISTICS INFO*/
 
-#div_graph{
-    background-color: rgb(194, 214, 245);
-    height: 50%;
-    width:100%;
-}
 
-#div_GraphControl{
-    background-color: rgb(194, 214, 245);
-    height: 50%;
-    width:100%;
-}
 
 
 /********************/
@@ -171,6 +184,12 @@ button:hover {
 }
 
  /* OTHER CLASSES */
+ .negative {
+     color:red;
+ }
+ .total{
+     font-weight: bold;
+ }
 
 .tableTooltip .tooltiptext {
     visibility: hidden;

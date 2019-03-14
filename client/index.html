@@ -14,6 +14,36 @@
 		<br>
 	</div>
 
+	<div id="div_MainPage" class="tab">
+		<div id="div_allPlayersTable">
+			<table id="table_allPlayersTable" class="std_table">
+				<thead></thead>
+				<tbody></tbody>
+			</table>
+		</div>
+		<div id="div_graph">
+			<canvas id="canvas_graphHistory"></canvas>
+		</div>
+		<div id="div_GraphControl">
+			<br>
+			<label for="input_graphFromDate">Von :</label>
+			<input id="input_graphFromDate" type="date"></input>
+			<label for="input_graphToDate">Bis :</label>
+			<input id="input_graphToDate" type="date"></input><br>
+
+			<label for="input_graphXSections">Alle X Tage :</label>
+			<input id="input_graphXSections" value="10" type="number"></input>
+			<label for="input_graphYSections">Anzahl X Linien :</label>
+			<input id="input_graphYSections" value="10" type="number"></input>
+			<label for="input_graphXMax">Maximalwert (0 für Auto):</label>
+			<input id="input_graphXMax" value="0" type="number"></input><br>
+			<button id="button_updateGraph">Graph erzeugen</button>
+		</div>
+
+
+
+	</div>
+
 
 	<div id="div_PersonalOverview" class="tab">
 		<div id="div_PersonalInfo">
@@ -122,29 +152,12 @@
 		</div>
 	</div>
 	<div id="div_statistics" class="tab">
-		<div id="div_graph">
-			<canvas id="canvas_graphHistory"></canvas>
-			
-		</div>
-		<div id="div_GraphControl">
-			<br>
-			<label for="input_graphFromDate">Von :</label>
-			<input id="input_graphFromDate" type="date"></input>
-			<label for="input_graphToDate">Bis :</label>
-			<input id="input_graphToDate" type="date"></input><br>
 
-			<label for="input_graphXSections">Alle X Tage :</label>
-			<input id="input_graphXSections" value="10" type="number"></input>
-			<label for="input_graphYSections">Anzahl X Linien :</label>
-			<input id="input_graphYSections" value="10" type="number"></input>
-			<label for="input_graphXMax">Maximalwert (0 für Auto):</label>
-			<input id="input_graphXMax" value="0" type="number"></input><br>
-			<button id="button_updateGraph">Graph erzeugen</button>
-		</div>
 
 	</div>
 
 	<div id="div_navigation">
+		<button id="button_tabMainPage">Hauptseite</button>
 		<button id="button_tabExerciseOverview">Übungsübersicht</button>
 		<button id="button_tabPersonalOverview">Persönliche Übersicht</button>
 		<button id="button_tabStatistics">Statistik</button>
