@@ -22,13 +22,15 @@ button:hover {
     display: none;
     color: #030;
     background-color: rgb(194, 214, 245);
-    
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-top: 1px solid #000000;
     overflow: hidden;
 }
 
 .tab div{
-    border-top: 1px solid #000000;
-    padding: 2px
+    padding: 2px;
+    align-items: center;
 }
 /* TAB MAIN INFO*/
 #div_allPlayersTable{
@@ -114,6 +116,8 @@ button:hover {
 .tab input,.tab select{
     width: 200px;
     height: 20px;
+    background-color: white;
+    margin: 1px;
 }
 
 .tab label{
@@ -144,7 +148,6 @@ button:hover {
 #canvas_graphHistory{
     background-color: rgb(255, 255, 255);
     border: 1px solid #000000;
-
 }
 
 

@@ -154,8 +154,6 @@ button_tabStatistics.onclick = function () {
     div_PersonalOverview.style.display = "none";
     div_statistics.style.display = "inline-block";
     div_MainPage.style.display = "none";
-    canvas_graphHistory.height = div_graph.clientHeight;
-    canvas_graphHistory.width = div_graph.clientWidth;
 };
 
 
@@ -295,7 +293,7 @@ function modifyExercise(emitString) {
 ******************************************************************************************************************/
 function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
     canvas.height = div_graph.clientHeight;
-    canvas.width = div_graph.clientWidth;
+    canvas.width = div_graph.clientWidth-10;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     var maxHeight = canvas.height;
     var maxWidth = canvas.width;
@@ -425,8 +423,8 @@ function generatePlayerListTable(data) {
         }
         cell = bodyRow.insertCell(cellNumber);
         cell.innerHTML += translate(playerid);
-        
-        
+
+
 
         cellNumber++;
         for (var playerKeyName in player) {
@@ -1130,7 +1128,7 @@ function translate(word) {
             return "Best @ Übungen";
         case "bothSides":
             return "Beidseitig";
-            case "online":
+        case "online":
             return "Online";
         default:
             return word;
