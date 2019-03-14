@@ -238,6 +238,10 @@ button:hover {
     visibility: visible;
 }
 
+.notEarned{
+    background: red;
+}
+
 .hiddenCell{
     visibility: hidden;
     position: absolute;

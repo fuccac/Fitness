@@ -77,6 +77,7 @@ var table_exerciseTable = document.getElementById('table_exerciseTable');
 var table_personalTable = document.getElementById('table_personalTable');
 var table_exerciseHistory = document.getElementById('table_exerciseHistory');
 var table_allPlayersTable = document.getElementById('table_allPlayersTable');
+var table_achievements = document.getElementById('table_achievements');
 var socket = io();
 
 initialize();
@@ -220,7 +221,7 @@ socket.on("refresh", function (data) {
     generatePlayerListTable(data);
     generateExerciseList(data);
     generatePlayerInfoTable(data);
-
+    generateAchievementListTable(data, Name);
 
 
 });
@@ -293,7 +294,7 @@ function modifyExercise(emitString) {
 ******************************************************************************************************************/
 function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
     canvas.height = div_graph.clientHeight;
-    canvas.width = div_graph.clientWidth-10;
+    canvas.width = div_graph.clientWidth - 10;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     var maxHeight = canvas.height;
     var maxWidth = canvas.width;
@@ -403,6 +404,65 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
 
 
 }
+function generateAchievementListTable(data, name) {
+
+    var theadPlayersTable = table_achievements.tHead;
+    var tBodyPlayersTable = table_achievements.tBodies[0];
+    var achievementIterator;
+
+    theadPlayersTable.innerHTML = "";
+    tBodyPlayersTable.innerHTML = "";
+    headerRow = theadPlayersTable.insertRow(0);
+
+    achievementListPlayer = data.achievementList[name];
+    var rowNumber = 0;
+    var cellNumber = 0;
+    var bodyRow;
+    var achievementKey;
+
+        for (achievementIterator = 0; achievementIterator <= achievementListPlayer.earnedAchievements.length; achievementIterator++) {
+            bodyRow = tBodyPlayersTable.insertRow(rowNumber);
+            for (achievementKey in achievementListPlayer.earnedAchievements[achievementIterator]) {
+                if (rowNumber == 0) {
+                    cell = headerRow.insertCell(cellNumber);
+                    cell.innerHTML += translate(achievementKey);
+                }
+
+
+                cell = bodyRow.insertCell(cellNumber);
+                cell.innerHTML += translate(achievementListPlayer.earnedAchievements[achievementIterator][achievementKey]);
+                cellNumber++;
+            }
+
+            rowNumber++;
+            cellNumber = 0;
+
+        }
+
+        for (achievementIterator = 0; achievementIterator <= achievementListPlayer.notEarnedAchievements.length; achievementIterator++) {
+            bodyRow = tBodyPlayersTable.insertRow(rowNumber);
+            bodyRow.classList.add("notEarned");
+            for (achievementKey in achievementListPlayer.notEarnedAchievements[achievementIterator]) {
+                if (rowNumber == 0) {
+                    cell = headerRow.insertCell(cellNumber);
+                    cell.innerHTML += translate(achievementKey);
+                }
+
+
+                cell = bodyRow.insertCell(cellNumber);
+                cell.innerHTML += translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]);
+                cellNumber++;
+            }
+
+            rowNumber++;
+            cellNumber = 0;
+
+        }
+
+
+
+}
+
 function generatePlayerListTable(data) {
     var playerIterator = 0;
     var theadPlayersTable = table_allPlayersTable.tHead;

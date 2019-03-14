@@ -73,14 +73,14 @@ var OnPlayerConnection = function (socket) {
 			PLAYER_LIST[newPlayer.id].addedExercises++;
 		}
 		else {
-			FITNESS_MANAGER.editExercise(id, creator, data.difficulty, data.difficulty10, data.difficulty100, data.unit, data.baseWeight, data.comment, data.bothSides,function (result){
+			FITNESS_MANAGER.editExercise(id, creator, data.difficulty, data.difficulty10, data.difficulty100, data.unit, data.baseWeight, data.comment, data.bothSides, function (result) {
 				saveAndRefresh();
 				PLAYER_LIST[newPlayer.id].modifiedExercises++;
 			});
-			
+
 		}
 
-		
+
 	});
 
 	socket.on("deleteExercise", function (data) {
@@ -276,7 +276,7 @@ var addUser = function (data, cb) {
 	}, 10);
 };
 
-function recalculateAllPoints(result){
+function recalculateAllPoints(result) {
 	for (var iPlayer in PLAYER_LIST) {
 		player = PLAYER_LIST[iPlayer];
 		player.points = FITNESS_MANAGER.calculatePointsFromHistory(player.name);
@@ -290,51 +290,59 @@ function saveAndRefresh(playerId) {
 	var iPlayer;
 	var player;
 
-	
-	if(playerId == undefined){
-		recalculateAllPoints(function(result){
+
+	if (playerId == undefined) {
+		recalculateAllPoints(function (result) {
 			console.log(result);
 			for (iPlayer in PLAYER_LIST) {
 				player = PLAYER_LIST[iPlayer];
 				FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
 					console.log(result);
-					FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (result) {
+					FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (playerList) {
+						FITNESS_MANAGER.getAchievementList(PLAYER_LIST, function (achievementList) {
+							if (SOCKET_LIST[player.id] != undefined) {
+								SOCKET_LIST[player.id].emit('refresh', {
+									exercises: FITNESS_MANAGER.exerciseList,
+									player: player,
+									registeredPlayers: FITNESS_MANAGER.registeredPlayers,
+									playerList: playerList,
+									achievementList:achievementList
+								});
+							}
+						});
+
+					});
+
+				});
+
+			}
+		});
+	}
+	else {
+		FITNESS_MANAGER.checkPlayerStuff(PLAYER_LIST[playerId], function (result) {
+			console.log(result);
+			FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (playerList) {
+				FITNESS_MANAGER.getAchievementList(PLAYER_LIST, function (achievementList) {
+					for (iPlayer in PLAYER_LIST) {
+						player = PLAYER_LIST[iPlayer];
 						if (SOCKET_LIST[player.id] != undefined) {
 							SOCKET_LIST[player.id].emit('refresh', {
 								exercises: FITNESS_MANAGER.exerciseList,
 								player: player,
 								registeredPlayers: FITNESS_MANAGER.registeredPlayers,
-								playerList: result,
+								playerList: playerList,
+								achievementList:achievementList
 							});
 						}
-					});
-		
-				});
-		
-			}
-		});
-	}
-	else{
-		FITNESS_MANAGER.checkPlayerStuff(PLAYER_LIST[playerId], function (result) {
-			console.log(result);
-			FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (result) {
-				for (iPlayer in PLAYER_LIST) {
-					player = PLAYER_LIST[iPlayer];
-					if (SOCKET_LIST[player.id] != undefined) {
-						SOCKET_LIST[player.id].emit('refresh', {
-							exercises: FITNESS_MANAGER.exerciseList,
-							player: player,
-							registeredPlayers: FITNESS_MANAGER.registeredPlayers,
-							playerList: result,
-						});
+
 					}
-			
-				}
+				});
+
 			});
 		});
-		
+
 	}
-	
+
 }
 
 

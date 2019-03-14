@@ -230,6 +230,43 @@ class FitnessManager {
         this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides));
     }
 
+    getAchievementList(playerList, result){
+        var achievementList = {};
+        var earnedAchievements = [];
+        var notEarnedAchievements = [];
+        var achievementIterator = 0;
+        var achievementCategory;
+
+        for(var playerId in playerList){
+            var earned = playerList[playerId].earnedAchievements;
+            var notEarned = playerList[playerId].notEarnedAchievements;
+
+            for (achievementCategory in earned){
+                earnedAchievements[achievementIterator] = {
+                    achievementCategory:achievementCategory,
+                    achievementText:earned[achievementCategory],
+                };
+                achievementIterator++;
+            }
+            achievementIterator = 0;
+            for (achievementCategory in notEarned){
+                notEarnedAchievements[achievementIterator] = {
+                    achievementCategory:achievementCategory,
+                    achievementText:notEarned[achievementCategory],
+                };
+                achievementIterator++;
+            }
+           
+
+            var entry = {
+                earnedAchievements:earnedAchievements,
+                notEarnedAchievements:notEarnedAchievements
+            };
+            achievementList[playerList[playerId].name] = entry;
+        }
+        result(achievementList);
+    }
+
     editExercise(id, editor, difficulty, difficulty10, difficulty100, unit, baseWeight, comment, bothSides,result) {
         var newVote = {
             difficulty: difficulty,
