@@ -10,6 +10,18 @@ googleSheetHistoryMuch = require("../saves/googleJSON/muchGoogle.json");
 googleSheetHistoryPhilipp = require("../saves/googleJSON/philippGoogle.json");
 googleSheetHistoryLisi = require("../saves/googleJSON/lisiGoogle.json");
 
+require('isomorphic-fetch'); 
+var Dropbox = require('dropbox').Dropbox;
+var dbx = new Dropbox({ accessToken: 'Ad3tLqqtKckAAAAAAACK_0aogsVnZrSmjMWjss79yxecm6jxPi3J3xBPy6YsOQNt', fetch});
+dbx.filesListFolder({path: ''})
+  .then(function(response) {
+    console.log(response);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+
+
 calc = new Calc();
 
 class FitnessManager {
@@ -22,8 +34,16 @@ class FitnessManager {
         this.registeredPlayers = {};
 
         this.importGoogleSheetStuff(function (result) {
-            console.log(result);            
+            console.log(result);
         }.bind(this));
+
+        dbx.usersGetCurrentAccount()
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
 
 
 
@@ -40,30 +60,30 @@ class FitnessManager {
         }.bind(this));
     }
 
-    addExerciseAchievement(exId,repsToGetOverall,repsToGetDaily,repsToGetMonthly,achievementCategory){
+    addExerciseAchievement(exId, repsToGetOverall, repsToGetDaily, repsToGetMonthly, achievementCategory) {
         repsToGetOverall = repsToGetOverall.map(Number);
         repsToGetDaily = repsToGetDaily.map(Number);
         repsToGetMonthly = repsToGetMonthly.map(Number);
-        
+
         var textOverall = "";
         var textDaily = "";
         var textMonthly = "";
         var achievementActive = false;
-        if(calc.getNonZeroValuesOfArray(repsToGetOverall)>0){
+        if (calc.getNonZeroValuesOfArray(repsToGetOverall) > 0) {
             textOverall = achievementCategory + " Achievement (Gesamt)";
             achievementActive = true;
         }
-        if(calc.getNonZeroValuesOfArray(repsToGetDaily)>0){
+        if (calc.getNonZeroValuesOfArray(repsToGetDaily) > 0) {
             textDaily = achievementCategory + " Achievement (Täglich)";
             achievementActive = true;
         }
-        if(calc.getNonZeroValuesOfArray(repsToGetMonthly)>0){
+        if (calc.getNonZeroValuesOfArray(repsToGetMonthly) > 0) {
             textMonthly = achievementCategory + " Achievement (Monatlich)";
             achievementActive = true;
         }
 
         this.achievementInfo = {
-            achievementActive:achievementActive,
+            achievementActive: achievementActive,
             repsToGetOverall: repsToGetOverall,
             repsToGetDaily: repsToGetDaily,
             repsToGetMonthly: repsToGetMonthly,
@@ -209,10 +229,10 @@ class FitnessManager {
                 }
             }
         }
-        for(var nameIterator = 0;nameIterator<nameData.length;nameIterator++){
+        for (var nameIterator = 0; nameIterator < nameData.length; nameIterator++) {
             this.calculatePointsFromHistory(nameData[nameIterator]);
         }
-        
+
         result("Histories from JSON imported.");
     }
 
@@ -230,44 +250,44 @@ class FitnessManager {
         this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides));
     }
 
-    getAchievementList(playerList, result){
+    getAchievementList(playerList, result) {
         var achievementList = {};
         var earnedAchievements = [];
         var notEarnedAchievements = [];
         var achievementIterator = 0;
         var achievementCategory;
 
-        for(var playerId in playerList){
+        for (var playerId in playerList) {
             var earned = playerList[playerId].earnedAchievements;
             var notEarned = playerList[playerId].notEarnedAchievements;
 
-            for (achievementCategory in earned){
+            for (achievementCategory in earned) {
                 earnedAchievements[achievementIterator] = {
-                    achievementCategory:achievementCategory,
-                    achievementText:earned[achievementCategory],
+                    achievementCategory: achievementCategory,
+                    achievementText: earned[achievementCategory],
                 };
                 achievementIterator++;
             }
             achievementIterator = 0;
-            for (achievementCategory in notEarned){
+            for (achievementCategory in notEarned) {
                 notEarnedAchievements[achievementIterator] = {
-                    achievementCategory:achievementCategory,
-                    achievementText:notEarned[achievementCategory],
+                    achievementCategory: achievementCategory,
+                    achievementText: notEarned[achievementCategory],
                 };
                 achievementIterator++;
             }
-           
+
 
             var entry = {
-                earnedAchievements:earnedAchievements,
-                notEarnedAchievements:notEarnedAchievements
+                earnedAchievements: earnedAchievements,
+                notEarnedAchievements: notEarnedAchievements
             };
             achievementList[playerList[playerId].name] = entry;
         }
         result(achievementList);
     }
 
-    editExercise(id, editor, difficulty, difficulty10, difficulty100, unit, baseWeight, comment, bothSides,result) {
+    editExercise(id, editor, difficulty, difficulty10, difficulty100, unit, baseWeight, comment, bothSides, result) {
         var newVote = {
             difficulty: difficulty,
             difficulty10: difficulty10,
@@ -279,18 +299,18 @@ class FitnessManager {
         this.exerciseList[id].votes[editor] = newVote;
         this.exerciseList[id].unit = unit;
         calc.calculateNewFactor(this.exerciseList[id]);
-        this.recalculateExercise(id,function(result){
+        this.recalculateExercise(id, function (result) {
             console.log(result);
         }.bind(this));
         result("editExercise done");
     }
 
-    recalculateExercise(id,result){
+    recalculateExercise(id, result) {
         var sumPoints = 0;
-        for(var historyDate in this.history){
+        for (var historyDate in this.history) {
             var historyEntry = this.history[historyDate];
-            for(var historyIterator = 0;historyIterator<historyEntry.exerciseId.length;historyIterator++){
-                if(historyEntry.exerciseId[historyIterator] != id){
+            for (var historyIterator = 0; historyIterator < historyEntry.exerciseId.length; historyIterator++) {
+                if (historyEntry.exerciseId[historyIterator] != id) {
                     continue;
                 }
                 var currentWeight = historyEntry.weight[historyIterator];
@@ -300,12 +320,12 @@ class FitnessManager {
                 sumPoints += Number(points);
                 console.log("recalculated " + historyEntry.exName[historyIterator]);
             }
-            
+
         }
         this.exerciseList[id].points = sumPoints;
         return result("recalculateExercise done");
     }
-   
+
     existExercise(name, equipment) {
         for (var i in this.exerciseList) {
             var exercise = this.exerciseList[i];
@@ -516,7 +536,7 @@ class FitnessManager {
         return sum;
     }
 
-   
+
     checkForAchievements(player, result) {
         //exercise Achievements
         for (var exId in this.exerciseList) {
@@ -581,20 +601,20 @@ class FitnessManager {
         result("checkForAchievements done");
     }
 
-    getPlayerList(playerList,result){
+    getPlayerList(playerList, result) {
         var returnList = {};
-        for( var idPlayer in playerList){
+        for (var idPlayer in playerList) {
             returnList[playerList[idPlayer].name] = playerList[idPlayer].points;
             returnList[playerList[idPlayer].name].online = true;
         }
-        for (var name in this.registeredPlayers){
-          if(returnList[name] != undefined){
-              continue;
-          }
-          else{
-            returnList[name] = this.calculatePointsFromHistory(name);
-            returnList[name].online = false;
-          }
+        for (var name in this.registeredPlayers) {
+            if (returnList[name] != undefined) {
+                continue;
+            }
+            else {
+                returnList[name] = this.calculatePointsFromHistory(name);
+                returnList[name].online = false;
+            }
         }
         return result(returnList);
     }
