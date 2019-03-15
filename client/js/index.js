@@ -324,7 +324,7 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
     minHeight += topBottom;
     minWidth += rightLeft;
     var startWidthNames = minWidth;
-    var colors = ["red", "green", "blue", "yellow", "brown", "grey", "magenta", "orange"];
+    var colors = ["green","red", "blue", "yellow", "brown", "grey", "magenta", "orange"];
 
     for (var playerName in data.graph) {
         var maxPlayer = data.graph[playerName].xAxis[data.graph[playerName].xAxis.length - 1];
