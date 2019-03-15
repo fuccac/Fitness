@@ -10,23 +10,23 @@ var pwHash = require('password-hash');
 var Config = require("./server/Config");
 var Player = require("./server/Player");
 var FitnessManager = require("./server/FitnessManager");
+var DropBoxHandler = require("./server/dropBoxHandler");
 
 
 //MODULE INITS
 var storageManager = new JSONFileStorage('./saves');
 var config = new Config();
 var serv = new http.Server(app);
+var dropbox = new DropBoxHandler();
 
 //GLOBALS
 var USERS = {};
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var FITNESS_MANAGER = new FitnessManager();
+var DB_TOKEN = config.DB_TOKEN;
 
-
-loadUsers();
-loadFitnessManager();
-
+loadSaveFiles();
 app.get('/', function (req, res) {
 	res.sendFile(__dirname + '/client/index.html');
 });
@@ -41,6 +41,25 @@ var io = require('socket.io')(serv, {});
 io.sockets.on('connection', function (socket) {
 	OnSocketConnection(socket);
 });
+
+function loadSaveFiles() {
+	var filesToLoad = ["exerciseList.json", "registeredPlayers.json", "history.json", "users.json"];
+	dropbox.downloadFile(DB_TOKEN, filesToLoad[0], function (callback) {
+		console.log(callback);
+		dropbox.downloadFile(DB_TOKEN, filesToLoad[1], function (callback) {
+			console.log(callback);
+			dropbox.downloadFile(DB_TOKEN, filesToLoad[2], function (callback) {
+				console.log(callback);
+				loadFitnessManager();
+			});
+		});
+	});
+	dropbox.downloadFile(DB_TOKEN, filesToLoad[3], function (callback) {
+		console.log(callback);
+		loadUsers();
+	});
+
+}
 
 /**
  * @param {SocketIO.Socket} socket 
@@ -200,18 +219,30 @@ var OnSocketConnection = function (socket) {
 function saveUsers(users) {
 	storageManager.put({ userlist: users, id: "users" }).then(result => {
 		console.log("userlist saved");
+		dropbox.uploadFile(DB_TOKEN,"users.json",function(result){
+			console.log(result);
+		});
 	});
 }
 
 function saveFitnessManager() {
 	storageManager.put({ exerciseList: FITNESS_MANAGER.exerciseList, id: "exerciseList" }).then(result => {
 		console.log("exerciseList saved");
+		dropbox.uploadFile(DB_TOKEN,"exerciseList.json",function(result){
+			console.log(result);
+		});
 	});
 	storageManager.put({ history: FITNESS_MANAGER.history, id: "history" }).then(result => {
 		console.log("history saved");
+		dropbox.uploadFile(DB_TOKEN,"history.json",function(result){
+			console.log(result);
+		});
 	});
 	storageManager.put({ registeredPlayers: FITNESS_MANAGER.registeredPlayers, id: "registeredPlayers" }).then(result => {
 		console.log("registeredPlayers saved");
+		dropbox.uploadFile(DB_TOKEN,"registeredPlayers.json",function(result){
+			console.log(result);
+		});
 	});
 }
 
@@ -237,6 +268,8 @@ function loadFitnessManager() {
 		.catch((err) => {
 			console.log("registeredPlayers file missing or corrupted");
 		});
+
+
 }
 
 function loadUsers() {
@@ -246,6 +279,7 @@ function loadUsers() {
 	})
 		.catch((err) => {
 			console.log("users file missing or corrupted");
+			console.log(err);
 		});
 }
 
@@ -356,6 +390,9 @@ function saveAndRefresh(playerId) {
 function savePlayer(player) {
 	storageManager.put({ content: player, id: player.name }).then(result => {
 		console.log("player " + player.name + " saved");
+		dropbox.uploadFile(DB_TOKEN,player.name +".json",function(result){
+			console.log(result);
+		});
 	});
 }
 

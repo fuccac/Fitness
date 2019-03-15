@@ -9,10 +9,9 @@ googleSheetHistoryJonny = require("../saves/googleJSON/jonnyGoogle.json");
 googleSheetHistoryMuch = require("../saves/googleJSON/muchGoogle.json");
 googleSheetHistoryPhilipp = require("../saves/googleJSON/philippGoogle.json");
 googleSheetHistoryLisi = require("../saves/googleJSON/lisiGoogle.json");
+var fs = require('fs');
 
-require('isomorphic-fetch');
-var Dropbox = require('dropbox').Dropbox;
-var dbx = new Dropbox({ accessToken: 'Ad3tLqqtKckAAAAAAACK_0aogsVnZrSmjMWjss79yxecm6jxPi3J3xBPy6YsOQNt', fetch });
+
 
 
 calc = new Calc();
@@ -29,7 +28,6 @@ class FitnessManager {
         this.importGoogleSheetStuff(function (result) {
             console.log(result);
         }.bind(this));
-
 
     }
 
@@ -270,7 +268,7 @@ class FitnessManager {
             earnedAchievements: earnedAchievements,
             notEarnedAchievements: notEarnedAchievements
         };
-        
+
         achievementList[player.name] = entry;
         result(achievementList);
     }
@@ -541,9 +539,9 @@ class FitnessManager {
                 if (exercise.achievementInfo.repsToGetOverall[levelOverallIterator] > 0) {
                     if (playerReps >= exercise.achievementInfo.repsToGetOverall[levelOverallIterator]) {
                         player.earnedAchievements[exCat + "Overall"] = {
-                            level:(levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
-                            text:exercise.achievementInfo.textOverall,
-                            progress:playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
+                            level: (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
+                            text: exercise.achievementInfo.textOverall,
+                            progress: playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
                         };
                         if (levelOverallIterator == exercise.achievementInfo.repsToGetOverall.length) {
                             delete player.notEarnedAchievements[exCat + "Overall"];
@@ -551,9 +549,9 @@ class FitnessManager {
                     }
                     else {
                         player.notEarnedAchievements[exCat + "Overall"] = {
-                            level:(levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
-                            text:exercise.achievementInfo.textOverall,
-                            progress:playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
+                            level: (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
+                            text: exercise.achievementInfo.textOverall,
+                            progress: playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
                         };
                         break;
                     }
@@ -566,17 +564,17 @@ class FitnessManager {
                 if (exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] > 0) {
                     if (playerRepsMonthly >= exercise.achievementInfo.repsToGetMonthly[levelMonthIterator]) {
                         player.earnedAchievements[exCat + "Month"] = {
-                            level:(levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
-                            text:exercise.achievementInfo.textMonthly,
-                            progress:playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
+                            level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
+                            text: exercise.achievementInfo.textMonthly,
+                            progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
                         };
-                        
+
                     }
                     else {
                         player.notEarnedAchievements[exCat + "Month"] = {
-                            level:(levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
-                            text:exercise.achievementInfo.textMonthly,
-                            progress:playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
+                            level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
+                            text: exercise.achievementInfo.textMonthly,
+                            progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
                         };
                         break;
                     }
@@ -589,16 +587,16 @@ class FitnessManager {
                 if (exercise.achievementInfo.repsToGetDaily[levelDayIterator] > 0) {
                     if (repsToGetDaily >= exercise.achievementInfo.repsToGetDaily[levelDayIterator]) {
                         player.earnedAchievements[exCat + "Day"] = {
-                            level:(levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
-                            text:exercise.achievementInfo.textDaily,
-                            progress:repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
+                            level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
+                            text: exercise.achievementInfo.textDaily,
+                            progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
                         };
                     }
                     else {
                         player.notEarnedAchievements[exCat + "Day"] = {
-                            level:(levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
-                            text:exercise.achievementInfo.textDaily,
-                            progress:repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
+                            level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
+                            text: exercise.achievementInfo.textDaily,
+                            progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
                         };
                         break;
                     }
