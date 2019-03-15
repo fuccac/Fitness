@@ -31,7 +31,7 @@ function DropboxFunctions() {
             if (err) {
                 console.log('Error: ', err);
             }
-            dbx.filesUpload({ path: '/' + id, contents: contents })
+            dbx.filesUpload({ path: '/' + id, contents: contents ,mode: 'overwrite'})
                 .then(function (response) {
                     callback(response);
                 })
