@@ -165,18 +165,13 @@ button:hover {
     padding: 8px;
 }
 
-.std_table.floatThead-table {
-    border-top: none;
-    border-bottom: none;
-    background-color: #fff;
-}
-
 .std_table td:first-child{
-
     text-align: left;
 }
 
-.std_table tr:nth-child(even){background-color: #f2f2f2;}
+.std_table tr:nth-child(even){
+    background-color: #f2f2f2;
+}
 
 .std_table thead tr{
     padding-top: 12px;
@@ -184,6 +179,10 @@ button:hover {
     text-align: left;
     background-color: rgb(38, 78, 39);
     color: white;
+}
+
+.std_table tbody tr:hover{
+   color:  #122c44b2;
 }
 
  /* OTHER CLASSES */
@@ -239,7 +238,8 @@ button:hover {
 }
 
 .notEarned{
-    background: red;
+    color: red;
+    font-style: italic;
 }
 
 .hiddenCell{

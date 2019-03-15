@@ -10,6 +10,11 @@ googleSheetHistoryMuch = require("../saves/googleJSON/muchGoogle.json");
 googleSheetHistoryPhilipp = require("../saves/googleJSON/philippGoogle.json");
 googleSheetHistoryLisi = require("../saves/googleJSON/lisiGoogle.json");
 
+require('isomorphic-fetch');
+var Dropbox = require('dropbox').Dropbox;
+var dbx = new Dropbox({ accessToken: 'Ad3tLqqtKckAAAAAAACK_0aogsVnZrSmjMWjss79yxecm6jxPi3J3xBPy6YsOQNt', fetch });
+
+
 calc = new Calc();
 
 class FitnessManager {
@@ -22,9 +27,8 @@ class FitnessManager {
         this.registeredPlayers = {};
 
         this.importGoogleSheetStuff(function (result) {
-            console.log(result);            
+            console.log(result);
         }.bind(this));
-
 
 
     }
@@ -40,30 +44,30 @@ class FitnessManager {
         }.bind(this));
     }
 
-    addExerciseAchievement(exId,repsToGetOverall,repsToGetDaily,repsToGetMonthly,achievementCategory){
+    addExerciseAchievement(exId, repsToGetOverall, repsToGetDaily, repsToGetMonthly, achievementCategory) {
         repsToGetOverall = repsToGetOverall.map(Number);
         repsToGetDaily = repsToGetDaily.map(Number);
         repsToGetMonthly = repsToGetMonthly.map(Number);
-        
+
         var textOverall = "";
         var textDaily = "";
         var textMonthly = "";
         var achievementActive = false;
-        if(calc.getNonZeroValuesOfArray(repsToGetOverall)>0){
+        if (calc.getNonZeroValuesOfArray(repsToGetOverall) > 0) {
             textOverall = achievementCategory + " Achievement (Gesamt)";
             achievementActive = true;
         }
-        if(calc.getNonZeroValuesOfArray(repsToGetDaily)>0){
+        if (calc.getNonZeroValuesOfArray(repsToGetDaily) > 0) {
             textDaily = achievementCategory + " Achievement (Täglich)";
             achievementActive = true;
         }
-        if(calc.getNonZeroValuesOfArray(repsToGetMonthly)>0){
+        if (calc.getNonZeroValuesOfArray(repsToGetMonthly) > 0) {
             textMonthly = achievementCategory + " Achievement (Monatlich)";
             achievementActive = true;
         }
 
         this.achievementInfo = {
-            achievementActive:achievementActive,
+            achievementActive: achievementActive,
             repsToGetOverall: repsToGetOverall,
             repsToGetDaily: repsToGetDaily,
             repsToGetMonthly: repsToGetMonthly,
@@ -209,10 +213,10 @@ class FitnessManager {
                 }
             }
         }
-        for(var nameIterator = 0;nameIterator<nameData.length;nameIterator++){
+        for (var nameIterator = 0; nameIterator < nameData.length; nameIterator++) {
             this.calculatePointsFromHistory(nameData[nameIterator]);
         }
-        
+
         result("Histories from JSON imported.");
     }
 
@@ -230,44 +234,48 @@ class FitnessManager {
         this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides));
     }
 
-    getAchievementList(playerList, result){
+    getAchievementList(player, result) {
         var achievementList = {};
         var earnedAchievements = [];
         var notEarnedAchievements = [];
         var achievementIterator = 0;
         var achievementCategory;
 
-        for(var playerId in playerList){
-            var earned = playerList[playerId].earnedAchievements;
-            var notEarned = playerList[playerId].notEarnedAchievements;
 
-            for (achievementCategory in earned){
-                earnedAchievements[achievementIterator] = {
-                    achievementCategory:achievementCategory,
-                    achievementText:earned[achievementCategory],
-                };
-                achievementIterator++;
-            }
-            achievementIterator = 0;
-            for (achievementCategory in notEarned){
-                notEarnedAchievements[achievementIterator] = {
-                    achievementCategory:achievementCategory,
-                    achievementText:notEarned[achievementCategory],
-                };
-                achievementIterator++;
-            }
-           
+        var earned = player.earnedAchievements;
+        var notEarned = player.notEarnedAchievements;
 
-            var entry = {
-                earnedAchievements:earnedAchievements,
-                notEarnedAchievements:notEarnedAchievements
+        for (achievementCategory in earned) {
+            earnedAchievements[achievementIterator] = {
+                achievementCategory: achievementCategory,
+                achievementText: earned[achievementCategory].text,
+                achievementProgress: earned[achievementCategory].progress,
+                achievementLevel: earned[achievementCategory].level,
             };
-            achievementList[playerList[playerId].name] = entry;
+            achievementIterator++;
         }
+        achievementIterator = 0;
+        for (achievementCategory in notEarned) {
+            notEarnedAchievements[achievementIterator] = {
+                achievementCategory: achievementCategory,
+                achievementText: notEarned[achievementCategory].text,
+                achievementProgress: notEarned[achievementCategory].progress,
+                achievementLevel: notEarned[achievementCategory].level,
+            };
+            achievementIterator++;
+        }
+
+
+        var entry = {
+            earnedAchievements: earnedAchievements,
+            notEarnedAchievements: notEarnedAchievements
+        };
+        
+        achievementList[player.name] = entry;
         result(achievementList);
     }
 
-    editExercise(id, editor, difficulty, difficulty10, difficulty100, unit, baseWeight, comment, bothSides,result) {
+    editExercise(id, editor, difficulty, difficulty10, difficulty100, unit, baseWeight, comment, bothSides, result) {
         var newVote = {
             difficulty: difficulty,
             difficulty10: difficulty10,
@@ -279,18 +287,18 @@ class FitnessManager {
         this.exerciseList[id].votes[editor] = newVote;
         this.exerciseList[id].unit = unit;
         calc.calculateNewFactor(this.exerciseList[id]);
-        this.recalculateExercise(id,function(result){
+        this.recalculateExercise(id, function (result) {
             console.log(result);
         }.bind(this));
         result("editExercise done");
     }
 
-    recalculateExercise(id,result){
+    recalculateExercise(id, result) {
         var sumPoints = 0;
-        for(var historyDate in this.history){
+        for (var historyDate in this.history) {
             var historyEntry = this.history[historyDate];
-            for(var historyIterator = 0;historyIterator<historyEntry.exerciseId.length;historyIterator++){
-                if(historyEntry.exerciseId[historyIterator] != id){
+            for (var historyIterator = 0; historyIterator < historyEntry.exerciseId.length; historyIterator++) {
+                if (historyEntry.exerciseId[historyIterator] != id) {
                     continue;
                 }
                 var currentWeight = historyEntry.weight[historyIterator];
@@ -300,12 +308,12 @@ class FitnessManager {
                 sumPoints += Number(points);
                 console.log("recalculated " + historyEntry.exName[historyIterator]);
             }
-            
+
         }
         this.exerciseList[id].points = sumPoints;
         return result("recalculateExercise done");
     }
-   
+
     existExercise(name, equipment) {
         for (var i in this.exerciseList) {
             var exercise = this.exerciseList[i];
@@ -516,7 +524,7 @@ class FitnessManager {
         return sum;
     }
 
-   
+
     checkForAchievements(player, result) {
         //exercise Achievements
         for (var exId in this.exerciseList) {
@@ -532,16 +540,21 @@ class FitnessManager {
             for (var levelOverallIterator = 0; levelOverallIterator < exercise.achievementInfo.repsToGetOverall.length; levelOverallIterator++) {
                 if (exercise.achievementInfo.repsToGetOverall[levelOverallIterator] > 0) {
                     if (playerReps >= exercise.achievementInfo.repsToGetOverall[levelOverallIterator]) {
-                        player.earnedAchievements[exCat + "Overall"] =
-                            exercise.achievementInfo.textOverall + " Level " +
-                            (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall) +
-                            " (" + playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator] + ")";
+                        player.earnedAchievements[exCat + "Overall"] = {
+                            level:(levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
+                            text:exercise.achievementInfo.textOverall,
+                            progress:playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
+                        };
                         if (levelOverallIterator == exercise.achievementInfo.repsToGetOverall.length) {
                             delete player.notEarnedAchievements[exCat + "Overall"];
                         }
                     }
                     else {
-                        player.notEarnedAchievements[exCat + "Overall"] = exercise.achievementInfo.textOverall + " Level " + (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall) + " (" + playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator] + ")";
+                        player.notEarnedAchievements[exCat + "Overall"] = {
+                            level:(levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
+                            text:exercise.achievementInfo.textOverall,
+                            progress:playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
+                        };
                         break;
                     }
                 }
@@ -552,10 +565,19 @@ class FitnessManager {
             for (var levelMonthIterator = 0; levelMonthIterator < exercise.achievementInfo.repsToGetMonthly.length; levelMonthIterator++) {
                 if (exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] > 0) {
                     if (playerRepsMonthly >= exercise.achievementInfo.repsToGetMonthly[levelMonthIterator]) {
-                        player.earnedAchievements[exCat + "Month"] = exercise.achievementInfo.textMonthly + " Level " + (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly) + " (" + playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] + ")";
+                        player.earnedAchievements[exCat + "Month"] = {
+                            level:(levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
+                            text:exercise.achievementInfo.textMonthly,
+                            progress:playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
+                        };
+                        
                     }
                     else {
-                        player.notEarnedAchievements[exCat + "Month"] = exercise.achievementInfo.textMonthly + " Level " + (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly) + " (" + playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] + ")";
+                        player.notEarnedAchievements[exCat + "Month"] = {
+                            level:(levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
+                            text:exercise.achievementInfo.textMonthly,
+                            progress:playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
+                        };
                         break;
                     }
                 }
@@ -566,10 +588,18 @@ class FitnessManager {
             for (var levelDayIterator = 0; levelDayIterator < exercise.achievementInfo.repsToGetDaily.length; levelDayIterator++) {
                 if (exercise.achievementInfo.repsToGetDaily[levelDayIterator] > 0) {
                     if (repsToGetDaily >= exercise.achievementInfo.repsToGetDaily[levelDayIterator]) {
-                        player.earnedAchievements[exCat + "Day"] = exercise.achievementInfo.textDaily + " Level " + (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily) + " (" + repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator] + ")";
+                        player.earnedAchievements[exCat + "Day"] = {
+                            level:(levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
+                            text:exercise.achievementInfo.textDaily,
+                            progress:repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
+                        };
                     }
                     else {
-                        player.notEarnedAchievements[exCat + "Day"] = exercise.achievementInfo.textDaily + " Level " + (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily) + " (" + repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator] + ")";
+                        player.notEarnedAchievements[exCat + "Day"] = {
+                            level:(levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
+                            text:exercise.achievementInfo.textDaily,
+                            progress:repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
+                        };
                         break;
                     }
                 }
@@ -581,20 +611,20 @@ class FitnessManager {
         result("checkForAchievements done");
     }
 
-    getPlayerList(playerList,result){
+    getPlayerList(playerList, result) {
         var returnList = {};
-        for( var idPlayer in playerList){
+        for (var idPlayer in playerList) {
             returnList[playerList[idPlayer].name] = playerList[idPlayer].points;
             returnList[playerList[idPlayer].name].online = true;
         }
-        for (var name in this.registeredPlayers){
-          if(returnList[name] != undefined){
-              continue;
-          }
-          else{
-            returnList[name] = this.calculatePointsFromHistory(name);
-            returnList[name].online = false;
-          }
+        for (var name in this.registeredPlayers) {
+            if (returnList[name] != undefined) {
+                continue;
+            }
+            else {
+                returnList[name] = this.calculatePointsFromHistory(name);
+                returnList[name].online = false;
+            }
         }
         return result(returnList);
     }

@@ -78,6 +78,7 @@ var table_personalTable = document.getElementById('table_personalTable');
 var table_exerciseHistory = document.getElementById('table_exerciseHistory');
 var table_allPlayersTable = document.getElementById('table_allPlayersTable');
 var table_achievements = document.getElementById('table_achievements');
+var table_notEarnedAchievements = document.getElementById('table_notEarnedAchievements');
 var socket = io();
 
 initialize();
@@ -155,6 +156,7 @@ button_tabStatistics.onclick = function () {
     div_PersonalOverview.style.display = "none";
     div_statistics.style.display = "inline-block";
     div_MainPage.style.display = "none";
+    requestAchievementList();
 };
 
 
@@ -200,6 +202,10 @@ socket.on("refreshHistory", function (data) {
     generateHistoryList(data, table_exerciseHistory, true, select_historyShowName.value, fromDate, toDate);
 });
 
+socket.on("refreshAchievements", function (data) {
+    generateAchievementListTable(data, Name);
+});
+
 socket.on("refreshGraph", function (data) {
     generateGraph(data, canvas_graphHistory, ctx_graphHistory, input_graphXSections.value, input_graphYSections.value, input_graphXMax.value);
 });
@@ -221,8 +227,6 @@ socket.on("refresh", function (data) {
     generatePlayerListTable(data);
     generateExerciseList(data);
     generatePlayerInfoTable(data);
-    generateAchievementListTable(data, Name);
-
 
 });
 
@@ -258,6 +262,11 @@ function requestHistoryDeletion(id, date) {
         date: date,
     });
     button_updateHistory.onclick();
+}
+function requestAchievementList() {
+    socket.emit("requestAchievements", data = {
+        name: Name
+    });
 }
 function exerciseDone(emitString) {
     socket.emit(emitString, exPack = {
@@ -406,58 +415,129 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
 }
 function generateAchievementListTable(data, name) {
 
-    var theadPlayersTable = table_achievements.tHead;
-    var tBodyPlayersTable = table_achievements.tBodies[0];
+    var theadAchievementTable = table_achievements.tHead;
+    var tBodyAchievementTable = table_achievements.tBodies[0];
     var achievementIterator;
 
-    theadPlayersTable.innerHTML = "";
-    tBodyPlayersTable.innerHTML = "";
-    headerRow = theadPlayersTable.insertRow(0);
+    theadAchievementTable.innerHTML = "";
+    tBodyAchievementTable.innerHTML = "";
+    headerRow = theadAchievementTable.insertRow(0);
 
     achievementListPlayer = data.achievementList[name];
     var rowNumber = 0;
     var cellNumber = 0;
     var bodyRow;
     var achievementKey;
+    var progressNumbers;
+    var percent;
+    var div;
+    var color;
 
-        for (achievementIterator = 0; achievementIterator <= achievementListPlayer.earnedAchievements.length; achievementIterator++) {
-            bodyRow = tBodyPlayersTable.insertRow(rowNumber);
-            for (achievementKey in achievementListPlayer.earnedAchievements[achievementIterator]) {
-                if (rowNumber == 0) {
-                    cell = headerRow.insertCell(cellNumber);
-                    cell.innerHTML += translate(achievementKey);
+    for (achievementIterator = 0; achievementIterator < achievementListPlayer.earnedAchievements.length; achievementIterator++) {
+        bodyRow = tBodyAchievementTable.insertRow(rowNumber);
+        for (achievementKey in achievementListPlayer.earnedAchievements[achievementIterator]) {
+            if (rowNumber == 0) {
+                cell = headerRow.insertCell(cellNumber);
+                cell.innerHTML += translate(achievementKey) + translate(" (Achievement erreicht) ");
+            }
+
+            if (achievementKey === "achievementProgress") {
+                progressNumbers = achievementListPlayer.earnedAchievements[achievementIterator][achievementKey].split("/").map(Number);
+                percent = progressNumbers[0] / progressNumbers[1] * 100;
+               
+                if(percent>100){
+                    percent=100;
                 }
-
-
+                if (percent <= 25){
+                    color="red";
+                }
+                else if(percent > 25 && percent <= 50){
+                    color = "orange";
+                }
+                else if(percent > 50 && percent <= 75){
+                    color = "yellow";
+                }
+                else if(percent > 75){
+                    color = "green";
+                }
+                div = document.createElement("div");
+                div.style = "background:"+color+";position:relative;height:100%;width:"+percent +"%";
+                cell = bodyRow.insertCell(cellNumber);
+                cell.appendChild(div);
+                div.innerHTML += translate(achievementListPlayer.earnedAchievements[achievementIterator][achievementKey]);
+                cellNumber++;
+            }
+            else {
                 cell = bodyRow.insertCell(cellNumber);
                 cell.innerHTML += translate(achievementListPlayer.earnedAchievements[achievementIterator][achievementKey]);
                 cellNumber++;
             }
 
-            rowNumber++;
-            cellNumber = 0;
-
         }
 
-        for (achievementIterator = 0; achievementIterator <= achievementListPlayer.notEarnedAchievements.length; achievementIterator++) {
-            bodyRow = tBodyPlayersTable.insertRow(rowNumber);
-            bodyRow.classList.add("notEarned");
-            for (achievementKey in achievementListPlayer.notEarnedAchievements[achievementIterator]) {
-                if (rowNumber == 0) {
-                    cell = headerRow.insertCell(cellNumber);
-                    cell.innerHTML += translate(achievementKey);
+        rowNumber++;
+        cellNumber = 0;
+
+    }
+
+
+    theadAchievementTable = table_notEarnedAchievements.tHead;
+    tBodyAchievementTable = table_notEarnedAchievements.tBodies[0];
+    achievementIterator = 0;
+    rowNumber = 0;
+    cellNumber = 0;
+
+    theadAchievementTable.innerHTML = "";
+    tBodyAchievementTable.innerHTML = "";
+    headerRow = theadAchievementTable.insertRow(0);
+
+    for (achievementIterator = 0; achievementIterator < achievementListPlayer.notEarnedAchievements.length; achievementIterator++) {
+        bodyRow = tBodyAchievementTable.insertRow(rowNumber);
+
+        for (achievementKey in achievementListPlayer.notEarnedAchievements[achievementIterator]) {
+            if (rowNumber == 0) {
+                cell = headerRow.insertCell(cellNumber);
+                cell.innerHTML += translate(achievementKey) + translate(" (nächstes Achievement)");
+            }
+
+
+            if (achievementKey === "achievementProgress") {
+                progressNumbers = achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey].split("/").map(Number);
+                percent = progressNumbers[0] / progressNumbers[1] * 100;
+                if(percent>100){
+                    percent=100;
                 }
-
-
+                if (percent <= 25){
+                    color="red";
+                }
+                else if(percent > 25 && percent <= 50){
+                    color = "orange";
+                }
+                else if(percent > 50 && percent <= 75){
+                    color = "yellow";
+                }
+                else if(percent > 75){
+                    color = "green";
+                }
+                div = document.createElement("div");
+                
+                div.style = "background:"+color+";position:relative;height:100%;width:"+percent +"%";
+                cell = bodyRow.insertCell(cellNumber);
+                cell.appendChild(div);
+                div.innerHTML += translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]);
+                cellNumber++;
+            }
+            else {
                 cell = bodyRow.insertCell(cellNumber);
                 cell.innerHTML += translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]);
                 cellNumber++;
             }
-
-            rowNumber++;
-            cellNumber = 0;
-
         }
+
+        rowNumber++;
+        cellNumber = 0;
+
+    }
 
 
 
@@ -1103,7 +1183,12 @@ function translate(word) {
         return word.toFixed(2);
     }
     word = word.toString();
+
     switch (word) {
+        case "achievementCategory":
+            return "Achievement Kategorie";
+        case "achievementText":
+            return "Achievement Text";
         case "exName":
             return "Übung";
         case "name":
@@ -1191,6 +1276,15 @@ function translate(word) {
         case "online":
             return "Online";
         default:
+            if (word.search("Overall") != -1) {
+                return word.replace("Overall", " Gesamt");
+            }
+            if (word.search("Day") != -1) {
+                return word.replace("Day", " an einem Tag");
+            }
+            if (word.search("Monthly") != -1) {
+                return word.replace("Monthly", "  in einem Monat");
+            }
             return word;
     }
 }
