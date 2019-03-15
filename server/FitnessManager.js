@@ -332,18 +332,25 @@ class FitnessManager {
         return 0;
     }
 
-    deleteExercise(id) {
+    deleteExercise(id, result) {
         delete this.exerciseList[id];
+        result("deleted Exercise");
     }
 
     deleteHistory(id, date) {
+        var exerciseIdToRecalculate;
         for (var historyEntryIterator in this.history[date].id) {
             if (this.history[date].id[historyEntryIterator] == id) {
+               exerciseIdToRecalculate = this.history[date].exerciseId[historyEntryIterator];
+               this.exerciseList[exerciseIdToRecalculate].repsPerPlayer[this.history[date].playerName[historyEntryIterator]] -= this.history[date].count[historyEntryIterator];
+               this.exerciseList[exerciseIdToRecalculate].pointsPerPlayer[this.history[date].playerName[historyEntryIterator]] -= this.history[date].points[historyEntryIterator];
                 for (var historyEntry in this.history[date]) {
                     this.history[date][historyEntry].splice(historyEntryIterator, 1);
+                    
                 }
             }
         }
+
     }
 
 

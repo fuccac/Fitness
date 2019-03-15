@@ -105,13 +105,15 @@ var OnPlayerConnection = function (socket) {
 	socket.on("deleteExercise", function (data) {
 		var id = FITNESS_MANAGER.existExercise(data.name, data.equipment);
 		if (id != 0) {
-			FITNESS_MANAGER.deleteExercise(id);
+			FITNESS_MANAGER.deleteExercise(id,function(result){
+				saveAndRefresh();
+			});
 			PLAYER_LIST[newPlayer.id].deletedExercises++;
 		}
 		else {
 			console.log("Exercise not found");
 		}
-		saveAndRefresh();
+		
 	});
 
 	socket.on("addDoneExercise", function (data) {
