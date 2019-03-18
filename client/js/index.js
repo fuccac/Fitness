@@ -39,7 +39,8 @@ var div_exerciseHistoryControl = document.getElementById('div_exerciseHistoryCon
 var div_statistics = document.getElementById('div_statistics');
 var div_graph = document.getElementById('div_graph');
 var div_MainPage = document.getElementById('div_MainPage');
-
+var div_achievementsDone = document.getElementById('div_achievementsDone');
+var div_achievementsToDo = document.getElementById('div_achievementsToDo');
 //FONTS
 var font_Courier = "Courier New";
 //INPUTS
@@ -77,8 +78,8 @@ var table_exerciseTable = document.getElementById('table_exerciseTable');
 var table_personalTable = document.getElementById('table_personalTable');
 var table_exerciseHistory = document.getElementById('table_exerciseHistory');
 var table_allPlayersTable = document.getElementById('table_allPlayersTable');
-var table_achievements = document.getElementById('table_achievements');
-var table_notEarnedAchievements = document.getElementById('table_notEarnedAchievements');
+var table_achievementsDone = document.getElementById('table_achievementsDone');
+var table_achievementsToDo = document.getElementById('table_achievementsToDo');
 var socket = io();
 
 initialize();
@@ -234,7 +235,7 @@ socket.on('signInResponse', function (data) {
     if (data.success) {
         Name = input_UserName.value;
         div_Sign.style.display = 'none';
-        div_ExerciseOverview.style.display = 'inline-block';
+        button_tabMainPage.onclick();
         div_navigation.style.display = 'inline-block';
     }
     else
@@ -324,7 +325,7 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
     minHeight += topBottom;
     minWidth += rightLeft;
     var startWidthNames = minWidth;
-    var colors = ["green","red", "blue", "yellow", "brown", "grey", "magenta", "orange"];
+    var colors = ["green", "red", "blue", "yellow", "brown", "grey", "magenta", "orange"];
 
     for (var playerName in data.graph) {
         var maxPlayer = data.graph[playerName].xAxis[data.graph[playerName].xAxis.length - 1];
@@ -415,8 +416,8 @@ function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
 }
 function generateAchievementListTable(data, name) {
 
-    var theadAchievementTable = table_achievements.tHead;
-    var tBodyAchievementTable = table_achievements.tBodies[0];
+    var theadAchievementTable = table_achievementsDone.tHead;
+    var tBodyAchievementTable = table_achievementsDone.tBodies[0];
     var achievementIterator;
 
     theadAchievementTable.innerHTML = "";
@@ -436,6 +437,9 @@ function generateAchievementListTable(data, name) {
     for (achievementIterator = 0; achievementIterator < achievementListPlayer.earnedAchievements.length; achievementIterator++) {
         bodyRow = tBodyAchievementTable.insertRow(rowNumber);
         for (achievementKey in achievementListPlayer.earnedAchievements[achievementIterator]) {
+            if (achievementKey === "achievementPercent" || achievementKey === "achievementLevel") {
+                continue;
+            }
             if (rowNumber == 0) {
                 cell = headerRow.insertCell(cellNumber);
                 cell.innerHTML += translate(achievementKey) + translate(" (Achievement erreicht) ");
@@ -443,28 +447,28 @@ function generateAchievementListTable(data, name) {
 
             if (achievementKey === "achievementProgress") {
                 progressNumbers = achievementListPlayer.earnedAchievements[achievementIterator][achievementKey].split("/").map(Number);
-                percent = progressNumbers[0] / progressNumbers[1] * 100;
-               
-                if(percent>100){
-                    percent=100;
+                percent = achievementListPlayer.earnedAchievements[achievementIterator].achievementPercent;
+
+                if (percent > 100) {
+                    percent = 100;
                 }
-                if (percent <= 25){
-                    color="red";
+                if (percent <= 25) {
+                    color = "red";
                 }
-                else if(percent > 25 && percent <= 50){
+                else if (percent > 25 && percent <= 50) {
                     color = "orange";
                 }
-                else if(percent > 50 && percent <= 75){
+                else if (percent > 50 && percent <= 75) {
                     color = "yellow";
                 }
-                else if(percent > 75){
+                else if (percent > 75) {
                     color = "green";
                 }
                 div = document.createElement("div");
-                div.style = "background:"+color+";position:relative;height:100%;width:"+percent +"%";
+                div.style = "background:" + color + ";position:relative;height:100%;width:" + percent + "%";
                 cell = bodyRow.insertCell(cellNumber);
                 cell.appendChild(div);
-                div.innerHTML += translate(achievementListPlayer.earnedAchievements[achievementIterator][achievementKey]);
+                div.innerHTML += "Level " + achievementListPlayer.earnedAchievements[achievementIterator].achievementLevel + " - " + translate(achievementListPlayer.earnedAchievements[achievementIterator][achievementKey]);
                 cellNumber++;
             }
             else {
@@ -481,8 +485,8 @@ function generateAchievementListTable(data, name) {
     }
 
 
-    theadAchievementTable = table_notEarnedAchievements.tHead;
-    tBodyAchievementTable = table_notEarnedAchievements.tBodies[0];
+    theadAchievementTable = table_achievementsToDo.tHead;
+    tBodyAchievementTable = table_achievementsToDo.tBodies[0];
     achievementIterator = 0;
     rowNumber = 0;
     cellNumber = 0;
@@ -495,6 +499,9 @@ function generateAchievementListTable(data, name) {
         bodyRow = tBodyAchievementTable.insertRow(rowNumber);
 
         for (achievementKey in achievementListPlayer.notEarnedAchievements[achievementIterator]) {
+            if (achievementKey === "achievementPercent" || achievementKey === "achievementLevel") {
+                continue;
+            }
             if (rowNumber == 0) {
                 cell = headerRow.insertCell(cellNumber);
                 cell.innerHTML += translate(achievementKey) + translate(" (nächstes Achievement)");
@@ -503,28 +510,28 @@ function generateAchievementListTable(data, name) {
 
             if (achievementKey === "achievementProgress") {
                 progressNumbers = achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey].split("/").map(Number);
-                percent = progressNumbers[0] / progressNumbers[1] * 100;
-                if(percent>100){
-                    percent=100;
+                percent = achievementListPlayer.notEarnedAchievements[achievementIterator].achievementPercent;
+                if (percent > 100) {
+                    percent = 100;
                 }
-                if (percent <= 25){
-                    color="red";
+                if (percent <= 25) {
+                    color = "red";
                 }
-                else if(percent > 25 && percent <= 50){
+                else if (percent > 25 && percent <= 50) {
                     color = "orange";
                 }
-                else if(percent > 50 && percent <= 75){
+                else if (percent > 50 && percent <= 75) {
                     color = "yellow";
                 }
-                else if(percent > 75){
+                else if (percent > 75) {
                     color = "green";
                 }
                 div = document.createElement("div");
-                
-                div.style = "background:"+color+";position:relative;height:100%;width:"+percent +"%";
+
+                div.style = "background:" + color + ";position:relative;height:100%;width:" + percent + "%";
                 cell = bodyRow.insertCell(cellNumber);
                 cell.appendChild(div);
-                div.innerHTML += translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]);
+                div.innerHTML += "Level " + achievementListPlayer.notEarnedAchievements[achievementIterator].achievementLevel + " - " + translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]);
                 cellNumber++;
             }
             else {
@@ -1275,6 +1282,8 @@ function translate(word) {
             return "Beidseitig";
         case "online":
             return "Online";
+        case "achievementProgress":
+            return "Achievement Fortschritt";
         default:
             if (word.search("Overall") != -1) {
                 return word.replace("Overall", " Gesamt");
@@ -1288,3 +1297,4 @@ function translate(word) {
             return word;
     }
 }
+ 

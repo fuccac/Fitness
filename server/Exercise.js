@@ -15,7 +15,7 @@ class Exercise {
         this.difficulty10 = Number(difficulty10);
         this.difficulty100 = Number(difficulty100);
         this.type = type;
-        this.bothSides = (bothSides.toUpperCase() === 'TRUE');
+        this.bothSides = (bothSides.toString().toUpperCase() === 'TRUE');
         this.unit = unit;
         this.equipment = equipment;
         this.usesWeight = usesWeight;

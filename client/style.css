@@ -28,10 +28,13 @@ button:hover {
     overflow: hidden;
 }
 
+
+
 .tab div{
     padding: 2px;
     align-items: center;
 }
+
 /* TAB MAIN INFO*/
 #div_allPlayersTable{
     width: 100%;
@@ -94,8 +97,26 @@ button:hover {
 }
 
 /* TAB STATISTICS INFO*/
+#div_achievementsDone{
+    height: 50%;
+    overflow: auto;
+}
+#div_achievementsToDo{
+    height: 50%;
+    overflow: auto;
+}
 
+#div_achievementsDone table td div, #div_achievementsToDo table td div{
+    overflow: visible;
+    white-space: nowrap;
+}
 
+#div_achievementsDone table td:first-child, #div_achievementsToDo table td:first-child{
+    width: 40%;
+}
+#div_achievementsDone table td, #div_achievementsToDo table td{
+    width: 20%;
+}
 
 
 /********************/

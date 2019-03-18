@@ -43,18 +43,17 @@ io.sockets.on('connection', function (socket) {
 });
 
 function loadSaveFiles() {
-	var filesToLoad = ["exerciseList.json", "registeredPlayers.json", "history.json", "users.json"];
-	dropbox.downloadFile(DB_TOKEN, filesToLoad[0], function (callback) {
+	dropbox.downloadFile(DB_TOKEN, config.EXERCISE_FILE_NAME, function (callback) {
 		console.log(callback);
-		dropbox.downloadFile(DB_TOKEN, filesToLoad[1], function (callback) {
+		dropbox.downloadFile(DB_TOKEN, config.HISTORY_FILE_NAME, function (callback) {
 			console.log(callback);
-			dropbox.downloadFile(DB_TOKEN, filesToLoad[2], function (callback) {
+			dropbox.downloadFile(DB_TOKEN, config.REG_PLAYERS_FILE_NAME, function (callback) {
 				console.log(callback);
 				loadFitnessManager();
 			});
 		});
 	});
-	dropbox.downloadFile(DB_TOKEN, filesToLoad[3], function (callback) {
+	dropbox.downloadFile(DB_TOKEN, config.USERS_FILE_NAME, function (callback) {
 		console.log(callback);
 		loadUsers();
 	});
@@ -219,51 +218,51 @@ var OnSocketConnection = function (socket) {
  * @param {{}} users list of users and passwords -> users[username] = password
  */
 function saveUsers(users) {
-	storageManager.put({ userlist: users, id: "users" }).then(result => {
+	storageManager.put({ userlist: users, id: config.USERS_FILE_NAME.replace(".json","") }).then(result => {
 		console.log("userlist saved");
-		dropbox.uploadFile(DB_TOKEN,"users.json",function(result){
+		dropbox.uploadFile(DB_TOKEN,config.USERS_FILE_NAME,function(result){
 			console.log(result);
 		});
 	});
 }
 
 function saveFitnessManager() {
-	storageManager.put({ exerciseList: FITNESS_MANAGER.exerciseList, id: "exerciseList" }).then(result => {
+	storageManager.put({ exerciseList: FITNESS_MANAGER.exerciseList, id: config.EXERCISE_FILE_NAME.replace(".json","") }).then(result => {
 		console.log("exerciseList saved");
-		dropbox.uploadFile(DB_TOKEN,"exerciseList.json",function(result){
+		dropbox.uploadFile(DB_TOKEN,config.EXERCISE_FILE_NAME,function(result){
 			console.log(result);
 		});
 	});
-	storageManager.put({ history: FITNESS_MANAGER.history, id: "history" }).then(result => {
+	storageManager.put({ history: FITNESS_MANAGER.history, id: config.HISTORY_FILE_NAME.replace(".json","") }).then(result => {
 		console.log("history saved");
-		dropbox.uploadFile(DB_TOKEN,"history.json",function(result){
+		dropbox.uploadFile(DB_TOKEN,config.HISTORY_FILE_NAME,function(result){
 			console.log(result);
 		});
 	});
-	storageManager.put({ registeredPlayers: FITNESS_MANAGER.registeredPlayers, id: "registeredPlayers" }).then(result => {
+	storageManager.put({ registeredPlayers: FITNESS_MANAGER.registeredPlayers, id: config.REG_PLAYERS_FILE_NAME.replace(".json","") }).then(result => {
 		console.log("registeredPlayers saved");
-		dropbox.uploadFile(DB_TOKEN,"registeredPlayers.json",function(result){
+		dropbox.uploadFile(DB_TOKEN,config.REG_PLAYERS_FILE_NAME,function(result){
 			console.log(result);
 		});
 	});
 }
 
 function loadFitnessManager() {
-	storageManager.get("exerciseList").then(result => {
+	storageManager.get( config.EXERCISE_FILE_NAME.replace(".json","")).then(result => {
 		FITNESS_MANAGER.exerciseList = result.exerciseList;
 		console.log("exerciseList Loaded");
 	})
 		.catch((err) => {
 			console.log("exerciseList file missing or corrupted");
 		});
-	storageManager.get("history").then(result => {
+	storageManager.get(config.HISTORY_FILE_NAME.replace(".json","")).then(result => {
 		FITNESS_MANAGER.history = result.history;
 		console.log("history Loaded");
 	})
 		.catch((err) => {
 			console.log("history file missing or corrupted");
 		});
-	storageManager.get("registeredPlayers").then(result => {
+	storageManager.get(config.REG_PLAYERS_FILE_NAME.replace(".json","")).then(result => {
 		FITNESS_MANAGER.registeredPlayers = result.registeredPlayers;
 		console.log("registeredPlayers Loaded");
 	})
@@ -275,7 +274,7 @@ function loadFitnessManager() {
 }
 
 function loadUsers() {
-	storageManager.get("users").then(result => {
+	storageManager.get(config.USERS_FILE_NAME.replace(".json","")).then(result => {
 		USERS = result.userlist;
 		console.log("Users Loaded");
 	})

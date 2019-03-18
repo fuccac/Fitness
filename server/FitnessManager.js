@@ -139,6 +139,7 @@ class FitnessManager {
             var repsToGetDaily;
             var repsToGetMonthly;
             var achievementCategory;
+            var achievementText;
             try {
                 repsToGetOverall = entry.repsToGetOverall.split(";").map(Number);
                 achievementActive = true;
@@ -169,14 +170,23 @@ class FitnessManager {
             catch (err) {
                 achievementCategory = entry.exname;
             }
+            try{
+                achievementText = entry.achievementText;
+                if (achievementText == undefined) {
+                    achievementText = "";
+                }
+            }
+            catch(err){
+                achievementText = "";
+            }
             exercise.achievementInfo.achievementActive = achievementActive;
             exercise.achievementInfo.repsToGetOverall = repsToGetOverall;
             exercise.achievementInfo.repsToGetDaily = repsToGetDaily;
             exercise.achievementInfo.repsToGetMonthly = repsToGetMonthly;
             exercise.achievementInfo.achievementCategory = achievementCategory;
-            exercise.achievementInfo.textDaily = achievementCategory + " Achievement (Täglich)";
-            exercise.achievementInfo.textMonthly = achievementCategory + " Achievement (Monatlich)";
-            exercise.achievementInfo.textOverall = achievementCategory + " Achievement (Gesamt)";
+            exercise.achievementInfo.textDaily = achievementText;
+            exercise.achievementInfo.textMonthly = achievementText;
+            exercise.achievementInfo.textOverall = achievementText;
 
             this.addExercise(exercise);
         }
@@ -245,20 +255,22 @@ class FitnessManager {
 
         for (achievementCategory in earned) {
             earnedAchievements[achievementIterator] = {
+                achievementProgress: earned[achievementCategory].progress,
+                achievementPercent: earned[achievementCategory].percent,
+                achievementLevel: earned[achievementCategory].level,
                 achievementCategory: achievementCategory,
                 achievementText: earned[achievementCategory].text,
-                achievementProgress: earned[achievementCategory].progress,
-                achievementLevel: earned[achievementCategory].level,
             };
             achievementIterator++;
         }
         achievementIterator = 0;
         for (achievementCategory in notEarned) {
             notEarnedAchievements[achievementIterator] = {
+                achievementProgress: notEarned[achievementCategory].progress,
+                achievementPercent: notEarned[achievementCategory].percent,
+                achievementLevel: notEarned[achievementCategory].level,
                 achievementCategory: achievementCategory,
                 achievementText: notEarned[achievementCategory].text,
-                achievementProgress: notEarned[achievementCategory].progress,
-                achievementLevel: notEarned[achievementCategory].level,
             };
             achievementIterator++;
         }
@@ -341,12 +353,12 @@ class FitnessManager {
         var exerciseIdToRecalculate;
         for (var historyEntryIterator in this.history[date].id) {
             if (this.history[date].id[historyEntryIterator] == id) {
-               exerciseIdToRecalculate = this.history[date].exerciseId[historyEntryIterator];
-               this.exerciseList[exerciseIdToRecalculate].repsPerPlayer[this.history[date].playerName[historyEntryIterator]] -= this.history[date].count[historyEntryIterator];
-               this.exerciseList[exerciseIdToRecalculate].pointsPerPlayer[this.history[date].playerName[historyEntryIterator]] -= this.history[date].points[historyEntryIterator];
+                exerciseIdToRecalculate = this.history[date].exerciseId[historyEntryIterator];
+                this.exerciseList[exerciseIdToRecalculate].repsPerPlayer[this.history[date].playerName[historyEntryIterator]] -= this.history[date].count[historyEntryIterator];
+                this.exerciseList[exerciseIdToRecalculate].pointsPerPlayer[this.history[date].playerName[historyEntryIterator]] -= this.history[date].points[historyEntryIterator];
                 for (var historyEntry in this.history[date]) {
                     this.history[date][historyEntry].splice(historyEntryIterator, 1);
-                    
+
                 }
             }
         }
@@ -360,9 +372,6 @@ class FitnessManager {
         var sortable = [];
         var historyChunk = [];
         for (var historyEntry in this.history) {
-            if (historyEntry === "2018-08-31") {
-                var x = 0;
-            }
             var currentDate = calc.createZeroDate(historyEntry);
             if (currentDate >= fromDate && currentDate <= toDate) {
                 sortable.push([historyEntry, this.history[historyEntry]]);
@@ -532,6 +541,9 @@ class FitnessManager {
 
     checkForAchievements(player, result) {
         //exercise Achievements
+        player.earnedAchievements = {};
+        player.notEarnedAchievements = {};
+        
         for (var exId in this.exerciseList) {
             var exercise = this.exerciseList[exId];
             if (!exercise.achievementInfo.achievementActive) {
@@ -542,6 +554,11 @@ class FitnessManager {
             var playerReps = sum.overall;
             var playerRepsMonthly = sum.monthly;
             var repsToGetDaily = sum.daily;
+            var endLastLevel;
+            var endThisLevel;
+            var diff;
+            var repsThisLevel;
+            var percent;
             for (var levelOverallIterator = 0; levelOverallIterator < exercise.achievementInfo.repsToGetOverall.length; levelOverallIterator++) {
                 if (exercise.achievementInfo.repsToGetOverall[levelOverallIterator] > 0) {
                     if (playerReps >= exercise.achievementInfo.repsToGetOverall[levelOverallIterator]) {
@@ -549,16 +566,28 @@ class FitnessManager {
                             level: (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
                             text: exercise.achievementInfo.textOverall,
                             progress: playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
+                            percent: 100,
                         };
                         if (levelOverallIterator == exercise.achievementInfo.repsToGetOverall.length) {
                             delete player.notEarnedAchievements[exCat + "Overall"];
                         }
                     }
                     else {
+                        if (levelOverallIterator > 0) {
+                            endLastLevel = exercise.achievementInfo.repsToGetOverall[levelOverallIterator - 1];
+                            endThisLevel = exercise.achievementInfo.repsToGetOverall[levelOverallIterator];
+                            diff = endThisLevel - endLastLevel;
+                            repsThisLevel = playerReps - endLastLevel;
+                            percent = repsThisLevel / diff * 100;
+                        }
+                        else {
+                            percent = playerReps / exercise.achievementInfo.repsToGetOverall[levelOverallIterator] * 100;
+                        }
                         player.notEarnedAchievements[exCat + "Overall"] = {
                             level: (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
                             text: exercise.achievementInfo.textOverall,
                             progress: playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
+                            percent: percent,
                         };
                         break;
                     }
@@ -574,14 +603,26 @@ class FitnessManager {
                             level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
                             text: exercise.achievementInfo.textMonthly,
                             progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
+                            percent:100,
                         };
 
                     }
                     else {
+                        if (levelMonthIterator > 0) {
+                            endLastLevel = exercise.achievementInfo.repsToGetMonthly[levelMonthIterator - 1];
+                            endThisLevel = exercise.achievementInfo.repsToGetMonthly[levelMonthIterator];
+                            diff = endThisLevel - endLastLevel;
+                            repsThisLevel = playerRepsMonthly - endLastLevel;
+                            percent = repsThisLevel / diff * 100;
+                        }
+                        else {
+                            percent = playerRepsMonthly / exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] * 100;
+                        }
                         player.notEarnedAchievements[exCat + "Month"] = {
                             level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
                             text: exercise.achievementInfo.textMonthly,
                             progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
+                            percent:percent,
                         };
                         break;
                     }
@@ -597,13 +638,25 @@ class FitnessManager {
                             level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
                             text: exercise.achievementInfo.textDaily,
                             progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
+                            percent:100,
                         };
                     }
                     else {
+                        if (levelDayIterator > 0) {
+                            endLastLevel = exercise.achievementInfo.repsToGetDaily[levelDayIterator - 1];
+                            endThisLevel = exercise.achievementInfo.repsToGetDaily[levelDayIterator];
+                            diff = endThisLevel - endLastLevel;
+                            repsThisLevel = repsToGetDaily - endLastLevel;
+                            percent = repsThisLevel / diff * 100;
+                        }
+                        else {
+                            percent = repsToGetDaily / exercise.achievementInfo.repsToGetDaily[levelDayIterator] * 100;
+                        }
                         player.notEarnedAchievements[exCat + "Day"] = {
                             level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
                             text: exercise.achievementInfo.textDaily,
                             progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
+                            percent:percent,
                         };
                         break;
                     }
