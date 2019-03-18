@@ -1,22 +1,22 @@
-body{
-    font-family: Helvetica,"Trebuchet MS", Arial, sans-serif !important;
+body {
+    font-family: Helvetica, "Trebuchet MS", Arial, sans-serif !important;
     overflow: hidden;
-    font-size:12;
+    font-size: 12;
 }
 
 button:hover {
-    border:2px solid #515151;
-  }
+    border: 2px solid #515151;
+}
 
- /* DIV */
+/* DIV */
 
- #div_Sign {
+#div_Sign {
     color: #030;
     background-color: rgb(194, 214, 245);
     border: 1px solid #000000;
 }
 
-.tab{
+.tab {
     width: 100%;
     height: 95%;
     display: none;
@@ -28,102 +28,102 @@ button:hover {
     overflow: hidden;
 }
 
-
-
-.tab div{
+.tab div {
     padding: 2px;
     align-items: center;
 }
 
 /* TAB MAIN INFO*/
-#div_allPlayersTable{
+
+#div_allPlayersTable {
     width: 100%;
     height: 30%;
 }
 
-#div_graph{
+#div_graph {
     background-color: rgb(194, 214, 245);
     height: 50%;
-    width:100%;
+    width: 100%;
 }
 
-#div_GraphControl{
+#div_GraphControl {
     background-color: rgb(194, 214, 245);
     height: 50%;
-    width:100%;
+    width: 100%;
 }
-
 
 /* TAB PERSONAL INFO*/
-#div_PersonalInfo{
+
+#div_PersonalInfo {
     width: 100%;
     height: 7%;
 }
 
-#div_addWorkout{
-    width: 100%;
-    height: 15%;
-    
-}
-
-#div_exerciseHistoryControl{
+#div_addWorkout {
     width: 100%;
     height: 15%;
 }
 
-#div_exerciseHistory{
+#div_exerciseHistoryControl {
+    width: 100%;
+    height: 15%;
+}
+
+#div_exerciseHistory {
     background-color: rgb(194, 214, 245);
     width: 100%;
     height: 63%;
     overflow-y: scroll;
 }
 
-
 /********************/
 
 /* TAB EXERCISE OVERVIEW */
-#div_addNewExercise{
+
+#div_addNewExercise {
     background-color: rgb(194, 214, 245);
     height: 25%;
-    width:100%;
+    width: 100%;
 }
 
-#div_exerciseTable{
+#div_exerciseTable {
     background-color: rgb(194, 214, 245);
     width: 100%;
     height: 75%;
-    top:25%;
+    top: 25%;
     overflow-y: scroll;
 }
 
 /* TAB STATISTICS INFO*/
-#div_achievementsDone{
-    height: 50%;
-    overflow: auto;
-}
-#div_achievementsToDo{
+
+#div_achievementsDone {
     height: 50%;
     overflow: auto;
 }
 
-#div_achievementsDone table td div, #div_achievementsToDo table td div{
+#div_achievementsToDo {
+    height: 50%;
+    overflow: auto;
+}
+
+#div_achievementsDone table td div, #div_achievementsToDo table td div {
     overflow: visible;
     white-space: nowrap;
 }
 
-#div_achievementsDone table td:first-child, #div_achievementsToDo table td:first-child{
+#div_achievementsDone table td:first-child, #div_achievementsToDo table td:first-child {
     width: 40%;
 }
-#div_achievementsDone table td, #div_achievementsToDo table td{
+
+#div_achievementsDone table td, #div_achievementsToDo table td {
     width: 20%;
 }
 
-
 /********************/
 
-#div_navigation{
+#div_navigation {
     width: 100%;
-    height:5%;
+    height: 5%;
     display: none;
     color: #030;
     background-color: rgb(194, 214, 245);
@@ -131,23 +131,22 @@ button:hover {
     overflow: hidden;
 }
 
-
 /* INPUTS, SELECTS, BUTTONS */
 
-.tab input,.tab select{
+.tab input, .tab select {
     width: 200px;
     height: 20px;
     background-color: white;
     margin: 1px;
 }
 
-.tab label{
+.tab label {
     display: inline-block;
     height: 10px;
     width: 200px;
 }
 
-.tab button{
+.tab button {
     background-color: rgb(215, 224, 238);
     text-align: center;
     font-size: 10;
@@ -155,7 +154,7 @@ button:hover {
     height: 30;
 }
 
-#div_navigation button{
+#div_navigation button {
     background-color: rgb(215, 224, 238);
     text-align: center;
     font-size: 10;
@@ -165,36 +164,48 @@ button:hover {
     padding: 1px;
 }
 
- /* CANVAS */
-#canvas_graphHistory{
+/* CANVAS */
+
+#canvas_graphHistory {
     background-color: rgb(255, 255, 255);
     border: 1px solid #000000;
 }
 
+/* TABLES */
 
- /* TABLES */
-
-.std_table{
-    font-family: Helvetica,"Trebuchet MS", Arial, sans-serif;
+.std_table {
+    font-family: Helvetica, "Trebuchet MS", Arial, sans-serif;
     font-size: 10;
     border-collapse: collapse;
     width: 100%;
 }
 
-.std_table td,.std_table th{
+.std_table td, .std_table th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-.std_table td:first-child{
+.std_table td:first-child {
     text-align: left;
 }
 
-.std_table tr:nth-child(even){
+.std_table thead tr td {
+    background: rgb(38, 78, 39);
+    position: sticky;
+    top: -3;
+    z-index: 1;
+}
+
+.std_table thead tr td.hiddenCell {
+    position: absolute;
+
+}
+
+.std_table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.std_table thead tr{
+.std_table thead tr {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -202,17 +213,19 @@ button:hover {
     color: white;
 }
 
-.std_table tbody tr:hover{
-   color:  #122c44b2;
+.std_table tbody tr:hover {
+    color: #122c44b2;
 }
 
- /* OTHER CLASSES */
- .negative {
-     color:red;
- }
- .total{
-     font-weight: bold;
- }
+/* OTHER CLASSES */
+
+.negative {
+    color: red;
+}
+
+.total {
+    font-weight: bold;
+}
 
 .tableTooltip .tooltiptext {
     visibility: hidden;
@@ -229,7 +242,7 @@ button:hover {
     position: absolute;
     z-index: 1;
     overflow: auto;
-    font-family: Helvetica,"Trebuchet MS", Arial, sans-serif;
+    font-family: Helvetica, "Trebuchet MS", Arial, sans-serif;
 }
 
 .tableTooltip:hover .tooltiptext {
@@ -251,19 +264,19 @@ button:hover {
     position: absolute;
     z-index: 1;
     overflow: auto;
-    font-family: Helvetica,"Trebuchet MS", Arial, sans-serif;
+    font-family: Helvetica, "Trebuchet MS", Arial, sans-serif;
 }
 
 .inputToolTip:hover .tooltiptext {
     visibility: visible;
 }
 
-.notEarned{
+.notEarned {
     color: red;
     font-style: italic;
 }
 
-.hiddenCell{
+.hiddenCell {
     visibility: hidden;
     position: absolute;
 }
