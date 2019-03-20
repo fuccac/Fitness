@@ -153,7 +153,6 @@ var OnPlayerConnection = function (socket) {
 			SOCKET_LIST[newPlayer.id].emit('refreshAchievements', {
 				achievementList: achievementList,
 			});
-			saveAndRefresh(newPlayer.id);
 		});
 	});
 
@@ -162,10 +161,7 @@ var OnPlayerConnection = function (socket) {
 		var graph = FITNESS_MANAGER.createGraph(data.fromDate, data.toDate);
 		SOCKET_LIST[newPlayer.id].emit('refreshGraph', {
 			graph: graph,
-
 		});
-		saveAndRefresh(newPlayer.id);
-
 	});
 
 };

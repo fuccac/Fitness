@@ -25,9 +25,11 @@ class Log {
                 break;
             case 2:
                 errorCode = "E";
+                showInConsole = true;
                 break;
             case 3:
                 errorCode = "X";
+                showInConsole = true;
                 break;
             default:
                 errorCode = "I";
