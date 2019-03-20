@@ -18,17 +18,17 @@ function DropboxFunctions() {
                         fs.writeFile(filepath, response.fileBinary, 'binary', function (err) {
                             if (err) { throw err; }
                             console.log("Dropbox File '" + response.name + "' saved");
-                            callback('File successfully downloaded');
+                            callback({msg:'File successfully downloaded',sev:0});
                         });
                     }
                 })
                 .catch(function (err) {
                     console.log(err);
-                    callback('Error downloading file using the Dropbox API');
+                    callback({msg:'Error downloading file using the Dropbox API',sev:2});
                 });
         }
         else {
-            callback('FILE '+id+' NOT DOWNLOADED - PROXY MODE ACTIVE');
+            callback({msg:'FILE '+id+' NOT DOWNLOADED - PROXY MODE ACTIVE',sev:1});
         }
 
     };
@@ -42,15 +42,15 @@ function DropboxFunctions() {
                 }
                 dbx.filesUpload({ path: '/' + id, contents: contents, mode: 'overwrite' })
                     .then(function (response) {
-                        callback(response);
+                        callback({msg:response,sev:0});
                     })
                     .catch(function (error) {
-                        callback(error);
+                        callback({msg:error,sev:2});
                     });
             });
         }
         else {
-            callback('FILE '+id+' NOT UPLOADED - PROXY MODE ACTIVE');
+            callback({msg:'FILE '+id+' NOT UPLOADED - PROXY MODE ACTIVE',sev:1});
         }
 
     };

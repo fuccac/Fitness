@@ -2,6 +2,7 @@
 /*jshint esversion: 6 */
 Exercise = require("./Exercise");
 Calc = require("./calc");
+Log = require("./Log");
 googleSheetList = require("../saves/googleJSON/exercisesGoogle.json");
 googleSheetHistoryCaf = require("../saves/googleJSON/cafGoogle.json");
 googleSheetHistoryGjf = require("../saves/googleJSON/gjfGoogle.json");
@@ -9,11 +10,8 @@ googleSheetHistoryJonny = require("../saves/googleJSON/jonnyGoogle.json");
 googleSheetHistoryMuch = require("../saves/googleJSON/muchGoogle.json");
 googleSheetHistoryPhilipp = require("../saves/googleJSON/philippGoogle.json");
 googleSheetHistoryLisi = require("../saves/googleJSON/lisiGoogle.json");
-var fs = require('fs');
 
-
-
-
+var logFile = new Log();
 calc = new Calc();
 
 class FitnessManager {
@@ -26,16 +24,16 @@ class FitnessManager {
         this.registeredPlayers = {};
 
         this.importGoogleSheetStuff(function (result) {
-            console.log(result);
+            logFile.log(result,false,0);
         }.bind(this));
 
     }
 
     importGoogleSheetStuff(result) {
         this.importExercisesFromGoogle(function (resultEx) {
-            console.log(resultEx);
+            logFile.log(resultEx,false,0);
             this.importHistoryFromGoogle(function (resultHistory) {
-                console.log(resultHistory);
+                logFile.log(resultHistory,false,0);
                 result("GoogleSheet Stuff loaded");
             }.bind(this));
 
@@ -213,9 +211,9 @@ class FitnessManager {
                     }
                     else {
                         if (dayEntryKeyName != "Datum") {
-                            console.log(dayEntry);
-                            console.log(dayEntryKeyValue);
-                            console.log(dayEntryKeyName);
+                            logFile.log(dayEntry,false,0);
+                            logFile.log(dayEntryKeyValue,false,0);
+                            logFile.log(dayEntryKeyName,false,0);
                         }
                     }
                 }
@@ -244,7 +242,6 @@ class FitnessManager {
 
     getAchievementList(player, result) {
         var achievementList = {};
-        var earnedAchievements = [];
         var notEarnedAchievements = [];
         var achievementIterator = 0;
         var achievementCategory;
@@ -253,22 +250,18 @@ class FitnessManager {
         var earned = player.earnedAchievements;
         var notEarned = player.notEarnedAchievements;
 
-        for (achievementCategory in earned) {
-            earnedAchievements[achievementIterator] = {
-                achievementProgress: earned[achievementCategory].progress,
-                achievementPercent: earned[achievementCategory].percent,
-                achievementLevel: earned[achievementCategory].level,
-                achievementCategory: achievementCategory,
-                achievementText: earned[achievementCategory].text,
-            };
-            achievementIterator++;
-        }
         achievementIterator = 0;
         for (achievementCategory in notEarned) {
+            var currentLevel = 0;
+            if (notEarned[achievementCategory].level.split("/").map(Number)[0] > 1){
+                currentLevel = earned[achievementCategory].level;
+            }
+
             notEarnedAchievements[achievementIterator] = {
                 achievementProgress: notEarned[achievementCategory].progress,
                 achievementPercent: notEarned[achievementCategory].percent,
-                achievementLevel: notEarned[achievementCategory].level,
+                achievementLevel: currentLevel,
+                achievementNextLevel:notEarned[achievementCategory].level,
                 achievementCategory: achievementCategory,
                 achievementText: notEarned[achievementCategory].text,
             };
@@ -277,7 +270,6 @@ class FitnessManager {
 
 
         var entry = {
-            earnedAchievements: earnedAchievements,
             notEarnedAchievements: notEarnedAchievements
         };
 
@@ -298,7 +290,7 @@ class FitnessManager {
         this.exerciseList[id].unit = unit;
         calc.calculateNewFactor(this.exerciseList[id]);
         this.recalculateExercise(id, function (result) {
-            console.log(result);
+            logFile.log(result,false,0);
         }.bind(this));
         result("editExercise done");
     }
@@ -316,7 +308,7 @@ class FitnessManager {
                 var points = calc.calculatePoints(this.exerciseList[historyEntry.exerciseId[historyIterator]], currentWeight, currentCount);
                 historyEntry.points[historyIterator] = points;
                 sumPoints += Number(points);
-                console.log("recalculated " + historyEntry.exName[historyIterator]);
+                logFile.log("recalculated " + historyEntry.exName[historyIterator],false,0);
             }
 
         }
@@ -454,9 +446,9 @@ class FitnessManager {
 
     checkPlayerStuff(player, result) {
         this.setBestExerciserNumber(player, function (result) {
-            console.log(result);
+            logFile.log(result,false,0);
             this.checkForAchievements(player, function (result) {
-                console.log(result);
+                logFile.log(result,false,0);
             }.bind(this));
         }.bind(this));
         result("checkPlayerStuff done");
@@ -775,6 +767,8 @@ class FitnessManager {
         d.setMinutes(m);
         d.setSeconds(s);
     }
+
+
 }
 
 module.exports = FitnessManager;

@@ -1,5 +1,6 @@
 // @ts-nocheck
 /*jshint esversion: 6 */
+
 function Calc() {
 	this.rand = /**
 	 * @param {number} min
@@ -152,7 +153,6 @@ function Calc() {
 		}
 		return result;
 	};
-
 
 }
 

@@ -40,7 +40,6 @@ var div_statistics = document.getElementById('div_statistics');
 var div_graph = document.getElementById('div_graph');
 var div_MainPage = document.getElementById('div_MainPage');
 var div_achievementsDone = document.getElementById('div_achievementsDone');
-var div_achievementsToDo = document.getElementById('div_achievementsToDo');
 //FONTS
 var font_Courier = "Courier New";
 //INPUTS
@@ -79,7 +78,6 @@ var table_personalTable = document.getElementById('table_personalTable');
 var table_exerciseHistory = document.getElementById('table_exerciseHistory');
 var table_allPlayersTable = document.getElementById('table_allPlayersTable');
 var table_achievementsDone = document.getElementById('table_achievementsDone');
-var table_achievementsToDo = document.getElementById('table_achievementsToDo');
 var socket = io();
 
 initialize();
@@ -434,63 +432,6 @@ function generateAchievementListTable(data, name) {
     var div;
     var color;
 
-    for (achievementIterator = 0; achievementIterator < achievementListPlayer.earnedAchievements.length; achievementIterator++) {
-        bodyRow = tBodyAchievementTable.insertRow(rowNumber);
-        for (achievementKey in achievementListPlayer.earnedAchievements[achievementIterator]) {
-            if (achievementKey === "achievementPercent" || achievementKey === "achievementLevel") {
-                continue;
-            }
-            if (rowNumber == 0) {
-                cell = headerRow.insertCell(cellNumber);
-                cell.innerHTML += translate(achievementKey) + translate(" (Achievement erreicht) ");
-            }
-
-            if (achievementKey === "achievementProgress") {
-                progressNumbers = achievementListPlayer.earnedAchievements[achievementIterator][achievementKey].split("/").map(Number);
-                percent = achievementListPlayer.earnedAchievements[achievementIterator].achievementPercent;
-
-                if (percent > 100) {
-                    percent = 100;
-                }
-                if (percent <= 25) {
-                    color = "red";
-                }
-                else if (percent > 25 && percent <= 50) {
-                    color = "orange";
-                }
-                else if (percent > 50 && percent <= 75) {
-                    color = "yellow";
-                }
-                else if (percent > 75) {
-                    color = "green";
-                }
-                div = document.createElement("div");
-                div.style = "background:" + color + ";position:relative;height:100%;width:" + percent + "%";
-                cell = bodyRow.insertCell(cellNumber);
-                cell.appendChild(div);
-                div.innerHTML += "Level " + achievementListPlayer.earnedAchievements[achievementIterator].achievementLevel + " - " + translate(achievementListPlayer.earnedAchievements[achievementIterator][achievementKey]);
-                cellNumber++;
-            }
-            else {
-                cell = bodyRow.insertCell(cellNumber);
-                cell.innerHTML += translate(achievementListPlayer.earnedAchievements[achievementIterator][achievementKey]);
-                cellNumber++;
-            }
-
-        }
-
-        rowNumber++;
-        cellNumber = 0;
-
-    }
-
-
-    theadAchievementTable = table_achievementsToDo.tHead;
-    tBodyAchievementTable = table_achievementsToDo.tBodies[0];
-    achievementIterator = 0;
-    rowNumber = 0;
-    cellNumber = 0;
-
     theadAchievementTable.innerHTML = "";
     tBodyAchievementTable.innerHTML = "";
     headerRow = theadAchievementTable.insertRow(0);
@@ -504,7 +445,7 @@ function generateAchievementListTable(data, name) {
             }
             if (rowNumber == 0) {
                 cell = headerRow.insertCell(cellNumber);
-                cell.innerHTML += translate(achievementKey) + translate(" (nächstes Achievement)");
+                cell.innerHTML += translate(achievementKey);
             }
 
 
@@ -1284,6 +1225,8 @@ function translate(word) {
             return "Online";
         case "achievementProgress":
             return "Achievement Fortschritt";
+        case "achievementNextLevel":
+            return "Nächstes Level";
         default:
             if (word.search("Overall") != -1) {
                 return word.replace("Overall", " Gesamt");

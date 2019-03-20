@@ -29,8 +29,9 @@ button:hover {
 }
 
 .tab div {
-    padding: 2px;
+    padding: 0px;
     align-items: center;
+    overflow: hidden;
 }
 
 /* TAB MAIN INFO*/
@@ -97,11 +98,7 @@ button:hover {
 /* TAB STATISTICS INFO*/
 
 #div_achievementsDone {
-    height: 50%;
-    overflow: auto;
-}
-
-#div_achievementsToDo {
+    width:50%;
     height: 50%;
     overflow: auto;
 }
@@ -192,7 +189,7 @@ button:hover {
 .std_table thead tr td {
     background: rgb(38, 78, 39);
     position: sticky;
-    top: -3;
+    top: 0;
     z-index: 1;
 }
 
