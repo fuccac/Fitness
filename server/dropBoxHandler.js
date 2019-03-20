@@ -17,14 +17,13 @@ function DropboxFunctions() {
                         var filepath = path.join(__dirname, '../saves/' + response.name);
                         fs.writeFile(filepath, response.fileBinary, 'binary', function (err) {
                             if (err) { throw err; }
-                            console.log("Dropbox File '" + response.name + "' saved");
                             callback({msg:'File successfully downloaded',sev:0});
                         });
                     }
                 })
                 .catch(function (err) {
-                    console.log(err);
-                    callback({msg:'Error downloading file using the Dropbox API',sev:2});
+                   
+                    callback({msg:'Error downloading file using the Dropbox API: ' + err,sev:2});
                 });
         }
         else {
@@ -38,11 +37,12 @@ function DropboxFunctions() {
             var dbx = new Dropbox({ accessToken: token, fetch });  // creates post-auth dbx instance
             fs.readFile(path.join(__dirname, '../saves/' + id), 'utf8', function (err, contents) {
                 if (err) {
-                    console.log('Error: ', err);
+                    callback({msg:err,sev:2});
+                    return;
                 }
                 dbx.filesUpload({ path: '/' + id, contents: contents, mode: 'overwrite' })
                     .then(function (response) {
-                        callback({msg:response,sev:0});
+                        callback({msg:response.name + " uploaded",sev:0});
                     })
                     .catch(function (error) {
                         callback({msg:error,sev:2});
