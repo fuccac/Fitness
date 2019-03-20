@@ -45,7 +45,7 @@ function DropboxFunctions() {
                         callback({msg:response.name + " uploaded",sev:0});
                     })
                     .catch(function (error) {
-                        callback({msg:error,sev:2});
+                        callback({msg:error.error_summary,sev:2});
                     });
             });
         }
