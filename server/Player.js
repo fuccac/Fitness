@@ -8,6 +8,8 @@ class Player {
         this.name = "RandomName" + calc.rand(1, 10000, 0);
         this.points = {
             total: 0,
+            cardio:0,
+            strength:0,
             negative: 0,
             today: 0,
             diffLastMonth: 0,

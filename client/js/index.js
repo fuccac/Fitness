@@ -653,11 +653,20 @@ function generateExerciseList(data) {
         bodyRow.onclick = function () {
             var id = this.getElementsByTagName("td")[0].innerHTML;
             input_exerciseName.value = data.exercises[id].name;
-            input_exerciseBaseWeight.value = data.exercises[id].votes[Name].baseWeight;
-            input_exerciseDifficulty.value = data.exercises[id].votes[Name].difficulty;
-            input_exerciseDifficulty10.value = data.exercises[id].votes[Name].difficulty10;
-            input_exerciseDifficulty100.value = data.exercises[id].votes[Name].difficulty100;
-            input_exerciseComment.value = data.exercises[id].votes[Name].comment;
+            if (data.exercises[id].votes[Name] == undefined) {
+                input_exerciseBaseWeight.value = translate(data.exercises[id].baseWeight);
+                input_exerciseDifficulty.value = translate(data.exercises[id].difficulty);
+                input_exerciseDifficulty10.value = translate(data.exercises[id].difficulty10);
+                input_exerciseDifficulty100.value = translate(data.exercises[id].difficulty100);
+            }
+            else {
+                input_exerciseBaseWeight.value = translate(data.exercises[id].votes[Name].baseWeight);
+                input_exerciseDifficulty.value = translate(data.exercises[id].votes[Name].difficulty);
+                input_exerciseDifficulty10.value = translate(data.exercises[id].votes[Name].difficulty10);
+                input_exerciseDifficulty100.value = translate(data.exercises[id].votes[Name].difficulty100);
+                input_exerciseComment.value = data.exercises[id].votes[Name].comment;
+            }
+
             select_exerciseEquipment.value = data.exercises[id].equipment;
             select_exerciseType.value = data.exercises[id].type;
             select_exerciseUnit.value = data.exercises[id].unit;
@@ -1240,4 +1249,3 @@ function translate(word) {
             return word;
     }
 }
- 
