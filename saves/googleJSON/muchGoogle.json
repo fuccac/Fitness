@@ -837,13 +837,20 @@
       "Datum": "2019-03-23"
     },
     {
-      "Datum": "2019-03-24"
+      "Datum": "2019-03-24",
+      "Crunches": 30,
+      "Laufen": 20,
+      "Curls": 100
     },
     {
-      "Datum": "2019-03-25"
+      "Datum": "2019-03-25",
+      "Planks": 120,
+      "Power-Rudern 10min": 1000
     },
     {
-      "Datum": "2019-03-26"
+      "Datum": "2019-03-26",
+      "Planks": 180,
+      "Power-Rudern 10min": 1000
     },
     {
       "Datum": "2019-03-27"
@@ -852,22 +859,38 @@
       "Datum": "2019-03-28"
     },
     {
-      "Datum": "2019-03-29"
+      "Datum": "2019-03-29",
+      "Crunches": 45,
+      "Laufen": 10,
+      "Curls": 200
     },
     {
       "Datum": "2019-03-30"
     },
     {
-      "Datum": "2019-03-31"
+      "Datum": "2019-03-31",
+      "Crunches": 120,
+      "Planks": 60,
+      "Laufen": 20,
+      "Power-Rudern 10min": 2400,
+      "Curls": 200,
+      "Bankdrücken": 30
     },
     {
       "Datum": "2019-04-01"
     },
     {
-      "Datum": "2019-04-02"
+      "Datum": "2019-04-02",
+      "Crunches": 135,
+      "Power-Rudern 10min": 2400,
+      "Curls": 320
     },
     {
-      "Datum": "2019-04-03"
+      "Datum": "2019-04-03",
+      "Crunches": 135,
+      "Power-Rudern 10min": 2492,
+      "Curls": 300,
+      "Bankdrücken": 30
     },
     {
       "Datum": "2019-04-04"

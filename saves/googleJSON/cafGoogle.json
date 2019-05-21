@@ -1457,61 +1457,84 @@
       "Wandern": 120
     },
     {
-      "Datum": "2019-03-14"
+      "Datum": "2019-03-14",
+      "Wandern": 70
     },
     {
-      "Datum": "2019-03-15"
+      "Datum": "2019-03-15",
+      "Wandern": 70
     },
     {
-      "Datum": "2019-03-16"
+      "Datum": "2019-03-16",
+      "Klettern": 90,
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-03-17"
     },
     {
-      "Datum": "2019-03-18"
+      "Datum": "2019-03-18",
+      "Wandern": 70
     },
     {
-      "Datum": "2019-03-19"
+      "Datum": "2019-03-19",
+      "Wandern": 70
     },
     {
-      "Datum": "2019-03-20"
+      "Datum": "2019-03-20",
+      "Wandern": 70
     },
     {
-      "Datum": "2019-03-21"
+      "Datum": "2019-03-21",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-03-22"
+      "Datum": "2019-03-22",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-03-23"
+      "Datum": "2019-03-23",
+      "Wandern": 60
     },
     {
-      "Datum": "2019-03-24"
+      "Datum": "2019-03-24",
+      "Wandern": 90
     },
     {
-      "Datum": "2019-03-25"
+      "Datum": "2019-03-25",
+      "Radfahren": 40,
+      "Wandern": 120
     },
     {
-      "Datum": "2019-03-26"
+      "Datum": "2019-03-26",
+      "Radfahren": 60
     },
     {
-      "Datum": "2019-03-27"
+      "Datum": "2019-03-27",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-03-28"
+      "Datum": "2019-03-28",
+      "Radfahren": 45
     },
     {
-      "Datum": "2019-03-29"
+      "Datum": "2019-03-29",
+      "Radfahren": 50
     },
     {
-      "Datum": "2019-03-30"
+      "Datum": "2019-03-30",
+      "Wandern": 180,
+      "Aufwärmen": 1,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-03-31"
+      "Datum": "2019-03-31",
+      "Wandern": 120,
+      "Junkfood": 1
     },
     {
-      "Datum": "2019-04-01"
+      "Datum": "2019-04-01",
+      "Radfahren": 40
     },
     {
       "Datum": "2019-04-02"
@@ -1520,10 +1543,12 @@
       "Datum": "2019-04-03"
     },
     {
-      "Datum": "2019-04-04"
+      "Datum": "2019-04-04",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-04-05"
+      "Datum": "2019-04-05",
+      "Radfahren": 40
     },
     {
       "Datum": "2019-04-06"

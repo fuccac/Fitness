@@ -1893,7 +1893,8 @@
     },
     {
       "Datum": "2019-03-07",
-      "Radfahren": 30
+      "Radfahren": 30,
+      "Fitness & Yoga": 60
     },
     {
       "Datum": "2019-03-08",
@@ -1937,73 +1938,154 @@
       "Aufwärmen": 1
     },
     {
-      "Datum": "2019-03-13"
+      "Datum": "2019-03-13",
+      "Radfahren": 30
     },
     {
-      "Datum": "2019-03-14"
+      "Datum": "2019-03-14",
+      "Radfahren": 80,
+      "Fitness & Yoga": 60
     },
     {
-      "Datum": "2019-03-15"
+      "Datum": "2019-03-15",
+      "Radfahren": 70
     },
     {
-      "Datum": "2019-03-16"
+      "Datum": "2019-03-16",
+      "Klettern": 60,
+      "Radfahren": 30,
+      "Junkfood": 1,
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
-      "Datum": "2019-03-17"
+      "Datum": "2019-03-17",
+      "Junkfood": 1
     },
     {
-      "Datum": "2019-03-18"
+      "Datum": "2019-03-18",
+      "Crunches": 100,
+      "Liegestütz": 24,
+      "Kniebeugen": 60,
+      "Radl-Crunches": 50,
+      "Türziehen": 75,
+      "Russian Twist": 50,
+      "Laufen": 25,
+      "Radfahren": 30,
+      "Abwärmen": 1,
+      "Aufwärmen": 1
     },
     {
-      "Datum": "2019-03-19"
+      "Datum": "2019-03-19",
+      "Radfahren": 30
     },
     {
-      "Datum": "2019-03-20"
+      "Datum": "2019-03-20",
+      "Crunches": 50,
+      "Radl-Crunches": 50,
+      "Burpees": 60,
+      "Radfahren": 30,
+      "Käfer Beine gestreckt": 15
     },
     {
-      "Datum": "2019-03-21"
+      "Datum": "2019-03-21",
+      "Radfahren": 40,
+      "Fitness & Yoga": 60,
+      "Junkfood": 1,
+      "Alkohol": 1
     },
     {
-      "Datum": "2019-03-22"
+      "Datum": "2019-03-22",
+      "Radfahren": 30
     },
     {
-      "Datum": "2019-03-23"
+      "Datum": "2019-03-23",
+      "Junkfood": 1,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-03-24"
+      "Datum": "2019-03-24",
+      "Liegestütz": 40,
+      "Klettern": 90,
+      "Radfahren": 25,
+      "Essen nach 20:00": 1,
+      "Alkohol": 2
     },
     {
-      "Datum": "2019-03-25"
+      "Datum": "2019-03-25",
+      "Sit-Ups": 10,
+      "Crunches": 150,
+      "Klimmzüge": 15,
+      "Radl-Crunches": 50,
+      "Russian Twist": 50,
+      "Beinheber": 20,
+      "Wandern": 60,
+      "Junkfood": 1
     },
     {
-      "Datum": "2019-03-26"
+      "Datum": "2019-03-26",
+      "Radfahren": 30
     },
     {
-      "Datum": "2019-03-27"
+      "Datum": "2019-03-27",
+      "Crunches": 150,
+      "Klimmzüge": 10,
+      "Burpees": 30,
+      "Türziehen": 10,
+      "Radfahren": 30
     },
     {
-      "Datum": "2019-03-28"
+      "Datum": "2019-03-28",
+      "Radfahren": 40,
+      "Fitness & Yoga": 60,
+      "Alkohol": 1
     },
     {
-      "Datum": "2019-03-29"
+      "Datum": "2019-03-29",
+      "Radfahren": 30,
+      "Alkohol": 1
     },
     {
-      "Datum": "2019-03-30"
+      "Datum": "2019-03-30",
+      "Crunches": 100,
+      "Liegestütz": 40,
+      "Klimmzüge": 16,
+      "Kniebeugen": 80,
+      "Radl-Crunches": 50,
+      "Russian Twist": 50,
+      "Radfahren": 30,
+      "Beinheber": 20
     },
     {
-      "Datum": "2019-03-31"
+      "Datum": "2019-03-31",
+      "Radfahren": 60,
+      "Alkohol": 4
     },
     {
-      "Datum": "2019-04-01"
+      "Datum": "2019-04-01",
+      "Crunches": 150,
+      "Liegestütz": 40,
+      "Kniebeugen": 100,
+      "Bergsteiger": 20,
+      "Planks": 240,
+      "Superman": 80,
+      "Curls": 320,
+      "Aufwärmen": 1
     },
     {
-      "Datum": "2019-04-02"
+      "Datum": "2019-04-02",
+      "Radfahren": 30,
+      "Junkfood": 1,
+      "Alkohol": 1
     },
     {
-      "Datum": "2019-04-03"
+      "Datum": "2019-04-03",
+      "Radfahren": 70
     },
     {
-      "Datum": "2019-04-04"
+      "Datum": "2019-04-04",
+      "Radfahren": 70,
+      "Fitness & Yoga": 60
     },
     {
       "Datum": "2019-04-05"

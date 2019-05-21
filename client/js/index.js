@@ -27,7 +27,6 @@ var canvas_graphHistory = document.getElementById('canvas_graphHistory');
 //CTX
 var ctx_graphHistory = canvas_graphHistory.getContext("2d");
 //DIVS
-var div_Sign = document.getElementById('div_Sign');
 var div_ExerciseOverview = document.getElementById('div_ExerciseOverview');
 var div_addNewExercise = document.getElementById('div_addNewExercise');
 var div_navigation = document.getElementById('div_navigation');
@@ -40,11 +39,10 @@ var div_statistics = document.getElementById('div_statistics');
 var div_graph = document.getElementById('div_graph');
 var div_MainPage = document.getElementById('div_MainPage');
 var div_achievementsDone = document.getElementById('div_achievementsDone');
+var div_login = document.getElementById('div_login');
 //FONTS
 var font_Courier = "Courier New";
 //INPUTS
-var input_Password = document.getElementById('input_Password');
-var input_UserName = document.getElementById('input_Username');
 var input_exerciseName = document.getElementById('input_exerciseName');
 var input_exerciseDifficulty = document.getElementById('input_exerciseDifficulty');
 var input_exerciseDifficulty10 = document.getElementById('input_exerciseDifficulty10');
@@ -60,10 +58,9 @@ var input_sumSelection = document.getElementById('input_sumSelection');
 var input_avgSelection = document.getElementById('input_avgSelection');
 var input_graphFromDate = document.getElementById('input_graphFromDate');
 var input_graphToDate = document.getElementById('input_graphToDate');
-var input_graphXSections = document.getElementById('input_graphXSections');
-var input_graphYSections = document.getElementById('input_graphYSections');
-var input_graphXMax = document.getElementById('input_graphXMax');
 var input_deletionMode = document.getElementById('input_deletionMode');
+var input_Password = document.getElementById('input_Password');
+var input_UserName = document.getElementById('input_Username');
 
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
@@ -89,7 +86,6 @@ initialize();
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
-
 //sign in code
 button_SignIn.onclick = function () {
     socket.emit('SignIn', { username: input_UserName.value, password: input_Password.value });
@@ -188,12 +184,32 @@ button_createExercise.onclick = function () {
 };
 
 
+
 /******************************************************************************************************************
 *******************************************************************************************************************
 *                                               SOCKET ON 
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
+
+socket.on('signInResponse', function (data) {
+    if (data.success) {
+        div_login.style.display = "none";
+        Name = input_UserName.value;
+        button_tabMainPage.onclick();
+        div_navigation.style.display = 'inline-block';
+    }
+    else
+        alert("Sign in unsuccessful");
+});
+
+socket.on('signUpResponse', function (data) {
+    if (data.success) {
+        alert("Sign Up successful");
+    }
+    else
+        alert("Sign Up unsuccessful");
+});
 
 socket.on("refreshHistory", function (data) {
     fromDate = createZeroDate(input_historyFromDate.value);
@@ -206,7 +222,7 @@ socket.on("refreshAchievements", function (data) {
 });
 
 socket.on("refreshGraph", function (data) {
-    generateGraph(data, canvas_graphHistory, ctx_graphHistory, input_graphXSections.value, input_graphYSections.value, input_graphXMax.value);
+    generateGraph(data, canvas_graphHistory, ctx_graphHistory);
 });
 
 socket.on("refresh", function (data) {
@@ -229,24 +245,7 @@ socket.on("refresh", function (data) {
 
 });
 
-socket.on('signInResponse', function (data) {
-    if (data.success) {
-        Name = input_UserName.value;
-        div_Sign.style.display = 'none';
-        button_tabMainPage.onclick();
-        div_navigation.style.display = 'inline-block';
-    }
-    else
-        alert("Sign in unsuccessful");
-});
 
-socket.on('signUpResponse', function (data) {
-    if (data.success) {
-        alert("Sign Up successful");
-    }
-    else
-        alert("Sign Up unsuccessful");
-});
 
 
 /******************************************************************************************************************
@@ -300,114 +299,66 @@ function modifyExercise(emitString) {
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
-function generateGraph(data, canvas, ctx, xSections, ySections, xMax) {
-    canvas.height = div_graph.clientHeight;
-    canvas.width = div_graph.clientWidth - 10;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    var maxHeight = canvas.height;
-    var maxWidth = canvas.width;
-    var minHeight = 0;
-    var minWidth = 0;
-    var maxValue = 0;
-    var heightSections = ySections;
-    var widthSections = xSections;
-    var pointAxisTextTuningHeight = 5;
-    var timeAxisTextTuningHeight = 10;
-    var rightLeft = 50;
-    var topBottom = 50;
-    var endDate;
-    var startDate;
-    var diagramNamesWidthSpace = 55;
-    maxHeight -= topBottom;
-    maxWidth -= rightLeft;
-    minHeight += topBottom;
-    minWidth += rightLeft;
-    var startWidthNames = minWidth;
+var OverallChart;
+function generateGraph(data, canvas, ctx) {
+    if (OverallChart != undefined) {
+        OverallChart.data.labels.pop();
+        OverallChart.data.datasets.forEach((dataset) => {
+            dataset.data.pop();
+        });
+        OverallChart.update();
+        canvas.height = div_graph.clientHeight;
+        canvas.width = div_graph.clientWidth - 10;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+
+    var datasets = [];
     var colors = ["green", "red", "blue", "yellow", "brown", "grey", "magenta", "orange"];
+    var colorIterator = 0;
 
-    for (var playerName in data.graph) {
-        var maxPlayer = data.graph[playerName].xAxis[data.graph[playerName].xAxis.length - 1];
-        if (maxPlayer > maxValue) {
-            maxValue = maxPlayer;
-        }
-
-        endDate = createZeroDate(data.graph[playerName].yAxis[data.graph[playerName].yAxis.length - 1]);
-        startDate = createZeroDate(data.graph[playerName].yAxis[0]);
-    }
-    maxValue = Math.ceil(maxValue / 10000) * 10000;
-    if (xMax > 0) {
-        maxValue = xMax;
-    }
-
-    endDate = endDate.getTime();
-    startDate = startDate.getTime();
-
-    var conversionFactor = (maxHeight - minHeight) / maxValue;
-    var heightStep = (maxHeight - minHeight) / heightSections;
-
-    var currentHeight = minHeight;
-    for (var diaIterator = 0; diaIterator <= heightSections; diaIterator++) {
-        drawLine(ctx, "black", minWidth, currentHeight, maxWidth, currentHeight);
-        createText(ctx, "black", "Arial", 10, ((maxHeight - currentHeight) / conversionFactor).toFixed(2), minWidth, currentHeight - pointAxisTextTuningHeight);
-        currentHeight += heightStep;
-    }
-
-    colorIterator = 0;
-    continueFlag = false;
-    gridFinished = false;
     for (var playerGraphName in data.graph) {
-        var widthSteps = (maxWidth - minWidth) / (data.graph[playerGraphName].xAxis.length - 1);
+        var dataset = {
+            label: playerGraphName,
+            data: data.graph[playerGraphName].xAxis,
+            fill: false,
+            pointStyle: 'cross',
+            radius: 1,
+            borderColor: [
+                colors[colorIterator],
 
-        var lastPoint = undefined;
-        var thisPoint = undefined;
-        var xPos = minWidth;
+            ],
+            borderWidth: 1
+        };
 
-        for (var pointIterator = 0; pointIterator < data.graph[playerGraphName].xAxis.length; pointIterator++) {
-            thisPoint = {
-                x: xPos,
-                y: maxHeight - data.graph[playerGraphName].xAxis[pointIterator] * conversionFactor,
-            };
-
-            if (lastPoint == undefined) {
-                lastPoint = {
-                    x: xPos,
-                    y: maxHeight - data.graph[playerGraphName].xAxis[pointIterator] * conversionFactor,
-                };
-            }
-            if (!gridFinished) {
-                if (pointIterator % widthSections == 0) {
-                    drawLine(ctx, "black", thisPoint.x, maxHeight, thisPoint.x, minHeight);
-                    createText(ctx, "black", "Arial", 10, getDateFormat(createZeroDate(data.graph[playerGraphName].yAxis[pointIterator]), "DD.MM.YYYY"), thisPoint.x, maxHeight + timeAxisTextTuningHeight);
-                }
-            }
-
-
-            if (thisPoint.y <= minHeight) {
-                if (continueFlag) {
-                    lastPoint = thisPoint;
-                    xPos += widthSteps;
-                    continue;
-                }
-                else {
-                    thisPoint.y = minHeight;
-                    continueFlag = true;
-                }
-
-            }
-            else {
-                continueFlag = false;
-            }
-
-            drawLine(ctx, colors[colorIterator], lastPoint.x, lastPoint.y, thisPoint.x, thisPoint.y);
-
-            lastPoint = thisPoint;
-            xPos += widthSteps;
-
-        }
-        gridFinished = true;
-        createText(ctx, colors[colorIterator], "Arial", 10, playerGraphName, startWidthNames, maxHeight + timeAxisTextTuningHeight * 3);
+        datasets.push(dataset);
         colorIterator++;
-        startWidthNames += diagramNamesWidthSpace;
+
+    }
+    if (OverallChart == undefined) {
+        OverallChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.graph.caf.yAxis,
+                datasets: datasets,
+            },
+
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                },
+            }
+        });
+        Chart.defaults.global.defaultColor = 'rgba(255, 255, 255, 1)';
+    }
+    else {
+        OverallChart.data.datasets = datasets;
+        OverallChart.data.labels = data.graph.caf.yAxis;
+        OverallChart.update();
     }
 
 
@@ -486,8 +437,6 @@ function generateAchievementListTable(data, name) {
         cellNumber = 0;
 
     }
-
-
 
 }
 
@@ -1117,6 +1066,7 @@ function initialize() {
     input_doneExerciseDate.value = getDateFormat(today, "YYYY-MM-DD");
     input_graphFromDate.value = "2018-08-01";
     input_graphToDate.value = getDateFormat(today, "YYYY-MM-DD");
+
 }
 
 function createZeroDate(date) {

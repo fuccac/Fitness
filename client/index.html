@@ -1,8 +1,11 @@
 <html>
 
 <body>
+	<link href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="style.css" />
-	<div id="div_Sign">
+	
+	<div id="div_login">
 		Willkommen - Anmeldung erforderlich! <br><br>
 		Name:<br><input id="input_Username" type="text" placeholder="Username"></input><br>
 		Passwort:<br><input id="input_Password" type="password" placeholder="Passwort"></input><br><br>
@@ -10,7 +13,6 @@
 		<button id="button_SignUp">Registrieren</button>
 		<br>
 	</div>
-
 	<div id="div_MainPage" class="tab">
 		<div id="div_allPlayersTable">
 			<table id="table_allPlayersTable" class="std_table">
@@ -27,13 +29,6 @@
 			<input id="input_graphFromDate" type="date"></input>
 			<label for="input_graphToDate">Bis :</label>
 			<input id="input_graphToDate" type="date"></input><br>
-
-			<label for="input_graphXSections">Alle X Tage :</label>
-			<input id="input_graphXSections" value="10" type="number"></input>
-			<label for="input_graphYSections">Anzahl X Linien :</label>
-			<input id="input_graphYSections" value="10" type="number"></input>
-			<label for="input_graphXMax">Maximalwert (0 für Auto):</label>
-			<input id="input_graphXMax" value="0" type="number"></input><br>
 			<button id="button_updateGraph">Graph erzeugen</button>
 		</div>
 	</div>
@@ -167,4 +162,5 @@
 </html>
 
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
 <script type="text/javascript" src="./js/index.js"></script>

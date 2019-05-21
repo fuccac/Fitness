@@ -1515,13 +1515,25 @@
       "Datum": "2019-03-17"
     },
     {
-      "Datum": "2019-03-18"
+      "Datum": "2019-03-18",
+      "Bergsteiger": 150,
+      "Türziehen": 60,
+      "Vogel und Hund": 30,
+      "Kniebeugen mit Band": 150,
+      "Curls": 240,
+      "Dips mit einem Stuhl [Beine gestreckt]": 45
     },
     {
       "Datum": "2019-03-19"
     },
     {
-      "Datum": "2019-03-20"
+      "Datum": "2019-03-20",
+      "Bergsteiger": 240,
+      "Türziehen": 60,
+      "Vogel und Hund": 30,
+      "Kniebeugen mit Band": 150,
+      "Curls": 240,
+      "Dips mit einem Stuhl [Beine gestreckt]": 45
     },
     {
       "Datum": "2019-03-21"
@@ -1539,13 +1551,27 @@
       "Datum": "2019-03-25"
     },
     {
-      "Datum": "2019-03-26"
+      "Datum": "2019-03-26",
+      "Bergsteiger": 250,
+      "Türziehen": 60,
+      "Beinheber": 150,
+      "Vogel und Hund": 30,
+      "Kniebeugen mit Band": 150,
+      "Curls": 240,
+      "Dips mit einem Stuhl [Beine gestreckt]": 45
     },
     {
       "Datum": "2019-03-27"
     },
     {
-      "Datum": "2019-03-28"
+      "Datum": "2019-03-28",
+      "Bergsteiger": 250,
+      "Türziehen": 60,
+      "Beinheber": 150,
+      "Vogel und Hund": 30,
+      "Kniebeugen mit Band": 150,
+      "Curls": 250,
+      "Dips mit einem Stuhl [Beine gestreckt]": 45
     },
     {
       "Datum": "2019-03-29"

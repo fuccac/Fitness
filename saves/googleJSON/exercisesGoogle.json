@@ -29,12 +29,12 @@
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
-      "type": "Kraft"
+      "type": "Cardio"
     },
     {
       "exname": "Liegestütz",
       "bothSides": false,
-      "diff": 1.5,
+      "diff": 1.6666666666666667,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -127,7 +127,7 @@
     {
       "exname": "Burpees",
       "bothSides": false,
-      "diff": 1.825,
+      "diff": 2.158333333333333,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -164,7 +164,7 @@
       "diff": 0.31666666666666665,
       "baseWeight": 0,
       "unit": "Schwung",
-      "equip": "Körpergewicht",
+      "equip": "Sprungseil",
       "type": "Cardio",
       "repsToGetOverall": "1000;2000;4000;8000;16000;32000;64000;100000;200000;400000",
       "achievementCategory": "Seilspringen",
@@ -253,7 +253,7 @@
     {
       "exname": "Power-Rudern 10min",
       "bothSides": false,
-      "diff": 0.05,
+      "diff": 0.05000000000000001,
       "baseWeight": 0,
       "unit": "m",
       "equip": "Körpergewicht",
@@ -951,7 +951,7 @@
       "bothSides": false,
       "diff": -10,
       "baseWeight": 0,
-      "unit": "Wdh",
+      "unit": "pro Tschick",
       "equip": "Strafe",
       "type": "Strafe"
     },
@@ -960,7 +960,7 @@
       "bothSides": false,
       "diff": -10,
       "baseWeight": 0,
-      "unit": "Wdh",
+      "unit": "pro Tag",
       "equip": "Strafe",
       "type": "Strafe"
     },
@@ -969,7 +969,7 @@
       "bothSides": false,
       "diff": -50,
       "baseWeight": 0,
-      "unit": "Wdh",
+      "unit": "ab 5 Drinks",
       "equip": "Strafe",
       "type": "Strafe"
     },
@@ -978,7 +978,7 @@
       "bothSides": false,
       "diff": -10,
       "baseWeight": 0,
-      "unit": "Wdh",
+      "unit": "pro Tag",
       "equip": "Strafe",
       "type": "Strafe"
     },
@@ -987,7 +987,7 @@
       "bothSides": false,
       "diff": -10,
       "baseWeight": 0,
-      "unit": "Wdh",
+      "unit": "pro Drink",
       "equip": "Strafe",
       "type": "Strafe"
     }

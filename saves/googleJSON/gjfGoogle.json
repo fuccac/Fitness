@@ -1178,55 +1178,134 @@
       "Datum": "2019-03-12"
     },
     {
-      "Datum": "2019-03-13"
+      "Datum": "2019-03-13",
+      "Klimmzüge": 15,
+      "Planks": 390,
+      "Seilspringen": 900,
+      "Curls": 300,
+      "Arnold Presses": 90,
+      "Legextension": 150,
+      "Lat Pull Down": 120
     },
     {
-      "Datum": "2019-03-14"
+      "Datum": "2019-03-14",
+      "Klimmzüge": 20,
+      "Planks": 480,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160,
+      "Alkohol": 4
     },
     {
-      "Datum": "2019-03-15"
+      "Datum": "2019-03-15",
+      "Klimmzüge": 20,
+      "Planks": 480,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160
     },
     {
-      "Datum": "2019-03-16"
+      "Datum": "2019-03-16",
+      "Alkohol": 4
     },
     {
       "Datum": "2019-03-17"
     },
     {
-      "Datum": "2019-03-18"
+      "Datum": "2019-03-18",
+      "Liegestütz": 30,
+      "Klimmzüge": 20,
+      "Kniebeugen": 30,
+      "Planks": 490,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Overhead Triceps": 25,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160
     },
     {
-      "Datum": "2019-03-19"
+      "Datum": "2019-03-19",
+      "Liegestütz": 15,
+      "Kniebeugen": 20,
+      "Planks": 90,
+      "Liegestütz [Arme erhöht]": 40
     },
     {
-      "Datum": "2019-03-20"
+      "Datum": "2019-03-20",
+      "Klimmzüge": 20,
+      "Planks": 480,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160
     },
     {
-      "Datum": "2019-03-21"
+      "Datum": "2019-03-21",
+      "Klimmzüge": 20,
+      "Planks": 480,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160
     },
     {
-      "Datum": "2019-03-22"
+      "Datum": "2019-03-22",
+      "Wandern": 60,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-03-23"
+      "Datum": "2019-03-23",
+      "Wandern": 50,
+      "Schwimmen": 500,
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-03-24"
     },
     {
-      "Datum": "2019-03-25"
+      "Datum": "2019-03-25",
+      "Klimmzüge": 20,
+      "Planks": 480,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160
     },
     {
       "Datum": "2019-03-26"
     },
     {
-      "Datum": "2019-03-27"
+      "Datum": "2019-03-27",
+      "Klimmzüge": 20,
+      "Planks": 490,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160
     },
     {
-      "Datum": "2019-03-28"
+      "Datum": "2019-03-28",
+      "Klimmzüge": 20,
+      "Planks": 481,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160,
+      "Alkohol": 1
     },
     {
-      "Datum": "2019-03-29"
+      "Datum": "2019-03-29",
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-03-30"
@@ -1235,19 +1314,43 @@
       "Datum": "2019-03-31"
     },
     {
-      "Datum": "2019-04-01"
+      "Datum": "2019-04-01",
+      "Liegestütz": 15,
+      "Klimmzüge": 20,
+      "Planks": 500,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160,
+      "Alkohol": 1
     },
     {
       "Datum": "2019-04-02"
     },
     {
-      "Datum": "2019-04-03"
+      "Datum": "2019-04-03",
+      "Klimmzüge": 20,
+      "Planks": 500,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160,
+      "Alkohol": 1
     },
     {
       "Datum": "2019-04-04"
     },
     {
-      "Datum": "2019-04-05"
+      "Datum": "2019-04-05",
+      "Klimmzüge": 24,
+      "Planks": 500,
+      "Seilspringen": 1500,
+      "Curls": 400,
+      "Arnold Presses": 120,
+      "Legextension": 200,
+      "Lat Pull Down": 160
     },
     {
       "Datum": "2019-04-06"

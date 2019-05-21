@@ -81,27 +81,48 @@ class FitnessManager {
         var chunk = this.getDefinedHistory(fromDate, toDate);
         var graph = {};
         for (var playerName in this.registeredPlayers) {
+            var entryFound = false;
             var xAxis = [];
             var yAxis = [];
-            var date = calc.createZeroDate(fromDate);
+            var date
             fromDate = calc.createZeroDate(fromDate);
             var sumPoints = this.calculatePointsFromHistory(playerName, fromDate).total;
             for (var historyIterator = 0; historyIterator < chunk.length; historyIterator++) {
-                date = calc.createZeroDate(chunk[historyIterator].date[0]);
+                entryFound = false;
                 for (var historyEntryIterator = 0; historyEntryIterator < chunk[historyIterator].points.length; historyEntryIterator++) {
                     if (chunk[historyIterator].playerName[historyEntryIterator].toUpperCase() != playerName.toUpperCase()) {
                         continue;
                     }
+                   
                     sumPoints += chunk[historyIterator].points[historyEntryIterator];
+                    entryFound = true;
+                    date = chunk[historyIterator].date[historyEntryIterator];
+
                 }
-                xAxis[historyIterator] = sumPoints;
-                yAxis[historyIterator] = date;
+                if (entryFound){
+                    xAxis[historyIterator] = sumPoints;
+                    yAxis[historyIterator] = date;
+                }
+                else{
+                    xAxis[historyIterator] = sumPoints;
+                    var newDate = calc.createZeroDate(yAxis[historyIterator]);
+                    newDate.setDate(newDate.getDate()+1);
+                    yAxis[historyIterator] = calc.getDateFormat(newDate,"DD.MM.YYYY");
+                }
+                
+                
+
+                
             }
+
             graph[playerName] = {
                 xAxis: xAxis,
                 yAxis: yAxis,
             };
         }
+        //calc.getDateFormat(date,"DD.MM.YYYY");
+
+
         return graph;
     }
 
@@ -399,7 +420,7 @@ class FitnessManager {
         if (this.history[date] != undefined) {
             for (var iterator in this.history[date].exerciseId) {
                 var exId = this.history[date].exerciseId[iterator];
-                if (exId === exerciseId && this.history[date].weight[iterator] == weight && this.history[date].playerName[iterator] == playerName.toUpperCase()) {
+                if (exId === exerciseId && this.history[date].weight[iterator] == weight && this.history[date].playerName[iterator].toUpperCase() == playerName.toUpperCase()) {
                     this.history[date].count[iterator] += Number(count);
                     this.history[date].points[iterator] += Number(points);
                     return;
@@ -503,6 +524,9 @@ class FitnessManager {
         var maxSumDaily = 0;
 
         var historyChunk = this.getDefinedHistory("1970-01-01", "9999-01-01");
+        if (historyChunk.length == 0){
+            return 0;
+        }
         var currentDate = calc.createZeroDate(historyChunk[0].date[0]);
         for (var historyIterator = 0; historyIterator < historyChunk.length; historyIterator++) {
             sumDaily = 0;

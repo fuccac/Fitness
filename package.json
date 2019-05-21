@@ -11,6 +11,7 @@
     "jshint": "^2.10.1",
     "jsonfile-storage": "0.0.16",
     "password-hash": "^1.2.2",
+    "popper.js": "^1.15.0",
     "socket.io": "^2.2.0"
   },
   "engines": {

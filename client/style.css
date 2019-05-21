@@ -10,11 +10,6 @@ button:hover {
 
 /* DIV */
 
-#div_Sign {
-    color: #030;
-    background-color: rgb(194, 214, 245);
-    border: 1px solid #000000;
-}
 
 .tab {
     width: 100%;
@@ -26,6 +21,12 @@ button:hover {
     border-right: 1px solid #000000;
     border-top: 1px solid #000000;
     overflow: hidden;
+}
+
+#div_login{
+    color: #030;
+    background-color: rgb(194, 214, 245);
+    border: 1px solid #000000;
 }
 
 .tab div {
@@ -148,7 +149,7 @@ button:hover {
 }
 
 .tab button {
-    background-color: rgb(215, 224, 238);
+    background-color: rgb(184, 211, 255);
     text-align: center;
     font-size: 10;
     width: 100;
@@ -157,7 +158,7 @@ button:hover {
 }
 
 #div_navigation button {
-    background-color: rgb(215, 224, 238);
+    background-color: rgb(184, 211, 255);
     text-align: center;
     font-size: 10;
     margin: 0.1%;
@@ -282,3 +283,4 @@ button:hover {
     visibility: hidden;
     position: absolute;
 }
+
