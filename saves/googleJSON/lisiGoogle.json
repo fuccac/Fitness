@@ -1147,19 +1147,40 @@
       "Datum": "2019-04-29"
     },
     {
-      "Datum": "2019-04-30"
+      "Datum": "2019-04-30",
+      "Walking Lunges": 48,
+      "Step Ups": 48,
+      "Knee Ups": 48,
+      "Dead Lifts": 30
     },
     {
-      "Datum": "2019-05-01"
+      "Datum": "2019-05-01",
+      "Kniebeugen": 30,
+      "Burpees": 20,
+      "Jump Squats": 62,
+      "Klappmesser": 30,
+      "Hand Release PushUp": 30,
+      "Dips mit einem Stuhl [Beine gestreckt]": 30
     },
     {
-      "Datum": "2019-05-02"
+      "Datum": "2019-05-02",
+      "Sit-Ups": 120,
+      "Liegestütz": 30,
+      "Radl-Crunches": 40
     },
     {
       "Datum": "2019-05-03"
     },
     {
-      "Datum": "2019-05-04"
+      "Datum": "2019-05-04",
+      "Sit-Ups": 30,
+      "Liegestütz": 30,
+      "Kniebeugen": 60,
+      "Radl-Crunches": 40,
+      "Burpees": 20,
+      "Walking Lunges": 50,
+      "Step Ups": 48,
+      "Knee Ups": 48
     },
     {
       "Datum": "2019-05-05"
@@ -1168,25 +1189,55 @@
       "Datum": "2019-05-06"
     },
     {
-      "Datum": "2019-05-07"
+      "Datum": "2019-05-07",
+      "Kniebeugen": 30,
+      "Burpees": 20,
+      "Jump Squats": 30,
+      "Jumping Split Squat": 40,
+      "Knee Ups": 48,
+      "Ausfallschritt [v oder h]": 30
     },
     {
       "Datum": "2019-05-08"
     },
     {
-      "Datum": "2019-05-09"
+      "Datum": "2019-05-09",
+      "Sit-Ups": 40,
+      "Liegestütz": 30,
+      "Kniebeugen": 60,
+      "Radl-Crunches": 40,
+      "Burpees": 60,
+      "Walking Lunges": 50,
+      "Step Ups": 48,
+      "Knee Ups": 48
     },
     {
       "Datum": "2019-05-10"
     },
     {
-      "Datum": "2019-05-11"
+      "Datum": "2019-05-11",
+      "Sit-Ups": 40,
+      "Liegestütz": 30,
+      "Bergsteiger": 120,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 30,
+      "Commandos": 48,
+      "Klappmesser": 40,
+      "Hand Release PushUp": 30,
+      "Clean & Press": 20
     },
     {
       "Datum": "2019-05-12"
     },
     {
-      "Datum": "2019-05-13"
+      "Datum": "2019-05-13",
+      "Liegestütz": 30,
+      "Kniebeugen": 30,
+      "Bergsteiger": 120,
+      "Burpees": 20,
+      "Jumping Split Squat": 30,
+      "Commandos": 48,
+      "Klappmesser": 30,
+      "Hand Release PushUp": 30
     },
     {
       "Datum": "2019-05-14"
@@ -1198,7 +1249,14 @@
       "Datum": "2019-05-16"
     },
     {
-      "Datum": "2019-05-17"
+      "Datum": "2019-05-17",
+      "Sit-Ups": 90,
+      "Liegestütz": 30,
+      "Kniebeugen": 30,
+      "Bergsteiger": 80,
+      "Radl-Crunches": 40,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 30,
+      "Hand Release PushUp": 30
     },
     {
       "Datum": "2019-05-18"
@@ -1210,10 +1268,25 @@
       "Datum": "2019-05-20"
     },
     {
-      "Datum": "2019-05-21"
+      "Datum": "2019-05-21",
+      "Sit-Ups": 30,
+      "Liegestütz": 30,
+      "Kniebeugen": 90,
+      "Radl-Crunches": 80,
+      "Burpees": 40,
+      "Jump Squats": 60,
+      "Walking Lunges": 100,
+      "Step Ups": 60
     },
     {
-      "Datum": "2019-05-22"
+      "Datum": "2019-05-22",
+      "Kniebeugen": 30,
+      "Burpees": 20,
+      "Seilspringen": 300,
+      "Jump Squats": 70,
+      "Walking Lunges": 50,
+      "Knee Ups": 90,
+      "Ausfallschritt [v oder h]": 30
     },
     {
       "Datum": "2019-05-23"
@@ -1240,7 +1313,17 @@
       "Datum": "2019-05-30"
     },
     {
-      "Datum": "2019-05-31"
+      "Datum": "2019-05-31",
+      "Liegestütz": 30,
+      "Kniebeugen": 30,
+      "Bergsteiger": 120,
+      "Burpees": 20,
+      "Seilspringen": 100,
+      "Laufen": 30,
+      "Jumping Split Squat": 30,
+      "Commandos": 50,
+      "Klappmesser": 30,
+      "Hand Release PushUp": 30
     },
     {
       "Datum": "2019-06-01"

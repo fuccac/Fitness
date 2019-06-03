@@ -1664,16 +1664,29 @@
       "Datum": "2019-04-27"
     },
     {
-      "Datum": "2019-04-28"
+      "Datum": "2019-04-28",
+      "Klettern": 90
     },
     {
       "Datum": "2019-04-29"
     },
     {
-      "Datum": "2019-04-30"
+      "Datum": "2019-04-30",
+      "Kniebeugen": 30,
+      "Beinheber": 30,
+      "Vogel und Hund": 30,
+      "Liegestütz [Arme erhöht]": 30,
+      "Dips mit einem Stuhl [Beine gestreckt]": 30
     },
     {
-      "Datum": "2019-05-01"
+      "Datum": "2019-05-01",
+      "Crunches": 50,
+      "Kniebeugen": 50,
+      "Radfahren": 120,
+      "Beinheber": 50,
+      "Vogel und Hund": 30,
+      "Liegestütz [Arme erhöht]": 30,
+      "Dips mit einem Stuhl [Beine gestreckt]": 30
     },
     {
       "Datum": "2019-05-02"
@@ -1694,7 +1707,8 @@
       "Datum": "2019-05-07"
     },
     {
-      "Datum": "2019-05-08"
+      "Datum": "2019-05-08",
+      "Power-Rudern 10min": 3
     },
     {
       "Datum": "2019-05-09"

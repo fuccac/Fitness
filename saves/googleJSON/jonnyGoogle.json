@@ -4,8 +4,8 @@
       "Datum": "2018-08-01",
       "Hampelmänner": 100,
       "Klimmzüge": 10,
-      "Bergsteiger": 30,
-      "Radl-Crunches": 40
+      "Radl-Crunches": 30,
+      "Planks": 40
     },
     {
       "Datum": "2018-08-02",
@@ -14,13 +14,13 @@
       "Liegestütz": 10,
       "Klimmzüge": 20,
       "Kniebeugen": 60,
-      "Bergsteiger": 50,
-      "Radl-Crunches": 60,
-      "Superman": 10,
-      "Wadenheber": 50,
-      "Türziehen": 20,
-      "Russian Twist": 10,
-      "Seilspringen": 100
+      "Radl-Crunches": 50,
+      "Planks": 60,
+      "Wadenheber": 10,
+      "Burpees": 50,
+      "Russian Twist": 20,
+      "Seilspringen": 10,
+      "Klettern": 100
     },
     {
       "Datum": "2018-08-03",
@@ -28,31 +28,30 @@
       "Liegestütz": 10,
       "Klimmzüge": 10,
       "Kniebeugen": 20,
-      "Bergsteiger": 20,
-      "Radl-Crunches": 30,
+      "Radl-Crunches": 20,
       "Planks": 30,
-      "Wadenheber": 40,
-      "Russian Twist": 20,
-      "Seilspringen": 100,
-      "Radfahren": 25,
-      "Junkfood": 1
+      "Wipers": 30,
+      "Burpees": 40,
+      "Seilspringen": 20,
+      "Klettern": 100,
+      "Fußball": 25,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-08-04",
       "Hampelmänner": 200,
       "Klimmzüge": 25,
-      "Bergsteiger": 40,
-      "Russian Twist": 20,
-      "Seilspringen": 100,
-      "Laufen": 30
+      "Radl-Crunches": 40,
+      "Seilspringen": 20,
+      "Klettern": 100,
+      "Radfahren": 30
     },
     {
       "Datum": "2018-08-05",
       "Hampelmänner": 100,
       "Klimmzüge": 30,
       "Kniebeugen": 50,
-      "Radfahren": 60,
-      "Alkohol": 1
+      "Fußball": 60
     },
     {
       "Datum": "2018-08-06",
@@ -60,25 +59,25 @@
       "Hampelmänner": 150,
       "Liegestütz": 10,
       "Kniebeugen": 50,
-      "Bergsteiger": 30,
-      "Radl-Crunches": 50,
-      "Wadenheber": 50,
-      "Radfahren": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 10,
-      "Power-Rudern 10min": 2599,
-      "Junkfood": 1
+      "Radl-Crunches": 30,
+      "Planks": 50,
+      "Burpees": 50,
+      "Fußball": 30,
+      "Beinheber": 10,
+      "Einbeiniges Kreuzheben": 2599,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-08-07",
       "Klimmzüge": 16,
       "Kniebeugen": 30,
-      "Bergsteiger": 30,
-      "Radl-Crunches": 40,
-      "Radfahren": 30,
-      "Umgekehrtes Bankdrücken": 10,
-      "Die Hundert [Pilates]": 100,
-      "Jumping Split Squat": 20,
-      "Curls": 30
+      "Radl-Crunches": 30,
+      "Planks": 40,
+      "Fußball": 30,
+      "Die Hundert [Pilates]": 10,
+      "Jump Squats": 100,
+      "Slides": 20,
+      "Seitstütz mit Beinheben [Stütz]": 30
     },
     {
       "Datum": "2018-08-08",
@@ -86,93 +85,88 @@
       "Liegestütz": 10,
       "Klimmzüge": 20,
       "Kniebeugen": 90,
-      "Bergsteiger": 40,
       "Radl-Crunches": 40,
-      "Planks": 105,
-      "Wipers": 10,
-      "Superman": 20,
-      "Wadenheber": 100,
-      "Seilspringen": 150,
-      "Beinheber": 15,
-      "Liegestütz [Arme erhöht]": 5,
-      "Umgekehrtes Bankdrücken": 20,
-      "Die Hundert [Pilates]": 200,
-      "Seitstütz mit Beinheben [Stütz]": 5,
-      "Overhead Triceps": 30,
-      "Dead Lifts mit Band": 50,
-      "Alkohol": 2
+      "Planks": 40,
+      "Wipers": 105,
+      "Superman": 10,
+      "Wadenheber": 20,
+      "Burpees": 100,
+      "Klettern": 150,
+      "Vogel und Hund": 15,
+      "Power-Rudern 10min": 5,
+      "Die Hundert [Pilates]": 20,
+      "Jump Squats": 200,
+      "Commandos": 5,
+      "Back Rows": 30,
+      "Reverse Flys": 50
     },
     {
       "Datum": "2018-08-09",
       "Kniebeugen": 40,
-      "Radfahren": 30,
-      "Junkfood": 1
+      "Fußball": 30,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-08-10",
       "Kniebeugen": 40,
-      "Radfahren": 40,
-      "Alkohol": 3
+      "Fußball": 40
     },
     {
       "Datum": "2018-08-11",
       "Crunches": 100,
       "Liegestütz": 10,
       "Klimmzüge": 15,
-      "Radl-Crunches": 30,
-      "Wadenheber": 50,
-      "Umgekehrtes Bankdrücken": 15,
-      "Die Hundert [Pilates]": 200
+      "Planks": 30,
+      "Burpees": 50,
+      "Die Hundert [Pilates]": 15,
+      "Jump Squats": 200
     },
     {
       "Datum": "2018-08-12",
       "Liegestütz": 20,
-      "Bergsteiger": 10,
-      "Die Hundert [Pilates]": 200,
-      "Vollrausch": 1
+      "Radl-Crunches": 10,
+      "Jump Squats": 200,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2018-08-13",
-      "Junkfood": 1,
-      "Alkohol": 4
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-08-14",
-      "Junkfood": 1,
-      "Alkohol": 3
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-08-15",
-      "Vollrausch": 1
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2018-08-16"
     },
     {
       "Datum": "2018-08-17",
-      "Junkfood": 1,
-      "Vollrausch": 1
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2018-08-18",
-      "Junkfood": 1,
-      "Vollrausch": 1
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
-      "Datum": "2018-08-19",
-      "Alkohol": 1
+      "Datum": "2018-08-19"
     },
     {
       "Datum": "2018-08-20",
       "Liegestütz": 13,
       "Klimmzüge": 15,
       "Kniebeugen": 30,
-      "Bergsteiger": 10,
-      "Radl-Crunches": 50,
-      "Wadenheber": 100,
-      "Radfahren": 45,
-      "Die Hundert [Pilates]": 200,
-      "Curls": 15
+      "Radl-Crunches": 10,
+      "Planks": 50,
+      "Burpees": 100,
+      "Fußball": 45,
+      "Jump Squats": 200,
+      "Seitstütz mit Beinheben [Stütz]": 15
     },
     {
       "Datum": "2018-08-21",
@@ -180,69 +174,69 @@
       "Liegestütz": 10,
       "Klimmzüge": 10,
       "Kniebeugen": 50,
-      "Radl-Crunches": 50,
-      "Superman": 10,
-      "Burpees": 10,
-      "Radfahren": 60,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 10,
-      "Vogel und Hund": 10,
-      "Umgekehrtes Bankdrücken": 10,
-      "Die Hundert [Pilates]": 100,
-      "Junkfood": 3
+      "Planks": 50,
+      "Wadenheber": 10,
+      "Türziehen": 10,
+      "Fußball": 60,
+      "Beinheber": 10,
+      "Liegestütz [Arme erhöht]": 10,
+      "Die Hundert [Pilates]": 10,
+      "Jump Squats": 100,
+      "Vollrausch": 3
     },
     {
       "Datum": "2018-08-22",
       "Klimmzüge": 5,
       "Kniebeugen": 20,
-      "Radfahren": 30,
-      "Die Hundert [Pilates]": 100
+      "Fußball": 30,
+      "Jump Squats": 100
     },
     {
       "Datum": "2018-08-23",
       "Liegestütz": 5,
       "Klimmzüge": 20,
       "Kniebeugen": 40,
-      "Bergsteiger": 20,
-      "Wadenheber": 100,
-      "Burpees": 1,
-      "Radfahren": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 10,
-      "Umgekehrtes Bankdrücken": 15,
-      "Die Hundert [Pilates]": 100,
-      "Curls": 12,
-      "Dirty Dogs": 10,
-      "Vollrausch": 1
+      "Radl-Crunches": 20,
+      "Burpees": 100,
+      "Türziehen": 1,
+      "Fußball": 30,
+      "Beinheber": 10,
+      "Die Hundert [Pilates]": 15,
+      "Jump Squats": 100,
+      "Seitstütz mit Beinheben [Stütz]": 12,
+      "Tischtennis": 10,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2018-08-24",
-      "Radfahren": 30,
-      "Kniebeuge im Ausfallschritt [l,r]": 3,
-      "Vollrausch": 1
+      "Fußball": 30,
+      "Seitlicher Ausfallschritt [l,r]": 3,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2018-08-25",
       "Crunches": 60,
       "Hampelmänner": 50,
       "Klimmzüge": 5,
-      "Radl-Crunches": 50,
-      "Planks": 140,
-      "Superman": 15,
-      "Wadenheber": 100,
-      "Russian Twist": 20,
-      "Radfahren": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 20,
-      "Die Hundert [Pilates]": 100,
-      "Curls": 30,
-      "Seitstütz mit Beinheben [Stütz]": 10,
-      "Overhead Triceps": 30,
-      "Dead Lifts mit Band": 23,
-      "Dirty Dogs": 20,
-      "Kniebeuge im Ausfallschritt [l,r]": 1,
-      "Vollrausch": 1
+      "Planks": 50,
+      "Wipers": 140,
+      "Wadenheber": 15,
+      "Burpees": 100,
+      "Seilspringen": 20,
+      "Fußball": 30,
+      "Beinheber": 20,
+      "Jump Squats": 100,
+      "Seitstütz mit Beinheben [Stütz]": 30,
+      "Commandos": 10,
+      "Back Rows": 30,
+      "Reverse Flys": 23,
+      "Tischtennis": 20,
+      "Seitlicher Ausfallschritt [l,r]": 1,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2018-08-26",
-      "Essen nach 20:00": 1
+      "Alkohol": 1
     },
     {
       "Datum": "2018-08-27",
@@ -250,25 +244,24 @@
       "Liegestütz": 20,
       "Klimmzüge": 30,
       "Kniebeugen": 60,
-      "Radl-Crunches": 100,
-      "Wadenheber": 80,
-      "Seilspringen": 367,
-      "Radfahren": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 20,
-      "Beinheber": 17,
-      "Die Hundert [Pilates]": 100,
-      "Jump Squats": 30,
-      "Curls": 24,
-      "Overhead Triceps": 30,
-      "Dead Lifts mit Band": 10,
-      "Dirty Dogs": 30,
-      "Junkfood": 1
+      "Planks": 100,
+      "Burpees": 80,
+      "Klettern": 367,
+      "Fußball": 30,
+      "Beinheber": 20,
+      "Vogel und Hund": 17,
+      "Jump Squats": 100,
+      "Einbeinige Squats mit Band": 30,
+      "Seitstütz mit Beinheben [Stütz]": 24,
+      "Back Rows": 30,
+      "Reverse Flys": 10,
+      "Tischtennis": 30,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-08-28",
-      "Radfahren": 30,
-      "Junkfood": 1,
-      "Essen nach 20:00": 1,
+      "Fußball": 30,
+      "Vollrausch": 1,
       "Alkohol": 1
     },
     {
@@ -276,23 +269,23 @@
       "Crunches": 100,
       "Klimmzüge": 21,
       "Kniebeugen": 30,
-      "Bergsteiger": 20,
-      "Radl-Crunches": 100,
-      "Planks": 90,
-      "Superman": 10,
-      "Wadenheber": 50,
-      "Russian Twist": 30,
-      "Seilspringen": 596,
-      "Klettern": 20,
-      "Radfahren": 60,
-      "Power-Rudern 10min": 1939,
-      "Die Hundert [Pilates]": 200,
-      "Jump Squats": 10,
-      "Junkfood": 1
+      "Radl-Crunches": 20,
+      "Planks": 100,
+      "Wipers": 90,
+      "Wadenheber": 10,
+      "Burpees": 50,
+      "Seilspringen": 30,
+      "Klettern": 596,
+      "Laufen": 20,
+      "Fußball": 60,
+      "Einbeiniges Kreuzheben": 1939,
+      "Jump Squats": 200,
+      "Einbeinige Squats mit Band": 10,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-08-30",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2018-08-31",
@@ -300,84 +293,80 @@
       "Liegestütz": 5,
       "Klimmzüge": 10,
       "Kniebeugen": 80,
-      "Bergsteiger": 55,
-      "Radl-Crunches": 50,
-      "Planks": 80,
-      "Superman": 10,
-      "Wadenheber": 50,
-      "Seilspringen": 200,
-      "Radfahren": 60,
-      "Curls": 24,
-      "Kniebeuge im Ausfallschritt [l,r]": 2,
-      "Alkohol": 2
+      "Radl-Crunches": 55,
+      "Planks": 50,
+      "Wipers": 80,
+      "Wadenheber": 10,
+      "Burpees": 50,
+      "Klettern": 200,
+      "Fußball": 60,
+      "Seitstütz mit Beinheben [Stütz]": 24,
+      "Seitlicher Ausfallschritt [l,r]": 2
     },
     {
       "Datum": "2018-09-01",
-      "Kniebeuge im Ausfallschritt [l,r]": 2,
-      "Alkohol": 3
+      "Seitlicher Ausfallschritt [l,r]": 2
     },
     {
       "Datum": "2018-09-02",
-      "Junkfood": 1,
-      "Alkohol": 1
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-09-03",
       "Crunches": 50,
       "Klimmzüge": 16,
       "Kniebeugen": 50,
-      "Radl-Crunches": 50,
-      "Wadenheber": 50,
-      "Seilspringen": 100,
-      "Radfahren": 30,
-      "Die Hundert [Pilates]": 100,
-      "Curls": 15,
-      "Wandern": 240,
-      "Dirty Dogs": 20,
-      "Kniebeuge im Ausfallschritt [l,r]": 1,
-      "Junkfood": 1
+      "Planks": 50,
+      "Burpees": 50,
+      "Klettern": 100,
+      "Fußball": 30,
+      "Jump Squats": 100,
+      "Seitstütz mit Beinheben [Stütz]": 15,
+      "Karate Front Kicks": 240,
+      "Tischtennis": 20,
+      "Seitlicher Ausfallschritt [l,r]": 1,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-09-04",
-      "Radfahren": 30,
-      "Essen nach 20:00": 1
+      "Fußball": 30,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-09-05",
       "Liegestütz": 25,
       "Kniebeugen": 70,
-      "Radl-Crunches": 100,
-      "Türziehen": 44,
-      "Seilspringen": 100,
-      "Radfahren": 30,
-      "Umgekehrtes Bankdrücken": 38,
-      "Seestern": 18
+      "Planks": 100,
+      "Russian Twist": 44,
+      "Klettern": 100,
+      "Fußball": 30,
+      "Die Hundert [Pilates]": 38,
+      "Ausfallschritt [v oder h]": 18
     },
     {
       "Datum": "2018-09-06",
-      "Klettern": 180,
-      "Radfahren": 30,
-      "Essen nach 20:00": 1,
+      "Laufen": 180,
+      "Fußball": 30,
       "Alkohol": 1
     },
     {
       "Datum": "2018-09-07",
       "Kniebeugen": 75,
-      "Seilspringen": 120,
-      "Radfahren": 30,
-      "Einbeiniges Kreuzheben": 21,
-      "Ausfallschritt [v oder h]": 40,
-      "Schwimmer": 71
+      "Klettern": 120,
+      "Fußball": 30,
+      "Umgekehrtes Bankdrücken": 21,
+      "Schwimmer": 40,
+      "Hand Release PushUp": 71
     },
     {
       "Datum": "2018-09-08"
     },
     {
       "Datum": "2018-09-09",
-      "Türziehen": 48,
-      "Vogel und Hund": 35,
-      "Umgekehrtes Bankdrücken": 40,
-      "Seestern": 28
+      "Russian Twist": 48,
+      "Liegestütz [Arme erhöht]": 35,
+      "Die Hundert [Pilates]": 40,
+      "Ausfallschritt [v oder h]": 28
     },
     {
       "Datum": "2018-09-10"
@@ -385,20 +374,20 @@
     {
       "Datum": "2018-09-11",
       "Kniebeugen": 36,
-      "Radl-Crunches": 66,
-      "Einbeiniges Kreuzheben": 28,
-      "Ausfallschritt [v oder h]": 28
+      "Planks": 66,
+      "Umgekehrtes Bankdrücken": 28,
+      "Schwimmer": 28
     },
     {
       "Datum": "2018-09-12"
     },
     {
       "Datum": "2018-09-13",
-      "Burpees": 21,
-      "Türziehen": 55,
-      "Umgekehrtes Bankdrücken": 56,
-      "Wandern": 210,
-      "Schwimmer": 51
+      "Türziehen": 21,
+      "Russian Twist": 55,
+      "Die Hundert [Pilates]": 56,
+      "Karate Front Kicks": 210,
+      "Hand Release PushUp": 51
     },
     {
       "Datum": "2018-09-14"
@@ -406,11 +395,11 @@
     {
       "Datum": "2018-09-15",
       "Kniebeugen": 78,
-      "Burpees": 21,
-      "Einbeiniges Kreuzheben": 36,
-      "Wandern": 120,
-      "Ausfallschritt [v oder h]": 36,
-      "Schwimmer": 55
+      "Türziehen": 21,
+      "Umgekehrtes Bankdrücken": 36,
+      "Karate Front Kicks": 120,
+      "Schwimmer": 36,
+      "Hand Release PushUp": 55
     },
     {
       "Datum": "2018-09-16"
@@ -420,12 +409,12 @@
       "Hampelmänner": 90,
       "Liegestütz": 29,
       "Kniebeugen": 45,
-      "Türziehen": 70,
-      "Vogel und Hund": 45,
-      "Umgekehrtes Bankdrücken": 60,
-      "Seitstütz mit Beinheben [Stütz]": 45,
-      "Seestern": 28,
-      "Ausfallschritt [v oder h]": 30
+      "Russian Twist": 70,
+      "Liegestütz [Arme erhöht]": 45,
+      "Die Hundert [Pilates]": 60,
+      "Commandos": 45,
+      "Ausfallschritt [v oder h]": 28,
+      "Schwimmer": 30
     },
     {
       "Datum": "2018-09-18"
@@ -433,10 +422,10 @@
     {
       "Datum": "2018-09-19",
       "Kniebeugen": 47,
-      "Radl-Crunches": 46,
-      "Einbeiniges Kreuzheben": 36,
-      "Wandern": 150,
-      "Ausfallschritt [v oder h]": 36
+      "Planks": 46,
+      "Umgekehrtes Bankdrücken": 36,
+      "Karate Front Kicks": 150,
+      "Schwimmer": 36
     },
     {
       "Datum": "2018-09-20"
@@ -444,23 +433,23 @@
     {
       "Datum": "2018-09-21",
       "Liegestütz": 23,
-      "Liegestütz [Arme erhöht]": 30,
-      "Seestern": 30,
-      "Military Press [Kniehöhe]": 36,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Power-Rudern 10min": 30,
+      "Ausfallschritt [v oder h]": 30,
+      "Dips mit einem Stuhl [Beine gestreckt]": 36,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-09-22"
     },
     {
       "Datum": "2018-09-23",
-      "Einbeiniges Kreuzheben": 36,
-      "Wandern": 90,
-      "Seestern": 30,
-      "Kniebeuge im Ausfallschritt [l,r]": 42,
-      "Seitlicher Ausfallschritt [l,r]": 30,
-      "Kniebeuge [3 sec halten]": 36
+      "Umgekehrtes Bankdrücken": 36,
+      "Karate Front Kicks": 90,
+      "Ausfallschritt [v oder h]": 30,
+      "Seitlicher Ausfallschritt [l,r]": 42,
+      "Kniebeuge [3 sec halten]": 30,
+      "Liegestütz [Beine erhöht]": 36
     },
     {
       "Datum": "2018-09-24"
@@ -468,202 +457,194 @@
     {
       "Datum": "2018-09-25",
       "Liegestütz": 10,
-      "Türziehen": 87,
-      "Seilspringen": 200,
-      "Radfahren": 30,
-      "Umgekehrtes Bankdrücken": 39,
-      "Curls": 36,
-      "Abwärmen": 1,
+      "Russian Twist": 87,
+      "Klettern": 200,
+      "Fußball": 30,
+      "Die Hundert [Pilates]": 39,
+      "Seitstütz mit Beinheben [Stütz]": 36,
       "Aufwärmen": 1,
-      "Junkfood": 1,
-      "Essen nach 20:00": 1,
-      "Alkohol": 4
+      "Rauchen": 1,
+      "Vollrausch": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-09-26",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2018-09-27",
       "Crunches": 54,
       "Liegestütz": 40,
       "Klimmzüge": 7,
-      "Radl-Crunches": 85,
-      "Planks": 60,
-      "Russian Twist": 45,
-      "Radfahren": 30,
-      "Beinheber": 51,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Planks": 85,
+      "Wipers": 60,
+      "Seilspringen": 45,
+      "Fußball": 30,
+      "Vogel und Hund": 51,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-09-28",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2018-09-29",
       "Crunches": 40,
       "Liegestütz": 30,
-      "Radl-Crunches": 20,
-      "Seilspringen": 150,
-      "Radfahren": 30,
-      "Liegestütz [Arme erhöht]": 20,
-      "Curls": 12,
-      "Seestern": 30,
-      "Military Press [Kniehöhe]": 39,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Planks": 20,
+      "Klettern": 150,
+      "Fußball": 30,
+      "Power-Rudern 10min": 20,
+      "Seitstütz mit Beinheben [Stütz]": 12,
+      "Ausfallschritt [v oder h]": 30,
+      "Dips mit einem Stuhl [Beine gestreckt]": 39,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-09-30",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2018-10-01",
       "Klimmzüge": 3,
       "Kniebeugen": 20,
-      "Planks": 40,
-      "Radfahren": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 40,
-      "Einbeiniges Kreuzheben": 36,
-      "Curls": 10,
-      "Kniebeuge im Ausfallschritt [l,r]": 48,
-      "Seitlicher Ausfallschritt [l,r]": 56,
-      "Kniebeuge [3 sec halten]": 36,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Wipers": 40,
+      "Fußball": 30,
+      "Beinheber": 40,
+      "Umgekehrtes Bankdrücken": 36,
+      "Seitstütz mit Beinheben [Stütz]": 10,
+      "Seitlicher Ausfallschritt [l,r]": 48,
+      "Kniebeuge [3 sec halten]": 56,
+      "Liegestütz [Beine erhöht]": 36,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-10-02",
-      "Klettern": 90,
-      "Radfahren": 30,
-      "Power-Rudern 10min": 2030,
-      "Junkfood": 1,
-      "Alkohol": 1
+      "Laufen": 90,
+      "Fußball": 30,
+      "Einbeiniges Kreuzheben": 2030,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-10-03",
-      "Radfahren": 30,
-      "Rauchen": 2,
-      "Alkohol": 2
+      "Fußball": 30,
+      "Junkfood": 2
     },
     {
       "Datum": "2018-10-04",
-      "Türziehen": 89,
-      "Radfahren": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 40,
-      "Umgekehrtes Bankdrücken": 36,
-      "Curls": 62,
-      "Abwärmen": 1,
+      "Russian Twist": 89,
+      "Fußball": 30,
+      "Beinheber": 40,
+      "Die Hundert [Pilates]": 36,
+      "Seitstütz mit Beinheben [Stütz]": 62,
       "Aufwärmen": 1,
-      "Vollrausch": 1
+      "Rauchen": 1,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2018-10-05",
       "Crunches": 112,
-      "Radl-Crunches": 61,
-      "Russian Twist": 49,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 68,
-      "Beinheber": 56,
-      "Umgekehrtes Bankdrücken": 40,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Planks": 61,
+      "Seilspringen": 49,
+      "Beinheber": 68,
+      "Vogel und Hund": 56,
+      "Die Hundert [Pilates]": 40,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-10-06",
-      "Radfahren": 30,
-      "Rauchen": 1,
-      "Alkohol": 3
+      "Fußball": 30,
+      "Junkfood": 1
     },
     {
       "Datum": "2018-10-07",
       "Liegestütz": 42,
-      "Seilspringen": 200,
-      "Umgekehrtes Bankdrücken": 28,
-      "Seestern": 24,
-      "Liegestütz [Beine erhöht]": 18,
-      "Bärengang": 55,
-      "Military Press [Kniehöhe]": 10,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Klettern": 200,
+      "Die Hundert [Pilates]": 28,
+      "Ausfallschritt [v oder h]": 24,
+      "Bärengang": 18,
+      "Ausfallschritt [v oder h]  [4sec halten]": 55,
+      "Dips mit einem Stuhl [Beine gestreckt]": 10,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-10-08",
-      "Klettern": 15,
-      "Wandern": 220,
-      "Junkfood": 2,
-      "Alkohol": 2
+      "Laufen": 15,
+      "Karate Front Kicks": 220,
+      "Vollrausch": 2
     },
     {
       "Datum": "2018-10-09",
       "Liegestütz": 5,
       "Klimmzüge": 10,
-      "Wadenheber": 30,
-      "Seilspringen": 210,
-      "Radfahren": 30,
-      "Einbeiniges Kreuzheben": 12,
-      "Umgekehrtes Bankdrücken": 30,
-      "Jump Squats": 50,
-      "Seitlicher Ausfallschritt [l,r]": 24,
+      "Burpees": 30,
+      "Klettern": 210,
+      "Fußball": 30,
+      "Umgekehrtes Bankdrücken": 12,
+      "Die Hundert [Pilates]": 30,
+      "Einbeinige Squats mit Band": 50,
       "Kniebeuge [3 sec halten]": 24,
-      "Liegestütz [Beine erhöht]": 5,
-      "Ausfallschritt [v oder h]  [4sec halten]": 20,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Liegestütz [Beine erhöht]": 24,
+      "Bärengang": 5,
+      "Military Press [Kniehöhe]": 20,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-10-10",
-      "Radfahren": 30,
-      "Junkfood": 1
+      "Fußball": 30,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-10-11",
       "Klimmzüge": 20,
-      "Türziehen": 63,
-      "Radfahren": 30,
-      "Umgekehrtes Bankdrücken": 28,
-      "Curls": 48,
-      "Bärengang": 50,
-      "Abwärmen": 1,
+      "Russian Twist": 63,
+      "Fußball": 30,
+      "Die Hundert [Pilates]": 28,
+      "Seitstütz mit Beinheben [Stütz]": 48,
+      "Ausfallschritt [v oder h]  [4sec halten]": 50,
       "Aufwärmen": 1,
-      "Rauchen": 4,
-      "Alkohol": 4
+      "Rauchen": 1,
+      "Junkfood": 4
     },
     {
       "Datum": "2018-10-12",
-      "Radfahren": 30,
-      "Alkohol": 1
+      "Fußball": 30
     },
     {
       "Datum": "2018-10-13",
       "Sit-Ups": 44,
-      "Radl-Crunches": 100,
-      "Russian Twist": 24,
-      "Beinheber": 20,
-      "Umgekehrtes Bankdrücken": 20,
-      "Bärengang": 50,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Planks": 100,
+      "Seilspringen": 24,
+      "Vogel und Hund": 20,
+      "Die Hundert [Pilates]": 20,
+      "Ausfallschritt [v oder h]  [4sec halten]": 50,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-10-14",
-      "Rauchen": 1,
-      "Junkfood": 1
+      "Junkfood": 1,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-10-15",
       "Crunches": 100,
       "Liegestütz": 34,
-      "Laufen": 10,
-      "Radfahren": 30,
-      "Umgekehrtes Bankdrücken": 40,
-      "Seestern": 24,
-      "Liegestütz [Beine erhöht]": 13,
-      "Bärengang": 105,
-      "Military Press [Kniehöhe]": 20,
-      "Aufwärmen": 1,
-      "Junkfood": 1,
-      "Essen nach 20:00": 1,
+      "Radfahren": 10,
+      "Fußball": 30,
+      "Die Hundert [Pilates]": 40,
+      "Ausfallschritt [v oder h]": 24,
+      "Bärengang": 13,
+      "Ausfallschritt [v oder h]  [4sec halten]": 105,
+      "Dips mit einem Stuhl [Beine gestreckt]": 20,
+      "Rauchen": 1,
+      "Vollrausch": 1,
       "Alkohol": 1
     },
     {
@@ -672,132 +653,126 @@
       "Liegestütz": 10,
       "Klimmzüge": 11,
       "Kniebeugen": 20,
-      "Radl-Crunches": 75,
-      "Wadenheber": 20,
-      "Türziehen": 20,
-      "Seilspringen": 200,
-      "Klettern": 75,
-      "Radfahren": 30,
-      "Umgekehrtes Bankdrücken": 15,
-      "Curls": 10,
-      "Liegestütz [Beine erhöht]": 5,
-      "Bärengang": 50,
-      "Rauchen": 1
+      "Planks": 75,
+      "Burpees": 20,
+      "Russian Twist": 20,
+      "Klettern": 200,
+      "Laufen": 75,
+      "Fußball": 30,
+      "Die Hundert [Pilates]": 15,
+      "Seitstütz mit Beinheben [Stütz]": 10,
+      "Bärengang": 5,
+      "Ausfallschritt [v oder h]  [4sec halten]": 50,
+      "Junkfood": 1
     },
     {
       "Datum": "2018-10-17",
-      "Radl-Crunches": 25,
-      "Wadenheber": 50,
-      "Radfahren": 30,
-      "Einbeiniges Kreuzheben": 15,
-      "Jump Squats": 24,
-      "Seitlicher Ausfallschritt [l,r]": 24,
+      "Planks": 25,
+      "Burpees": 50,
+      "Fußball": 30,
+      "Umgekehrtes Bankdrücken": 15,
+      "Einbeinige Squats mit Band": 24,
       "Kniebeuge [3 sec halten]": 24,
-      "Ausfallschritt [v oder h]  [4sec halten]": 20,
-      "Abwärmen": 1,
+      "Liegestütz [Beine erhöht]": 24,
+      "Military Press [Kniehöhe]": 20,
       "Aufwärmen": 1,
-      "Junkfood": 1,
-      "Essen nach 20:00": 1,
+      "Rauchen": 1,
+      "Vollrausch": 1,
       "Alkohol": 1
     },
     {
       "Datum": "2018-10-18",
       "Klimmzüge": 5,
-      "Radl-Crunches": 50,
-      "Burpees": 5,
-      "Türziehen": 30,
-      "Seilspringen": 130,
-      "Klettern": 75,
-      "Radfahren": 30,
-      "Aufwärmen": 1,
-      "Junkfood": 1
+      "Planks": 50,
+      "Türziehen": 5,
+      "Russian Twist": 30,
+      "Klettern": 130,
+      "Laufen": 75,
+      "Fußball": 30,
+      "Rauchen": 1,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-10-19",
       "Crunches": 60,
       "Klimmzüge": 10,
-      "Burpees": 3,
-      "Türziehen": 70,
-      "Seilspringen": 189,
-      "Radfahren": 30,
-      "Umgekehrtes Bankdrücken": 20,
-      "Curls": 98,
-      "Abwärmen": 1,
+      "Türziehen": 3,
+      "Russian Twist": 70,
+      "Klettern": 189,
+      "Fußball": 30,
+      "Die Hundert [Pilates]": 20,
+      "Seitstütz mit Beinheben [Stütz]": 98,
       "Aufwärmen": 1,
-      "Rauchen": 5,
-      "Vollrausch": 1,
-      "Essen nach 20:00": 1
+      "Rauchen": 1,
+      "Junkfood": 5,
+      "Essen nach 20:00": 1,
+      "Alkohol": 1
     },
     {
-      "Datum": "2018-10-20",
-      "Alkohol": 1
+      "Datum": "2018-10-20"
     },
     {
       "Datum": "2018-10-21",
       "Sit-Ups": 39,
       "Crunches": 30,
-      "Bergsteiger": 20,
-      "Burpees": 5,
-      "Russian Twist": 80,
-      "Beinheber": 34,
-      "Käfer Beine gestreckt": 20,
-      "Aufwärmen": 1,
-      "Alkohol": 1
+      "Radl-Crunches": 20,
+      "Türziehen": 5,
+      "Seilspringen": 80,
+      "Vogel und Hund": 34,
+      "Box Jump [Kniehöhe]": 20,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-10-22",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2018-10-23",
       "Liegestütz": 36,
-      "Radfahren": 30,
-      "Liegestütz [Arme erhöht]": 69,
-      "Seestern": 49,
-      "Military Press [Kniehöhe]": 144,
-      "Abwärmen": 1,
+      "Fußball": 30,
+      "Power-Rudern 10min": 69,
+      "Ausfallschritt [v oder h]": 49,
+      "Dips mit einem Stuhl [Beine gestreckt]": 144,
       "Aufwärmen": 1,
       "Rauchen": 1,
-      "Alkohol": 1
+      "Junkfood": 1
     },
     {
       "Datum": "2018-10-24",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2018-10-25",
-      "Radfahren": 50,
-      "Einbeiniges Kreuzheben": 55,
-      "Ausfallschritt [v oder h]": 100,
-      "Rauchen": 1,
-      "Alkohol": 2
+      "Fußball": 50,
+      "Umgekehrtes Bankdrücken": 55,
+      "Schwimmer": 100,
+      "Junkfood": 1
     },
     {
       "Datum": "2018-10-26",
       "Kniebeugen": 100,
-      "Radfahren": 30,
-      "Einbeiniges Kreuzheben": 100,
-      "Ausfallschritt [v oder h]": 100,
-      "Good Morning [Ohne Gewicht]": 25,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Fußball": 30,
+      "Umgekehrtes Bankdrücken": 100,
+      "Schwimmer": 100,
+      "Military Press [Hände am Boden]": 25,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-10-27",
-      "Rauchen": 1,
       "Junkfood": 1,
-      "Alkohol": 1
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-10-28",
-      "Türziehen": 150,
-      "Seilspringen": 100,
-      "Umgekehrtes Bankdrücken": 24,
-      "Curls": 58,
-      "Wandern": 90,
-      "Bärengang": 37,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Russian Twist": 150,
+      "Klettern": 100,
+      "Die Hundert [Pilates]": 24,
+      "Seitstütz mit Beinheben [Stütz]": 58,
+      "Karate Front Kicks": 90,
+      "Ausfallschritt [v oder h]  [4sec halten]": 37,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-10-29"
@@ -807,267 +782,255 @@
       "Crunches": 30,
       "Hampelmänner": 200,
       "Liegestütz": 40,
-      "Radl-Crunches": 25,
-      "Russian Twist": 140,
-      "Radfahren": 30,
-      "Beinheber": 10,
-      "Hüfttwist": 126,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Planks": 25,
+      "Seilspringen": 140,
+      "Fußball": 30,
+      "Vogel und Hund": 10,
+      "Seitliches Hüftheben": 126,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-10-31",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2018-11-01",
       "Hampelmänner": 100,
       "Liegestütz": 100,
-      "Türziehen": 82,
-      "Seilspringen": 100,
-      "Wandern": 160,
-      "Ausfallschritt [v oder h]": 100,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Russian Twist": 82,
+      "Klettern": 100,
+      "Karate Front Kicks": 160,
+      "Schwimmer": 100,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-02",
-      "Junkfood": 1,
-      "Alkohol": 2
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-11-03",
-      "Wandern": 150,
-      "Junkfood": 1,
-      "Alkohol": 4
+      "Karate Front Kicks": 150,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-11-04",
       "Sit-Ups": 70,
       "Hampelmänner": 50,
-      "Planks": 120,
-      "Burpees": 24,
-      "Liegestütz [Arme erhöht]": 71,
-      "Wandern": 60,
-      "Aufwärmen": 1
+      "Wipers": 120,
+      "Türziehen": 24,
+      "Power-Rudern 10min": 71,
+      "Karate Front Kicks": 60,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-05",
       "Hampelmänner": 50,
       "Kniebeugen": 20,
-      "Seilspringen": 300,
-      "Radfahren": 30,
-      "Einbeiniges Kreuzheben": 20,
-      "Jump Squats": 24,
-      "Karate Front Kicks": 40,
-      "Ausfallschritt [v oder h]": 40,
-      "Seitlicher Ausfallschritt [l,r]": 20,
-      "Aufwärmen": 1
+      "Klettern": 300,
+      "Fußball": 30,
+      "Umgekehrtes Bankdrücken": 20,
+      "Einbeinige Squats mit Band": 24,
+      "Kick Backs": 40,
+      "Schwimmer": 40,
+      "Kniebeuge [3 sec halten]": 20,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-06",
-      "Radfahren": 30,
-      "Rauchen": 1,
-      "Alkohol": 3
+      "Fußball": 30,
+      "Junkfood": 1
     },
     {
       "Datum": "2018-11-07",
       "Sit-Ups": 60,
       "Hampelmänner": 100,
       "Klimmzüge": 16,
-      "Türziehen": 110,
-      "Radfahren": 30,
-      "Umgekehrtes Bankdrücken": 38,
-      "Curls": 45,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Russian Twist": 110,
+      "Fußball": 30,
+      "Die Hundert [Pilates]": 38,
+      "Seitstütz mit Beinheben [Stütz]": 45,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-08",
       "Hampelmänner": 25,
-      "Radl-Crunches": 40,
-      "Russian Twist": 100,
-      "Radfahren": 30,
-      "Beinheber": 121,
-      "Käfer Beine gestreckt": 70,
-      "Seitliches Hüftheben": 16,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Planks": 40,
+      "Seilspringen": 100,
+      "Fußball": 30,
+      "Vogel und Hund": 121,
+      "Box Jump [Kniehöhe]": 70,
+      "Face Pulls": 16,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-09",
       "Hampelmänner": 50,
       "Liegestütz": 50,
       "Kniebeugen": 10,
-      "Radl-Crunches": 50,
-      "Wadenheber": 30,
-      "Burpees": 5,
-      "Türziehen": 100,
-      "Radfahren": 60,
-      "Liegestütz [Arme erhöht]": 20,
-      "Umgekehrtes Bankdrücken": 10,
-      "Curls": 15,
-      "Ausfallschritt [v oder h]": 100,
-      "Bärengang": 25,
-      "Military Press [Kniehöhe]": 10,
-      "Abwärmen": 1,
+      "Planks": 50,
+      "Burpees": 30,
+      "Türziehen": 5,
+      "Russian Twist": 100,
+      "Fußball": 60,
+      "Power-Rudern 10min": 20,
+      "Die Hundert [Pilates]": 10,
+      "Seitstütz mit Beinheben [Stütz]": 15,
+      "Schwimmer": 100,
+      "Ausfallschritt [v oder h]  [4sec halten]": 25,
+      "Dips mit einem Stuhl [Beine gestreckt]": 10,
       "Aufwärmen": 1,
       "Rauchen": 1,
-      "Essen nach 20:00": 1,
-      "Alkohol": 3
+      "Junkfood": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-11-10",
-      "Wandern": 180,
-      "Rauchen": 1,
-      "Alkohol": 1
+      "Karate Front Kicks": 180,
+      "Junkfood": 1
     },
     {
       "Datum": "2018-11-11",
       "Crunches": 40,
       "Liegestütz": 42,
-      "Seilspringen": 150,
-      "Radfahren": 30,
-      "Liegestütz [Arme erhöht]": 100,
-      "Military Press [Kniehöhe]": 49,
-      "Abwärmen": 1,
+      "Klettern": 150,
+      "Fußball": 30,
+      "Power-Rudern 10min": 100,
+      "Dips mit einem Stuhl [Beine gestreckt]": 49,
       "Aufwärmen": 1,
       "Rauchen": 1,
-      "Alkohol": 2
+      "Junkfood": 1
     },
     {
       "Datum": "2018-11-12",
       "Crunches": 50,
       "Hampelmänner": 50,
       "Kniebeugen": 20,
-      "Wadenheber": 50,
-      "Seilspringen": 200,
-      "Radfahren": 30,
-      "Einbeiniges Kreuzheben": 20,
-      "Jump Squats": 10,
-      "Ausfallschritt [v oder h]": 48,
-      "Good Morning [Ohne Gewicht]": 32,
-      "Abwärmen": 1,
+      "Burpees": 50,
+      "Klettern": 200,
+      "Fußball": 30,
+      "Umgekehrtes Bankdrücken": 20,
+      "Einbeinige Squats mit Band": 10,
+      "Schwimmer": 48,
+      "Military Press [Hände am Boden]": 32,
       "Aufwärmen": 1,
-      "Alkohol": 1
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-13",
-      "Radfahren": 30,
-      "Rauchen": 1,
+      "Fußball": 30,
       "Junkfood": 1,
-      "Essen nach 20:00": 1,
-      "Alkohol": 3
+      "Vollrausch": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-11-14",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2018-11-15",
       "Klimmzüge": 8,
-      "Türziehen": 138,
-      "Radfahren": 30,
-      "Umgekehrtes Bankdrücken": 74,
-      "Curls": 51,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Russian Twist": 138,
+      "Fußball": 30,
+      "Die Hundert [Pilates]": 74,
+      "Seitstütz mit Beinheben [Stütz]": 51,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-16",
-      "Radfahren": 60,
-      "Rauchen": 2,
-      "Junkfood": 1,
-      "Essen nach 20:00": 1,
-      "Alkohol": 2
+      "Fußball": 60,
+      "Junkfood": 2,
+      "Vollrausch": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-11-17",
       "Crunches": 40,
       "Hampelmänner": 30,
       "Klimmzüge": 5,
-      "Radl-Crunches": 70,
-      "Planks": 60,
-      "Russian Twist": 32,
-      "Seilspringen": 148,
-      "Radfahren": 30,
-      "Beinheber": 24,
-      "Käfer Beine gestreckt": 10,
-      "Daumen Hoch": 40,
-      "V-Ups": 20,
-      "Seitliches Hüftheben": 13,
-      "Abwärmen": 1,
+      "Planks": 70,
+      "Wipers": 60,
+      "Seilspringen": 32,
+      "Klettern": 148,
+      "Fußball": 30,
+      "Vogel und Hund": 24,
+      "Box Jump [Kniehöhe]": 10,
+      "Enger Liegestütz": 40,
+      "Hüfttwist": 20,
+      "Face Pulls": 13,
       "Aufwärmen": 1,
-      "Junkfood": 1,
-      "Alkohol": 1
+      "Rauchen": 1,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-11-18",
       "Crunches": 30,
       "Hampelmänner": 50,
       "Klimmzüge": 10,
-      "Seilspringen": 300,
-      "Radfahren": 30,
-      "Curls": 5,
-      "Bärengang": 50
+      "Klettern": 300,
+      "Fußball": 30,
+      "Seitstütz mit Beinheben [Stütz]": 5,
+      "Ausfallschritt [v oder h]  [4sec halten]": 50
     },
     {
       "Datum": "2018-11-19",
-      "Radfahren": 30,
-      "Alkohol": 1
+      "Fußball": 30
     },
     {
       "Datum": "2018-11-20",
       "Sit-Ups": 50,
       "Hampelmänner": 40,
       "Liegestütz": 48,
-      "Türziehen": 80,
-      "Ausfallschritt [v oder h]": 80,
-      "Bärengang": 25,
-      "Daumen Hoch": 100,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Russian Twist": 80,
+      "Schwimmer": 80,
+      "Ausfallschritt [v oder h]  [4sec halten]": 25,
+      "Enger Liegestütz": 100,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-21",
-      "Seilspringen": 400,
-      "Radfahren": 30,
-      "Junkfood": 1,
-      "Essen nach 20:00": 1,
+      "Klettern": 400,
+      "Fußball": 30,
+      "Vollrausch": 1,
       "Alkohol": 1
     },
     {
       "Datum": "2018-11-22",
       "Liegestütz": 34,
-      "Burpees": 5,
-      "Radfahren": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 10,
-      "Liegestütz [Arme erhöht]": 35,
-      "Seestern": 24,
-      "Liegestütz [Beine erhöht]": 10,
-      "Bärengang": 100,
-      "Military Press [Kniehöhe]": 20,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Türziehen": 5,
+      "Fußball": 30,
+      "Beinheber": 10,
+      "Power-Rudern 10min": 35,
+      "Ausfallschritt [v oder h]": 24,
+      "Bärengang": 10,
+      "Ausfallschritt [v oder h]  [4sec halten]": 100,
+      "Dips mit einem Stuhl [Beine gestreckt]": 20,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-23",
       "Crunches": 30,
       "Klimmzüge": 10,
       "Kniebeugen": 35,
-      "Seilspringen": 500,
-      "Klettern": 120,
-      "Radfahren": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 5,
-      "Liegestütz [Arme erhöht]": 45,
-      "Umgekehrtes Bankdrücken": 15
+      "Klettern": 500,
+      "Laufen": 120,
+      "Fußball": 30,
+      "Beinheber": 5,
+      "Power-Rudern 10min": 45,
+      "Die Hundert [Pilates]": 15
     },
     {
       "Datum": "2018-11-24",
-      "Rauchen": 1,
       "Junkfood": 1,
       "Vollrausch": 1,
-      "Essen nach 20:00": 1
+      "Essen nach 20:00": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-11-25"
@@ -1078,15 +1041,15 @@
       "Hampelmänner": 50,
       "Liegestütz": 10,
       "Kniebeugen": 100,
-      "Planks": 200,
-      "Burpees": 5,
-      "Seilspringen": 200,
-      "Liegestütz [Arme erhöht]": 30,
-      "Einbeiniges Kreuzheben": 100,
-      "Kniebeuge im Ausfallschritt [l,r]": 100,
+      "Wipers": 200,
+      "Türziehen": 5,
+      "Klettern": 200,
+      "Power-Rudern 10min": 30,
+      "Umgekehrtes Bankdrücken": 100,
       "Seitlicher Ausfallschritt [l,r]": 100,
-      "Bärengang": 25,
-      "Aufwärmen": 1
+      "Kniebeuge [3 sec halten]": 100,
+      "Ausfallschritt [v oder h]  [4sec halten]": 25,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-27",
@@ -1094,91 +1057,88 @@
       "Hampelmänner": 50,
       "Klimmzüge": 3,
       "Kniebeugen": 35,
-      "Radl-Crunches": 40,
-      "Seilspringen": 150,
-      "Radfahren": 60,
-      "Liegestütz [Arme erhöht]": 35,
-      "Daumen Hoch": 10,
-      "Junkfood": 1
+      "Planks": 40,
+      "Klettern": 150,
+      "Fußball": 60,
+      "Power-Rudern 10min": 35,
+      "Enger Liegestütz": 10,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-11-28",
       "Crunches": 70,
       "Kniebeugen": 55,
-      "Radl-Crunches": 90,
-      "Planks": 180,
-      "Türziehen": 73,
-      "Seilspringen": 600,
-      "Radfahren": 30,
-      "Liegestütz [Arme erhöht]": 50,
-      "Einbeiniges Kreuzheben": 40,
-      "Curls": 106,
-      "Daumen Hoch": 25,
-      "Good Morning [Ohne Gewicht]": 25,
-      "Arnold Presses": 30,
-      "Aufwärmen": 1
+      "Planks": 90,
+      "Wipers": 180,
+      "Russian Twist": 73,
+      "Klettern": 600,
+      "Fußball": 30,
+      "Power-Rudern 10min": 50,
+      "Umgekehrtes Bankdrücken": 40,
+      "Seitstütz mit Beinheben [Stütz]": 106,
+      "Enger Liegestütz": 25,
+      "Military Press [Hände am Boden]": 25,
+      "Schaukelstuhl": 30,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-11-29",
       "Crunches": 40,
       "Kniebeugen": 50,
-      "Seilspringen": 417,
-      "Radfahren": 40,
-      "Liegestütz [Arme erhöht]": 50,
-      "Einbeiniges Kreuzheben": 6,
-      "Curls": 20,
-      "Good Morning [Ohne Gewicht]": 5,
-      "Alkohol": 2
+      "Klettern": 417,
+      "Fußball": 40,
+      "Power-Rudern 10min": 50,
+      "Umgekehrtes Bankdrücken": 6,
+      "Seitstütz mit Beinheben [Stütz]": 20,
+      "Military Press [Hände am Boden]": 5
     },
     {
       "Datum": "2018-11-30",
       "Kniebeugen": 60,
-      "Radfahren": 30,
-      "Liegestütz [Arme erhöht]": 60,
-      "Käfer Beine gestreckt": 45,
-      "Daumen Hoch": 5,
-      "Rauchen": 3,
-      "Junkfood": 1,
+      "Fußball": 30,
+      "Power-Rudern 10min": 60,
+      "Box Jump [Kniehöhe]": 45,
+      "Enger Liegestütz": 5,
+      "Junkfood": 3,
       "Vollrausch": 1,
-      "Essen nach 20:00": 1
+      "Essen nach 20:00": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-12-01",
       "Sit-Ups": 66,
       "Crunches": 100,
       "Hampelmänner": 20,
-      "Wadenheber": 50,
-      "Beinheber": 76,
-      "Liegestütz [Arme erhöht]": 30,
-      "Wandern": 60
+      "Burpees": 50,
+      "Vogel und Hund": 76,
+      "Power-Rudern 10min": 30,
+      "Karate Front Kicks": 60
     },
     {
       "Datum": "2018-12-02",
-      "Wandern": 60,
-      "Junkfood": 1,
-      "Alkohol": 2
+      "Karate Front Kicks": 60,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-12-03",
       "Crunches": 270,
       "Liegestütz": 55,
       "Kniebeugen": 160,
-      "Planks": 480,
-      "Wadenheber": 50,
-      "Türziehen": 160,
-      "Seilspringen": 1000,
-      "Radfahren": 30,
-      "Aufwärmen": 1
+      "Wipers": 480,
+      "Burpees": 50,
+      "Russian Twist": 160,
+      "Klettern": 1000,
+      "Fußball": 30,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-12-04",
       "Hampelmänner": 100,
-      "Radl-Crunches": 40,
-      "Burpees": 10,
-      "Seilspringen": 222,
-      "Radfahren": 30,
-      "Die Hundert [Pilates]": 200,
-      "Alkohol": 1
+      "Planks": 40,
+      "Türziehen": 10,
+      "Klettern": 222,
+      "Fußball": 30,
+      "Jump Squats": 200
     },
     {
       "Datum": "2018-12-05",
@@ -1186,50 +1146,49 @@
       "Liegestütz": 20,
       "Klimmzüge": 3,
       "Kniebeugen": 80,
-      "Radl-Crunches": 90,
-      "Türziehen": 60,
-      "Seilspringen": 400,
-      "Radfahren": 60,
-      "Liegestütz [Arme erhöht]": 70,
-      "Umgekehrtes Bankdrücken": 20,
-      "Bärengang": 60,
-      "Good Morning [Ohne Gewicht]": 20,
-      "Rauchen": 1,
-      "Alkohol": 4
+      "Planks": 90,
+      "Russian Twist": 60,
+      "Klettern": 400,
+      "Fußball": 60,
+      "Power-Rudern 10min": 70,
+      "Die Hundert [Pilates]": 20,
+      "Ausfallschritt [v oder h]  [4sec halten]": 60,
+      "Military Press [Hände am Boden]": 20,
+      "Junkfood": 1
     },
     {
       "Datum": "2018-12-06",
-      "Radfahren": 30,
-      "Junkfood": 1,
+      "Fußball": 30,
       "Vollrausch": 1,
-      "Essen nach 20:00": 1
+      "Essen nach 20:00": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-12-07",
       "Crunches": 100,
       "Liegestütz": 20,
       "Kniebeugen": 20,
-      "Radl-Crunches": 100,
-      "Seilspringen": 400,
-      "Radfahren": 30,
-      "Liegestütz [Arme erhöht]": 20,
-      "Curls": 10,
-      "Good Morning [Ohne Gewicht]": 20,
-      "Arnold Presses": 25,
-      "Junkfood": 1,
+      "Planks": 100,
+      "Klettern": 400,
+      "Fußball": 30,
+      "Power-Rudern 10min": 20,
+      "Seitstütz mit Beinheben [Stütz]": 10,
+      "Military Press [Hände am Boden]": 20,
+      "Schaukelstuhl": 25,
       "Vollrausch": 1,
-      "Essen nach 20:00": 1
+      "Essen nach 20:00": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-12-08",
       "Liegestütz": 30,
       "Klimmzüge": 12,
-      "Seilspringen": 300
+      "Klettern": 300
     },
     {
       "Datum": "2018-12-09",
       "Liegestütz": 10,
-      "Seilspringen": 100
+      "Klettern": 100
     },
     {
       "Datum": "2018-12-10",
@@ -1239,35 +1198,35 @@
       "Liegestütz": 10,
       "Klimmzüge": 5,
       "Kniebeugen": 20,
-      "Bergsteiger": 20,
-      "Radl-Crunches": 50,
-      "Planks": 60,
-      "Wipers": 5,
-      "Superman": 10,
-      "Wadenheber": 50,
-      "Burpees": 10,
-      "Türziehen": 20,
+      "Radl-Crunches": 20,
+      "Planks": 50,
+      "Wipers": 60,
+      "Superman": 5,
+      "Wadenheber": 10,
+      "Burpees": 50,
+      "Türziehen": 10,
       "Russian Twist": 20,
-      "Seilspringen": 100,
-      "Radfahren": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 10,
-      "Beinheber": 20,
-      "Vogel und Hund": 10,
-      "Liegestütz [Arme erhöht]": 20,
-      "Einbeiniges Kreuzheben": 10,
+      "Seilspringen": 20,
+      "Klettern": 100,
+      "Fußball": 30,
+      "Beinheber": 10,
+      "Vogel und Hund": 20,
+      "Liegestütz [Arme erhöht]": 10,
+      "Power-Rudern 10min": 20,
       "Umgekehrtes Bankdrücken": 10,
-      "Die Hundert [Pilates]": 100,
-      "Jump Squats": 10,
+      "Die Hundert [Pilates]": 10,
+      "Jump Squats": 100,
       "Einbeinige Squats mit Band": 10,
-      "Jumping Split Squat": 10,
-      "Frog Crunches": 10,
+      "Kniebeugen mit Band": 10,
+      "Slides": 10,
       "Curls": 10,
-      "Seitstütz mit Beinheben [Stütz]": 5,
-      "Karate Front Kicks": 5
+      "Seitstütz mit Beinheben [Stütz]": 10,
+      "Commandos": 5,
+      "Kick Backs": 5
     },
     {
       "Datum": "2018-12-11",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2018-12-12",
@@ -1275,63 +1234,60 @@
       "Liegestütz": 10,
       "Klimmzüge": 5,
       "Kniebeugen": 20,
-      "Türziehen": 17,
-      "Seilspringen": 200,
-      "Radfahren": 30,
-      "Liegestütz [Beine erhöht]": 20
+      "Russian Twist": 17,
+      "Klettern": 200,
+      "Fußball": 30,
+      "Bärengang": 20
     },
     {
       "Datum": "2018-12-13",
-      "Radfahren": 30,
-      "Junkfood": 1,
-      "Alkohol": 1
+      "Fußball": 30,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-12-14",
-      "Radfahren": 30,
-      "Rauchen": 1,
+      "Fußball": 30,
       "Junkfood": 1,
       "Vollrausch": 1,
-      "Essen nach 20:00": 1
+      "Essen nach 20:00": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-12-15",
-      "Radfahren": 60
+      "Fußball": 60
     },
     {
       "Datum": "2018-12-16",
-      "Vollrausch": 1
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2018-12-17",
-      "Vollrausch": 1
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2018-12-18",
-      "Radfahren": 90
+      "Fußball": 90
     },
     {
       "Datum": "2018-12-19",
       "Kniebeugen": 5,
-      "Radfahren": 90,
-      "Good Morning [Ohne Gewicht]": 5,
-      "Junkfood": 1,
-      "Essen nach 20:00": 1,
-      "Alkohol": 2
+      "Fußball": 90,
+      "Military Press [Hände am Boden]": 5,
+      "Vollrausch": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2018-12-20",
       "Kniebeugen": 10,
-      "Radfahren": 30,
-      "Good Morning [Ohne Gewicht]": 10
+      "Fußball": 30,
+      "Military Press [Hände am Boden]": 10
     },
     {
       "Datum": "2018-12-21",
       "Klimmzüge": 3,
       "Kniebeugen": 10,
-      "Radfahren": 30,
-      "Good Morning [Ohne Gewicht]": 5,
-      "Essen nach 20:00": 1,
+      "Fußball": 30,
+      "Military Press [Hände am Boden]": 5,
       "Alkohol": 1
     },
     {
@@ -1340,14 +1296,14 @@
       "Liegestütz": 15,
       "Klimmzüge": 13,
       "Kniebeugen": 20,
-      "Bergsteiger": 10,
-      "Wadenheber": 30,
-      "Türziehen": 10,
-      "Beinheber": 10,
-      "Vogel und Hund": 5,
-      "Seitstütz mit Beinheben [Stütz]": 5,
-      "Dirty Dogs": 5,
-      "Daumen Hoch": 5
+      "Radl-Crunches": 10,
+      "Burpees": 30,
+      "Russian Twist": 10,
+      "Vogel und Hund": 10,
+      "Liegestütz [Arme erhöht]": 5,
+      "Commandos": 5,
+      "Tischtennis": 5,
+      "Enger Liegestütz": 5
     },
     {
       "Datum": "2018-12-23",
@@ -1356,30 +1312,28 @@
       "Liegestütz": 40,
       "Klimmzüge": 5,
       "Kniebeugen": 30,
-      "Bergsteiger": 10,
-      "Radl-Crunches": 25,
-      "Burpees": 5,
-      "Türziehen": 10,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 10,
-      "Vogel und Hund": 20,
-      "Umgekehrtes Bankdrücken": 20,
-      "Curls": 10,
-      "Dirty Dogs": 10,
-      "Ausfallschritt [v oder h]": 15,
-      "Daumen Hoch": 10,
-      "Junkfood": 1,
-      "Alkohol": 1
-    },
-    {
-      "Datum": "2018-12-24",
-      "Rauchen": 1,
-      "Junkfood": 1,
+      "Radl-Crunches": 10,
+      "Planks": 25,
+      "Türziehen": 5,
+      "Russian Twist": 10,
+      "Beinheber": 10,
+      "Liegestütz [Arme erhöht]": 20,
+      "Die Hundert [Pilates]": 20,
+      "Seitstütz mit Beinheben [Stütz]": 10,
+      "Tischtennis": 10,
+      "Schwimmer": 15,
+      "Enger Liegestütz": 10,
       "Vollrausch": 1
     },
     {
-      "Datum": "2018-12-25",
+      "Datum": "2018-12-24",
       "Junkfood": 1,
-      "Essen nach 20:00": 1,
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
+    },
+    {
+      "Datum": "2018-12-25",
+      "Vollrausch": 1,
       "Alkohol": 1
     },
     {
@@ -1389,44 +1343,43 @@
       "Liegestütz": 25,
       "Klimmzüge": 10,
       "Kniebeugen": 100,
-      "Bergsteiger": 50,
       "Radl-Crunches": 50,
-      "Wadenheber": 60,
-      "Türziehen": 30,
-      "Laufen": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 30,
-      "Vogel und Hund": 10,
+      "Planks": 50,
+      "Burpees": 60,
+      "Russian Twist": 30,
+      "Radfahren": 30,
+      "Beinheber": 30,
       "Liegestütz [Arme erhöht]": 10,
-      "Curls": 30,
-      "Daumen Hoch": 10,
-      "Aufwärmen": 1
+      "Power-Rudern 10min": 10,
+      "Seitstütz mit Beinheben [Stütz]": 30,
+      "Enger Liegestütz": 10,
+      "Rauchen": 1
     },
     {
       "Datum": "2018-12-27"
     },
     {
       "Datum": "2018-12-28",
-      "Radfahren": 30,
-      "Junkfood": 1,
-      "Alkohol": 1
+      "Fußball": 30,
+      "Vollrausch": 1
     },
     {
       "Datum": "2018-12-29",
-      "Radfahren": 30,
-      "Wandern": 150
+      "Fußball": 30,
+      "Karate Front Kicks": 150
     },
     {
       "Datum": "2018-12-30"
     },
     {
       "Datum": "2018-12-31",
-      "Rauchen": 1,
       "Junkfood": 1,
-      "Vollrausch": 1
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2019-01-01",
-      "Junkfood": 1
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-01-02",
@@ -1434,16 +1387,15 @@
       "Liegestütz": 49,
       "Klimmzüge": 1,
       "Kniebeugen": 30,
-      "Seilspringen": 100,
-      "Laufen": 30,
+      "Klettern": 100,
       "Radfahren": 30,
-      "Dips mit einem Stuhl [Beine 90 Grad]": 20,
-      "Vogel und Hund": 30,
-      "Liegestütz [Arme erhöht]": 20,
-      "Curls": 30,
-      "Daumen Hoch": 20,
-      "Aufwärmen": 1,
-      "Alkohol": 1
+      "Fußball": 30,
+      "Beinheber": 20,
+      "Liegestütz [Arme erhöht]": 30,
+      "Power-Rudern 10min": 20,
+      "Seitstütz mit Beinheben [Stütz]": 30,
+      "Enger Liegestütz": 20,
+      "Rauchen": 1
     },
     {
       "Datum": "2019-01-03"
@@ -1465,8 +1417,7 @@
     },
     {
       "Datum": "2019-01-09",
-      "Radfahren": 30,
-      "Alkohol": 2
+      "Fußball": 30
     },
     {
       "Datum": "2019-01-10",
@@ -1474,86 +1425,77 @@
       "Liegestütz": 50,
       "Klimmzüge": 5,
       "Kniebeugen": 100,
-      "Radl-Crunches": 50,
-      "Klettern": 90,
-      "Radfahren": 30,
-      "Alkohol": 1
+      "Planks": 50,
+      "Laufen": 90,
+      "Fußball": 30
     },
     {
       "Datum": "2019-01-11"
     },
     {
       "Datum": "2019-01-12",
-      "Rauchen": 2,
-      "Junkfood": 1,
-      "Alkohol": 3
+      "Junkfood": 2,
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-01-13",
       "Crunches": 100,
       "Liegestütz": 25,
       "Kniebeugen": 50,
-      "Radfahren": 120,
-      "Umgekehrtes Bankdrücken": 25,
-      "Curls": 10,
-      "Rauchen": 1,
-      "Alkohol": 1
+      "Fußball": 120,
+      "Die Hundert [Pilates]": 25,
+      "Seitstütz mit Beinheben [Stütz]": 10,
+      "Junkfood": 1
     },
     {
       "Datum": "2019-01-14",
       "Crunches": 100,
       "Kniebeugen": 40,
-      "Liegestütz [Arme erhöht]": 10,
-      "Wandern": 180,
-      "Arnold Presses": 5,
-      "Rauchen": 1,
-      "Alkohol": 2
+      "Power-Rudern 10min": 10,
+      "Karate Front Kicks": 180,
+      "Schaukelstuhl": 5,
+      "Junkfood": 1
     },
     {
       "Datum": "2019-01-15",
-      "Rauchen": 2,
-      "Junkfood": 1,
-      "Essen nach 20:00": 1,
-      "Alkohol": 2
+      "Junkfood": 2,
+      "Vollrausch": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2019-01-16",
       "Crunches": 100,
       "Liegestütz": 15,
       "Kniebeugen": 20,
-      "Wandern": 120,
-      "Schwimmen": 750
+      "Karate Front Kicks": 120,
+      "Legpress": 750
     },
     {
       "Datum": "2019-01-17",
       "Liegestütz": 15,
-      "Schwimmen": 1200,
-      "Rauchen": 1,
-      "Alkohol": 1
+      "Legpress": 1200,
+      "Junkfood": 1
     },
     {
       "Datum": "2019-01-18",
       "Crunches": 50,
       "Liegestütz": 10,
-      "Planks": 60,
-      "Wandern": 60,
-      "Schwimmen": 750,
-      "Rauchen": 1,
-      "Alkohol": 2
+      "Wipers": 60,
+      "Karate Front Kicks": 60,
+      "Legpress": 750,
+      "Junkfood": 1
     },
     {
       "Datum": "2019-01-19",
-      "Radfahren": 270,
-      "Wandern": 60
+      "Fußball": 270,
+      "Karate Front Kicks": 60
     },
     {
-      "Datum": "2019-01-20",
-      "Alkohol": 1
+      "Datum": "2019-01-20"
     },
     {
       "Datum": "2019-01-21",
-      "Rauchen": 3,
-      "Alkohol": 1
+      "Junkfood": 3
     },
     {
       "Datum": "2019-01-22",
@@ -1561,35 +1503,32 @@
       "Hampelmänner": 200,
       "Liegestütz": 50,
       "Kniebeugen": 100,
-      "Bergsteiger": 40,
-      "Radl-Crunches": 100,
-      "Planks": 450,
-      "Vogel und Hund": 40,
-      "Umgekehrtes Bankdrücken": 50,
-      "Schwimmen": 1000,
-      "Aufwärmen": 1,
+      "Radl-Crunches": 40,
+      "Planks": 100,
+      "Wipers": 450,
+      "Liegestütz [Arme erhöht]": 40,
+      "Die Hundert [Pilates]": 50,
+      "Legpress": 1000,
       "Rauchen": 1,
-      "Alkohol": 2
+      "Junkfood": 1
     },
     {
       "Datum": "2019-01-23",
       "Crunches": 170,
-      "Planks": 270,
-      "Wandern": 150,
-      "Schwimmen": 2500,
-      "Rauchen": 1,
+      "Wipers": 270,
+      "Karate Front Kicks": 150,
+      "Legpress": 2500,
       "Junkfood": 1,
-      "Alkohol": 1
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-01-24",
-      "Wandern": 180,
-      "Schwimmen": 500
+      "Karate Front Kicks": 180,
+      "Legpress": 500
     },
     {
       "Datum": "2019-01-25",
-      "Rauchen": 3,
-      "Alkohol": 3
+      "Junkfood": 3
     },
     {
       "Datum": "2019-01-26",
@@ -1597,26 +1536,25 @@
       "Hampelmänner": 400,
       "Liegestütz": 30,
       "Kniebeugen": 100,
-      "Türziehen": 100,
-      "Curls": 48,
-      "Arnold Presses": 10,
-      "Schwimmen": 750,
-      "Aufwärmen": 1,
+      "Russian Twist": 100,
+      "Seitstütz mit Beinheben [Stütz]": 48,
+      "Schaukelstuhl": 10,
+      "Legpress": 750,
       "Rauchen": 1,
-      "Vollrausch": 1
+      "Junkfood": 1,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2019-01-27",
       "Liegestütz": 28,
       "Kniebeugen": 120,
-      "Radl-Crunches": 200,
-      "Planks": 240,
-      "Türziehen": 120,
-      "Curls": 166,
-      "Arnold Presses": 50,
-      "Aufwärmen": 1,
+      "Planks": 200,
+      "Wipers": 240,
+      "Russian Twist": 120,
+      "Seitstütz mit Beinheben [Stütz]": 166,
+      "Schaukelstuhl": 50,
       "Rauchen": 1,
-      "Alkohol": 2
+      "Junkfood": 1
     },
     {
       "Datum": "2019-01-28"
@@ -1625,42 +1563,40 @@
       "Datum": "2019-01-29",
       "Crunches": 200,
       "Liegestütz": 80,
-      "Türziehen": 60,
-      "Vogel und Hund": 20,
-      "Einbeiniges Kreuzheben": 30,
-      "Ausfallschritt [v oder h]": 30,
-      "Seitlicher Ausfallschritt [l,r]": 20,
-      "Schwimmen": 1000,
-      "Abwärmen": 1,
+      "Russian Twist": 60,
+      "Liegestütz [Arme erhöht]": 20,
+      "Umgekehrtes Bankdrücken": 30,
+      "Schwimmer": 30,
+      "Kniebeuge [3 sec halten]": 20,
+      "Legpress": 1000,
       "Aufwärmen": 1,
-      "Junkfood": 1,
-      "Alkohol": 1
+      "Rauchen": 1,
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-01-30",
       "Crunches": 250,
-      "Radl-Crunches": 100,
-      "Planks": 120,
-      "Superman": 30,
-      "Vogel und Hund": 80,
-      "Seestern": 40,
-      "Schwimmer": 60,
-      "Abwärmen": 1,
+      "Planks": 100,
+      "Wipers": 120,
+      "Wadenheber": 30,
+      "Liegestütz [Arme erhöht]": 80,
+      "Ausfallschritt [v oder h]": 40,
+      "Hand Release PushUp": 60,
       "Aufwärmen": 1,
       "Rauchen": 1,
       "Junkfood": 1,
-      "Alkohol": 3
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-01-31",
       "Crunches": 200,
       "Liegestütz": 60,
-      "Superman": 80,
-      "Wadenheber": 400,
-      "Türziehen": 100,
-      "Vogel und Hund": 100,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Wadenheber": 80,
+      "Burpees": 400,
+      "Russian Twist": 100,
+      "Liegestütz [Arme erhöht]": 100,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2019-02-01"
@@ -1670,14 +1606,12 @@
     },
     {
       "Datum": "2019-02-03",
-      "Junkfood": 1,
-      "Alkohol": 1
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-02-04",
-      "Rauchen": 1,
       "Junkfood": 1,
-      "Alkohol": 1
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-02-05",
@@ -1685,194 +1619,187 @@
       "Liegestütz": 5,
       "Klimmzüge": 6,
       "Kniebeugen": 250,
-      "Wadenheber": 300,
-      "Burpees": 55,
-      "Türziehen": 100,
-      "Radfahren": 80,
-      "Curls": 200,
-      "Aufwärmen": 1,
-      "Alkohol": 1
+      "Burpees": 300,
+      "Türziehen": 55,
+      "Russian Twist": 100,
+      "Fußball": 80,
+      "Seitstütz mit Beinheben [Stütz]": 200,
+      "Rauchen": 1
     },
     {
       "Datum": "2019-02-06",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-02-07",
       "Liegestütz": 40,
-      "Radl-Crunches": 200,
-      "Planks": 240,
-      "Superman": 80,
-      "Burpees": 10,
-      "Radfahren": 50,
-      "Curls": 320,
-      "Ausfallschritt [v oder h]": 40,
-      "Käfer Beine gestreckt": 40,
-      "Aufwärmen": 1,
+      "Planks": 200,
+      "Wipers": 240,
+      "Wadenheber": 80,
+      "Türziehen": 10,
+      "Fußball": 50,
+      "Seitstütz mit Beinheben [Stütz]": 320,
+      "Schwimmer": 40,
+      "Box Jump [Kniehöhe]": 40,
       "Rauchen": 1,
       "Junkfood": 1,
-      "Essen nach 20:00": 1,
-      "Alkohol": 2
+      "Vollrausch": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2019-02-08",
-      "Radfahren": 90
+      "Fußball": 90
     },
     {
       "Datum": "2019-02-09",
       "Klimmzüge": 3,
       "Kniebeugen": 20,
-      "Klettern": 60,
-      "Wandern": 120,
-      "Liegestütz [Beine erhöht]": 30,
-      "Junkfood": 1,
-      "Vollrausch": 1
+      "Laufen": 60,
+      "Karate Front Kicks": 120,
+      "Bärengang": 30,
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2019-02-10"
     },
     {
       "Datum": "2019-02-11",
-      "Radfahren": 30,
-      "Schwimmen": 1000,
-      "Essen nach 20:00": 1
+      "Fußball": 30,
+      "Legpress": 1000,
+      "Alkohol": 1
     },
     {
       "Datum": "2019-02-12",
       "Crunches": 100,
       "Liegestütz": 20,
-      "Planks": 240,
-      "Wadenheber": 200,
-      "Radfahren": 50,
-      "Liegestütz [Arme erhöht]": 20,
-      "Curls": 160,
-      "Liegestütz [Beine erhöht]": 20
+      "Wipers": 240,
+      "Burpees": 200,
+      "Fußball": 50,
+      "Power-Rudern 10min": 20,
+      "Seitstütz mit Beinheben [Stütz]": 160,
+      "Bärengang": 20
     },
     {
       "Datum": "2019-02-13",
       "Crunches": 100,
       "Liegestütz": 30,
       "Kniebeugen": 40,
-      "Radl-Crunches": 50,
-      "Wadenheber": 200,
-      "Radfahren": 40,
-      "Junkfood": 1,
-      "Alkohol": 1
+      "Planks": 50,
+      "Burpees": 200,
+      "Fußball": 40,
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-02-14",
       "Crunches": 100,
       "Liegestütz": 5,
       "Klimmzüge": 9,
-      "Bergsteiger": 60,
-      "Superman": 60,
-      "Seilspringen": 400,
-      "Radfahren": 30,
-      "Beinheber": 30,
+      "Radl-Crunches": 60,
+      "Wadenheber": 60,
+      "Klettern": 400,
+      "Fußball": 30,
       "Vogel und Hund": 30,
-      "Curls": 160,
-      "Seestern": 10,
-      "Junkfood": 1,
-      "Essen nach 20:00": 1,
+      "Liegestütz [Arme erhöht]": 30,
+      "Seitstütz mit Beinheben [Stütz]": 160,
+      "Ausfallschritt [v oder h]": 10,
+      "Vollrausch": 1,
       "Alkohol": 1
     },
     {
       "Datum": "2019-02-15",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-02-16",
       "Crunches": 400,
       "Liegestütz": 40,
       "Kniebeugen": 100,
-      "Bergsteiger": 120,
-      "Planks": 240,
-      "Superman": 160,
-      "Wadenheber": 400,
-      "Seilspringen": 550,
-      "Laufen": 15,
-      "Umgekehrtes Bankdrücken": 40,
-      "Curls": 320,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Radl-Crunches": 120,
+      "Wipers": 240,
+      "Wadenheber": 160,
+      "Burpees": 400,
+      "Klettern": 550,
+      "Radfahren": 15,
+      "Die Hundert [Pilates]": 40,
+      "Seitstütz mit Beinheben [Stütz]": 320,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2019-02-17",
-      "Klettern": 90,
-      "Radfahren": 30,
-      "Wandern": 120,
-      "Alkohol": 1
+      "Laufen": 90,
+      "Fußball": 30,
+      "Karate Front Kicks": 120
     },
     {
       "Datum": "2019-02-18",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-02-19",
-      "Planks": 360,
-      "Radfahren": 30,
-      "Käfer Beine gestreckt": 30
+      "Wipers": 360,
+      "Fußball": 30,
+      "Box Jump [Kniehöhe]": 30
     },
     {
       "Datum": "2019-02-20",
-      "Radfahren": 70,
-      "Alkohol": 1
+      "Fußball": 70
     },
     {
       "Datum": "2019-02-21",
-      "Radfahren": 30,
-      "Alkohol": 2
+      "Fußball": 30
     },
     {
       "Datum": "2019-02-22",
-      "Radfahren": 30,
-      "Rauchen": 1,
+      "Fußball": 30,
       "Junkfood": 1,
-      "Vollrausch": 1
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2019-02-23",
       "Liegestütz": 30,
       "Kniebeugen": 60,
-      "Radl-Crunches": 150,
-      "Wadenheber": 300,
-      "Radfahren": 30,
-      "Curls": 280,
-      "Schwimmer": 75,
-      "Aufwärmen": 1,
+      "Planks": 150,
+      "Burpees": 300,
+      "Fußball": 30,
+      "Seitstütz mit Beinheben [Stütz]": 280,
+      "Hand Release PushUp": 75,
       "Rauchen": 1,
       "Junkfood": 1,
-      "Vollrausch": 1
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2019-02-24"
     },
     {
       "Datum": "2019-02-25",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-02-26",
       "Crunches": 300,
-      "Planks": 240,
-      "Superman": 120,
-      "Burpees": 30,
-      "Radfahren": 30,
-      "Curls": 240,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Wipers": 240,
+      "Wadenheber": 120,
+      "Türziehen": 30,
+      "Fußball": 30,
+      "Seitstütz mit Beinheben [Stütz]": 240,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2019-02-27"
     },
     {
       "Datum": "2019-02-28",
-      "Klettern": 60,
-      "Radfahren": 30
+      "Laufen": 60,
+      "Fußball": 30
     },
     {
       "Datum": "2019-03-01",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-03-02"
@@ -1885,165 +1812,159 @@
     },
     {
       "Datum": "2019-03-05",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-03-06",
-      "Radfahren": 40
+      "Fußball": 40
     },
     {
       "Datum": "2019-03-07",
-      "Radfahren": 30,
-      "Fitness & Yoga": 60
+      "Fußball": 30,
+      "Leg Curls": 60
     },
     {
       "Datum": "2019-03-08",
-      "Radfahren": 30,
-      "Rauchen": 1,
-      "Alkohol": 4
+      "Fußball": 30,
+      "Junkfood": 1
     },
     {
       "Datum": "2019-03-09",
-      "Radfahren": 30,
-      "Junkfood": 1,
-      "Essen nach 20:00": 1,
-      "Alkohol": 4
+      "Fußball": 30,
+      "Vollrausch": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2019-03-10",
       "Liegestütz": 35,
-      "Planks": 240,
-      "Seilspringen": 300,
-      "Ausfallschritt [v oder h]": 30,
-      "Abwärmen": 1,
+      "Wipers": 240,
+      "Klettern": 300,
+      "Schwimmer": 30,
       "Aufwärmen": 1,
-      "Junkfood": 1
+      "Rauchen": 1,
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-03-11",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-03-12",
       "Crunches": 100,
       "Liegestütz": 28,
       "Kniebeugen": 80,
-      "Bergsteiger": 30,
-      "Radl-Crunches": 50,
-      "Planks": 240,
-      "Russian Twist": 50,
-      "Radfahren": 30,
-      "Curls": 320,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Radl-Crunches": 30,
+      "Planks": 50,
+      "Wipers": 240,
+      "Seilspringen": 50,
+      "Fußball": 30,
+      "Seitstütz mit Beinheben [Stütz]": 320,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2019-03-13",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-03-14",
-      "Radfahren": 80,
-      "Fitness & Yoga": 60
+      "Fußball": 80,
+      "Leg Curls": 60
     },
     {
       "Datum": "2019-03-15",
-      "Radfahren": 70
+      "Fußball": 70
     },
     {
       "Datum": "2019-03-16",
-      "Klettern": 60,
-      "Radfahren": 30,
-      "Junkfood": 1,
+      "Laufen": 60,
+      "Fußball": 30,
       "Vollrausch": 1,
-      "Essen nach 20:00": 1
+      "Essen nach 20:00": 1,
+      "Alkohol": 1
     },
     {
       "Datum": "2019-03-17",
-      "Junkfood": 1
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-03-18",
       "Crunches": 100,
       "Liegestütz": 24,
       "Kniebeugen": 60,
-      "Radl-Crunches": 50,
-      "Türziehen": 75,
-      "Russian Twist": 50,
-      "Laufen": 25,
-      "Radfahren": 30,
-      "Abwärmen": 1,
-      "Aufwärmen": 1
+      "Planks": 50,
+      "Russian Twist": 75,
+      "Seilspringen": 50,
+      "Radfahren": 25,
+      "Fußball": 30,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
       "Datum": "2019-03-19",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-03-20",
       "Crunches": 50,
-      "Radl-Crunches": 50,
-      "Burpees": 60,
-      "Radfahren": 30,
-      "Käfer Beine gestreckt": 15
+      "Planks": 50,
+      "Türziehen": 60,
+      "Fußball": 30,
+      "Box Jump [Kniehöhe]": 15
     },
     {
       "Datum": "2019-03-21",
-      "Radfahren": 40,
-      "Fitness & Yoga": 60,
-      "Junkfood": 1,
-      "Alkohol": 1
+      "Fußball": 40,
+      "Leg Curls": 60,
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-03-22",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-03-23",
-      "Junkfood": 1,
-      "Vollrausch": 1
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2019-03-24",
       "Liegestütz": 40,
-      "Klettern": 90,
-      "Radfahren": 25,
-      "Essen nach 20:00": 1,
-      "Alkohol": 2
+      "Laufen": 90,
+      "Fußball": 25,
+      "Alkohol": 1
     },
     {
       "Datum": "2019-03-25",
       "Sit-Ups": 10,
       "Crunches": 150,
       "Klimmzüge": 15,
-      "Radl-Crunches": 50,
-      "Russian Twist": 50,
-      "Beinheber": 20,
-      "Wandern": 60,
-      "Junkfood": 1
+      "Planks": 50,
+      "Seilspringen": 50,
+      "Vogel und Hund": 20,
+      "Karate Front Kicks": 60,
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-03-26",
-      "Radfahren": 30
+      "Fußball": 30
     },
     {
       "Datum": "2019-03-27",
       "Crunches": 150,
       "Klimmzüge": 10,
-      "Burpees": 30,
-      "Türziehen": 10,
-      "Radfahren": 30
+      "Türziehen": 30,
+      "Russian Twist": 10,
+      "Fußball": 30
     },
     {
       "Datum": "2019-03-28",
-      "Radfahren": 40,
-      "Fitness & Yoga": 60,
-      "Alkohol": 1
+      "Fußball": 40,
+      "Leg Curls": 60
     },
     {
       "Datum": "2019-03-29",
-      "Radfahren": 30,
-      "Alkohol": 1
+      "Fußball": 30
     },
     {
       "Datum": "2019-03-30",
@@ -2051,86 +1972,147 @@
       "Liegestütz": 40,
       "Klimmzüge": 16,
       "Kniebeugen": 80,
-      "Radl-Crunches": 50,
-      "Russian Twist": 50,
-      "Radfahren": 30,
-      "Beinheber": 20
+      "Planks": 50,
+      "Seilspringen": 50,
+      "Fußball": 30,
+      "Vogel und Hund": 20
     },
     {
       "Datum": "2019-03-31",
-      "Radfahren": 60,
-      "Alkohol": 4
+      "Fußball": 60
     },
     {
       "Datum": "2019-04-01",
       "Crunches": 150,
       "Liegestütz": 40,
       "Kniebeugen": 100,
-      "Bergsteiger": 20,
-      "Planks": 240,
-      "Superman": 80,
-      "Curls": 320,
-      "Aufwärmen": 1
+      "Radl-Crunches": 20,
+      "Wipers": 240,
+      "Wadenheber": 80,
+      "Seitstütz mit Beinheben [Stütz]": 320,
+      "Rauchen": 1
     },
     {
       "Datum": "2019-04-02",
-      "Radfahren": 30,
-      "Junkfood": 1,
-      "Alkohol": 1
+      "Fußball": 30,
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-04-03",
-      "Radfahren": 70
+      "Fußball": 70
     },
     {
       "Datum": "2019-04-04",
-      "Radfahren": 70,
-      "Fitness & Yoga": 60
+      "Fußball": 70,
+      "Leg Curls": 60
     },
     {
-      "Datum": "2019-04-05"
+      "Datum": "2019-04-05",
+      "Laufen": 120,
+      "Fußball": 60
     },
     {
-      "Datum": "2019-04-06"
+      "Datum": "2019-04-06",
+      "Fußball": 30,
+      "Alkohol": 1
     },
     {
-      "Datum": "2019-04-07"
+      "Datum": "2019-04-07",
+      "Liegestütz": 36,
+      "Wipers": 240,
+      "Russian Twist": 90,
+      "Fußball": 15,
+      "Die Hundert [Pilates]": 25,
+      "Karate Front Kicks": 135,
+      "Ausfallschritt [v oder h]": 35,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
-      "Datum": "2019-04-08"
+      "Datum": "2019-04-08",
+      "Fußball": 30
     },
     {
-      "Datum": "2019-04-09"
+      "Datum": "2019-04-09",
+      "Crunches": 100,
+      "Liegestütz": 10,
+      "Kniebeugen": 100,
+      "Wipers": 240,
+      "Wadenheber": 40,
+      "Fußball": 80,
+      "Umgekehrtes Bankdrücken": 31,
+      "Schwimmer": 75
     },
     {
-      "Datum": "2019-04-10"
+      "Datum": "2019-04-10",
+      "Liegestütz": 30,
+      "Laufen": 75,
+      "Fußball": 60
     },
     {
-      "Datum": "2019-04-11"
+      "Datum": "2019-04-11",
+      "Fußball": 50,
+      "Leg Curls": 60,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-04-12"
+      "Datum": "2019-04-12",
+      "Fußball": 30,
+      "Vollrausch": 1,
+      "Alkohol": 1
     },
     {
-      "Datum": "2019-04-13"
+      "Datum": "2019-04-13",
+      "Fußball": 30,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-04-14"
+      "Datum": "2019-04-14",
+      "Liegestütz": 50,
+      "Wipers": 240,
+      "Russian Twist": 100,
+      "Die Hundert [Pilates]": 30,
+      "Seitstütz mit Beinheben [Stütz]": 120,
+      "Rauchen": 1
     },
     {
-      "Datum": "2019-04-15"
+      "Datum": "2019-04-15",
+      "Crunches": 100,
+      "Kniebeugen": 110,
+      "Wipers": 360,
+      "Fußball": 30,
+      "Umgekehrtes Bankdrücken": 50,
+      "Schwimmer": 80
     },
     {
-      "Datum": "2019-04-16"
+      "Datum": "2019-04-16",
+      "Liegestütz": 40,
+      "Klimmzüge": 15,
+      "Russian Twist": 100,
+      "Fußball": 50,
+      "Power-Rudern 10min": 76
     },
     {
-      "Datum": "2019-04-17"
+      "Datum": "2019-04-17",
+      "Crunches": 50,
+      "Liegestütz": 25,
+      "Klimmzüge": 10,
+      "Fußball": 60,
+      "Die Hundert [Pilates]": 32
     },
     {
-      "Datum": "2019-04-18"
+      "Datum": "2019-04-18",
+      "Fußball": 40,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-04-19"
+      "Datum": "2019-04-19",
+      "Kniebeugen": 120,
+      "Planks": 65,
+      "Wipers": 360,
+      "Fußball": 30,
+      "Umgekehrtes Bankdrücken": 60,
+      "Schwimmer": 120
     },
     {
       "Datum": "2019-04-20"
@@ -2145,103 +2127,223 @@
       "Datum": "2019-04-23"
     },
     {
-      "Datum": "2019-04-24"
+      "Datum": "2019-04-24",
+      "Liegestütz": 20,
+      "Klimmzüge": 18,
+      "Kniebeugen": 60,
+      "Fußball": 40,
+      "Vogel und Hund": 60,
+      "Bärengang": 5,
+      "Aufwärmen": 1,
+      "Rauchen": 1
     },
     {
-      "Datum": "2019-04-25"
+      "Datum": "2019-04-25",
+      "Fußball": 30
     },
     {
-      "Datum": "2019-04-26"
+      "Datum": "2019-04-26",
+      "Fußball": 30
     },
     {
-      "Datum": "2019-04-27"
+      "Datum": "2019-04-27",
+      "Fußball": 30
     },
     {
-      "Datum": "2019-04-28"
+      "Datum": "2019-04-28",
+      "Fußball": 30
     },
     {
-      "Datum": "2019-04-29"
+      "Datum": "2019-04-29",
+      "Fußball": 30
     },
     {
-      "Datum": "2019-04-30"
+      "Datum": "2019-04-30",
+      "Liegestütz": 30,
+      "Rauchen": 1
     },
     {
-      "Datum": "2019-05-01"
+      "Datum": "2019-05-01",
+      "Crunches": 50,
+      "Liegestütz": 30,
+      "Klimmzüge": 3,
+      "Kniebeugen": 120,
+      "Planks": 50,
+      "Russian Twist": 100,
+      "Vogel und Hund": 30,
+      "Aufwärmen": 1,
+      "Rauchen": 1,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-05-02"
+      "Datum": "2019-05-02",
+      "Crunches": 100,
+      "Liegestütz": 10,
+      "Klimmzüge": 5,
+      "Wipers": 90,
+      "Klettern": 100,
+      "Seitstütz mit Beinheben [Stütz]": 80,
+      "Bärengang": 15,
+      "Rauchen": 1
     },
     {
-      "Datum": "2019-05-03"
+      "Datum": "2019-05-03",
+      "Crunches": 70,
+      "Liegestütz": 30,
+      "Klimmzüge": 10,
+      "Planks": 50,
+      "Wipers": 30,
+      "Russian Twist": 20,
+      "Klettern": 144,
+      "Laufen": 60,
+      "Beinheber": 20,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-05-04"
+      "Datum": "2019-05-04",
+      "Crunches": 100,
+      "Klimmzüge": 20,
+      "Wipers": 120,
+      "Russian Twist": 40,
+      "Vogel und Hund": 40,
+      "Seitstütz mit Beinheben [Stütz]": 160,
+      "Karate Front Kicks": 60,
+      "Schwimmer": 40,
+      "Rauchen": 1
     },
     {
-      "Datum": "2019-05-05"
+      "Datum": "2019-05-05",
+      "Fußball": 80,
+      "Karate Front Kicks": 60,
+      "Schaukelstuhl": 45
     },
     {
-      "Datum": "2019-05-06"
+      "Datum": "2019-05-06",
+      "Fußball": 30
     },
     {
-      "Datum": "2019-05-07"
+      "Datum": "2019-05-07",
+      "Crunches": 80,
+      "Liegestütz": 70,
+      "Klimmzüge": 20,
+      "Türziehen": 5,
+      "Russian Twist": 20,
+      "Laufen": 60,
+      "Fußball": 70,
+      "Beinheber": 10,
+      "Vogel und Hund": 60,
+      "Die Hundert [Pilates]": 30,
+      "Seitstütz mit Beinheben [Stütz]": 46
     },
     {
-      "Datum": "2019-05-08"
+      "Datum": "2019-05-08",
+      "Fußball": 30,
+      "Karate Front Kicks": 120
     },
     {
-      "Datum": "2019-05-09"
+      "Datum": "2019-05-09",
+      "Fußball": 50,
+      "Leg Curls": 60
     },
     {
-      "Datum": "2019-05-10"
+      "Datum": "2019-05-10",
+      "Fußball": 50
     },
     {
-      "Datum": "2019-05-11"
+      "Datum": "2019-05-11",
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2019-05-12"
     },
     {
-      "Datum": "2019-05-13"
+      "Datum": "2019-05-13",
+      "Crunches": 90,
+      "Türziehen": 30,
+      "Fußball": 90
     },
     {
-      "Datum": "2019-05-14"
+      "Datum": "2019-05-14",
+      "Liegestütz": 30,
+      "Klimmzüge": 3,
+      "Kniebeugen": 90,
+      "Planks": 150,
+      "Russian Twist": 90,
+      "Klettern": 70,
+      "Laufen": 60,
+      "Fußball": 70,
+      "Beinheber": 10,
+      "Vogel und Hund": 30,
+      "Die Hundert [Pilates]": 10,
+      "Rauchen": 1,
+      "Alkohol": 1
     },
     {
-      "Datum": "2019-05-15"
+      "Datum": "2019-05-15",
+      "Fußball": 50
     },
     {
-      "Datum": "2019-05-16"
+      "Datum": "2019-05-16",
+      "Fußball": 70,
+      "Leg Curls": 60
     },
     {
-      "Datum": "2019-05-17"
+      "Datum": "2019-05-17",
+      "Fußball": 30
     },
     {
-      "Datum": "2019-05-18"
+      "Datum": "2019-05-18",
+      "Crunches": 200,
+      "Liegestütz": 30,
+      "Fußball": 30,
+      "Seitstütz mit Beinheben [Stütz]": 80,
+      "Schwimmer": 20
     },
     {
       "Datum": "2019-05-19"
     },
     {
-      "Datum": "2019-05-20"
+      "Datum": "2019-05-20",
+      "Fußball": 30
     },
     {
-      "Datum": "2019-05-21"
+      "Datum": "2019-05-21",
+      "Fußball": 30
     },
     {
-      "Datum": "2019-05-22"
+      "Datum": "2019-05-22",
+      "Liegestütz": 50,
+      "Wipers": 120,
+      "Seilspringen": 40,
+      "Klettern": 100,
+      "Laufen": 90,
+      "Fußball": 70,
+      "Vogel und Hund": 120,
+      "Seitstütz mit Beinheben [Stütz]": 800,
+      "Aufwärmen": 1,
+      "Rauchen": 1,
+      "Alkohol": 1
     },
     {
-      "Datum": "2019-05-23"
+      "Datum": "2019-05-23",
+      "Fußball": 60,
+      "Leg Curls": 60
     },
     {
-      "Datum": "2019-05-24"
+      "Datum": "2019-05-24",
+      "Fußball": 40,
+      "Essen nach 20:00": 1
     },
     {
       "Datum": "2019-05-25"
     },
     {
-      "Datum": "2019-05-26"
+      "Datum": "2019-05-26",
+      "Kniebeugen": 120,
+      "Wipers": 180,
+      "Die Hundert [Pilates]": 45,
+      "Bärengang": 30
     },
     {
       "Datum": "2019-05-27"
@@ -2253,10 +2355,24 @@
       "Datum": "2019-05-29"
     },
     {
-      "Datum": "2019-05-30"
+      "Datum": "2019-05-30",
+      "Crunches": 300,
+      "Liegestütz": 45,
+      "Kniebeugen": 120,
+      "Wipers": 180,
+      "Burpees": 270,
+      "Seitstütz mit Beinheben [Stütz]": 120,
+      "Rauchen": 1
     },
     {
-      "Datum": "2019-05-31"
+      "Datum": "2019-05-31",
+      "Crunches": 150,
+      "Liegestütz": 60,
+      "Klimmzüge": 30,
+      "Kniebeugen": 40,
+      "Wadenheber": 230,
+      "Seilspringen": 200,
+      "Curls": 240
     },
     {
       "Datum": "2019-06-01"

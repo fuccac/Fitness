@@ -896,40 +896,92 @@
       "Datum": "2019-04-04"
     },
     {
-      "Datum": "2019-04-05"
+      "Datum": "2019-04-05",
+      "Crunches": 171,
+      "Laufen": 10,
+      "Power-Rudern 10min": 2538,
+      "Curls": 600,
+      "Bankdrücken": 26,
+      "Alkohol": 1
     },
     {
       "Datum": "2019-04-06"
     },
     {
-      "Datum": "2019-04-07"
+      "Datum": "2019-04-07",
+      "Crunches": 96,
+      "Klimmzüge": 5,
+      "Kniebeugen": 90,
+      "Wadenheber": 400,
+      "Legpress": 36,
+      "Legextension": 120,
+      "Alkohol": 2
     },
     {
-      "Datum": "2019-04-08"
+      "Datum": "2019-04-08",
+      "Crunches": 270,
+      "Curls": 480,
+      "Reverse Flys": 160,
+      "Shoulderpress": 60,
+      "Bankdrücken": 30,
+      "Alkohol": 1
     },
     {
       "Datum": "2019-04-09"
     },
     {
-      "Datum": "2019-04-10"
+      "Datum": "2019-04-10",
+      "Crunches": 360,
+      "Klimmzüge": 5,
+      "Laufen": 13,
+      "Power-Rudern 10min": 2300,
+      "Curls": 166,
+      "Bankdrücken": 30
     },
     {
-      "Datum": "2019-04-11"
+      "Datum": "2019-04-11",
+      "Crunches": 360,
+      "Liegestütz": 54,
+      "Klimmzüge": 5,
+      "Laufen": 15,
+      "Power-Rudern 10min": 2468,
+      "Bankdrücken": 45,
+      "Lat Pull Down": 60
     },
     {
-      "Datum": "2019-04-12"
+      "Datum": "2019-04-12",
+      "Crunches": 90,
+      "Curls": 1000,
+      "Reverse Flys": 30,
+      "Bankdrücken": 60,
+      "Hyperextension": 45,
+      "Lat Pull Down": 130,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-04-13"
+      "Datum": "2019-04-13",
+      "Planks": 180,
+      "Power-Rudern 10min": 2437
     },
     {
-      "Datum": "2019-04-14"
+      "Datum": "2019-04-14",
+      "Crunches": 270,
+      "Klimmzüge": 5,
+      "Power-Rudern 10min": 2538,
+      "Bankdrücken": 80,
+      "Hyperextension": 45,
+      "Lat Pull Down": 60
     },
     {
       "Datum": "2019-04-15"
     },
     {
-      "Datum": "2019-04-16"
+      "Datum": "2019-04-16",
+      "Crunches": 210,
+      "Planks": 300,
+      "Curls": 460,
+      "Bankdrücken": 32,
+      "Hyperextension": 30
     },
     {
       "Datum": "2019-04-17"
@@ -941,16 +993,53 @@
       "Datum": "2019-04-19"
     },
     {
-      "Datum": "2019-04-20"
+      "Datum": "2019-04-20",
+      "Hampelmänner": 150,
+      "Planks": 300,
+      "Burpees": 30,
+      "Curls": 200,
+      "Tischtennis": 90,
+      "Arnold Presses": 60,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-04-21"
+      "Datum": "2019-04-21",
+      "Sit-Ups": 20,
+      "Crunches": 20,
+      "Hampelmänner": 50,
+      "Liegestütz": 10,
+      "Kniebeugen": 30,
+      "Bergsteiger": 50,
+      "Radl-Crunches": 30,
+      "Planks": 60,
+      "Wipers": 16,
+      "Superman": 20,
+      "Wadenheber": 30,
+      "Russian Twist": 50,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 17,
+      "Beinheber": 20,
+      "Vogel und Hund": 20,
+      "Liegestütz [Arme erhöht]": 20,
+      "Curls": 67,
+      "Arnold Presses": 50
     },
     {
-      "Datum": "2019-04-22"
+      "Datum": "2019-04-22",
+      "Radfahren": 120
     },
     {
-      "Datum": "2019-04-23"
+      "Datum": "2019-04-23",
+      "Liegestütz": 10,
+      "Die Hundert [Pilates]": 100,
+      "Jump Squats": 20,
+      "Einbeinige Squats mit Band": 20,
+      "Jumping Split Squat": 20,
+      "Slides": 20,
+      "Frog Crunches": 30,
+      "Curls": 200,
+      "Seitstütz mit Beinheben [Stütz]": 20,
+      "Commandos": 30,
+      "Arnold Presses": 60
     },
     {
       "Datum": "2019-04-24"
@@ -962,25 +1051,53 @@
       "Datum": "2019-04-26"
     },
     {
-      "Datum": "2019-04-27"
+      "Datum": "2019-04-27",
+      "Radl-Crunches": 100,
+      "Planks": 120,
+      "Klettern": 90,
+      "Curls": 132,
+      "Tischtennis": 60,
+      "Arnold Presses": 40
     },
     {
-      "Datum": "2019-04-28"
+      "Datum": "2019-04-28",
+      "Kniebeugen": 30,
+      "Radl-Crunches": 50,
+      "Commandos": 50,
+      "Kick Backs": 20,
+      "Klappmesser": 10,
+      "Glute Bridge": 10,
+      "Tischtennis": 60
     },
     {
       "Datum": "2019-04-29"
     },
     {
-      "Datum": "2019-04-30"
+      "Datum": "2019-04-30",
+      "Planks": 120,
+      "Klettern": 90
     },
     {
-      "Datum": "2019-05-01"
+      "Datum": "2019-05-01",
+      "Kniebeugen": 100,
+      "Radl-Crunches": 150,
+      "Planks": 180,
+      "Wadenheber": 100,
+      "Burpees": 20,
+      "Laufen": 67,
+      "Curls": 520,
+      "Arnold Presses": 66
     },
     {
       "Datum": "2019-05-02"
     },
     {
-      "Datum": "2019-05-03"
+      "Datum": "2019-05-03",
+      "Crunches": 90,
+      "Liegestütz": 10,
+      "Klimmzüge": 10,
+      "Planks": 180,
+      "Klettern": 60
     },
     {
       "Datum": "2019-05-04"
@@ -992,22 +1109,44 @@
       "Datum": "2019-05-06"
     },
     {
-      "Datum": "2019-05-07"
+      "Datum": "2019-05-07",
+      "Crunches": 150,
+      "Power-Rudern 10min": 2548,
+      "Bankdrücken": 40,
+      "Hyperextension": 20
     },
     {
-      "Datum": "2019-05-08"
+      "Datum": "2019-05-08",
+      "Crunches": 180,
+      "Planks": 120,
+      "Laufen": 20,
+      "Curls": 96,
+      "Reverse Flys": 53,
+      "Shoulderpress": 40,
+      "Bankdrücken": 16,
+      "Lat Pull Down": 40
     },
     {
       "Datum": "2019-05-09"
     },
     {
-      "Datum": "2019-05-10"
+      "Datum": "2019-05-10",
+      "Crunches": 50,
+      "Power-Rudern 10min": 2518,
+      "Curls": 88,
+      "Bankdrücken": 40,
+      "Lat Pull Down": 80
     },
     {
       "Datum": "2019-05-11"
     },
     {
-      "Datum": "2019-05-12"
+      "Datum": "2019-05-12",
+      "Crunches": 100,
+      "Laufen": 23,
+      "Curls": 232,
+      "Bankdrücken": 40,
+      "Lat Pull Down": 108
     },
     {
       "Datum": "2019-05-13"
@@ -1016,7 +1155,12 @@
       "Datum": "2019-05-14"
     },
     {
-      "Datum": "2019-05-15"
+      "Datum": "2019-05-15",
+      "Crunches": 100,
+      "Power-Rudern 10min": 2489,
+      "Curls": 133,
+      "Bankdrücken": 34,
+      "Lat Pull Down": 108
     },
     {
       "Datum": "2019-05-16"
@@ -1025,10 +1169,19 @@
       "Datum": "2019-05-17"
     },
     {
-      "Datum": "2019-05-18"
+      "Datum": "2019-05-18",
+      "Alkohol": 2
     },
     {
-      "Datum": "2019-05-19"
+      "Datum": "2019-05-19",
+      "Crunches": 100,
+      "Planks": 210,
+      "Laufen": 30,
+      "Power-Rudern 10min": 2480,
+      "Curls": 247,
+      "Reverse Flys": 66,
+      "Bankdrücken": 28,
+      "Lat Pull Down": 120
     },
     {
       "Datum": "2019-05-20"
@@ -1040,13 +1193,20 @@
       "Datum": "2019-05-22"
     },
     {
-      "Datum": "2019-05-23"
+      "Datum": "2019-05-23",
+      "Crunches": 50,
+      "Power-Rudern 10min": 2505,
+      "Curls": 169,
+      "Bankdrücken": 40,
+      "Lat Pull Down": 120
     },
     {
       "Datum": "2019-05-24"
     },
     {
-      "Datum": "2019-05-25"
+      "Datum": "2019-05-25",
+      "Curls": 66,
+      "Tischtennis": 60
     },
     {
       "Datum": "2019-05-26"
@@ -1055,22 +1215,40 @@
       "Datum": "2019-05-27"
     },
     {
-      "Datum": "2019-05-28"
+      "Datum": "2019-05-28",
+      "Crunches": 120,
+      "Liegestütz": 30,
+      "Planks": 180,
+      "Klettern": 90,
+      "Ausfallschritt [v oder h]": 75,
+      "Alkohol": 1
     },
     {
-      "Datum": "2019-05-29"
+      "Datum": "2019-05-29",
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-05-30"
+      "Datum": "2019-05-30",
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-05-31"
+      "Datum": "2019-05-31",
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-06-01"
     },
     {
-      "Datum": "2019-06-02"
+      "Datum": "2019-06-02",
+      "Crunches": 50,
+      "Liegestütz": 20,
+      "Radl-Crunches": 50,
+      "Planks": 200,
+      "Laufen": 52,
+      "Curls": 80,
+      "Tischtennis": 60,
+      "Ausfallschritt [v oder h]": 50,
+      "Arnold Presses": 40
     }
   ]
 }

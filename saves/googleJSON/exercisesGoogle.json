@@ -12,7 +12,7 @@
     {
       "exname": "Crunches",
       "bothSides": false,
-      "diff": 0.48000000000000004,
+      "diff": 0.5466666666666667,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -25,7 +25,7 @@
     {
       "exname": "Hampelmänner",
       "bothSides": false,
-      "diff": 0.25000000000000006,
+      "diff": 0.2666666666666667,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -47,7 +47,7 @@
     {
       "exname": "Klimmzüge",
       "bothSides": false,
-      "diff": 1.9,
+      "diff": 2.1,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -77,7 +77,7 @@
     {
       "exname": "Radl-Crunches",
       "bothSides": false,
-      "diff": 0.5700000000000001,
+      "diff": 0.67,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -100,7 +100,7 @@
     {
       "exname": "Wipers",
       "bothSides": false,
-      "diff": 0.9,
+      "diff": 1.275,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -109,7 +109,7 @@
     {
       "exname": "Superman",
       "bothSides": false,
-      "diff": 0.35,
+      "diff": 0.41,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -127,7 +127,7 @@
     {
       "exname": "Burpees",
       "bothSides": false,
-      "diff": 2.158333333333333,
+      "diff": 2.37,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -152,7 +152,7 @@
     {
       "exname": "Russian Twist",
       "bothSides": true,
-      "diff": 0.3166666666666667,
+      "diff": 0.38749999999999996,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -161,7 +161,7 @@
     {
       "exname": "Seilspringen",
       "bothSides": false,
-      "diff": 0.31666666666666665,
+      "diff": 0.3016666666666667,
       "baseWeight": 0,
       "unit": "Schwung",
       "equip": "Sprungseil",
@@ -182,7 +182,7 @@
     {
       "exname": "Laufen",
       "bothSides": false,
-      "diff": 2.5833333333333335,
+      "diff": 2.9166666666666665,
       "baseWeight": 0,
       "unit": "min",
       "equip": "Körpergewicht",
@@ -194,7 +194,7 @@
     {
       "exname": "Radfahren",
       "bothSides": false,
-      "diff": 1.6,
+      "diff": 1.5833333333333333,
       "baseWeight": 0,
       "unit": "min",
       "equip": "Körpergewicht",
@@ -212,7 +212,7 @@
     {
       "exname": "Dips mit einem Stuhl [Beine 90 Grad]",
       "bothSides": false,
-      "diff": 0.8800000000000001,
+      "diff": 0.8999999999999999,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -225,7 +225,7 @@
     {
       "exname": "Beinheber",
       "bothSides": false,
-      "diff": 0.75,
+      "diff": 0.7,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -234,7 +234,7 @@
     {
       "exname": "Vogel und Hund",
       "bothSides": true,
-      "diff": 0.5000000000000001,
+      "diff": 0.45000000000000007,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -243,7 +243,7 @@
     {
       "exname": "Liegestütz [Arme erhöht]",
       "bothSides": false,
-      "diff": 0.68,
+      "diff": 0.7333333333333334,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -253,7 +253,7 @@
     {
       "exname": "Power-Rudern 10min",
       "bothSides": false,
-      "diff": 0.05000000000000001,
+      "diff": 0.06666666666666667,
       "baseWeight": 0,
       "unit": "m",
       "equip": "Körpergewicht",
@@ -280,7 +280,7 @@
     {
       "exname": "Die Hundert [Pilates]",
       "bothSides": false,
-      "diff": 0.1925,
+      "diff": 0.19499999999999998,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -289,7 +289,7 @@
     {
       "exname": "Jump Squats",
       "bothSides": false,
-      "diff": 1.3,
+      "diff": 1.3499999999999999,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -298,7 +298,7 @@
     {
       "exname": "Einbeinige Squats mit Band",
       "bothSides": true,
-      "diff": 0.9125000000000001,
+      "diff": 0.93,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -317,7 +317,7 @@
     {
       "exname": "Jumping Split Squat",
       "bothSides": false,
-      "diff": 1.3375000000000001,
+      "diff": 1.27,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -326,7 +326,7 @@
     {
       "exname": "Slides",
       "bothSides": false,
-      "diff": 0.725,
+      "diff": 0.6799999999999999,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -344,7 +344,7 @@
     {
       "exname": "Curls",
       "bothSides": true,
-      "diff": 0.48333333333333334,
+      "diff": 0.4875,
       "baseWeight": 1.5,
       "unit": "Wdh",
       "equip": "2x Hantel",
@@ -353,7 +353,7 @@
     {
       "exname": "Seitstütz mit Beinheben [Stütz]",
       "bothSides": true,
-      "diff": 1.05,
+      "diff": 1.0375,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -407,7 +407,7 @@
     {
       "exname": "Wandern",
       "bothSides": false,
-      "diff": 0.9833333333333334,
+      "diff": 0.8625,
       "baseWeight": 0,
       "unit": "min",
       "equip": "Körpergewicht",
@@ -425,7 +425,7 @@
     {
       "exname": "Kick Backs",
       "bothSides": true,
-      "diff": 0.42500000000000004,
+      "diff": 0.45,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -434,7 +434,7 @@
     {
       "exname": "Klappmesser",
       "bothSides": false,
-      "diff": 1.1666666666666667,
+      "diff": 1.5,
       "baseWeight": 0,
       "unit": "Wdh",
       "equip": "Körpergewicht",
@@ -926,6 +926,24 @@
       "baseWeight": 0,
       "unit": "min",
       "equip": "Körpergewicht",
+      "type": "Kraft"
+    },
+    {
+      "exname": "Leg Curls",
+      "bothSides": false,
+      "diff": 0.9,
+      "baseWeight": 20,
+      "unit": "Wdh",
+      "equip": "Leg Curl Maschine",
+      "type": "Kraft"
+    },
+    {
+      "exname": "Situps mit Gewicht",
+      "bothSides": false,
+      "diff": 1.2,
+      "baseWeight": 9,
+      "unit": "Wdh",
+      "equip": "Gewichtball",
       "type": "Kraft"
     },
     {

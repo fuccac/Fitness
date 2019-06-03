@@ -1551,10 +1551,12 @@
       "Radfahren": 40
     },
     {
-      "Datum": "2019-04-06"
+      "Datum": "2019-04-06",
+      "Wandern": 60
     },
     {
-      "Datum": "2019-04-07"
+      "Datum": "2019-04-07",
+      "Wandern": 150
     },
     {
       "Datum": "2019-04-08"
@@ -1572,70 +1574,95 @@
       "Datum": "2019-04-12"
     },
     {
-      "Datum": "2019-04-13"
+      "Datum": "2019-04-13",
+      "Wandern": 100
     },
     {
       "Datum": "2019-04-14"
     },
     {
-      "Datum": "2019-04-15"
+      "Datum": "2019-04-15",
+      "Radfahren": 20
     },
     {
-      "Datum": "2019-04-16"
+      "Datum": "2019-04-16",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-04-17"
+      "Datum": "2019-04-17",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-04-18"
+      "Datum": "2019-04-18",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-04-19"
+      "Datum": "2019-04-19",
+      "Radfahren": 40,
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-04-20"
+      "Datum": "2019-04-20",
+      "Vollrausch": 1
     },
     {
-      "Datum": "2019-04-21"
+      "Datum": "2019-04-21",
+      "Alkohol": 3
     },
     {
-      "Datum": "2019-04-22"
+      "Datum": "2019-04-22",
+      "Wandern": 150,
+      "Alkohol": 2
     },
     {
-      "Datum": "2019-04-23"
+      "Datum": "2019-04-23",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-04-24"
+      "Datum": "2019-04-24",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-04-25"
+      "Datum": "2019-04-25",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-04-26"
+      "Datum": "2019-04-26",
+      "Radfahren": 40
     },
     {
       "Datum": "2019-04-27"
     },
     {
-      "Datum": "2019-04-28"
+      "Datum": "2019-04-28",
+      "Wandern": 120
     },
     {
-      "Datum": "2019-04-29"
+      "Datum": "2019-04-29",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-04-30"
+      "Datum": "2019-04-30",
+      "Crunches": 100,
+      "Bergsteiger": 100,
+      "Radfahren": 40,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 105,
+      "Strandschere [l,r]": 50
     },
     {
       "Datum": "2019-05-01"
     },
     {
-      "Datum": "2019-05-02"
+      "Datum": "2019-05-02",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-05-03"
+      "Datum": "2019-05-03",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-05-04"
+      "Datum": "2019-05-04",
+      "Vollrausch": 1
     },
     {
       "Datum": "2019-05-05"
@@ -1644,7 +1671,16 @@
       "Datum": "2019-05-06"
     },
     {
-      "Datum": "2019-05-07"
+      "Datum": "2019-05-07",
+      "Crunches": 60,
+      "Liegestütz": 15,
+      "Kniebeugen": 60,
+      "Burpees": 5,
+      "Klettern": 75,
+      "Dips mit einem Stuhl [Beine 90 Grad]": 10,
+      "Beinheber": 60,
+      "Curls": 93,
+      "Situps mit Gewicht": 50
     },
     {
       "Datum": "2019-05-08"
@@ -1662,19 +1698,27 @@
       "Datum": "2019-05-12"
     },
     {
-      "Datum": "2019-05-13"
+      "Datum": "2019-05-13",
+      "Wandern": 209,
+      "Junkfood": 1
     },
     {
-      "Datum": "2019-05-14"
+      "Datum": "2019-05-14",
+      "Wandern": 60,
+      "Junkfood": 1
     },
     {
-      "Datum": "2019-05-15"
+      "Datum": "2019-05-15",
+      "Radfahren": 40,
+      "Junkfood": 1
     },
     {
-      "Datum": "2019-05-16"
+      "Datum": "2019-05-16",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-05-17"
+      "Datum": "2019-05-17",
+      "Radfahren": 40
     },
     {
       "Datum": "2019-05-18"
@@ -1683,22 +1727,33 @@
       "Datum": "2019-05-19"
     },
     {
-      "Datum": "2019-05-20"
+      "Datum": "2019-05-20",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-05-21"
+      "Datum": "2019-05-21",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-05-22"
+      "Datum": "2019-05-22",
+      "Liegestütz": 40,
+      "Planks": 120,
+      "Klettern": 90,
+      "Radfahren": 40,
+      "Beinheber": 120,
+      "Curls": 800
     },
     {
-      "Datum": "2019-05-23"
+      "Datum": "2019-05-23",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-05-24"
+      "Datum": "2019-05-24",
+      "Radfahren": 40
     },
     {
-      "Datum": "2019-05-25"
+      "Datum": "2019-05-25",
+      "Radfahren": 75
     },
     {
       "Datum": "2019-05-26"
@@ -1707,19 +1762,35 @@
       "Datum": "2019-05-27"
     },
     {
-      "Datum": "2019-05-28"
+      "Datum": "2019-05-28",
+      "Crunches": 90,
+      "Liegestütz": 30,
+      "Planks": 180,
+      "Klettern": 90,
+      "Ausfallschritt [v oder h]  [4sec halten]": 75
     },
     {
-      "Datum": "2019-05-29"
+      "Datum": "2019-05-29",
+      "Radfahren": 40,
+      "Junkfood": 1,
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
-      "Datum": "2019-05-30"
+      "Datum": "2019-05-30",
+      "Junkfood": 1,
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
-      "Datum": "2019-05-31"
+      "Datum": "2019-05-31",
+      "Junkfood": 1,
+      "Vollrausch": 1,
+      "Essen nach 20:00": 1
     },
     {
-      "Datum": "2019-06-01"
+      "Datum": "2019-06-01",
+      "Junkfood": 1
     },
     {
       "Datum": "2019-06-02"
