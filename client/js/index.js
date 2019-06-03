@@ -1182,6 +1182,8 @@ function translate(word) {
             return "Beidseitig";
         case "online":
             return "Online";
+        case "strength":
+            return "Stärke";
         case "achievementProgress":
             return "Achievement Fortschritt";
         case "achievementNextLevel":
