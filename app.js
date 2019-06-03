@@ -338,6 +338,7 @@ function recalculateAllPoints(result) {
 }
 
 function saveAndRefreshPlayer(playerId) {
+	saveFitnessManager();
 	var iPlayer;
 	var player;
 
