@@ -45,8 +45,6 @@ class Exercise {
         };
         this.votes[creator] = newVote;
     }
-
-
 }
 
 module.exports = Exercise;

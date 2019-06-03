@@ -84,7 +84,7 @@ class FitnessManager {
             var entryFound = false;
             var xAxis = [];
             var yAxis = [];
-            var date
+            var date;
             fromDate = calc.createZeroDate(fromDate);
             var sumPoints = this.calculatePointsFromHistory(playerName, fromDate).total;
             for (var historyIterator = 0; historyIterator < chunk.length; historyIterator++) {
@@ -109,9 +109,6 @@ class FitnessManager {
                     newDate.setDate(newDate.getDate()+1);
                     yAxis[historyIterator] = calc.getDateFormat(newDate,"DD.MM.YYYY");
                 }
-                
-                
-
                 
             }
 
