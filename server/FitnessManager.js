@@ -144,7 +144,8 @@ class FitnessManager {
                 entry.equip,
                 usesWeight,
                 entry.baseWeight,
-                entry.exname + " Import from GS", "JsonImporter",
+                entry.exname + " Import from GS", 
+                "caf",
                 entry.type,
                 entry.unit,
                 entry.bothSides
