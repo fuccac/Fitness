@@ -23,9 +23,9 @@ class FitnessManager {
         this.history = {};
         this.registeredPlayers = {};
 
-        this.importGoogleSheetStuff(function (result) {
-            logFile.log(result,false,0);
-        }.bind(this));
+        //this.importGoogleSheetStuff(function (result) {
+        //    logFile.log(result,false,0);
+        //}.bind(this));
 
     }
 
