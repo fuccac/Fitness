@@ -46,21 +46,23 @@ io.sockets.on('connection', function (socket) {
 });
 
 function loadSaveFiles() {
-	dropbox.downloadFile(DB_TOKEN, config.EXERCISE_FILE_NAME, function (callback) {
+	dropbox.downloadFile(DB_TOKEN, config.LOG_FILE_NAME, function (callback) {
 		logFile.log(callback.msg, false, callback.sev);
-		dropbox.downloadFile(DB_TOKEN, config.HISTORY_FILE_NAME, function (callback) {
+		dropbox.downloadFile(DB_TOKEN, config.EXERCISE_FILE_NAME, function (callback) {
 			logFile.log(callback.msg, false, callback.sev);
-			dropbox.downloadFile(DB_TOKEN, config.REG_PLAYERS_FILE_NAME, function (callback) {
+			dropbox.downloadFile(DB_TOKEN, config.HISTORY_FILE_NAME, function (callback) {
 				logFile.log(callback.msg, false, callback.sev);
-				loadFitnessManager();
+				dropbox.downloadFile(DB_TOKEN, config.REG_PLAYERS_FILE_NAME, function (callback) {
+					logFile.log(callback.msg, false, callback.sev);
+					loadFitnessManager();
+				});
 			});
 		});
+		dropbox.downloadFile(DB_TOKEN, config.USERS_FILE_NAME, function (callback) {
+			logFile.log(callback.msg, false, callback.sev);
+			loadUsers();
+		});
 	});
-	dropbox.downloadFile(DB_TOKEN, config.USERS_FILE_NAME, function (callback) {
-		logFile.log(callback.msg, false, callback.sev);
-		loadUsers();
-	});
-
 }
 
 /**
@@ -467,19 +469,10 @@ function loadPlayer(name, id, cb) {
 
 setInterval(function () {
 	var date = new Date();
-	if ((FITNESS_MANAGER.today.getDate() < date.getDate() &&  //10.01.2017 -> 11.01.2017
-		FITNESS_MANAGER.today.getMonth() == date.getMonth() &&
-		FITNESS_MANAGER.today.getFullYear() == date.getFullYear()) ||
-		(FITNESS_MANAGER.today.getDate() > date.getDate() &&  //31.01.2017 -> 01.02.2017
-			FITNESS_MANAGER.today.getMonth() < date.getMonth() &&
-			FITNESS_MANAGER.today.getFullYear() == date.getFullYear()) ||
-		(FITNESS_MANAGER.today.getDate() > date.getDate() &&  //31.12.2017 -> 01.01.2018
-			FITNESS_MANAGER.today.getMonth() > date.getMonth() &&
-			FITNESS_MANAGER.today.getFullYear() < date.getFullYear())
-	) {
+
 		dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME, function (result) {
 			logFile.log(result.msg, false, result.sev);
 		});
-	}
-	FITNESS_MANAGER.today = date;
+	
+		FITNESS_MANAGER.today = date;
 }, config.INTERVAL);
