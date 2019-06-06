@@ -470,10 +470,8 @@ function loadPlayer(name, id, cb) {
 setInterval(function () {
 	var date = new Date();
 	logFile.logUploadTimer++;
-	console.log(logFile.logUploadTimer);
 		if (logFile.logUploadTimer === 3600) {
 			logFile.logUploadTimer = 0;
-			logFile.log("Interval", false, 0);
 			dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME, function (result) {
 			logFile.log(result.msg, false, result.sev);
 		});
