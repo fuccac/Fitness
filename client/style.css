@@ -71,7 +71,7 @@ button:hover {
 
 #div_exerciseHistory {
     background-color: var(--mainColor);
-    height: 63vh;
+    height: 63%;
     overflow-y: scroll;
 }
 
@@ -83,7 +83,7 @@ button:hover {
 
 #div_exerciseTable {
     background-color: var(--mainColor);
-    height: 75%;
+    height: 72%;
     top: 25vh;
     overflow-y: scroll;
 }
