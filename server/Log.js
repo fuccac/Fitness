@@ -8,6 +8,7 @@ var fs = require('fs');
 class Log {
     constructor() {
         this.LOG_PATH = config.LOG_PATH;
+        this.logUploadTimer = 0;
 
     }
 
