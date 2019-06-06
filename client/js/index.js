@@ -130,12 +130,13 @@ button_doneExerciseSend.onclick = function () {
 };
 
 button_tabMainPage.onclick = function () {
+    var border = 2;
     div_ExerciseOverview.style.display = "none";
     div_PersonalOverview.style.display = "none";
     div_statistics.style.display = "none";
     div_MainPage.style.display = "inline-block";
-    canvas_graphHistory.height = div_graph.clientHeight;
-    canvas_graphHistory.width = div_graph.clientWidth;
+    canvas_graphHistory.height = div_graph.clientHeight-border;
+    canvas_graphHistory.width = div_graph.clientWidth-border;
     button_updateGraph.onclick();
 };
 
@@ -538,7 +539,20 @@ function generateExerciseList(data) {
 
     for (var exerciseId in data.exercises) {
         exercise = data.exercises[exerciseId];
-        addOption(select_doneExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + translate(exercise.factor));
+        var group = "";
+        if (exercise.usesWeight){
+            group = "Gewichte";
+        }
+        else {
+            group = "Keine Gewichte";
+        }
+        if (exercise.bothSides){
+            group = group + " - Beidseitig";
+        }
+        else {
+            group = group + " - Einseitig";
+        }
+        addOption(select_doneExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + translate(exercise.factor),group);
 
         bodyRow = tBodyExerciseTable.insertRow(rowNumber);
         rowNumber++;
@@ -821,10 +835,30 @@ function dateDiff(date1, date2) {
     return Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
 }
 
-function addOption(select, key, Name) {
+function addOption(select, key, Name,group) {
     var option = document.createElement('option');
+    
+    if (group == undefined){
+        option.text = Name;
+        option.value = key;    
+        select.add(option);
+        return;
+    }
+   
+    var optionGroup = document.getElementById(group);
+    if (optionGroup == undefined){
+        addOptionGroup(select,group);
+        optionGroup = document.getElementById(group);
+    }
     option.text = Name;
     option.value = key;
+    optionGroup.appendChild(option);
+}
+
+function addOptionGroup(select,Name){
+    var option = document.createElement('OPTGROUP');
+    option.label = Name;
+    option.id = Name;
     select.add(option);
 }
 
@@ -1195,8 +1229,8 @@ function translate(word) {
             if (word.search("Day") != -1) {
                 return word.replace("Day", " an einem Tag");
             }
-            if (word.search("Monthly") != -1) {
-                return word.replace("Monthly", "  in einem Monat");
+            if (word.search("Month") != -1) {
+                return word.replace("Month", "  in einem Monat");
             }
             return word;
     }

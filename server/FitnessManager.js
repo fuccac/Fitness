@@ -265,25 +265,47 @@ class FitnessManager {
         var notEarnedAchievements = [];
         var achievementIterator = 0;
         var achievementCategory;
-
+        var currentLevel = 0;
 
         var earned = player.earnedAchievements;
         var notEarned = player.notEarnedAchievements;
 
         achievementIterator = 0;
         for (achievementCategory in notEarned) {
-            var currentLevel = 0;
+            currentLevel = 0;
             if (notEarned[achievementCategory].level.split("/").map(Number)[0] > 1){
                 currentLevel = earned[achievementCategory].level;
             }
 
             notEarnedAchievements[achievementIterator] = {
+                achievementCategory: achievementCategory,
                 achievementProgress: notEarned[achievementCategory].progress,
+                achievementText: notEarned[achievementCategory].text,
                 achievementPercent: notEarned[achievementCategory].percent,
                 achievementLevel: currentLevel,
                 achievementNextLevel:notEarned[achievementCategory].level,
+
+            };
+            achievementIterator++;
+        }
+
+        for (achievementCategory in earned) {
+            currentLevel = 0;
+            if (earned[achievementCategory].level.split("/").map(Number)[0] == earned[achievementCategory].level.split("/").map(Number)[1]){
+                currentLevel = earned[achievementCategory].level;
+            }
+            else{
+                continue;
+            }
+
+            notEarnedAchievements[achievementIterator] = {
                 achievementCategory: achievementCategory,
-                achievementText: notEarned[achievementCategory].text,
+                achievementProgress: earned[achievementCategory].progress,
+                achievementText: earned[achievementCategory].text,
+                achievementPercent: earned[achievementCategory].percent,
+                achievementLevel: currentLevel,
+                achievementNextLevel:"-"
+
             };
             achievementIterator++;
         }

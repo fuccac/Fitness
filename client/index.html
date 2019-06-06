@@ -1,15 +1,28 @@
+<!DOCTYPE HTML>
 <html>
+<html lang="de">
+
+<head>
+	<title>FitnessApp</title>
+</head>
+
 
 <body>
 	<link rel="stylesheet" href="style.css" />
-	
+
 	<div id="div_login">
-		Willkommen - Anmeldung erforderlich! <br><br>
-		Name:<br><input id="input_Username" type="text" placeholder="Username"></input><br>
-		Passwort:<br><input id="input_Password" type="password" placeholder="Passwort"></input><br><br>
+		<h1>Willkommen - Anmeldung erforderlich!</h1> <br><br>
+		<label for="input_Username">Name:</label>
+		<br><input id="input_Username" type="text" placeholder="Username"></input><br>
+		<label for="input_Password">Passwort:</label>
+		<br><input id="input_Password" type="password" placeholder="Passwort"></input><br><br>
 		<button id="button_SignIn">Anmelden</button>
 		<button id="button_SignUp">Registrieren</button>
 		<br>
+		<p>	Anmeldung = Name vom GoogleSheet + selbst ausgedachtes Passwort. Bitte das Passwort merken, 
+			es kann nicht wiederhergestellt werden. Falls kein Googlesheetname vorhanden ist, 
+			einen neuen ausdenken.
+		</p>
 	</div>
 	<div id="div_MainPage" class="tab">
 		<div id="div_allPlayersTable">
@@ -65,7 +78,7 @@
 			<input id="input_avgSelection" type="text" placeholder="Auswertung starten..." disabled></input><br>
 			<button id="button_updateHistory">Update</button><br>
 			<label for="input_deletionMode">Löschmodus (Tabelle anklicken) :</label>
-			<input type="checkbox" id="input_deletionMode"><br>
+			<input type="checkbox" id="input_deletionMode"></input><br>
 		</div>
 		<div id="div_exerciseHistory">
 			<table id="table_exerciseHistory" class="std_table">
@@ -109,21 +122,28 @@
 			</select><br>
 			<label for="select_exerciseEquipment">Ausrüstung :</label>
 			<select id="select_exerciseEquipment">
-				<option value="Sprungseil">Sprungseil</option>
-				<option value="Widerstandsband (Leicht)">Widerstandsband (Leicht)</option>
-				<option value="Widerstandsband (Mittel)">Widerstandsband (Mittel)</option>
-				<option value="Widerstandsband (Schwer)">Widerstandsband (Schwer)</option>
-				<option value="Langhantel">Langhantel</option>
-				<option value="Hantel">Hantel</option>
-				<option value="2x Hantel">2x Hantel</option>
-				<option value="Körpergewicht">Körpergewicht</option>
-				<option value="Rudergerät">Rudergerät</option>
-				<option value="Fahrrad">Fahrrad</option>
-				<option value="Gewichtball">Gewichtball</option>
-				<option value="LegPress Maschine">LegPress Maschine</option>
-				<option value="Legextension">Legextension</option>
-				<option value="Lat Pull Down">Lat Pull Down</option>
-
+				<optgroup label="Hanteln/Gewichte">
+					<option value="Langhantel">Langhantel</option>
+					<option value="Hantel">Hantel</option>
+					<option value="2x Hantel">2x Hantel</option>
+					<option value="Gewichtball">Gewichtball</option>
+				</optgroup>
+				<optgroup label="Bänder">
+					<option value="Widerstandsband (Leicht)">Widerstandsband (Leicht)</option>
+					<option value="Widerstandsband (Mittel)">Widerstandsband (Mittel)</option>
+					<option value="Widerstandsband (Schwer)">Widerstandsband (Schwer)</option>
+				</optgroup>
+				<optgroup label="Spezialgeräte/Großgeräte">
+					<option value="Rudergerät">Rudergerät</option>
+					<option value="Fahrrad">Fahrrad</option>
+					<option value="LegPress Maschine">LegPress Maschine</option>
+					<option value="Legextension">Legextension</option>
+					<option value="Lat Pull Down">Lat Pull Down</option>
+				</optgroup>
+				<optgroup label="Sonstiges">
+						<option value="Sprungseil">Sprungseil</option>
+						<option value="Körpergewicht">Körpergewicht</option>
+				</optgroup>
 			</select><br>
 			<label for="input_exerciseComment">Kommentar :</label>
 			<input id="input_exerciseComment" type="text" placeholder="Kommentarfeld"></input><br>
