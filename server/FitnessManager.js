@@ -118,8 +118,6 @@ class FitnessManager {
             };
         }
         //calc.getDateFormat(date,"DD.MM.YYYY");
-
-
         return graph;
     }
 
@@ -319,19 +317,23 @@ class FitnessManager {
         result(achievementList);
     }
 
-    editExercise(id, editor, difficulty, difficulty10, difficulty100, unit, baseWeight, comment, bothSides, result) {
+    editExercise(data,editor, result) {
         var newVote = {
-            difficulty: difficulty,
-            difficulty10: difficulty10,
-            difficulty100: difficulty100,
-            baseWeight: baseWeight,
-            comment: comment
+            difficulty: data.difficulty,
+            difficulty10: data.difficulty10,
+            difficulty100: data.difficulty100,
+            baseWeight: data.baseWeight,
+            comment: data.comment
         };
-        this.bothSides = (bothSides.toUpperCase() === 'TRUE');
-        this.exerciseList[id].votes[editor] = newVote;
-        this.exerciseList[id].unit = unit;
-        calc.calculateNewFactor(this.exerciseList[id]);
-        this.recalculateExercise(id, function (result) {
+        this.exerciseList[data.id].bothSides = (data.bothSides.toUpperCase() === 'TRUE');
+        this.exerciseList[data.id].votes[editor] = newVote;
+        this.exerciseList[data.id].unit = data.unit;
+        this.exerciseList[data.id].name = data.name;
+        this.exerciseList[data.id].type = data.type;
+        this.exerciseList[data.id].equipment = data.equipment;
+
+        calc.calculateNewFactor(this.exerciseList[data.id]);
+        this.recalculateExercise(data.id, function (result) {
             logFile.log(result,false,0);
         }.bind(this));
         result("editExercise done");

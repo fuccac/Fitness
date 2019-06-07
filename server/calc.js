@@ -52,6 +52,9 @@ function Calc() {
 			if (exercise.baseWeight > 0) {
 				exercise.usesWeight = true;
 			}
+			else{
+				exercise.usesWeight = false;
+			}
 
 			exercise.factor = ((Number(exercise.difficulty) + Number(exercise.difficulty10) + Number(exercise.difficulty100)) / 3).toFixed(2);
 			exercise.factor = Number(exercise.factor);
@@ -128,9 +131,18 @@ function Calc() {
 
 	};
 
+	this.createViennaDate = function(){
+		viennaDate = new Date().toLocaleString("en-US", {timeZone: "Europe/Vienna"});
+		viennaDate = new Date(viennaDate);
+		return viennaDate;
+	};
+
+	
+
 	this.createZeroDate = function (date) {
 		if (typeof date === 'undefined') {
-			zeroDate = new Date();
+			zeroDate = new Date().toLocaleString("en-US", {timeZone: "Europe/Vienna"});
+			zeroDate = new Date(zeroDate);
 			zeroDate.setHours(0);
 			zeroDate.setMinutes(0);
 			zeroDate.setSeconds(0);

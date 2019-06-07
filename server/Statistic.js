@@ -18,7 +18,6 @@ class Statistic {
                 averageThisMonth: 0,
             },
             
-            
         };
 
     }

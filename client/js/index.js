@@ -8,6 +8,7 @@
 *******************************************************************************************************************
 ******************************************************************************************************************/
 var Name = "";
+var exerciseTableSortMode = {cellIndex: 1};
 
 //BUTTONS
 var button_SignIn = document.getElementById('button_SignIn');
@@ -21,6 +22,7 @@ var button_updateHistory = document.getElementById('button_updateHistory');
 var button_tabStatistics = document.getElementById('button_tabStatistics');
 var button_updateGraph = document.getElementById('button_updateGraph');
 var button_tabMainPage = document.getElementById('button_tabMainPage');
+var button_modifyExercise = document.getElementById('button_modifyExercise');
 //CANVAS
 var canvas_graphHistory = document.getElementById('canvas_graphHistory');
 
@@ -61,6 +63,7 @@ var input_graphToDate = document.getElementById('input_graphToDate');
 var input_deletionMode = document.getElementById('input_deletionMode');
 var input_Password = document.getElementById('input_Password');
 var input_UserName = document.getElementById('input_Username');
+var input_exerciseID = document.getElementById('input_exerciseID');
 
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
@@ -184,6 +187,18 @@ button_createExercise.onclick = function () {
 
 };
 
+button_modifyExercise.onclick = function () {
+    if (checkForEmptyBoxesNewExercise()) {
+        modifyExercise('modifyExercise');
+        button_updateHistory.onclick();
+    }
+    else {
+        alert("Nicht alle Inputboxen wurden ausgefüllt!");
+    }
+
+};
+
+
 
 
 /******************************************************************************************************************
@@ -288,6 +303,7 @@ function modifyExercise(emitString) {
         equipment: select_exerciseEquipment.value,
         bothSides: select_bothSides.value,
         comment: input_exerciseComment.value,
+        id: input_exerciseID.value
     });
 }
 
@@ -616,6 +632,7 @@ function generateExerciseList(data) {
         bodyRow.onclick = function () {
             var id = this.getElementsByTagName("td")[0].innerHTML;
             input_exerciseName.value = data.exercises[id].name;
+            input_exerciseID.value = id;
             if (data.exercises[id].votes[Name] == undefined) {
                 input_exerciseBaseWeight.value = translate(data.exercises[id].baseWeight);
                 input_exerciseDifficulty.value = translate(data.exercises[id].difficulty);
@@ -648,8 +665,12 @@ function generateExerciseList(data) {
         }
         cell.onclick = function () {
             sortTable(this, table_exerciseTable);
+            exerciseTableSortMode = this;
         };
     }
+
+    sortTable(exerciseTableSortMode, table_exerciseTable);
+
 }
 
 function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) {

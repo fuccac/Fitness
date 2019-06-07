@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-<html>
 <html lang="de">
 
 <head>
@@ -19,8 +18,8 @@
 		<button id="button_SignIn">Anmelden</button>
 		<button id="button_SignUp">Registrieren</button>
 		<br>
-		<p>	Anmeldung = Name vom GoogleSheet + selbst ausgedachtes Passwort. Bitte das Passwort merken, 
-			es kann nicht wiederhergestellt werden. Falls kein Googlesheetname vorhanden ist, 
+		<p> Anmeldung = Name vom GoogleSheet + selbst ausgedachtes Passwort. Bitte das Passwort merken,
+			es kann nicht wiederhergestellt werden. Falls kein Googlesheetname vorhanden ist,
 			einen neuen ausdenken.
 		</p>
 	</div>
@@ -66,18 +65,18 @@
 			<button id="button_doneExerciseSend">Anlegen</button>
 		</div>
 		<div id="div_exerciseHistoryControl">
-			<label for="select_historyShowName">Name :</label>
+			<label for="select_historyShowName">Name:</label>
 			<select id="select_historyShowName"></select><br>
-			<label for="input_historyFromDate">Von :</label>
+			<label for="input_historyFromDate">Von:</label>
 			<input id="input_historyFromDate" type="date"></input>
-			<label for="input_historyToDate">Bis :</label>
+			<label for="input_historyToDate">Bis:</label>
 			<input id="input_historyToDate" type="date"></input>
-			<label for="input_sumSelection">Summe Auswahl :</label>
+			<label for="input_sumSelection">Summe Auswahl:</label>
 			<input id="input_sumSelection" type="text" placeholder="Auswertung starten..." disabled></input>
-			<label for="input_avgSelection">Durchschnitt Auswahl :</label>
+			<label for="input_avgSelection">Mittlw. Auswahl:</label>
 			<input id="input_avgSelection" type="text" placeholder="Auswertung starten..." disabled></input><br>
 			<button id="button_updateHistory">Update</button><br>
-			<label for="input_deletionMode">Löschmodus (Tabelle anklicken) :</label>
+			<label for="input_deletionMode">Löschmodus (Tabelle anklicken):</label>
 			<input type="checkbox" id="input_deletionMode"></input><br>
 		</div>
 		<div id="div_exerciseHistory">
@@ -88,30 +87,44 @@
 		</div>
 	</div>
 	<div id="div_ExerciseOverview" class="tab">
+		<p>Seid versichert: Das ändern von bestehenden Übungen verändert auch die vergangen Punkte! Ändert mit bedacht!
+		</p>
 		<div id="div_addNewExercise">
-			<label for="input_exerciseName">Name :</label>
-			<input id="input_exerciseName" type="text" placeholder="Übungsname" required></input><br>
+			<label for="input_exerciseID" class="hiddenCell"></label>
+			<input id="input_exerciseID" type="number" class="hiddenCell"></input>
+
+			<label for="input_exerciseName">Name:</label>
+			<br><input id="input_exerciseName" type="text" placeholder="Übungsname" required></input><br>
 
 			<label for="input_exerciseDifficulty">Schwierigkeit (1,10,100):</label>
-			<input id="input_exerciseDifficulty" type="number" placeholder="Faktor für 1x">
+			<br><input id="input_exerciseDifficulty" type="number" placeholder="Faktor für 1x">
 			<input id="input_exerciseDifficulty10" type="number" placeholder="Faktor für 10x">
 			<input id="input_exerciseDifficulty100" type="number" placeholder="Faktor für 100x"></input><br>
-			<label for="input_exerciseBaseWeight">Basisgewicht:</label>
-			<input id="input_exerciseBaseWeight" type="number" placeholder="Standardgewicht"></input><br>
 
-			<label for="select_exerciseType">Typ :</label>
+			<label for="input_exerciseBaseWeight">Basisgewicht:</label>
+			<label for="select_exerciseType">Typ:</label>
+			<label for="select_bothSides">Beidseitig :</label>
+
+
+			<br><input id="input_exerciseBaseWeight" type="number" placeholder="Standardgewicht"></input>
+
+
 			<select id="select_exerciseType">
 				<option value="Cardio">Cardio</option>
 				<option value="Kraft">Kraft</option>
-			</select><br>
-			<label for="select_bothSides">Beidseitig :</label>
+			</select>
+
 			<select id="select_bothSides">
 				<option value="true">Ja</option>
 				<option value="false">Nein</option>
 			</select><br>
 
-			<label for="select_exerciseUnit">Einheit :</label>
-			<select id="select_exerciseUnit">
+
+			<label for="select_exerciseUnit">Einheit:</label>
+			<label for="select_exerciseEquipment">Ausrüstung:</label>
+			<label for="input_exerciseComment">Kommentar:</label>
+
+			<br><select id="select_exerciseUnit">
 				<option value="km">km</option>
 				<option value="m">m</option>
 				<option value="Wdh">Wdh</option>
@@ -119,8 +132,8 @@
 				<option value="min">min</option>
 				<option value="h">h</option>
 				<option value="Schwung">Schwung</option>
-			</select><br>
-			<label for="select_exerciseEquipment">Ausrüstung :</label>
+			</select>
+
 			<select id="select_exerciseEquipment">
 				<optgroup label="Hanteln/Gewichte">
 					<option value="Langhantel">Langhantel</option>
@@ -141,14 +154,19 @@
 					<option value="Lat Pull Down">Lat Pull Down</option>
 				</optgroup>
 				<optgroup label="Sonstiges">
-						<option value="Sprungseil">Sprungseil</option>
-						<option value="Körpergewicht">Körpergewicht</option>
+					<option value="Sprungseil">Sprungseil</option>
+					<option value="Körpergewicht">Körpergewicht</option>
 				</optgroup>
-			</select><br>
-			<label for="input_exerciseComment">Kommentar :</label>
-			<input id="input_exerciseComment" type="text" placeholder="Kommentarfeld"></input><br>
+			</select>
+
+
+			<input id="input_exerciseComment" type="text" placeholder="Kommentarfeld"></input>
+			<br>
+			<br>
 			<button id="button_createExercise">Anlegen</button>
+			<button id="button_modifyExercise">Bearbeiten</button>
 			<button id="button_deleteExercise">Löschen</button>
+
 		</div>
 
 		<div id="div_exerciseTable">

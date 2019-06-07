@@ -4,6 +4,10 @@
     --mainFontSize: 10px;
     --mainButtonColor: rgb(187, 198, 228);
     --mainBorderColor: rgb(0,0,0);
+    --mainInputHeight: 15px;
+    --mainInputWidth: 200px;
+    --mainSelectHeight: 21px;
+    --mainSelectWidth: 204px;
   }
 
 
@@ -52,21 +56,21 @@ button:hover {
 /* TAB MAIN INFO*/
 
 #div_allPlayersTable {
-    max-height: 40vh;
+    max-height: 40%;
     overflow: auto;
-    padding-bottom: 1vh;
+    padding-bottom: 5px;
 }
 
 #div_graph {
     background-color: var(--mainColor);
-    height: 50vh;
-    padding-bottom: 1vh;
+    height: 50%;
+    padding-bottom: 5px;
 }
 
 #div_GraphControl {
     background-color: var(--mainColor);
-    max-height: 10vh;
-    padding-bottom: 1vh;
+    max-height: 10%;
+    padding-bottom: 5px;
 }
 
 #div_exerciseHistory {
@@ -83,15 +87,15 @@ button:hover {
 
 #div_exerciseTable {
     background-color: var(--mainColor);
-    height: 72%;
-    top: 25vh;
+    height: 60%;
+    top: 25%;
     overflow-y: scroll;
 }
 
 /* TAB STATISTICS INFO*/
 
 #div_achievementsDone {
-    height: 50vh;
+    height: 50%;
     overflow: auto;
 }
 
@@ -131,9 +135,16 @@ button:hover {
 
 /* INPUTS, SELECTS, BUTTONS */
 
-.tab input, .tab select {
-    width: 200px;
-    height: 20px;
+.tab input {
+    width:  var(--mainInputWidth);
+    height: var(--mainInputHeight);
+    background-color: white;
+    margin: 1px;
+}
+
+.tab select {
+    width:  var(--mainSelectWidth);
+    height: var(--mainSelectHeight);
     background-color: white;
     margin: 1px;
 }
@@ -141,8 +152,15 @@ button:hover {
 .tab label {
     display: inline-block;
     height: 10px;
-    width: 15em;
+    width: 10em;
+    font-size:10px;
+    padding-left:5px;
 }
+
+#div_addNewExercise label{
+    width: 200px;
+}
+
 
 .tab button {
     background-color: var(--mainButtonColor);

@@ -14,7 +14,6 @@ var DropBoxHandler = require("./server/dropBoxHandler");
 Log = require("./server/Log");
 
 
-
 //MODULE INITS
 var storageManager = new JSONFileStorage('./saves');
 var config = new Config();
@@ -72,9 +71,16 @@ var OnPlayerConnection = function (socket) {
 	var newPlayer = new Player(socket.id);
 	PLAYER_LIST[newPlayer.id] = newPlayer;
 
+	socket.on("modifyExercise", function (data) {
+		var creator = PLAYER_LIST[newPlayer.id].name;
+		logFile.log(newPlayer.name + " " + "edits Exercise " + data.name, false, 0);
+		FITNESS_MANAGER.editExercise(data, creator, function (result) {
+			saveAndRefreshEverything();
+			PLAYER_LIST[newPlayer.id].modifiedExercises++;
+		});
+	});
 
 	socket.on("addExercise", function (data) {
-
 		var usesWeight;
 		if (data.baseWeight === "") {
 			data.baseWeight = 0;
@@ -91,30 +97,20 @@ var OnPlayerConnection = function (socket) {
 		}
 
 		var creator = PLAYER_LIST[newPlayer.id].name;
-		var id = FITNESS_MANAGER.existExercise(data.name, data.equipment);
-		if (id == 0) {
-			logFile.log(newPlayer.name + " " + "adds new Exercise " + data.name, false, 0);
-			FITNESS_MANAGER.createExercise(data, usesWeight, creator);
-			PLAYER_LIST[newPlayer.id].addedExercises++;
-			saveAndRefreshEverything();
-		}
-		else {
-			logFile.log(newPlayer.name + " " + "edits Exercise " + data.name, false, 0);
-			FITNESS_MANAGER.editExercise(id, creator, data.difficulty, data.difficulty10, data.difficulty100, data.unit, data.baseWeight, data.comment, data.bothSides, function (result) {
-				saveAndRefreshEverything();
-				PLAYER_LIST[newPlayer.id].modifiedExercises++;
-			});
 
-		}
 
+		logFile.log(newPlayer.name + " " + "adds new Exercise " + data.name, false, 0);
+		FITNESS_MANAGER.createExercise(data, usesWeight, creator);
+		PLAYER_LIST[newPlayer.id].addedExercises++;
+		saveAndRefreshEverything();
 
 	});
 
 	socket.on("deleteExercise", function (data) {
-		var id = FITNESS_MANAGER.existExercise(data.name, data.equipment);
-		if (id != 0) {
+
+		if (data.id != 0) {
 			logFile.log(newPlayer.name + " " + "deletes Exercise " + data.name, false, 0);
-			FITNESS_MANAGER.deleteExercise(id, function (result) {
+			FITNESS_MANAGER.deleteExercise(data.id, function (result) {
 				saveAndRefreshEverything();
 			});
 			PLAYER_LIST[newPlayer.id].deletedExercises++;
@@ -468,14 +464,14 @@ function loadPlayer(name, id, cb) {
 
 
 setInterval(function () {
-	var date = new Date();
+	var date = calc.createViennaDate();
 	logFile.logUploadTimer++;
-		if (logFile.logUploadTimer === 3600) {
-			logFile.logUploadTimer = 0;
-			dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME, function (result) {
+	if (logFile.logUploadTimer === 3600) {
+		logFile.logUploadTimer = 0;
+		dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME, function (result) {
 			logFile.log(result.msg, false, result.sev);
 		});
-		}
-		
-		FITNESS_MANAGER.today = date;
+	}
+
+	FITNESS_MANAGER.today = date;
 }, config.INTERVAL);
