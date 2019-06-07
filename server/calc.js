@@ -141,7 +141,7 @@ function Calc() {
 
 	this.createZeroDate = function (date) {
 		if (typeof date === 'undefined') {
-			zeroDate = new Date().toLocaleString("en-US", {timeZone: "Europe/Vienna"});
+			zeroDate = new Date()//.toLocaleString("en-US", {timeZone: "Europe/Vienna"});
 			zeroDate = new Date(zeroDate);
 			zeroDate.setHours(0);
 			zeroDate.setMinutes(0);
