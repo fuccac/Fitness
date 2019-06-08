@@ -91,10 +91,10 @@ initialize();
 ******************************************************************************************************************/
 //sign in code
 button_SignIn.onclick = function () {
-    socket.emit('SignIn', { username: input_UserName.value, password: input_Password.value });
+    socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value });
 };
 button_SignUp.onclick = function () {
-    socket.emit('SignUp', { username: input_UserName.value, password: input_Password.value });
+    socket.emit('SignUp', { username: input_UserName.value.toLowerCase(), password: input_Password.value });
 };
 
 input_historyFromDate.onchange = function () {
