@@ -64,7 +64,7 @@ var input_deletionMode = document.getElementById('input_deletionMode');
 var input_Password = document.getElementById('input_Password');
 var input_UserName = document.getElementById('input_Username');
 var input_exerciseID = document.getElementById('input_exerciseID');
-
+var onlineIndicator= document.getElementById('onlineIndicator');
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
@@ -1138,7 +1138,18 @@ function createZeroDate(date) {
         zeroDate.setSeconds(0);
     }
     return zeroDate;
-};
+}
+
+setInterval(function () {
+if(socket.connected){
+    onlineIndicator.color ="green";
+    onlineIndicator.checked = true;
+}
+else{
+    onlineIndicator.color ="red";
+    onlineIndicator.checked = false;
+}
+}, 1000);
 
 function translate(word) {
     if (checkIfNumber(word)) {
