@@ -83,7 +83,7 @@ var socket = io();
 
 initialize();
 
-var loginCookie = getCookie("loginCookie");
+var loginCookie ="";
 div_ExerciseOverview.style.display = "none";
 div_PersonalOverview.style.display = "none";
 div_statistics.style.display = "none";
