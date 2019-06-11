@@ -65,6 +65,7 @@ var input_Password = document.getElementById('input_Password');
 var input_UserName = document.getElementById('input_Username');
 var input_exerciseID = document.getElementById('input_exerciseID');
 var onlineIndicator= document.getElementById('onlineIndicator');
+var input_RememberMe=document.getElementById('input_RememberMe');
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
@@ -82,6 +83,12 @@ var socket = io();
 
 initialize();
 
+var loginCookie = getCookie("loginCookie");
+div_ExerciseOverview.style.display = "none";
+div_PersonalOverview.style.display = "none";
+div_statistics.style.display = "none";
+div_MainPage.style.display = "none";
+div_navigation.style.display = "none";
 
 /******************************************************************************************************************
 *******************************************************************************************************************
@@ -91,7 +98,7 @@ initialize();
 ******************************************************************************************************************/
 //sign in code
 button_SignIn.onclick = function () {
-    socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value });
+    socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value});
 };
 button_SignUp.onclick = function () {
     socket.emit('SignUp', { username: input_UserName.value.toLowerCase(), password: input_Password.value });
@@ -214,6 +221,9 @@ socket.on('signInResponse', function (data) {
         Name = input_UserName.value;
         button_tabMainPage.onclick();
         div_navigation.style.display = 'inline-block';
+        if (input_RememberMe.checked && loginCookie===""){
+            setCookie("loginCookie",Name,1);
+        }
     }
     else
         alert("Sign in unsuccessful");
@@ -1124,6 +1134,29 @@ function initialize() {
 
 }
 
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
 function createZeroDate(date) {
     if (date == undefined) {
         zeroDate = new Date();
@@ -1150,6 +1183,11 @@ else{
     onlineIndicator.checked = false;
 }
 }, 1000);
+
+if(loginCookie!=""){
+    input_UserName.value = loginCookie;
+    socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value,loginCookie:loginCookie});
+}
 
 function translate(word) {
     if (checkIfNumber(word)) {

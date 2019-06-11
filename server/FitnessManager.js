@@ -22,6 +22,12 @@ class FitnessManager {
         this.today = calc.createZeroDate();
         this.history = {};
         this.registeredPlayers = {};
+        this.uploadTimer = 0;
+        this.needsUpload = {
+            history:false,
+            registeredPlayers:false,
+            exerciseList:false
+        };
 
         //this.importGoogleSheetStuff(function (result) {
         //    logFile.log(result,false,0);
@@ -75,6 +81,7 @@ class FitnessManager {
 
 
         this.exerciseList[exId].achievementInfo = achievementInfo;
+        this.needsUpload.exerciseList = true;
     }
 
     createGraph(fromDate, toDate) {
@@ -246,11 +253,13 @@ class FitnessManager {
     addExercise(exercise) {
         this.exerciseList[exercise.id] = exercise;
         this.exerciseCount++;
+        this.needsUpload.exerciseList = true;
     }
 
     removeExercise(id) {
         delete this.exerciseList[id];
         this.exerciseCount--;
+        this.needsUpload.exerciseList = true;
     }
 
     createExercise(exPack, usesWeight, creator, callback) {
@@ -335,7 +344,9 @@ class FitnessManager {
         calc.calculateNewFactor(this.exerciseList[data.id]);
         this.recalculateExercise(data.id, function (result) {
             logFile.log(result,false,0);
+            this.needsUpload.exerciseList = true;
         }.bind(this));
+        
         result("editExercise done");
     }
 
@@ -393,9 +404,10 @@ class FitnessManager {
     deleteExercise(id, result) {
         delete this.exerciseList[id];
         result("deleted Exercise");
+        this.needsUpload.exerciseList = true;
     }
 
-    deleteHistory(id, date) {
+    deleteHistory(id, date,result) {
         var exerciseIdToRecalculate;
         for (var historyEntryIterator in this.history[date].id) {
             if (this.history[date].id[historyEntryIterator] == id) {
@@ -408,6 +420,10 @@ class FitnessManager {
                 }
             }
         }
+
+        this.needsUpload.history = true;
+        this.needsUpload.exerciseList = true;
+        result("deleted History Entry: " + exerciseIdToRecalculate);
 
     }
 
@@ -432,7 +448,7 @@ class FitnessManager {
         return historyChunk;
     }
 
-    addToHistory(id, playerName, exerciseId, weight, count, date) {
+    addToHistory(id, playerName, exerciseId, weight, count, date,result) {
         if (weight === "" || this.exerciseList[exerciseId].usesWeight === false) {
             weight = 0;
         }
@@ -445,6 +461,9 @@ class FitnessManager {
                 if (exId === exerciseId && this.history[date].weight[iterator] == weight && this.history[date].playerName[iterator].toUpperCase() == playerName.toUpperCase()) {
                     this.history[date].count[iterator] += Number(count);
                     this.history[date].points[iterator] += Number(points);
+                    result("added workout to existing history");
+                    this.needsUpload.exerciseList = true;
+                    this.needsUpload.history = true;
                     return;
                 }
             }
@@ -457,6 +476,8 @@ class FitnessManager {
             this.history[date].points.push(Number(points));
             this.history[date].weight.push(Number(weight));
             this.history[date].exerciseId.push(exerciseId);
+            this.needsUpload.exerciseList = true;
+            this.needsUpload.history = true;
 
         }
         else {
@@ -496,6 +517,10 @@ class FitnessManager {
         else {
             this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
         }
+        
+        this.needsUpload.exerciseList = true;
+        this.needsUpload.history = true;
+        result("added workout to history");
     }
 
     checkPlayerStuff(player, result) {
@@ -826,6 +851,7 @@ class FitnessManager {
         };
 
         this.registeredPlayers[name] = sumPointsTotal;
+        this.needsUpload.registeredPlayers = true;
 
         return points;
 

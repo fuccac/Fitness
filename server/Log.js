@@ -4,6 +4,8 @@
 Config = require("./Config");
 config = new Config();
 var fs = require('fs');
+Calc = require("./calc");
+calc = new Calc();
 
 class Log {
     constructor() {
@@ -37,12 +39,12 @@ class Log {
         }
 
 
-        var date = new Date();
-        fs.appendFile(config.LOG_PATH, date.toLocaleDateString() + " | " + errorCode + " | " + date.toLocaleTimeString() + " - " + str + "\r\n", function (err) {
+        var date = calc.createViennaDate();
+        fs.appendFile(config.LOG_PATH, calc.getDateFormat(date,"DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds() + " - " + str + "\r\n", function (err) {
 
         });
         if (showInConsole) {
-            console.log(date.toLocaleDateString() + " | " + errorCode + " | " + date.toLocaleTimeString() + " - " + str);
+            console.log(calc.getDateFormat(date,"DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds() + " - " + str);
         }
     }
 

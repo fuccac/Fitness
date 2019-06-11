@@ -12,6 +12,8 @@ var Player = require("./server/Player");
 var FitnessManager = require("./server/FitnessManager");
 var DropBoxHandler = require("./server/dropBoxHandler");
 Log = require("./server/Log");
+Calc = require("./server/calc");
+calc = new Calc();
 
 
 //MODULE INITS
@@ -100,9 +102,11 @@ var OnPlayerConnection = function (socket) {
 
 
 		logFile.log(newPlayer.name + " " + "adds new Exercise " + data.name, false, 0);
-		FITNESS_MANAGER.createExercise(data, usesWeight, creator);
-		PLAYER_LIST[newPlayer.id].addedExercises++;
-		saveAndRefreshEverything();
+		FITNESS_MANAGER.createExercise(data, usesWeight, creator, function (result) {
+			PLAYER_LIST[newPlayer.id].addedExercises++;
+			saveAndRefreshEverything();
+		});
+
 
 	});
 
@@ -124,16 +128,16 @@ var OnPlayerConnection = function (socket) {
 	socket.on("addDoneExercise", function (data) {
 		logFile.log(newPlayer.name + " " + "adds Workout", false, 0);
 		var id = Math.random().toFixed(config.ID_LENGTH).slice(2);
-		FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.date);
-		PLAYER_LIST[socket.id].points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[socket.id].name);
-		saveAndRefreshPlayer(newPlayer.id);
+		FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.date, function (result) {
+			saveAndRefreshPlayer(newPlayer.id);
+		});
 	});
 
 	socket.on("deleteHistory", function (data) {
 		logFile.log(newPlayer.name + " " + "deletes Workout", false, 0);
-		FITNESS_MANAGER.deleteHistory(data.id, data.date);
-		PLAYER_LIST[socket.id].points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[socket.id].name);
-		saveAndRefreshPlayer(newPlayer.id);
+		FITNESS_MANAGER.deleteHistory(data.id, data.date, function (result) {
+			saveAndRefreshPlayer(newPlayer.id);
+		});
 	});
 
 
@@ -143,7 +147,6 @@ var OnPlayerConnection = function (socket) {
 		SOCKET_LIST[newPlayer.id].emit('refreshHistory', {
 			history: historyChunk,
 		});
-		saveAndRefreshPlayer(newPlayer.id);
 	});
 
 	socket.on("requestAchievements", function (data) {
@@ -177,19 +180,33 @@ var OnSocketConnection = function (socket) {
 
 	//someone signs in
 	socket.on('SignIn', function (data) {
-		isValidPassword(data, function (res) {
-			if (res) {
-				OnPlayerConnection(socket);
-				loadPlayer(data.username, socket.id, function (res) {
-					logFile.log(res, false, 0);
-					saveAndRefreshPlayer(socket.id);
-				});
-				socket.emit('signInResponse', { success: true });
-			}
-			else {
-				socket.emit('signInResponse', { success: false });
-			}
-		});
+
+		if (data.loginCookie == undefined) {
+			isValidPassword(data, function (res) {
+				if (res) {
+					OnPlayerConnection(socket);
+					loadPlayer(data.username, socket.id, function (res) {
+						logFile.log(res, false, 0);
+						saveAndRefreshPlayer(socket.id);
+					});
+					socket.emit('signInResponse', { success: true });
+				}
+				else {
+					socket.emit('signInResponse', { success: false });
+				}
+			});
+		}
+		else {
+			OnPlayerConnection(socket);
+			loadPlayer(data.loginCookie, socket.id, function (res) {
+				logFile.log(res, false, 0);
+				saveAndRefreshPlayer(socket.id);
+			});
+			socket.emit('signInResponse', { success: true });
+			
+		}
+
+
 	});
 
 	//someone signs up
@@ -233,19 +250,24 @@ function saveUsers(users) {
 	});
 }
 
-function saveFitnessManager() {
+function saveExerciseList() {
 	storageManager.put({ exerciseList: FITNESS_MANAGER.exerciseList, id: config.EXERCISE_FILE_NAME.replace(".json", "") }).then(result => {
 		logFile.log("exerciseList saved", false, 0);
 		dropbox.uploadFile(DB_TOKEN, config.EXERCISE_FILE_NAME, function (result) {
 			logFile.log(result.msg, false, result.sev);
 		});
 	});
+}
+
+function saveHistory() {
 	storageManager.put({ history: FITNESS_MANAGER.history, id: config.HISTORY_FILE_NAME.replace(".json", "") }).then(result => {
 		logFile.log("history saved", false, 0);
 		dropbox.uploadFile(DB_TOKEN, config.HISTORY_FILE_NAME, function (result) {
 			logFile.log(result.msg, false, result.sev);
 		});
 	});
+}
+function saveRegisteredPlayers() {
 	storageManager.put({ registeredPlayers: FITNESS_MANAGER.registeredPlayers, id: config.REG_PLAYERS_FILE_NAME.replace(".json", "") }).then(result => {
 		logFile.log("registeredPlayers saved", false, 0);
 		dropbox.uploadFile(DB_TOKEN, config.REG_PLAYERS_FILE_NAME, function (result) {
@@ -336,11 +358,12 @@ function recalculateAllPoints(result) {
 }
 
 function saveAndRefreshPlayer(playerId) {
-	saveFitnessManager();
+
 	var iPlayer;
 	var player;
 
 	FITNESS_MANAGER.checkPlayerStuff(PLAYER_LIST[playerId], function (result) {
+		PLAYER_LIST[playerId].points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[playerId].name);
 		logFile.log(result, false, 0);
 		FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (playerList) {
 			for (iPlayer in PLAYER_LIST) {
@@ -361,7 +384,6 @@ function saveAndRefreshPlayer(playerId) {
 }
 
 function saveAndRefreshEverything() {
-	saveFitnessManager();
 	var iPlayer;
 	var player;
 
@@ -466,12 +488,31 @@ function loadPlayer(name, id, cb) {
 setInterval(function () {
 	var date = calc.createViennaDate();
 	logFile.logUploadTimer++;
+	FITNESS_MANAGER.uploadTimer++;
 	if (logFile.logUploadTimer === 3600) {
 		logFile.logUploadTimer = 0;
 		dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME, function (result) {
 			logFile.log(result.msg, false, result.sev);
 		});
+
+		saveRegisteredPlayers();
 	}
+	if (FITNESS_MANAGER.uploadTimer === 15) {
+		FITNESS_MANAGER.uploadTimer = 0;
+		if (FITNESS_MANAGER.needsUpload.history) {
+			saveHistory();
+			FITNESS_MANAGER.needsUpload.history = false;
+		}
+		if (FITNESS_MANAGER.needsUpload.registeredPlayers) {
+			saveRegisteredPlayers();
+			FITNESS_MANAGER.needsUpload.registeredPlayers = false;
+		}
+		if (FITNESS_MANAGER.needsUpload.exerciseList) {
+			saveExerciseList();
+			FITNESS_MANAGER.needsUpload.exerciseList = false;
+		}
+	}
+
 
 	FITNESS_MANAGER.today = date;
 }, config.INTERVAL);
