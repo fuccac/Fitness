@@ -24,9 +24,9 @@ class FitnessManager {
         this.registeredPlayers = {};
         this.uploadTimer = 0;
         this.needsUpload = {
-            history:false,
-            registeredPlayers:false,
-            exerciseList:false
+            history: false,
+            registeredPlayers: false,
+            exerciseList: false
         };
 
         //this.importGoogleSheetStuff(function (result) {
@@ -37,13 +37,25 @@ class FitnessManager {
 
     importGoogleSheetStuff(result) {
         this.importExercisesFromGoogle(function (resultEx) {
-            logFile.log(resultEx,false,0);
+            logFile.log(resultEx, false, 0);
             this.importHistoryFromGoogle(function (resultHistory) {
-                logFile.log(resultHistory,false,0);
+                logFile.log(resultHistory, false, 0);
                 result("GoogleSheet Stuff loaded");
             }.bind(this));
 
         }.bind(this));
+    }
+
+    recalculateAllExercisesWithHistory(result){
+        for (var id in this.exerciseList) {
+            this.recalculateExercise(id,this.exerciseList[id].name,function (result){
+              
+            });
+            
+        }
+        result("recalculated all exercises with history");
+        this.needsUpload.history = true;
+        this.needsUpload.exerciseList = true;
     }
 
     addExerciseAchievement(exId, repsToGetOverall, repsToGetDaily, repsToGetMonthly, achievementCategory) {
@@ -100,23 +112,23 @@ class FitnessManager {
                     if (chunk[historyIterator].playerName[historyEntryIterator].toUpperCase() != playerName.toUpperCase()) {
                         continue;
                     }
-                   
+
                     sumPoints += chunk[historyIterator].points[historyEntryIterator];
                     entryFound = true;
                     date = chunk[historyIterator].date[historyEntryIterator];
 
                 }
-                if (entryFound){
+                if (entryFound) {
                     xAxis[historyIterator] = sumPoints;
                     yAxis[historyIterator] = date;
                 }
-                else{
+                else {
                     xAxis[historyIterator] = sumPoints;
                     var newDate = calc.createZeroDate(yAxis[historyIterator]);
-                    newDate.setDate(newDate.getDate()+1);
-                    yAxis[historyIterator] = calc.getDateFormat(newDate,"DD.MM.YYYY");
+                    newDate.setDate(newDate.getDate() + 1);
+                    yAxis[historyIterator] = calc.getDateFormat(newDate, "DD.MM.YYYY");
                 }
-                
+
             }
 
             graph[playerName] = {
@@ -149,7 +161,7 @@ class FitnessManager {
                 entry.equip,
                 usesWeight,
                 entry.baseWeight,
-                entry.exname + " Import from GS", 
+                entry.exname + " Import from GS",
                 "caf",
                 entry.type,
                 entry.unit,
@@ -192,13 +204,13 @@ class FitnessManager {
             catch (err) {
                 achievementCategory = entry.exname;
             }
-            try{
+            try {
                 achievementText = entry.achievementText;
                 if (achievementText == undefined) {
                     achievementText = "";
                 }
             }
-            catch(err){
+            catch (err) {
                 achievementText = "";
             }
             exercise.achievementInfo.achievementActive = achievementActive;
@@ -235,9 +247,9 @@ class FitnessManager {
                     }
                     else {
                         if (dayEntryKeyName != "Datum") {
-                            logFile.log(dayEntry,false,0);
-                            logFile.log(dayEntryKeyValue,false,0);
-                            logFile.log(dayEntryKeyName,false,0);
+                            logFile.log(dayEntry, false, 0);
+                            logFile.log(dayEntryKeyValue, false, 0);
+                            logFile.log(dayEntryKeyName, false, 0);
                         }
                     }
                 }
@@ -263,7 +275,7 @@ class FitnessManager {
     }
 
     createExercise(exPack, usesWeight, creator, callback) {
-        this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides));    
+        this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides));
     }
 
 
@@ -280,7 +292,7 @@ class FitnessManager {
         achievementIterator = 0;
         for (achievementCategory in notEarned) {
             currentLevel = 0;
-            if (notEarned[achievementCategory].level.split("/").map(Number)[0] > 1){
+            if (notEarned[achievementCategory].level.split("/").map(Number)[0] > 1) {
                 currentLevel = earned[achievementCategory].level;
             }
 
@@ -290,7 +302,7 @@ class FitnessManager {
                 achievementText: notEarned[achievementCategory].text,
                 achievementPercent: notEarned[achievementCategory].percent,
                 achievementLevel: currentLevel,
-                achievementNextLevel:notEarned[achievementCategory].level,
+                achievementNextLevel: notEarned[achievementCategory].level,
 
             };
             achievementIterator++;
@@ -298,10 +310,10 @@ class FitnessManager {
 
         for (achievementCategory in earned) {
             currentLevel = 0;
-            if (earned[achievementCategory].level.split("/").map(Number)[0] == earned[achievementCategory].level.split("/").map(Number)[1]){
+            if (earned[achievementCategory].level.split("/").map(Number)[0] == earned[achievementCategory].level.split("/").map(Number)[1]) {
                 currentLevel = earned[achievementCategory].level;
             }
-            else{
+            else {
                 continue;
             }
 
@@ -311,7 +323,7 @@ class FitnessManager {
                 achievementText: earned[achievementCategory].text,
                 achievementPercent: earned[achievementCategory].percent,
                 achievementLevel: currentLevel,
-                achievementNextLevel:"-"
+                achievementNextLevel: "-"
 
             };
             achievementIterator++;
@@ -326,7 +338,7 @@ class FitnessManager {
         result(achievementList);
     }
 
-    editExercise(data,editor, result) {
+    editExercise(data, editor, result) {
         var newVote = {
             difficulty: data.difficulty,
             difficulty10: data.difficulty10,
@@ -342,20 +354,22 @@ class FitnessManager {
         this.exerciseList[data.id].equipment = data.equipment;
 
         calc.calculateNewFactor(this.exerciseList[data.id]);
-        this.recalculateExercise(data.id, function (result) {
-            logFile.log(result,false,0);
+        this.recalculateExercise(data.id, data.name, function (result) {
+            logFile.log(result, false, 0);
             this.needsUpload.exerciseList = true;
         }.bind(this));
-        
+
         result("editExercise done");
     }
 
-    recalculateExercise(id, result) {
+    recalculateExercise(id, exName, result) {
         var sumPoints = 0;
-        var currentCount;
-        var currentWeight;
+        var currentCount = 0;
+        var currentWeight = 0;
         var currentName;
         var points;
+        var pointsPerPlayer = {};
+        var repsPerPlayer = {};
 
         for (var historyDate in this.history) {
             var historyEntry = this.history[historyDate];
@@ -369,16 +383,32 @@ class FitnessManager {
 
                 points = calc.calculatePoints(this.exerciseList[historyEntry.exerciseId[historyIterator]], currentWeight, currentCount);
                 historyEntry.points[historyIterator] = points;
+                historyEntry.exName[historyIterator] = exName;
                 sumPoints += Number(points);
-                logFile.log("recalculated " + historyEntry.exName[historyIterator],false,0);
-                break;
+               
+
+                if(repsPerPlayer[currentName]==undefined){
+                    repsPerPlayer[currentName] = currentCount;
+                }
+                else{
+                    repsPerPlayer[currentName] += currentCount;
+                }
+
+                if(pointsPerPlayer[currentName]==undefined){
+                    pointsPerPlayer[currentName] = points;
+                }
+                else{
+                    pointsPerPlayer[currentName] += points;
+                }
+
+                continue;
             }
-            
+
         }
         this.exerciseList[id].points = sumPoints;
-        this.exerciseList[id].repsPerPlayer[currentName] -= currentCount;
-        this.exerciseList[id].pointsPerPlayer[currentName] -= points;
-        return result("recalculateExercise done");
+        this.exerciseList[id].repsPerPlayer = repsPerPlayer;
+        this.exerciseList[id].pointsPerPlayer = pointsPerPlayer;
+        return result("recalculate all Exercises " + exName + " done");
     }
 
     existExercise(name, equipment) {
@@ -407,7 +437,7 @@ class FitnessManager {
         this.needsUpload.exerciseList = true;
     }
 
-    deleteHistory(id, date,result) {
+    deleteHistory(id, date, result) {
         var exerciseIdToRecalculate;
         for (var historyEntryIterator in this.history[date].id) {
             if (this.history[date].id[historyEntryIterator] == id) {
@@ -448,7 +478,7 @@ class FitnessManager {
         return historyChunk;
     }
 
-    addToHistory(id, playerName, exerciseId, weight, count, date,result) {
+    addToHistory(id, playerName, exerciseId, weight, count, date, result) {
         if (weight === "" || this.exerciseList[exerciseId].usesWeight === false) {
             weight = 0;
         }
@@ -517,7 +547,7 @@ class FitnessManager {
         else {
             this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
         }
-        
+
         this.needsUpload.exerciseList = true;
         this.needsUpload.history = true;
         result("added workout to history");
@@ -525,10 +555,10 @@ class FitnessManager {
 
     checkPlayerStuff(player, result) {
         this.setBestExerciserNumber(player, function (result) {
-            logFile.log(result,false,0);
+            logFile.log(result, false, 0);
             this.checkForAchievements(player, function (result) {
-                logFile.log(result,false,0);
-                
+                logFile.log(result, false, 0);
+
             }.bind(this));
         }.bind(this));
         result("checkPlayerStuff done");
@@ -571,7 +601,7 @@ class FitnessManager {
         var maxSumDaily = 0;
 
         var historyChunk = this.getDefinedHistory("1970-01-01", "9999-01-01");
-        if (historyChunk.length == 0){
+        if (historyChunk.length == 0) {
             return 0;
         }
         var currentDate = calc.createZeroDate(historyChunk[0].date[0]);
@@ -618,7 +648,7 @@ class FitnessManager {
         //exercise Achievements
         player.earnedAchievements = {};
         player.notEarnedAchievements = {};
-        
+
         for (var exId in this.exerciseList) {
             var exercise = this.exerciseList[exId];
             if (!exercise.achievementInfo.achievementActive) {
@@ -678,7 +708,7 @@ class FitnessManager {
                             level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
                             text: exercise.achievementInfo.textMonthly,
                             progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
-                            percent:100,
+                            percent: 100,
                         };
 
                     }
@@ -697,7 +727,7 @@ class FitnessManager {
                             level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
                             text: exercise.achievementInfo.textMonthly,
                             progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
-                            percent:percent,
+                            percent: percent,
                         };
                         break;
                     }
@@ -713,7 +743,7 @@ class FitnessManager {
                             level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
                             text: exercise.achievementInfo.textDaily,
                             progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
-                            percent:100,
+                            percent: 100,
                         };
                     }
                     else {
@@ -731,7 +761,7 @@ class FitnessManager {
                             level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
                             text: exercise.achievementInfo.textDaily,
                             progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
-                            percent:percent,
+                            percent: percent,
                         };
                         break;
                     }
@@ -801,12 +831,12 @@ class FitnessManager {
             dailyMax = 0;
             for (var iterator in historyEntry.playerName) {
                 var historyName = historyEntry.playerName[iterator];
-                var exerciseId =  historyEntry.exerciseId[iterator];
+                var exerciseId = historyEntry.exerciseId[iterator];
                 if (historyName.toUpperCase() === name.toUpperCase()) {
-                    if (this.exerciseList[exerciseId].type === "Cardio"){
+                    if (this.exerciseList[exerciseId].type === "Cardio") {
                         sumPointsCardio += Number(historyEntry.points[iterator]);
                     }
-                    else if(this.exerciseList[exerciseId].type === "Kraft"){
+                    else if (this.exerciseList[exerciseId].type === "Kraft") {
                         sumPointsStrength += Number(historyEntry.points[iterator]);
                     }
                     sumPointsTotal += Number(historyEntry.points[iterator]);
@@ -840,7 +870,7 @@ class FitnessManager {
         var points = {
             total: sumPointsTotal,
             cardio: sumPointsCardio,
-            strength:sumPointsStrength,
+            strength: sumPointsStrength,
             negative: sumPointsNegative,
             today: sumPointsToday,
             diffLastMonth: sumPointsLastMonth - sumPointsThisMonth,

@@ -23,6 +23,7 @@ var button_tabStatistics = document.getElementById('button_tabStatistics');
 var button_updateGraph = document.getElementById('button_updateGraph');
 var button_tabMainPage = document.getElementById('button_tabMainPage');
 var button_modifyExercise = document.getElementById('button_modifyExercise');
+var button_statisticsExercise = document.getElementById('button_statisticsExercise');
 //CANVAS
 var canvas_graphHistory = document.getElementById('canvas_graphHistory');
 
@@ -73,6 +74,7 @@ var select_exerciseEquipment = document.getElementById('select_exerciseEquipment
 var select_doneExercise = document.getElementById('select_doneExercise');
 var select_historyShowName = document.getElementById('select_historyShowName');
 var select_bothSides = document.getElementById('select_bothSides');
+var select_statisticsExercise = document.getElementById('select_statisticsExercise');
 //TABLES
 var table_exerciseTable = document.getElementById('table_exerciseTable');
 var table_personalTable = document.getElementById('table_personalTable');
@@ -80,6 +82,8 @@ var table_exerciseHistory = document.getElementById('table_exerciseHistory');
 var table_allPlayersTable = document.getElementById('table_allPlayersTable');
 var table_achievementsDone = document.getElementById('table_achievementsDone');
 var socket = io();
+//para
+paragraph_statisticsExercise = document.getElementById('paragraph_statisticsExercise');
 
 initialize();
 
@@ -205,6 +209,10 @@ button_modifyExercise.onclick = function () {
 
 };
 
+button_statisticsExercise.onclick = function(){
+    requestExerciseStatistic(select_statisticsExercise.value);
+};
+
 
 
 
@@ -271,6 +279,14 @@ socket.on("refresh", function (data) {
 
 });
 
+socket.on("refreshExerciseStatistics",function(data){
+    if (data.reps == undefined || data.points == undefined){
+        data.reps = 0;
+        data.points = 0;
+    }
+    paragraph_statisticsExercise.innerHTML ="Punkte: " + translate(data.points) + "<br>Wiederholungen: " + data.reps;
+});
+
 
 
 
@@ -280,6 +296,17 @@ socket.on("refresh", function (data) {
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
+function requestExerciseStatistic(id){
+ if (id == undefined || id == ""){
+    paragraph_statisticsExercise.innerHTML = "Bitte etwas auswählen..";
+    return
+ }
+ socket.emit("requestExerciseStatistic",data ={
+    id:id
+ });
+}
+
+
 function requestHistoryDeletion(id, date) {
     socket.emit("deleteHistory", data = {
         id: id,
@@ -561,7 +588,7 @@ function generateExerciseList(data) {
     var rowNumber = 0;
     var selIndex = select_doneExercise.selectedIndex;
     select_doneExercise.innerHTML = "";
-
+    select_statisticsExercise.innerHTML = "";
 
     for (var exerciseId in data.exercises) {
         exercise = data.exercises[exerciseId];
@@ -578,12 +605,16 @@ function generateExerciseList(data) {
         else {
             group = group + " - Einseitig";
         }
+        
         addOption(select_doneExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + translate(exercise.factor),group);
-
+        select_statisticsExercise.innerHTML = select_doneExercise.innerHTML;
+        
         bodyRow = tBodyExerciseTable.insertRow(rowNumber);
         rowNumber++;
         var cellNumber = 0;
         var toolTipText = "";
+        var bestPlayer;
+        var playerName;
         for (var exerciseKeys in exercise) {
             key = exercise[exerciseKeys];
 
@@ -603,8 +634,8 @@ function generateExerciseList(data) {
             }
             if (exerciseKeys === "pointsPerPlayer") {
                 var max = 0;
-                var bestPlayer = "Keiner";
-                for (var playerName in key) {
+                bestPlayer = "Keiner";
+                for (playerName in key) {
                     var points = key[playerName];
                     if (points > max) {
                         max = points;
@@ -616,8 +647,8 @@ function generateExerciseList(data) {
             }
             if (exerciseKeys === "repsPerPlayer") {
                 var maxReps = 0;
-                var bestPlayer = "Keiner";
-                for (var playerName in key) {
+                bestPlayer = "Keiner";
+                for (playerName in key) {
                     var reps = key[playerName];
                     if (reps > maxReps) {
                         maxReps = reps;
@@ -644,16 +675,16 @@ function generateExerciseList(data) {
             input_exerciseName.value = data.exercises[id].name;
             input_exerciseID.value = id;
             if (data.exercises[id].votes[Name] == undefined) {
-                input_exerciseBaseWeight.value = translate(data.exercises[id].baseWeight);
-                input_exerciseDifficulty.value = translate(data.exercises[id].difficulty);
-                input_exerciseDifficulty10.value = translate(data.exercises[id].difficulty10);
-                input_exerciseDifficulty100.value = translate(data.exercises[id].difficulty100);
+                input_exerciseBaseWeight.value = data.exercises[id].baseWeight;
+                input_exerciseDifficulty.value = data.exercises[id].difficulty;
+                input_exerciseDifficulty10.value = data.exercises[id].difficulty10;
+                input_exerciseDifficulty100.value = data.exercises[id].difficulty100;
             }
             else {
-                input_exerciseBaseWeight.value = translate(data.exercises[id].votes[Name].baseWeight);
-                input_exerciseDifficulty.value = translate(data.exercises[id].votes[Name].difficulty);
-                input_exerciseDifficulty10.value = translate(data.exercises[id].votes[Name].difficulty10);
-                input_exerciseDifficulty100.value = translate(data.exercises[id].votes[Name].difficulty100);
+                input_exerciseBaseWeight.value = data.exercises[id].votes[Name].baseWeight;
+                input_exerciseDifficulty.value = data.exercises[id].votes[Name].difficulty;
+                input_exerciseDifficulty10.value = data.exercises[id].votes[Name].difficulty10;
+                input_exerciseDifficulty100.value = data.exercises[id].votes[Name].difficulty100;
                 input_exerciseComment.value = data.exercises[id].votes[Name].comment;
             }
 
@@ -664,6 +695,7 @@ function generateExerciseList(data) {
         };
     }
     select_doneExercise.selectedIndex = selIndex;
+    select_statisticsExercise.selectedIndex = selIndex;
     headerRow = theadExerciseTable.insertRow(0);
 
     for (headerContents = 0; headerContents < headerArray.length; headerContents++) {
