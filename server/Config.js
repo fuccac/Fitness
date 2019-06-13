@@ -17,6 +17,7 @@ function Config() {
     this.USERS_FILE_NAME ="users.json";
     this.LOG_FILE_NAME ="log.txt";
     this.LOG_PATH = "./saves/log.txt";
+    this.RECALCULATE_HISTORY_ON_CHANGES = 0;
 }
 
 module.exports = Config;

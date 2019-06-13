@@ -3,7 +3,7 @@
 
 //MODULES etc..
 var express = require('express');
-var app = express();
+var application = express();
 var http = require("http");
 var JSONFileStorage = require('jsonfile-storage');
 var pwHash = require('password-hash');
@@ -19,7 +19,7 @@ calc = new Calc();
 //MODULE INITS
 var storageManager = new JSONFileStorage('./saves');
 var config = new Config();
-var serv = new http.Server(app);
+var server = new http.Server(application);
 var dropbox = new DropBoxHandler();
 var logFile = new Log();
 
@@ -31,17 +31,19 @@ var FITNESS_MANAGER = new FitnessManager();
 var DB_TOKEN = config.DB_TOKEN;
 
 loadSaveFiles();
-app.get('/', function (req, res) {
+application.get('/', function (req, res) {
 	res.sendFile(__dirname + '/client/index.html');
 });
 
-app.use('/', express.static(__dirname + '/client'));
-app.use('/client', express.static(__dirname + '/client'));
+application.use('/', express.static(__dirname + '/client'));
+application.use('/client', express.static(__dirname + '/client'));
 
-serv.listen(process.env.PORT || config.LOCAL_PORT);
+server.listen(process.env.PORT || config.LOCAL_PORT);
 logFile.log("Started Server", true, 0);
 
-var io = require('socket.io')(serv, {});
+var io = require('socket.io')(server, {
+	pingTimeout:3600000,
+});
 io.sockets.on('connection', function (socket) {
 	OnSocketConnection(socket);
 });
@@ -297,6 +299,7 @@ function saveAndRefreshPlayer(playerId) {
 						player: player,
 						registeredPlayers: FITNESS_MANAGER.registeredPlayers,
 						playerList: playerList,
+						compInfo:FITNESS_MANAGER.dailyWins,
 					});
 				}
 
@@ -323,6 +326,7 @@ function saveAndRefreshEverything() {
 							player: player,
 							registeredPlayers: FITNESS_MANAGER.registeredPlayers,
 							playerList: playerList,
+							compInfo:FITNESS_MANAGER.dailyWins,
 						});
 					}
 				});

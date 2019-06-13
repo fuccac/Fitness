@@ -62,9 +62,11 @@
 			<label for="select_doneExercise">Übung :</label>
 			<select id="select_doneExercise"></select><br>
 			<label for="input_doneExercise">Übung Anzahl :</label>
-			<input id="input_doneExercise" type="number" placeholder="Anzahl"></input><br>
+			<input id="input_doneExercise" type="number" min="0" placeholder="Anzahl"
+				oninput="validity.valid||(value='');"></input><br>
 			<label for="input_doneExerciseWeight">Übung Gewicht [kg]:</label>
-			<input id="input_doneExerciseWeight" type="number"></input><br>
+			<input id="input_doneExerciseWeight" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number" placeholder="Benutzes Gewicht" min="0"
+				oninput="validity.valid||(value='');"></input><br>
 			<button id="button_doneExerciseSend">Anlegen</button>
 		</div>
 		<div id="div_exerciseHistoryControl">
@@ -100,21 +102,27 @@
 			<br><input id="input_exerciseName" type="text" placeholder="Übungsname" required></input><br>
 
 			<label for="input_exerciseDifficulty">Schwierigkeit (1,10,100):</label>
-			<br><input id="input_exerciseDifficulty" type="number" placeholder="Faktor für 1x">
-			<input id="input_exerciseDifficulty10" type="number" placeholder="Faktor für 10x">
-			<input id="input_exerciseDifficulty100" type="number" placeholder="Faktor für 100x"></input><br>
+			<br><input id="input_exerciseDifficulty" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number" placeholder="Faktor für 1x" min="-50" max="5"
+				oninput="validity.valid||(value='');">
+			<input id="input_exerciseDifficulty10" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number" placeholder="Faktor für 10x" min="-50" max="5"
+				oninput="validity.valid||(value='');">
+			<input id="input_exerciseDifficulty100" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number" placeholder="Faktor für 100x" min="-50" max="5"
+				oninput="validity.valid||(value='');"></input><br>
 
 			<label for="input_exerciseBaseWeight">Basisgewicht:</label>
 			<label for="select_exerciseType">Typ:</label>
 			<label for="select_bothSides">Beidseitig :</label>
 
 
-			<br><input id="input_exerciseBaseWeight" type="number" placeholder="Standardgewicht"></input>
+			<br><input id="input_exerciseBaseWeight" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number" placeholder="Standardgewicht" min="0"
+				oninput="validity.valid||(value='');"></input>
 
 
 			<select id="select_exerciseType">
 				<option value="Cardio">Cardio</option>
 				<option value="Kraft">Kraft</option>
+				<option value="-">-</option>
+				<option value="Strafe">Strafe</option>
 			</select>
 
 			<select id="select_bothSides">
@@ -134,7 +142,10 @@
 				<option value="sec">sec</option>
 				<option value="min">min</option>
 				<option value="h">h</option>
-				<option value="Schwung">Schwung</option>
+				<option value="ab 5 Drinks">ab 5 Drinks</option>
+				<option value="pro Drink">pro Drink</option>
+				<option value="pro Tag">pro Tag</option>
+				<option value="pro Tschick">pro Tschick</option>
 			</select>
 
 			<select id="select_exerciseEquipment">
@@ -159,6 +170,7 @@
 				<optgroup label="Sonstiges">
 					<option value="Sprungseil">Sprungseil</option>
 					<option value="Körpergewicht">Körpergewicht</option>
+					<option value="Strafe">Strafe</option>
 				</optgroup>
 			</select>
 
@@ -194,17 +206,26 @@
 			<p id="paragraph_statisticsExercise"></p>
 		</div>
 	</div>
+	<div id="div_competition" class="tab">
+		<div id="div_DailyWins">
+			<table id="table_dailyWins" class="std_table">
+				<thead></thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</div>
 
 	<div id="div_navigation">
 		<button id="button_tabMainPage">Übersicht</button>
 		<button id="button_tabExerciseOverview">Übungen</button>
 		<button id="button_tabPersonalOverview">Eintragen</button>
 		<button id="button_tabStatistics">Erfolge</button>
+		<button id="button_tabCompetition">Siege</button>
 		<input id="onlineIndicator" type="checkbox" disabled="true">Online Status</input>
+		<a href="https://trello.com/invite/b/aZfDB1r0/d9bb40353771097cb89993e31baef54b/fitnessapp"
+			target="_blank">Feedback</a>
 	</div>
 </body>
-
-
 
 </html>
 

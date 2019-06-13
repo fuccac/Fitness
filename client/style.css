@@ -237,6 +237,13 @@ button:hover {
 }
 
 /* OTHER CLASSES */
+.headPara{
+    font-size: 18px;
+}
+
+.stdPara{
+    font-size: 14px;
+}
 
 .negative {
     color: rgb(255, 0, 0);

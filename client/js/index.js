@@ -24,6 +24,7 @@ var button_updateGraph = document.getElementById('button_updateGraph');
 var button_tabMainPage = document.getElementById('button_tabMainPage');
 var button_modifyExercise = document.getElementById('button_modifyExercise');
 var button_statisticsExercise = document.getElementById('button_statisticsExercise');
+var button_tabCompetition = document.getElementById('button_tabCompetition');
 //CANVAS
 var canvas_graphHistory = document.getElementById('canvas_graphHistory');
 
@@ -43,6 +44,8 @@ var div_graph = document.getElementById('div_graph');
 var div_MainPage = document.getElementById('div_MainPage');
 var div_achievementsDone = document.getElementById('div_achievementsDone');
 var div_login = document.getElementById('div_login');
+var div_competition = document.getElementById('div_competition');
+var div_DailyWins= document.getElementById('div_DailyWins');
 //FONTS
 var font_Courier = "Courier New";
 //INPUTS
@@ -81,6 +84,7 @@ var table_personalTable = document.getElementById('table_personalTable');
 var table_exerciseHistory = document.getElementById('table_exerciseHistory');
 var table_allPlayersTable = document.getElementById('table_allPlayersTable');
 var table_achievementsDone = document.getElementById('table_achievementsDone');
+var table_dailyWins  = document.getElementById('table_dailyWins');
 var socket = io();
 //para
 paragraph_statisticsExercise = document.getElementById('paragraph_statisticsExercise');
@@ -149,6 +153,7 @@ button_tabMainPage.onclick = function () {
     div_PersonalOverview.style.display = "none";
     div_statistics.style.display = "none";
     div_MainPage.style.display = "inline-block";
+    div_competition.style.display = "none";
     canvas_graphHistory.height = div_graph.clientHeight-border;
     canvas_graphHistory.width = div_graph.clientWidth-border;
     button_updateGraph.onclick();
@@ -159,6 +164,15 @@ button_tabPersonalOverview.onclick = function () {
     div_PersonalOverview.style.display = "inline-block";
     div_statistics.style.display = "none";
     div_MainPage.style.display = "none";
+    div_competition.style.display = "none";
+};
+
+button_tabCompetition.onclick = function (){
+    div_ExerciseOverview.style.display = "none";
+    div_PersonalOverview.style.display = "none";
+    div_statistics.style.display = "none";
+    div_MainPage.style.display = "none";
+    div_competition.style.display = "inline-block";
 };
 
 button_tabStatistics.onclick = function () {
@@ -166,6 +180,7 @@ button_tabStatistics.onclick = function () {
     div_PersonalOverview.style.display = "none";
     div_statistics.style.display = "inline-block";
     div_MainPage.style.display = "none";
+    div_competition.style.display = "none";
     requestAchievementList();
 };
 
@@ -175,6 +190,7 @@ button_tabExerciseOverview.onclick = function () {
     div_PersonalOverview.style.display = "none";
     div_statistics.style.display = "none";
     div_MainPage.style.display = "none";
+    div_competition.style.display = "none";
 };
 
 button_deleteExercise.onclick = function () {
@@ -276,6 +292,7 @@ socket.on("refresh", function (data) {
     generatePlayerListTable(data);
     generateExerciseList(data);
     generatePlayerInfoTable(data);
+    generateCompetitionData(data);
 
 });
 
@@ -319,6 +336,8 @@ function requestAchievementList() {
         name: Name
     });
 }
+
+
 function exerciseDone(emitString) {
     socket.emit(emitString, exPack = {
         exId: select_doneExercise.value,
@@ -592,22 +611,8 @@ function generateExerciseList(data) {
 
     for (var exerciseId in data.exercises) {
         exercise = data.exercises[exerciseId];
-        var group = "";
-        if (exercise.usesWeight){
-            group = "Gewichte";
-        }
-        else {
-            group = "Keine Gewichte";
-        }
-        if (exercise.bothSides){
-            group = group + " - Beidseitig";
-        }
-        else {
-            group = group + " - Einseitig";
-        }
-        
-        addOption(select_doneExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + translate(exercise.factor),group);
-        select_statisticsExercise.innerHTML = select_doneExercise.innerHTML;
+               
+        addOption(select_doneExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + translate(exercise.factor));
         
         bodyRow = tBodyExerciseTable.insertRow(rowNumber);
         rowNumber++;
@@ -694,8 +699,12 @@ function generateExerciseList(data) {
             select_bothSides.value = data.exercises[id].bothSides;
         };
     }
+    
+    sortSelect(select_doneExercise);
+    select_statisticsExercise.innerHTML =select_doneExercise.innerHTML;
     select_doneExercise.selectedIndex = selIndex;
     select_statisticsExercise.selectedIndex = selIndex;
+
     headerRow = theadExerciseTable.insertRow(0);
 
     for (headerContents = 0; headerContents < headerArray.length; headerContents++) {
@@ -752,13 +761,13 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                         break;
                     }
                     else {
-                        if (historyKeys === "exerciseId" || historyKeys === "playerName") {
+                        if (historyKeys === "exerciseId" || historyKeys === "playerName" || historyKeys === "dailySum" || historyKeys === "dailyWinner") {
                             continue;
                         }
                     }
                 }
                 else {
-                    if (historyKeys === "exerciseId") {
+                    if (historyKeys === "exerciseId" || historyKeys === "dailySum" || historyKeys === "dailyWinner") {
                         continue;
                     }
                 }
@@ -831,6 +840,49 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
     input_avgSelection.value = translate(Number(selectionSum) / (selectionCount + 1));
 
 
+}
+
+function generateCompetitionData(data){
+
+  
+    var theadDailyWinsTable = table_dailyWins.tHead;
+    var tBodyDailyWinsTable = table_dailyWins.tBodies[0];
+
+    theadDailyWinsTable.innerHTML = "";
+    tBodyDailyWinsTable.innerHTML = "";
+
+    var headerRow = theadDailyWinsTable.insertRow(0);
+    var cell = headerRow.insertCell(0);
+    cell.innerHTML = "Name";
+    cell.onclick = function () {
+        sortTable(this, table_dailyWins);
+    };
+    cell = headerRow.insertCell(1);
+    cell.innerHTML = "Tagessiege";
+    cell.onclick = function () {
+        sortTable(this, table_dailyWins);
+    };
+
+    
+    
+    
+    
+    
+    for (var playerName in data.compInfo) {
+        var cellNumber = 0;
+        var rowNumber = 0;
+        bodyRow = tBodyDailyWinsTable.insertRow(rowNumber);
+        cell = bodyRow.insertCell(cellNumber);
+        cell.innerHTML=playerName;
+        cellNumber++;
+        cell = bodyRow.insertCell(cellNumber);
+        cell.innerHTML=data.compInfo[playerName];
+        cellNumber++;
+        //month
+
+
+        rowNumber++;
+    }
 }
 
 
@@ -1219,6 +1271,24 @@ else{
 if(loginCookie!=""){
     input_UserName.value = loginCookie;
     socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value,loginCookie:loginCookie});
+}
+
+function sortSelect(selElem) {
+    var tmpAry = new Array();
+    for (var i=0;i<selElem.options.length;i++) {
+        tmpAry[i] = new Array();
+        tmpAry[i][0] = selElem.options[i].text;
+        tmpAry[i][1] = selElem.options[i].value;
+    }
+    tmpAry.sort();
+    while (selElem.options.length > 0) {
+        selElem.options[0] = null;
+    }
+    for (var i=0;i<tmpAry.length;i++) {
+        var op = new Option(tmpAry[i][0], tmpAry[i][1]);
+        selElem.options[i] = op;
+    }
+    return;
 }
 
 function translate(word) {
