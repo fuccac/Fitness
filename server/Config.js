@@ -10,7 +10,7 @@ function Config() {
     this.LOG_UPLOAD_INTERVAL = 3600; //sec
     this.SAVE_UPLOAD_INTERVAL = 15; //sec
     this.DB_TOKEN = "Ad3tLqqtKckAAAAAAACK_0aogsVnZrSmjMWjss79yxecm6jxPi3J3xBPy6YsOQNt";
-    this.PROXY_MODE = 0;
+    this.PROXY_MODE = 1;
     this.EXERCISE_FILE_NAME = "exerciseList.json";
     this.REG_PLAYERS_FILE_NAME ="registeredPlayers.json";
     this.HISTORY_FILE_NAME ="history.json";

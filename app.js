@@ -142,7 +142,14 @@ var OnPlayerConnection = function (socket) {
 
 	socket.on("requestGraphUpdate", function (data) {
 		logFile.log(newPlayer.name + " " + "requests Graph update", false, 0);
-		var graph = FITNESS_MANAGER.createGraph(data.fromDate, data.toDate);
+		var graph;
+		if (data.type){
+			graph = FITNESS_MANAGER.createMonthChartData();
+		}
+		else{
+			graph = FITNESS_MANAGER.createGraph(data.fromDate, data.toDate);
+		}
+		
 		SOCKET_LIST[newPlayer.id].emit('refreshGraph', {
 			graph: graph,
 		});
@@ -444,6 +451,7 @@ function loadFitnessManager() {
 				});
 			})
 				.catch((err) => {
+					console.log(err);
 					logFile.log("registeredPlayers file missing or corrupted", false, 1);
 				});
 		})

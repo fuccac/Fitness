@@ -59,8 +59,11 @@ class FitnessManager {
         }
         this.calculateHistoryDailyMax();
         result("recalculated all exercises with history + dailyMax");
-        this.needsUpload.history = true;
-        this.needsUpload.exerciseList = true;
+        
+        setTimeout(function(){
+            this.needsUpload.history = true;
+            this.needsUpload.exerciseList = true;
+        }.bind(this),10);
     }
 
     addExerciseAchievement(exId, repsToGetOverall, repsToGetDaily, repsToGetMonthly, achievementCategory) {
@@ -98,7 +101,10 @@ class FitnessManager {
 
 
         this.exerciseList[exId].achievementInfo = achievementInfo;
-        this.needsUpload.exerciseList = true;
+        
+        setTimeout(function(){
+            this.needsUpload.exerciseList = true;
+        }.bind(this),10);
     }
 
     createGraph(fromDate, toDate) {
@@ -143,6 +149,41 @@ class FitnessManager {
         }
         //calc.getDateFormat(date,"DD.MM.YYYY");
         return graph;
+    }
+
+    createMonthChartData() {
+
+        var data = {};
+        
+        var chunk = this.getDefinedHistory("1970-01-01", "9999-01-01");
+        var MONTHS = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+        for (var historyIterator = 0; historyIterator < chunk.length; historyIterator++) {
+            for (var historyEntryIterator = 0; historyEntryIterator < chunk[historyIterator].points.length; historyEntryIterator++) {
+                var currentDate = chunk[historyIterator].date[historyEntryIterator];
+                var currentMonth = MONTHS[Number(currentDate.substring(5, 5 + 2))-1] + " " + currentDate.substring(0, 0 + 4);
+                var currentName = chunk[historyIterator].playerName[historyEntryIterator];
+                
+                
+                if (data[currentMonth] == undefined) {
+                    var player = {};
+                    player[currentName] = Number(chunk[historyIterator].points[historyEntryIterator]);
+                    data[currentMonth] = player;
+                   
+                }
+                else {
+                    if (data[currentMonth][currentName] == undefined){
+                        data[currentMonth][currentName] = Number(chunk[historyIterator].points[historyEntryIterator]);
+                    }
+                    else{
+                        data[currentMonth][currentName] += Number(chunk[historyIterator].points[historyEntryIterator]);
+                    }
+                    
+                }
+
+            }
+        }
+        return data;
     }
 
     importExercisesFromGoogle(result) {
@@ -270,14 +311,19 @@ class FitnessManager {
     addExercise(exercise) {
         this.exerciseList[exercise.id] = exercise;
         this.exerciseCount++;
-        this.needsUpload.exerciseList = true;
+        
+        setTimeout(function(){
+            this.needsUpload.exerciseList = true;
+        }.bind(this),10);
         return "add Exercise finished";
     }
 
     removeExercise(id) {
         delete this.exerciseList[id];
         this.exerciseCount--;
-        this.needsUpload.exerciseList = true;
+        setTimeout(function(){
+            this.needsUpload.exerciseList = true;
+        }.bind(this),10);
     }
 
     createExercise(exPack, usesWeight, creator, result) {
@@ -447,7 +493,9 @@ class FitnessManager {
     deleteExercise(id, result) {
         delete this.exerciseList[id];
         result("deleted Exercise");
-        this.needsUpload.exerciseList = true;
+        setTimeout(function(){
+            this.needsUpload.exerciseList = true;
+        }.bind(this),10);
     }
 
     deleteHistory(id, date, result) {
@@ -467,13 +515,12 @@ class FitnessManager {
             }
         }
 
-        this.needsUpload.history = true;
-        this.needsUpload.exerciseList = true;
-
-
-
         result("deleted History Entry: " + exerciseIdToRecalculate + " | " + this.checkDailyWinner(date));
-
+        setTimeout(function(){
+            this.needsUpload.history = true;
+            this.needsUpload.exerciseList = true;
+        }.bind(this),10);
+        
     }
 
     checkDailyWinner(date) {
@@ -543,9 +590,6 @@ class FitnessManager {
                     this.history[date].points[iterator] += Number(points);
                     this.history[date].dailySum[playerName] += Number(points);
 
-                    this.needsUpload.exerciseList = true;
-                    this.needsUpload.history = true;
-
                     if (this.exerciseList[exerciseId].pointsPerPlayer[playerName] == undefined) {
                         this.exerciseList[exerciseId].pointsPerPlayer[playerName] = Number(points);
                     }
@@ -560,6 +604,10 @@ class FitnessManager {
                         this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
                     }
                     result("added workout to existing history" + " | " + this.checkDailyWinner(date));
+                    setTimeout(function(){
+                        this.needsUpload.history = true;
+                        this.needsUpload.exerciseList = true;
+                    }.bind(this),10);
                     return;
                 }
             }
@@ -579,8 +627,10 @@ class FitnessManager {
                 this.history[date].dailySum[playerName] += Number(points);
             }
 
-            this.needsUpload.exerciseList = true;
-            this.needsUpload.history = true;
+            setTimeout(function(){
+                this.needsUpload.history = true;
+                this.needsUpload.exerciseList = true;
+            }.bind(this),10);
 
         }
         else {
@@ -623,9 +673,13 @@ class FitnessManager {
             this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
         }
 
-        this.needsUpload.exerciseList = true;
-        this.needsUpload.history = true;
+
         result("added workout to history" + " | " + this.checkDailyWinner(date));
+
+        setTimeout(function(){
+            this.needsUpload.history = true;
+            this.needsUpload.exerciseList = true;
+        }.bind(this),10);
     }
 
     checkPlayerStuff(player, result) {
@@ -956,7 +1010,10 @@ class FitnessManager {
         };
 
         this.registeredPlayers[name] = sumPointsTotal;
-        this.needsUpload.registeredPlayers = true;
+        
+        setTimeout(function(){
+            this.needsUpload.registeredPlayers = true;
+        }.bind(this),10);
 
         return points;
 
