@@ -585,6 +585,9 @@ function generateAchievementListTable(data, name) {
             if (rowNumber == 0) {
                 cell = headerRow.insertCell(cellNumber);
                 cell.innerHTML += translate(achievementKey);
+                cell.onclick = function () {
+                    sortTable(this, table_achievementsDone);
+                };
             }
 
 
@@ -1237,7 +1240,9 @@ function sortTable(n, table) {
     table.style.cursor = "wait";
     m = n.cellIndex;
     matcher = /(\d{2}).(\d{2}).(\d{4})/;
-
+    bestRepMatcher = /([a-zA-Z]+): (\d+).(\d{2})/;
+    var startOfRepX = 0;
+    var startOfRepY = 0;
     var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     var valX, valY = "";
     switching = true;
@@ -1250,7 +1255,25 @@ function sortTable(n, table) {
             x = rows[i].getElementsByTagName("td")[m];
             y = rows[i + 1].getElementsByTagName("td")[m];
             if (dir == "asc") {
-                if (x.innerHTML.match(matcher) != null) {
+                if (x.innerHTML.includes("Level")){
+                    startOfRepX = x.children[0].innerHTML.substring(6,6+2);
+                    startOfRepY = y.children[0].innerHTML.substring(6,6+2);
+                    if (startOfRepX.includes("/")){
+                        startOfRepX =  startOfRepX.substring(0,1);
+                    }
+                    if (startOfRepY.includes("/")){
+                        startOfRepY = startOfRepY.substring(0,1);
+                    }
+                    valX = Number(startOfRepX);
+                    valY = Number(startOfRepY);
+                }
+                else if (x.innerHTML.match(bestRepMatcher) != null){
+                    startOfRepX = x.innerHTML.indexOf(":");
+                    startOfRepY = y.innerHTML.indexOf(":");
+                    valX = Number(x.innerHTML.substring(startOfRepX+2));
+                    valY = Number(y.innerHTML.substring(startOfRepY+2));
+                }
+                else if (x.innerHTML.match(matcher) != null) {
                     valX = createZeroDate(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
                     valY = createZeroDate(getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
                 }
@@ -1267,7 +1290,26 @@ function sortTable(n, table) {
                     break;
                 }
             } else if (dir == "desc") {
-                if (x.innerHTML.match(matcher) != null) {
+                
+                if (x.innerHTML.includes("Level")){
+                    startOfRepX = x.children[0].innerHTML.substring(6,6+2);
+                    startOfRepY = y.children[0].innerHTML.substring(6,6+2);
+                    if (startOfRepX.includes("/")){
+                        startOfRepX =  startOfRepX.substring(0,1);
+                    }
+                    if (startOfRepY.includes("/")){
+                        startOfRepY = startOfRepY.substring(0,1);
+                    }
+                    valX = Number(startOfRepX);
+                    valY = Number(startOfRepY);
+                }
+                else if (x.innerHTML.match(bestRepMatcher) != null){
+                    startOfRepX = x.innerHTML.indexOf(":");
+                    startOfRepY = y.innerHTML.indexOf(":");
+                    valX = Number(x.innerHTML.substring(startOfRepX+2));
+                    valY = Number(y.innerHTML.substring(startOfRepY+2));
+                }
+                else if (x.innerHTML.match(matcher) != null) {
                     valX = createZeroDate(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
                     valY = createZeroDate(getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
                 }
@@ -1513,6 +1555,8 @@ function translate(word) {
             return "Achievement Fortschritt";
         case "achievementNextLevel":
             return "Nächstes Level";
+        case "monthlyMax":
+            return "Monatsbestleistung";
         default:
             if (word.search("Overall") != -1) {
                 return word.replace("Overall", " Gesamt");

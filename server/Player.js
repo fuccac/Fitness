@@ -16,6 +16,7 @@ class Player {
             last5Days: 0,
             thisMonth: 0,
             dailyMax:0,
+            monthlyMax:0,
             averageThisMonth: 0,
         };
 

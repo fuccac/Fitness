@@ -293,9 +293,8 @@ function saveAndRefreshPlayer(playerId) {
 
 	var iPlayer;
 	var player;
-
+	PLAYER_LIST[playerId].points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[playerId].name);
 	FITNESS_MANAGER.checkPlayerStuff(PLAYER_LIST[playerId], function (result) {
-		PLAYER_LIST[playerId].points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[playerId].name);
 		logFile.log(result, false, 0);
 		FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (playerList) {
 			for (iPlayer in PLAYER_LIST) {
