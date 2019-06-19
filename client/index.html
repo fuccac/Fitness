@@ -18,7 +18,7 @@
 		<button id="button_SignIn">Anmelden</button>
 		<button id="button_SignUp">Registrieren</button>
 		<br><br>
-		<label for="input_RememberMe">Login merken</label>
+		<label for="input_RememberMe">Login merken (useless ATM)</label>
 		<input id="input_RememberMe" type="checkbox"></input>
 
 		<p> Anmeldung = Name vom GoogleSheet + selbst ausgedachtes Passwort. Bitte das Passwort merken,
@@ -62,7 +62,7 @@
 			</table>
 		</div>
 		<div id="div_graph">
-			
+
 		</div>
 		<div id="div_GraphControl">
 			<br>
@@ -95,8 +95,8 @@
 			<input id="input_doneExercise" type="number" min="0" placeholder="Anzahl"
 				oninput="validity.valid||(value='');"></input><br>
 			<label for="input_doneExerciseWeight">Übung Gewicht [kg]:</label>
-			<input id="input_doneExerciseWeight" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number" placeholder="Benutzes Gewicht" min="0"
-				oninput="validity.valid||(value='');"></input><br>
+			<input id="input_doneExerciseWeight" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number"
+				placeholder="Benutzes Gewicht" min="0" oninput="validity.valid||(value='');"></input><br>
 			<button id="button_doneExerciseSend">Anlegen</button>
 		</div>
 		<div id="div_exerciseHistoryControl">
@@ -132,20 +132,20 @@
 			<br><input id="input_exerciseName" type="text" placeholder="Übungsname" required></input><br>
 
 			<label for="input_exerciseDifficulty">Schwierigkeit (1,10,100):</label>
-			<br><input id="input_exerciseDifficulty" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number" placeholder="Faktor für 1x" min="-50" max="5"
-				oninput="validity.valid||(value='');">
-			<input id="input_exerciseDifficulty10" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number" placeholder="Faktor für 10x" min="-50" max="5"
-				oninput="validity.valid||(value='');">
-			<input id="input_exerciseDifficulty100" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number" placeholder="Faktor für 100x" min="-50" max="5"
-				oninput="validity.valid||(value='');"></input><br>
+			<br><input id="input_exerciseDifficulty" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
+				placeholder="Faktor für 1x" min="-50" max="5" oninput="validity.valid||(value='');">
+			<input id="input_exerciseDifficulty10" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
+				placeholder="Faktor für 10x" min="-50" max="5" oninput="validity.valid||(value='');">
+			<input id="input_exerciseDifficulty100" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
+				placeholder="Faktor für 100x" min="-50" max="5" oninput="validity.valid||(value='');"></input><br>
 
 			<label for="input_exerciseBaseWeight">Basisgewicht:</label>
 			<label for="select_exerciseType">Typ:</label>
 			<label for="select_bothSides">Beidseitig :</label>
 
 
-			<br><input id="input_exerciseBaseWeight" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number" placeholder="Standardgewicht" min="0"
-				oninput="validity.valid||(value='');"></input>
+			<br><input id="input_exerciseBaseWeight" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number"
+				placeholder="Standardgewicht" min="0" oninput="validity.valid||(value='');"></input>
 
 
 			<select id="select_exerciseType">
@@ -246,7 +246,7 @@
 	</div>
 	<div id="div_events" class="tab">
 		<div id="div_eventLog">
-			
+
 		</div>
 	</div>
 

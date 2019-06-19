@@ -17,17 +17,17 @@ function DropboxFunctions() {
                         var filepath = path.join(__dirname, '../saves/' + response.name);
                         fs.writeFile(filepath, response.fileBinary, 'binary', function (err) {
                             if (err) { throw err; }
-                            callback({msg:'File successfully downloaded',sev:0});
+                            callback({ msg: 'File successfully downloaded', sev: 0 });
                         });
                     }
                 })
                 .catch(function (err) {
-                   
-                    callback({msg:'Error downloading file using the Dropbox API: ' + err,sev:2});
+
+                    callback({ msg: 'Error downloading file using the Dropbox API: ' + err, sev: 2 });
                 });
         }
         else {
-            callback({msg:'FILE '+id+' NOT DOWNLOADED - PROXY MODE ACTIVE',sev:1});
+            callback({ msg: 'FILE ' + id + ' NOT DOWNLOADED - PROXY MODE ACTIVE', sev: 1 });
         }
 
     };
@@ -37,20 +37,20 @@ function DropboxFunctions() {
             var dbx = new Dropbox({ accessToken: token, fetch });  // creates post-auth dbx instance
             fs.readFile(path.join(__dirname, '../saves/' + id), 'utf8', function (err, contents) {
                 if (err) {
-                    callback({msg:err,sev:2});
+                    callback({ msg: err, sev: 2 });
                     return;
                 }
                 dbx.filesUpload({ path: '/' + id, contents: contents, mode: 'overwrite' })
                     .then(function (response) {
-                        callback({msg:response.name + " uploaded",sev:0});
+                        callback({ msg: response.name + " uploaded", sev: 0 });
                     })
                     .catch(function (error) {
-                        callback({msg:error.error_summary,sev:2});
+                        callback({ msg: error.error_summary, sev: 2 });
                     });
             });
         }
         else {
-            callback({msg:'FILE '+id+' NOT UPLOADED - PROXY MODE ACTIVE',sev:1});
+            callback({ msg: 'FILE ' + id + ' NOT UPLOADED - PROXY MODE ACTIVE', sev: 1 });
         }
 
     };

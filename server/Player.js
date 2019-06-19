@@ -8,15 +8,15 @@ class Player {
         this.name = "RandomName" + calc.rand(1, 10000, 0);
         this.points = {
             total: 0,
-            cardio:0,
-            strength:0,
+            cardio: 0,
+            strength: 0,
             negative: 0,
             today: 0,
             diffLastMonth: 0,
             last5Days: 0,
             thisMonth: 0,
-            dailyMax:0,
-            monthlyMax:0,
+            dailyMax: 0,
+            monthlyMax: 0,
             averageThisMonth: 0,
         };
 
@@ -29,9 +29,9 @@ class Player {
         this.id = id;
         this.earnedAchievements = {};
         this.notEarnedAchievements = {};
-        
 
-        
+
+
     }
 
 

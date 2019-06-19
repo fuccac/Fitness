@@ -40,11 +40,11 @@ class Log {
 
 
         var date = calc.createViennaDate();
-        fs.appendFile(config.LOG_PATH, calc.getDateFormat(date,"DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds() + " - " + str + "\r\n", function (err) {
+        fs.appendFile(config.LOG_PATH, calc.getDateFormat(date, "DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " - " + str + "\r\n", function (err) {
 
         });
         if (showInConsole) {
-            console.log(calc.getDateFormat(date,"DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours()+":"+date.getMinutes()+":"+date.getSeconds() + " - " + str);
+            console.log(calc.getDateFormat(date, "DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " - " + str);
         }
     }
 

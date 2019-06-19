@@ -52,7 +52,7 @@ function Calc() {
 			if (exercise.baseWeight > 0) {
 				exercise.usesWeight = true;
 			}
-			else{
+			else {
 				exercise.usesWeight = false;
 			}
 
@@ -131,13 +131,13 @@ function Calc() {
 
 	};
 
-	this.createViennaDate = function(){
-		viennaDate = new Date().toLocaleString("en-US", {timeZone: "Europe/Vienna"});
+	this.createViennaDate = function () {
+		viennaDate = new Date().toLocaleString("en-US", { timeZone: "Europe/Vienna" });
 		viennaDate = new Date(viennaDate);
 		return viennaDate;
 	};
 
-	
+
 
 	this.createZeroDate = function (date) {
 		if (typeof date === 'undefined') {
@@ -156,10 +156,10 @@ function Calc() {
 		return zeroDate;
 	};
 
-	this.getNonZeroValuesOfArray = function(array){
+	this.getNonZeroValuesOfArray = function (array) {
 		var result = 0;
-		for(var i = 0; i<array.length;i++){
-			if (array[i] > 0){
+		for (var i = 0; i < array.length; i++) {
+			if (array[i] > 0) {
 				result++;
 			}
 		}

@@ -6,7 +6,7 @@ var Config = require("./Config");
 var config = new Config();
 
 class Exercise {
-    constructor(name, difficulty, difficulty10, difficulty100, equipment, usesWeight, baseWeight, comment, creator, type, unit,bothSides) {
+    constructor(name, difficulty, difficulty10, difficulty100, equipment, usesWeight, baseWeight, comment, creator, type, unit, bothSides) {
         this.id = Math.random().toFixed(config.ID_LENGTH).slice(2);
         this.name = name;
         this.factor = (Number(difficulty) + Number(difficulty10) + Number(difficulty100)) / 3;
@@ -26,7 +26,7 @@ class Exercise {
         this.repsPerPlayer = {};
         this.votes = {};
         this.achievementInfo = {
-            achievementActive:false,
+            achievementActive: false,
             repsToGetOverall: [0],
             repsToGetDaily: [0],
             repsToGetMonthly: [0],

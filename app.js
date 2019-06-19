@@ -42,7 +42,7 @@ server.listen(process.env.PORT || config.LOCAL_PORT);
 logFile.log("Started Server", true, 0);
 
 var io = require('socket.io')(server, {
-	pingTimeout:3600000,
+	pingTimeout: 3600000,
 });
 io.sockets.on('connection', function (socket) {
 	OnSocketConnection(socket);
@@ -56,6 +56,7 @@ io.sockets.on('connection', function (socket) {
 var OnPlayerConnection = function (socket) {
 	var newPlayer = new Player(socket.id);
 	PLAYER_LIST[newPlayer.id] = newPlayer;
+
 
 	socket.on("modifyExercise", function (data) {
 		var creator = PLAYER_LIST[newPlayer.id].name;
@@ -143,13 +144,13 @@ var OnPlayerConnection = function (socket) {
 	socket.on("requestGraphUpdate", function (data) {
 		logFile.log(newPlayer.name + " " + "requests Graph update", false, 0);
 		var graph;
-		if (data.type){
+		if (data.type) {
 			graph = FITNESS_MANAGER.createMonthChartData();
 		}
-		else{
+		else {
 			graph = FITNESS_MANAGER.createGraph(data.fromDate, data.toDate);
 		}
-		
+
 		SOCKET_LIST[newPlayer.id].emit('refreshGraph', {
 			graph: graph,
 		});
@@ -185,6 +186,7 @@ var OnSocketConnection = function (socket) {
 					OnPlayerConnection(socket);
 					loadPlayer(data.username, socket.id, function (res) {
 						logFile.log(res, false, 0);
+						FITNESS_MANAGER.addToEventLog(data.username + " hat sich angemeldet!");
 						saveAndRefreshPlayer(socket.id);
 					});
 					socket.emit('signInResponse', { success: true });
@@ -305,8 +307,8 @@ function saveAndRefreshPlayer(playerId) {
 						player: player,
 						registeredPlayers: FITNESS_MANAGER.registeredPlayers,
 						playerList: playerList,
-						compInfo:FITNESS_MANAGER.dailyWins,
-						eventLog:FITNESS_MANAGER.eventLog,
+						compInfo: FITNESS_MANAGER.dailyWins,
+						eventLog: FITNESS_MANAGER.eventLog,
 					});
 				}
 
@@ -333,8 +335,8 @@ function saveAndRefreshEverything() {
 							player: player,
 							registeredPlayers: FITNESS_MANAGER.registeredPlayers,
 							playerList: playerList,
-							compInfo:FITNESS_MANAGER.dailyWins,
-							eventLog:FITNESS_MANAGER.eventLog,
+							compInfo: FITNESS_MANAGER.dailyWins,
+							eventLog: FITNESS_MANAGER.eventLog,
 						});
 					}
 				});
@@ -427,6 +429,7 @@ function loadSaveFiles() {
 				dropbox.downloadFile(DB_TOKEN, config.REG_PLAYERS_FILE_NAME, function (callback) {
 					logFile.log(callback.msg, false, callback.sev);
 					loadFitnessManager();
+					FITNESS_MANAGER.addToEventLog("Server gestartet");
 				});
 			});
 		});
@@ -483,6 +486,9 @@ function saveExerciseList() {
 		logFile.log("exerciseList saved", false, 0);
 		dropbox.uploadFile(DB_TOKEN, config.EXERCISE_FILE_NAME, function (result) {
 			logFile.log(result.msg, false, result.sev);
+			if (result.sev < 2) {
+				FITNESS_MANAGER.needsUpload.exerciseList = false;
+			}
 		});
 	});
 }
@@ -492,6 +498,9 @@ function saveHistory() {
 		logFile.log("history saved", false, 0);
 		dropbox.uploadFile(DB_TOKEN, config.HISTORY_FILE_NAME, function (result) {
 			logFile.log(result.msg, false, result.sev);
+			if (result.sev < 2) {
+				FITNESS_MANAGER.needsUpload.history = false;
+			}
 		});
 	});
 }
@@ -500,6 +509,9 @@ function saveRegisteredPlayers() {
 		logFile.log("registeredPlayers saved", false, 0);
 		dropbox.uploadFile(DB_TOKEN, config.REG_PLAYERS_FILE_NAME, function (result) {
 			logFile.log(result.msg, false, result.sev);
+			if (result.sev < 2) {
+				FITNESS_MANAGER.needsUpload.registeredPlayers = false;
+			}
 		});
 	});
 }

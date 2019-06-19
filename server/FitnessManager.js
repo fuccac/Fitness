@@ -554,11 +554,11 @@ class FitnessManager {
             if (this.dailyWins[dailyWinner] != undefined) {
                 this.dailyWins[dailyWinner]++;
                 this.dailyWins[lastWinner]--;
-                this.addToEventLog(dailyWinner + " hat mit "+ max + " Punkten den Tagessieg, bis jetzt!");
+                this.addToEventLog(dailyWinner + " hat mit " + max + " Punkten den Tagessieg, bis jetzt!");
             }
             else {
                 this.dailyWins[dailyWinner] = 1;
-                this.addToEventLog(dailyWinner + " hat mit "+ max + " Punkten den Tagessieg, bis jetzt!");
+                this.addToEventLog(dailyWinner + " hat mit " + max + " Punkten den Tagessieg, bis jetzt!");
                 this.dailyWins[lastWinner]--;
             }
         }
@@ -619,9 +619,9 @@ class FitnessManager {
                     else {
                         this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
                     }
-                    this.addToEventLog(playerName + " hat etwas am "+ date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name);
+                    this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name);
                     result("added workout to existing history" + " | " + this.checkDailyWinner(date));
-                    
+
                     setTimeout(function () {
                         this.needsUpload.history = true;
                         this.needsUpload.exerciseList = true;
@@ -691,9 +691,9 @@ class FitnessManager {
             this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
         }
 
-        this.addToEventLog(playerName + " hat etwas am "+ date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name);
+        this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name);
         result("added workout to history" + " | " + this.checkDailyWinner(date));
-        
+
 
         setTimeout(function () {
             this.needsUpload.history = true;
