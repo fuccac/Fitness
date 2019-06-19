@@ -619,7 +619,7 @@ class FitnessManager {
                     else {
                         this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
                     }
-                    this.addToEventLog(playerName + " hat etwas gemacht: " + count + " " + this.exerciseList[exerciseId].name);
+                    this.addToEventLog(playerName + " hat etwas am "+ date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name);
                     result("added workout to existing history" + " | " + this.checkDailyWinner(date));
                     
                     setTimeout(function () {
@@ -691,7 +691,7 @@ class FitnessManager {
             this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
         }
 
-        this.addToEventLog(playerName + " hat etwas gemacht: " + count + " " + this.exerciseList[exerciseId].name);
+        this.addToEventLog(playerName + " hat etwas am "+ date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name);
         result("added workout to history" + " | " + this.checkDailyWinner(date));
         
 
