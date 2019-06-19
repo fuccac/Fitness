@@ -25,6 +25,7 @@ var button_tabMainPage = document.getElementById('button_tabMainPage');
 var button_modifyExercise = document.getElementById('button_modifyExercise');
 var button_statisticsExercise = document.getElementById('button_statisticsExercise');
 var button_tabCompetition = document.getElementById('button_tabCompetition');
+var button_tabEventLog = document.getElementById('button_tabEventLog');
 //CANVAS
 //var canvas_graphHistory = document.getElementById('canvas_graphHistory');
 
@@ -46,6 +47,8 @@ var div_achievementsDone = document.getElementById('div_achievementsDone');
 var div_login = document.getElementById('div_login');
 var div_competition = document.getElementById('div_competition');
 var div_DailyWins = document.getElementById('div_DailyWins');
+var div_events = document.getElementById('div_events');
+var div_eventLog = document.getElementById('div_eventLog');
 //FONTS
 var font_Courier = "Courier New";
 //INPUTS
@@ -154,6 +157,7 @@ button_tabMainPage.onclick = function () {
     div_statistics.style.display = "none";
     div_MainPage.style.display = "inline-block";
     div_competition.style.display = "none";
+    div_events.style.display = "none";
     button_updateGraph.onclick();
 };
 
@@ -163,6 +167,7 @@ button_tabPersonalOverview.onclick = function () {
     div_statistics.style.display = "none";
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
+    div_events.style.display = "none";
 };
 
 button_tabCompetition.onclick = function () {
@@ -171,6 +176,7 @@ button_tabCompetition.onclick = function () {
     div_statistics.style.display = "none";
     div_MainPage.style.display = "none";
     div_competition.style.display = "inline-block";
+    div_events.style.display = "none";
 };
 
 button_tabStatistics.onclick = function () {
@@ -179,6 +185,7 @@ button_tabStatistics.onclick = function () {
     div_statistics.style.display = "inline-block";
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
+    div_events.style.display = "none";
     requestAchievementList();
 };
 
@@ -189,6 +196,16 @@ button_tabExerciseOverview.onclick = function () {
     div_statistics.style.display = "none";
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
+    div_events.style.display = "none";
+};
+
+button_tabEventLog.onclick = function () {
+    div_ExerciseOverview.style.display = "none";
+    div_PersonalOverview.style.display = "none";
+    div_statistics.style.display = "none";
+    div_MainPage.style.display = "none";
+    div_competition.style.display = "none";
+    div_events.style.display = "inline-block";
 };
 
 button_deleteExercise.onclick = function () {
@@ -228,14 +245,14 @@ button_statisticsExercise.onclick = function () {
 };
 
 input_graphSwitch.onclick = function () {
-if (input_graphSwitch.checked){
-    input_graphFromDate.disabled = true;
-    input_graphToDate.disabled = true;
-}
-else{
-    input_graphFromDate.disabled = false;
-    input_graphToDate.disabled = false;
-}
+    if (input_graphSwitch.checked) {
+        input_graphFromDate.disabled = true;
+        input_graphToDate.disabled = true;
+    }
+    else {
+        input_graphFromDate.disabled = false;
+        input_graphToDate.disabled = false;
+    }
 
 };
 
@@ -284,12 +301,12 @@ socket.on("refreshAchievements", function (data) {
 
 socket.on("refreshGraph", function (data) {
     var border = 2;
-    if(document.getElementById("canvas_graphHistory")){
+    if (document.getElementById("canvas_graphHistory")) {
         canvas_graphHistory = document.getElementById("canvas_graphHistory");
         canvas_graphHistory.remove();
     }
     canvas_graphHistory = document.createElement("canvas");
-    canvas_graphHistory.id ="canvas_graphHistory";
+    canvas_graphHistory.id = "canvas_graphHistory";
     div_graph.appendChild(canvas_graphHistory);
     var ctx_graphHistory = canvas_graphHistory.getContext("2d");
     canvas_graphHistory.height = div_graph.clientHeight - border;
@@ -315,6 +332,7 @@ socket.on("refresh", function (data) {
     generateExerciseList(data);
     generatePlayerInfoTable(data);
     generateCompetitionData(data);
+    generateEventLog(data);
 
 });
 
@@ -395,7 +413,7 @@ function modifyExercise(emitString) {
 *******************************************************************************************************************
 ******************************************************************************************************************/
 var OverallChart;
-function generateGraph(data, canvas, ctx) {    
+function generateGraph(data, canvas, ctx) {
     if (OverallChart != undefined) {
         OverallChart.data.labels.pop();
         OverallChart.data.datasets.forEach((dataset) => {
@@ -411,7 +429,7 @@ function generateGraph(data, canvas, ctx) {
 
     var datasets = [];
     var dataset;
-   
+
     var colorIterator = 0;
     var month;
     var playerName;
@@ -539,7 +557,7 @@ function generateGraph(data, canvas, ctx) {
             Chart.defaults.global.defaultColor = 'rgba(255, 255, 255, 1)';
         }
         else {
-            
+
             OverallChart.config.type = 'line';
             OverallChart.data.datasets = datasets;
             OverallChart.data.labels = data.graph.caf.yAxis;
@@ -627,8 +645,10 @@ function generateAchievementListTable(data, name) {
         rowNumber++;
         cellNumber = 0;
 
-    }
 
+
+    }
+    sortTable({ cellIndex: 0 }, table_achievementsDone);
 }
 
 function generatePlayerListTable(data) {
@@ -880,7 +900,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                     }
                     else {
                         if (historyKeys === "exerciseId" || historyKeys === "playerName" || historyKeys === "dailySum" || historyKeys === "dailyWinner") {
-                            if (historyKeys === "dailyWinner"){
+                            if (historyKeys === "dailyWinner") {
                                 toolTipText = "Tagessieger: " + historyEntry[historyKeys];
                             }
                             continue;
@@ -988,7 +1008,7 @@ function generateCompetitionData(data) {
 
 
     for (var playerName in data.compInfo) {
-        if (playerName =="Keiner"){
+        if (playerName == "Keiner") {
             continue;
         }
         var cellNumber = 0;
@@ -1005,6 +1025,14 @@ function generateCompetitionData(data) {
 
         rowNumber++;
     }
+}
+
+function generateEventLog(data) {
+    div_eventLog.innerHTML = "";
+    for (var date in data.eventLog) {
+        div_eventLog.innerHTML = div_eventLog.innerHTML + "<li>" + date + " - " + data.eventLog[date] + "</li>";
+    }
+
 }
 
 
@@ -1255,23 +1283,23 @@ function sortTable(n, table) {
             x = rows[i].getElementsByTagName("td")[m];
             y = rows[i + 1].getElementsByTagName("td")[m];
             if (dir == "asc") {
-                if (x.innerHTML.includes("Level")){
-                    startOfRepX = x.children[0].innerHTML.substring(6,6+2);
-                    startOfRepY = y.children[0].innerHTML.substring(6,6+2);
-                    if (startOfRepX.includes("/")){
-                        startOfRepX =  startOfRepX.substring(0,1);
+                if (x.innerHTML.includes("Level")) {
+                    startOfRepX = x.children[0].innerHTML.substring(6, 6 + 2);
+                    startOfRepY = y.children[0].innerHTML.substring(6, 6 + 2);
+                    if (startOfRepX.includes("/")) {
+                        startOfRepX = startOfRepX.substring(0, 1);
                     }
-                    if (startOfRepY.includes("/")){
-                        startOfRepY = startOfRepY.substring(0,1);
+                    if (startOfRepY.includes("/")) {
+                        startOfRepY = startOfRepY.substring(0, 1);
                     }
                     valX = Number(startOfRepX);
                     valY = Number(startOfRepY);
                 }
-                else if (x.innerHTML.match(bestRepMatcher) != null){
+                else if (x.innerHTML.match(bestRepMatcher) != null) {
                     startOfRepX = x.innerHTML.indexOf(":");
                     startOfRepY = y.innerHTML.indexOf(":");
-                    valX = Number(x.innerHTML.substring(startOfRepX+2));
-                    valY = Number(y.innerHTML.substring(startOfRepY+2));
+                    valX = Number(x.innerHTML.substring(startOfRepX + 2));
+                    valY = Number(y.innerHTML.substring(startOfRepY + 2));
                 }
                 else if (x.innerHTML.match(matcher) != null) {
                     valX = createZeroDate(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
@@ -1290,24 +1318,24 @@ function sortTable(n, table) {
                     break;
                 }
             } else if (dir == "desc") {
-                
-                if (x.innerHTML.includes("Level")){
-                    startOfRepX = x.children[0].innerHTML.substring(6,6+2);
-                    startOfRepY = y.children[0].innerHTML.substring(6,6+2);
-                    if (startOfRepX.includes("/")){
-                        startOfRepX =  startOfRepX.substring(0,1);
+
+                if (x.innerHTML.includes("Level")) {
+                    startOfRepX = x.children[0].innerHTML.substring(6, 6 + 2);
+                    startOfRepY = y.children[0].innerHTML.substring(6, 6 + 2);
+                    if (startOfRepX.includes("/")) {
+                        startOfRepX = startOfRepX.substring(0, 1);
                     }
-                    if (startOfRepY.includes("/")){
-                        startOfRepY = startOfRepY.substring(0,1);
+                    if (startOfRepY.includes("/")) {
+                        startOfRepY = startOfRepY.substring(0, 1);
                     }
                     valX = Number(startOfRepX);
                     valY = Number(startOfRepY);
                 }
-                else if (x.innerHTML.match(bestRepMatcher) != null){
+                else if (x.innerHTML.match(bestRepMatcher) != null) {
                     startOfRepX = x.innerHTML.indexOf(":");
                     startOfRepY = y.innerHTML.indexOf(":");
-                    valX = Number(x.innerHTML.substring(startOfRepX+2));
-                    valY = Number(y.innerHTML.substring(startOfRepY+2));
+                    valX = Number(x.innerHTML.substring(startOfRepX + 2));
+                    valY = Number(y.innerHTML.substring(startOfRepY + 2));
                 }
                 else if (x.innerHTML.match(matcher) != null) {
                     valX = createZeroDate(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
@@ -1559,13 +1587,13 @@ function translate(word) {
             return "Monatsbestleistung";
         default:
             if (word.search("Overall") != -1) {
-                return word.replace("Overall", " Gesamt");
+                return word.replace("Overall", "[Gesamt] - ");
             }
             if (word.search("Day") != -1) {
-                return word.replace("Day", " an einem Tag");
+                return word.replace("Day", "[Täglich] - ");
             }
             if (word.search("Month") != -1) {
-                return word.replace("Month", "  in einem Monat");
+                return word.replace("Month", "[Monatlich] - ");
             }
             return word;
     }

@@ -306,6 +306,7 @@ function saveAndRefreshPlayer(playerId) {
 						registeredPlayers: FITNESS_MANAGER.registeredPlayers,
 						playerList: playerList,
 						compInfo:FITNESS_MANAGER.dailyWins,
+						eventLog:FITNESS_MANAGER.eventLog,
 					});
 				}
 
@@ -333,6 +334,7 @@ function saveAndRefreshEverything() {
 							registeredPlayers: FITNESS_MANAGER.registeredPlayers,
 							playerList: playerList,
 							compInfo:FITNESS_MANAGER.dailyWins,
+							eventLog:FITNESS_MANAGER.eventLog,
 						});
 					}
 				});
