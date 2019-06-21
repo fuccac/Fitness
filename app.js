@@ -545,15 +545,12 @@ setInterval(function () {
 		FITNESS_MANAGER.uploadTimer = 0;
 		if (FITNESS_MANAGER.needsUpload.history) {
 			saveHistory();
-			FITNESS_MANAGER.needsUpload.history = false;
 		}
 		if (FITNESS_MANAGER.needsUpload.registeredPlayers) {
 			saveRegisteredPlayers();
-			FITNESS_MANAGER.needsUpload.registeredPlayers = false;
 		}
 		if (FITNESS_MANAGER.needsUpload.exerciseList) {
 			saveExerciseList();
-			FITNESS_MANAGER.needsUpload.exerciseList = false;
 		}
 	}
 
