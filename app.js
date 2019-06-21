@@ -428,8 +428,11 @@ function loadSaveFiles() {
 				logFile.log(callback.msg, false, callback.sev);
 				dropbox.downloadFile(DB_TOKEN, config.REG_PLAYERS_FILE_NAME, function (callback) {
 					logFile.log(callback.msg, false, callback.sev);
-					loadFitnessManager();
-					FITNESS_MANAGER.addToEventLog("Server gestartet");
+					dropbox.downloadFile(DB_TOKEN, config.EVENT_LOG_FILE_NAME, function (callback) {
+						logFile.log(callback.msg, false, callback.sev);
+						loadFitnessManager();
+						FITNESS_MANAGER.addToEventLog("Server gestartet");
+					});
 				});
 			});
 		});
@@ -450,9 +453,16 @@ function loadFitnessManager() {
 			storageManager.get(config.REG_PLAYERS_FILE_NAME.replace(".json", "")).then(result => {
 				FITNESS_MANAGER.registeredPlayers = result.registeredPlayers;
 				logFile.log("registeredPlayers Loaded", false, 0);
-				FITNESS_MANAGER.recalculateAllExercisesWithHistory(function (result) {
-					logFile.log(result, false, 0);
-				});
+				storageManager.get(config.EVENT_LOG_FILE_NAME.replace(".json", "")).then(result => {
+					FITNESS_MANAGER.eventLog = result.eventLog;
+					FITNESS_MANAGER.recalculateAllExercisesWithHistory(function (result) {
+						logFile.log(result, false, 0);
+					});
+				})
+					.catch((err) => {
+						console.log(err);
+						logFile.log("eventlog file missing or corrupted", false, 1);
+					});
 			})
 				.catch((err) => {
 					console.log(err);
@@ -516,6 +526,18 @@ function saveRegisteredPlayers() {
 	});
 }
 
+function saveEventLog() {
+	storageManager.put({ eventLog: FITNESS_MANAGER.eventLog, id: config.EVENT_LOG_FILE_NAME.replace(".json", "") }).then(result => {
+		logFile.log("eventlog saved", false, 0);
+		dropbox.uploadFile(DB_TOKEN, config.EVENT_LOG_FILE_NAME, function (result) {
+			logFile.log(result.msg, false, result.sev);
+			if (result.sev < 2) {
+				FITNESS_MANAGER.needsUpload.eventLog = false;
+			}
+		});
+	});
+}
+
 function loadUsers() {
 	storageManager.get(config.USERS_FILE_NAME.replace(".json", "")).then(result => {
 		USERS = result.userlist;
@@ -551,6 +573,9 @@ setInterval(function () {
 		}
 		if (FITNESS_MANAGER.needsUpload.exerciseList) {
 			saveExerciseList();
+		}
+		if (FITNESS_MANAGER.needsUpload.eventLog){
+			saveEventLog();
 		}
 	}
 

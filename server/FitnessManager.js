@@ -31,10 +31,14 @@ class FitnessManager {
         this.needsUpload = {
             history: false,
             registeredPlayers: false,
-            exerciseList: false
+            exerciseList: false,
+            eventLog: false
         };
         this.dailyWins = {};
-        this.eventLog = {};
+        this.eventLog = {
+            time:[],
+            msg:[]
+        };
 
         //this.importGoogleSheetStuff(function (result) {
         //    logFile.log(result,false,0);
@@ -554,12 +558,17 @@ class FitnessManager {
             if (this.dailyWins[dailyWinner] != undefined) {
                 this.dailyWins[dailyWinner]++;
                 this.dailyWins[lastWinner]--;
-                this.addToEventLog(dailyWinner + " hat mit " + max + " Punkten den Tagessieg, bis jetzt!");
+                if (dailyWinner != "Keiner"){
+                    this.addToEventLog(dailyWinner + " hat mit " + max + " Punkten den Tagessieg, bis jetzt!");
+                }
+                
             }
             else {
                 this.dailyWins[dailyWinner] = 1;
-                this.addToEventLog(dailyWinner + " hat mit " + max + " Punkten den Tagessieg, bis jetzt!");
                 this.dailyWins[lastWinner]--;
+                if (dailyWinner != "Keiner"){
+                    this.addToEventLog(dailyWinner + " hat mit " + max + " Punkten den Tagessieg, bis jetzt!");
+                }
             }
         }
 
@@ -1296,8 +1305,15 @@ class FitnessManager {
             hours = "0" + hours.toString();
         }
 
-        this.eventLog[calc.getDateFormat(date, "DD.MM.YYYY") + " | " + hours + ":" + minutes + ":" + seconds] = msg;
+        if (this.eventLog.time.length == 50){
+            this.eventLog.time = this.eventLog.time.slice(1);
+            this.eventLog.msg = this.eventLog.msg.slice(1);
+        }
+        this.eventLog.time.push(calc.getDateFormat(date, "DD.MM.YYYY") + " | " + hours + ":" + minutes + ":" + seconds);
+        this.eventLog.msg.push(msg);
 
+        
+        this.needsUpload.eventLog = true;
     }
 
 

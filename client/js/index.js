@@ -1029,8 +1029,8 @@ function generateCompetitionData(data) {
 
 function generateEventLog(data) {
     div_eventLog.innerHTML = "";
-    for (var date in data.eventLog) {
-        div_eventLog.innerHTML = div_eventLog.innerHTML + "<li>" + date + " - " + data.eventLog[date] + "</li>";
+    for (var eventIterator = 0;eventIterator<data.eventLog.time.length;eventIterator++) {
+        div_eventLog.innerHTML = div_eventLog.innerHTML + "<li>" + data.eventLog.time[eventIterator] + " - " + data.eventLog.msg[eventIterator] + "</li>";
     }
 
 }

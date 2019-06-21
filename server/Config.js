@@ -16,6 +16,7 @@ function Config() {
     this.HISTORY_FILE_NAME = "history.json";
     this.USERS_FILE_NAME = "users.json";
     this.LOG_FILE_NAME = "log.txt";
+    this.EVENT_LOG_FILE_NAME = "eventlog.json";
     this.LOG_PATH = "./saves/log.txt";
     this.RECALCULATE_HISTORY_ON_CHANGES = 0;
 }
