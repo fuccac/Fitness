@@ -32,46 +32,24 @@ class FitnessManager {
             history: false,
             registeredPlayers: false,
             exerciseList: false,
-            eventLog: false
+            eventLog: false,
+            achievements: false,
         };
         this.dailyWins = {};
+        this.monthlyWins = {};
+        this.monthlyData = {};
+        this.fullGraph = {};
         this.eventLog = {
-            time:[],
-            msg:[]
+            time: [],
+            msg: []
         };
-
-        //this.importGoogleSheetStuff(function (result) {
-        //    logFile.log(result,false,0);
-        //}.bind(this));
+        this.achievements = {};
+        this.loadingDone = false;
+        this.maxExerciseCounts = {};
+        this.maxExerciseCountsCategory = {};
 
     }
 
-    importGoogleSheetStuff(result) {
-        this.importExercisesFromGoogle(function (resultEx) {
-            logFile.log(resultEx, false, 0);
-            this.importHistoryFromGoogle(function (resultHistory) {
-                logFile.log(resultHistory, false, 0);
-                result("GoogleSheet Stuff loaded");
-            }.bind(this));
-
-        }.bind(this));
-    }
-
-    recalculateAllExercisesWithHistory(result) {
-        for (var id in this.exerciseList) {
-            this.recalculateExercise(id, this.exerciseList[id].name, function (result) {
-
-            });
-
-        }
-        this.calculateHistoryDailyMax();
-        result("recalculated all exercises with history + dailyMax");
-
-        setTimeout(function () {
-            this.needsUpload.history = true;
-            this.needsUpload.exerciseList = true;
-        }.bind(this), 10);
-    }
 
     addExerciseAchievement(exId, repsToGetOverall, repsToGetDaily, repsToGetMonthly, achievementCategory) {
         repsToGetOverall = repsToGetOverall.map(Number);
@@ -115,204 +93,40 @@ class FitnessManager {
     }
 
     createGraph(fromDate, toDate) {
-        var chunk = this.getDefinedHistory(fromDate, toDate);
-        var graph = {};
-        for (var playerName in this.registeredPlayers) {
-            var entryFound = false;
-            var xAxis = [];
-            var yAxis = [];
-            var date;
-            fromDate = calc.createZeroDate(fromDate);
-            var sumPoints = this.calculatePointsFromHistory(playerName, fromDate).total;
-            for (var historyIterator = 0; historyIterator < chunk.length; historyIterator++) {
-                entryFound = false;
-                for (var historyEntryIterator = 0; historyEntryIterator < chunk[historyIterator].points.length; historyEntryIterator++) {
-                    if (chunk[historyIterator].playerName[historyEntryIterator].toUpperCase() != playerName.toUpperCase()) {
-                        continue;
-                    }
+        fromDate = calc.createZeroDate(fromDate);
+        toDate = calc.createZeroDate(toDate);
 
-                    sumPoints += chunk[historyIterator].points[historyEntryIterator];
-                    entryFound = true;
-                    date = chunk[historyIterator].date[historyEntryIterator];
+        var resultGraph = {};
+        var firstIndex = -1;
+        var lastIndex = -1;
 
+        for (var playerName in this.fullGraph) {
+            var currentGraph = this.fullGraph[playerName];
+            for (var graphIterator = 0; graphIterator < currentGraph.yAxis.length; graphIterator++) {
+                if (firstIndex == -1 && calc.createZeroDate(currentGraph.yAxis[graphIterator]) >= fromDate) {
+                    firstIndex = graphIterator;
                 }
-                if (entryFound) {
-                    xAxis[historyIterator] = sumPoints;
-                    yAxis[historyIterator] = date;
+                if (lastIndex == -1 && calc.createZeroDate(currentGraph.yAxis[graphIterator]) > toDate) {
+                    lastIndex = graphIterator;
                 }
-                else {
-                    xAxis[historyIterator] = sumPoints;
-                    var newDate = calc.createZeroDate(yAxis[historyIterator]);
-                    newDate.setDate(newDate.getDate() + 1);
-                    yAxis[historyIterator] = calc.getDateFormat(newDate, "DD.MM.YYYY");
+                if (firstIndex != -1 && lastIndex != -1) {
+                    break;
                 }
-
             }
-
-            graph[playerName] = {
-                xAxis: xAxis,
-                yAxis: yAxis,
+            if (lastIndex == -1) {
+                lastIndex = currentGraph.yAxis.length - 1;
+            }
+            resultGraph[playerName] = {
+                yAxis: currentGraph.yAxis.slice(firstIndex, lastIndex),
+                xAxis: currentGraph.xAxis.slice(firstIndex, lastIndex)
             };
+
         }
-        //calc.getDateFormat(date,"DD.MM.YYYY");
-        return graph;
+        return resultGraph;
     }
 
     createMonthChartData() {
-
-        var data = {};
-
-        var chunk = this.getDefinedHistory("1970-01-01", "9999-01-01");
-        var MONTHS = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-
-        for (var historyIterator = 0; historyIterator < chunk.length; historyIterator++) {
-            for (var historyEntryIterator = 0; historyEntryIterator < chunk[historyIterator].points.length; historyEntryIterator++) {
-                var currentDate = chunk[historyIterator].date[historyEntryIterator];
-                var currentMonth = MONTHS[Number(currentDate.substring(5, 5 + 2)) - 1] + " " + currentDate.substring(0, 0 + 4);
-                var currentName = chunk[historyIterator].playerName[historyEntryIterator];
-
-
-                if (data[currentMonth] == undefined) {
-                    var player = {};
-                    player[currentName] = Number(chunk[historyIterator].points[historyEntryIterator]);
-                    data[currentMonth] = player;
-
-                }
-                else {
-                    if (data[currentMonth][currentName] == undefined) {
-                        data[currentMonth][currentName] = Number(chunk[historyIterator].points[historyEntryIterator]);
-                    }
-                    else {
-                        data[currentMonth][currentName] += Number(chunk[historyIterator].points[historyEntryIterator]);
-                    }
-
-                }
-
-            }
-        }
-        return data;
-    }
-
-    importExercisesFromGoogle(result) {
-        var usesWeight = false;
-        for (var entryNo in googleSheetList.JSONExportÜbungen) {
-            var entry = googleSheetList.JSONExportÜbungen[entryNo];
-            if (entry.exname == undefined || entry.diff == undefined) {
-                continue;
-            }
-            if (entry.baseWeight > 0) {
-                usesWeight = true;
-            }
-            else {
-                usesWeight = false;
-            }
-            var exercise = new Exercise(
-                entry.exname,
-                entry.diff,
-                entry.diff,
-                entry.diff,
-                entry.equip,
-                usesWeight,
-                entry.baseWeight,
-                entry.exname + " Import from GS",
-                "caf",
-                entry.type,
-                entry.unit,
-                entry.bothSides
-            );
-
-            var achievementActive = false;
-            var repsToGetOverall;
-            var repsToGetDaily;
-            var repsToGetMonthly;
-            var achievementCategory;
-            var achievementText;
-            try {
-                repsToGetOverall = entry.repsToGetOverall.split(";").map(Number);
-                achievementActive = true;
-            }
-            catch (err) {
-                repsToGetOverall = [0];
-            }
-            try {
-                repsToGetDaily = entry.repsToGetDaily.split(";").map(Number);
-                achievementActive = true;
-            }
-            catch (err) {
-                repsToGetDaily = [0];
-            }
-            try {
-                repsToGetMonthly = entry.repsToGetMonthly.split(";").map(Number);
-                achievementActive = true;
-            }
-            catch (err) {
-                repsToGetMonthly = [0];
-            }
-            try {
-                achievementCategory = entry.achievementCategory;
-                if (achievementCategory == undefined) {
-                    achievementCategory = entry.exname;
-                }
-            }
-            catch (err) {
-                achievementCategory = entry.exname;
-            }
-            try {
-                achievementText = entry.achievementText;
-                if (achievementText == undefined) {
-                    achievementText = "";
-                }
-            }
-            catch (err) {
-                achievementText = "";
-            }
-            exercise.achievementInfo.achievementActive = achievementActive;
-            exercise.achievementInfo.repsToGetOverall = repsToGetOverall;
-            exercise.achievementInfo.repsToGetDaily = repsToGetDaily;
-            exercise.achievementInfo.repsToGetMonthly = repsToGetMonthly;
-            exercise.achievementInfo.achievementCategory = achievementCategory;
-            exercise.achievementInfo.textDaily = achievementText;
-            exercise.achievementInfo.textMonthly = achievementText;
-            exercise.achievementInfo.textOverall = achievementText;
-
-            this.addExercise(exercise);
-        }
-        result("Exercises from JSON imported.");
-
-    }
-
-    importHistoryFromGoogle(result) {
-        var historyData = [googleSheetHistoryCaf, googleSheetHistoryGjf, googleSheetHistoryJonny, googleSheetHistoryMuch, googleSheetHistoryPhilipp, googleSheetHistoryLisi];
-        var nameData = ["caf", "gjf", "jonny", "much", "philipp", "lisi"];
-        var date;
-        var id;
-        for (var i = 0; i < historyData.length; i++) {
-            for (var dayEntryNo in historyData[i].JSONExportHistory) {
-                var dayEntry = historyData[i].JSONExportHistory[dayEntryNo];
-                date = calc.createZeroDate(dayEntry.Datum);
-                for (var dayEntryKeyName in dayEntry) {
-                    var dayEntryKeyValue = dayEntry[dayEntryKeyName];
-                    var exerciseId = this.existExerciseName(dayEntryKeyName);
-                    if (exerciseId > 0) {
-                        id = Math.random().toFixed(16).slice(2);
-                        var weight = this.exerciseList[exerciseId].baseWeight;
-                        this.addToHistory(id, nameData[i], exerciseId, weight, dayEntryKeyValue, date);
-                    }
-                    else {
-                        if (dayEntryKeyName != "Datum") {
-                            logFile.log(dayEntry, false, 0);
-                            logFile.log(dayEntryKeyValue, false, 0);
-                            logFile.log(dayEntryKeyName, false, 0);
-                        }
-                    }
-                }
-            }
-        }
-        for (var nameIterator = 0; nameIterator < nameData.length; nameIterator++) {
-            this.calculatePointsFromHistory(nameData[nameIterator]);
-        }
-
-        result("Histories from JSON imported.");
+        return this.monthlyData;
     }
 
     addExercise(exercise) {
@@ -346,8 +160,8 @@ class FitnessManager {
         var achievementCategory;
         var currentLevel = 0;
 
-        var earned = player.earnedAchievements;
-        var notEarned = player.notEarnedAchievements;
+        var earned = this.achievements[player.name].earnedAchievements;
+        var notEarned = this.achievements[player.name].notEarnedAchievements;
 
         achievementIterator = 0;
         for (achievementCategory in notEarned) {
@@ -414,88 +228,8 @@ class FitnessManager {
         this.exerciseList[data.id].equipment = data.equipment;
 
         calc.calculateNewFactor(this.exerciseList[data.id]);
-        this.recalculateExercise(data.id, data.name, function (result) {
-            logFile.log(result, false, 0);
-            this.needsUpload.exerciseList = true;
-        }.bind(this));
         this.addToEventLog(editor + " bearbeitet eine Übung: " + data.name);
         result("editExercise done");
-    }
-
-    recalculateExercise(id, exName, result) {
-        var sumPoints = 0;
-        var currentCount = 0;
-        var currentWeight = 0;
-        var currentName;
-        var points;
-        var pointsPerPlayer = {};
-        var repsPerPlayer = {};
-
-        for (var historyDate in this.history) {
-            var historyEntry = this.history[historyDate];
-            for (var historyIterator = 0; historyIterator < historyEntry.exerciseId.length; historyIterator++) {
-                if (historyEntry.exerciseId[historyIterator] != id) {
-                    continue;
-                }
-                currentWeight = historyEntry.weight[historyIterator];
-                currentCount = historyEntry.count[historyIterator];
-                currentName = historyEntry.playerName[historyIterator];
-                if (config.RECALCULATE_HISTORY_ON_CHANGES) {
-                    points = calc.calculatePoints(this.exerciseList[historyEntry.exerciseId[historyIterator]], currentWeight, currentCount);
-                    historyEntry.points[historyIterator] = points;
-                }
-                else {
-                    points = historyEntry.points[historyIterator];
-                }
-
-                historyEntry.exName[historyIterator] = exName;
-                sumPoints += Number(points);
-
-
-                if (repsPerPlayer[currentName] == undefined) {
-                    repsPerPlayer[currentName] = currentCount;
-                }
-                else {
-                    repsPerPlayer[currentName] += currentCount;
-                }
-
-                if (pointsPerPlayer[currentName] == undefined) {
-                    pointsPerPlayer[currentName] = points;
-                }
-                else {
-                    pointsPerPlayer[currentName] += points;
-                }
-
-                continue;
-            }
-
-        }
-        this.exerciseList[id].points = sumPoints;
-        this.exerciseList[id].repsPerPlayer = repsPerPlayer;
-        this.exerciseList[id].pointsPerPlayer = pointsPerPlayer;
-        return result("recalculate all Exercises " + exName + " done");
-
-
-    }
-
-    existExercise(name, equipment) {
-        for (var i in this.exerciseList) {
-            var exercise = this.exerciseList[i];
-            if (exercise.name === name && exercise.equipment === equipment) {
-                return exercise.id;
-            }
-        }
-        return 0;
-    }
-
-    existExerciseName(name) {
-        for (var i in this.exerciseList) {
-            var exercise = this.exerciseList[i];
-            if (exercise.name === name) {
-                return exercise.id;
-            }
-        }
-        return 0;
     }
 
     deleteExercise(id, result) {
@@ -529,56 +263,13 @@ class FitnessManager {
 
         this.addToEventLog(deleter + " entfernt einen Eintrag aus seiner History: " + exercise + " am " + date);
 
-        result("deleted History Entry: " + exerciseIdToRecalculate + " | " + this.checkDailyWinner(date));
+        result("deleted History Entry: " + exerciseIdToRecalculate + " | "); //+ this.checkDailyWinner(date)
         setTimeout(function () {
             this.needsUpload.history = true;
             this.needsUpload.exerciseList = true;
         }.bind(this), 10);
 
     }
-
-    checkDailyWinner(date) {
-        var max = 100;
-        var dailyWinner = "Keiner";
-
-        if (this.history[date].dailyWinner == undefined) {
-            this.history[date].dailyWinner = dailyWinner;
-        }
-        for (var playerName in this.history[date].dailySum) {
-            if (this.history[date].dailySum[playerName] > max) {
-                max = this.history[date].dailySum[playerName];
-                dailyWinner = playerName;
-            }
-        }
-
-        if (this.history[date].dailyWinner != dailyWinner) {
-            var lastWinner = this.history[date].dailyWinner;
-
-            this.history[date].dailyWinner = dailyWinner;
-            if (this.dailyWins[dailyWinner] != undefined) {
-                this.dailyWins[dailyWinner]++;
-                this.dailyWins[lastWinner]--;
-                if (dailyWinner != "Keiner"){
-                    this.addToEventLog(dailyWinner + " hat mit " + max + " Punkten den Tagessieg, bis jetzt!");
-                }
-                
-            }
-            else {
-                this.dailyWins[dailyWinner] = 1;
-                this.dailyWins[lastWinner]--;
-                if (dailyWinner != "Keiner"){
-                    this.addToEventLog(dailyWinner + " hat mit " + max + " Punkten den Tagessieg, bis jetzt!");
-                }
-            }
-        }
-
-
-
-
-        return "daily Winner of date " + date + " calculated";
-
-    }
-
 
     getDefinedHistory(fromDate, toDate) {
         fromDate = calc.createZeroDate(fromDate);
@@ -629,7 +320,7 @@ class FitnessManager {
                         this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
                     }
                     this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name);
-                    result("added workout to existing history" + " | " + this.checkDailyWinner(date));
+                    result("added workout to existing history" + " | "); // + this.checkDailyWinner(date)
 
                     setTimeout(function () {
                         this.needsUpload.history = true;
@@ -701,7 +392,7 @@ class FitnessManager {
         }
 
         this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name);
-        result("added workout to history" + " | " + this.checkDailyWinner(date));
+        result("added workout to history" + " | "); //+ this.checkDailyWinner(date)
 
 
         setTimeout(function () {
@@ -710,18 +401,23 @@ class FitnessManager {
         }.bind(this), 10);
     }
 
-    checkPlayerStuff(player, result) {
-        this.setBestExerciserNumber(player, function (result) {
-            logFile.log(result, false, 0);
-            this.checkForAchievements(player, function (result) {
+    checkPlayerStuff(player, playerStuffResult) {
+        this.fullRefresh(function (fullRefreshResult) {
+            logFile.log(fullRefreshResult, false, 0);
+            this.setBestExerciserNumber(player, function (result) {
                 logFile.log(result, false, 0);
-
+                this.checkForAchievements(player, function (result) {
+                    logFile.log(result, false, 0);
+                    playerStuffResult("checkPlayerStuff done");
+                }.bind(this));
             }.bind(this));
         }.bind(this));
-        result("checkPlayerStuff done");
+
+
     }
 
     setBestExerciserNumber(player, result) {
+        let start = Date.now();
         var sum = 0;
         for (var exId in this.exerciseList) {
             var exercise = this.exerciseList[exId];
@@ -740,71 +436,18 @@ class FitnessManager {
         }
 
         player.bestExercises = sum;
-        result("setBestExerciserNumber done");
+        let end = Date.now();
+        result(`setBestExerciserNumber done in ${end - start}`);
     }
-
-    getMaxExerciseCounts(exId, playerName, ignoreCategory) {
-        var sumMonthly = 0;
-        var sumDaily = 0;
-        var sumOverall = 0;
-        var exCat;
-        if (ignoreCategory) {
-            exCat = undefined;
-        }
-        else {
-            exCat = this.exerciseList[exId].achievementInfo.achievementCategory;
-        }
-        var maxSumMonthly = 0;
-        var maxSumDaily = 0;
-
-        var historyChunk = this.getDefinedHistory("1970-01-01", "9999-01-01");
-        if (historyChunk.length == 0) {
-            return 0;
-        }
-        var currentDate = calc.createZeroDate(historyChunk[0].date[0]);
-        for (var historyIterator = 0; historyIterator < historyChunk.length; historyIterator++) {
-            sumDaily = 0;
-            var newDate = calc.createZeroDate(historyChunk[historyIterator].date[0]);
-            if (currentDate < newDate && ((currentDate.getMonth() < newDate.getMonth()) || (currentDate.getMonth() > newDate.getMonth() && currentDate.getFullYear() < newDate.getFullYear()))) {
-                //new Month
-                currentDate = calc.createZeroDate(historyChunk[historyIterator].date[0]);
-                sumMonthly = 0;
-            }
-            var historyEntry = historyChunk[historyIterator];
-            for (var entryIterator in historyEntry.playerName) {
-                var currentCategory = this.exerciseList[historyEntry.exerciseId[entryIterator]].achievementInfo.achievementCategory;
-                if ((historyEntry.playerName[entryIterator].toUpperCase() === playerName.toUpperCase() && historyEntry.exerciseId[entryIterator] == exId) ||
-                    (historyEntry.playerName[entryIterator].toUpperCase() === playerName.toUpperCase() && currentCategory == exCat)) {
-                    sumMonthly += Number(historyEntry.count[entryIterator]);
-                    sumDaily += Number(historyEntry.count[entryIterator]);
-                    sumOverall += Number(historyEntry.count[entryIterator]);
-                }
-                else {
-                    continue;
-                }
-
-            }
-            if (sumMonthly > maxSumMonthly) {
-                maxSumMonthly = sumMonthly;
-            }
-            if (sumDaily > maxSumDaily) {
-                maxSumDaily = sumDaily;
-            }
-
-        }
-        var sum = {
-            daily: maxSumDaily,
-            monthly: maxSumMonthly,
-            overall: sumOverall
-        };
-        return sum;
-    }
-
 
     checkForAchievements(player, result) {
+        let start = Date.now(); // milliseconds count from 1 Jan 1970
         //exercise Achievements
-        player.earnedAchievements = {};
-        player.notEarnedAchievements = {};
+        this.achievements[player.name] = {
+            earnedAchievements: {},
+            notEarnedAchievements: {}
+        };
+
         var endLastLevel;
         var endThisLevel;
         var diff;
@@ -816,23 +459,24 @@ class FitnessManager {
                 continue;
             }
             var exCat = this.exerciseList[exId].achievementInfo.achievementCategory;
-            var sum = this.getMaxExerciseCounts(exId, player.name, false);
-            var playerReps = sum.overall;
-            var playerRepsMonthly = sum.monthly;
-            var repsToGetDaily = sum.daily;
+
+            //this.getMaxExerciseCounts(exId, player.name, false);
+            var playerReps = this.maxExerciseCountsCategory[exCat].overall[player.name] == undefined ? 0 : this.maxExerciseCountsCategory[exCat].overall[player.name];
+            var playerRepsMonthly = this.maxExerciseCountsCategory[exCat].monthly[player.name] == undefined ? 0 : this.maxExerciseCountsCategory[exCat].monthly[player.name];
+            var repsToGetDaily = this.maxExerciseCountsCategory[exCat].daily[player.name] == undefined ? 0 : this.maxExerciseCountsCategory[exCat].daily[player.name];
             var repsThisLevel;
 
             for (var levelOverallIterator = 0; levelOverallIterator < exercise.achievementInfo.repsToGetOverall.length; levelOverallIterator++) {
                 if (exercise.achievementInfo.repsToGetOverall[levelOverallIterator] > 0) {
                     if (playerReps >= exercise.achievementInfo.repsToGetOverall[levelOverallIterator]) {
-                        player.earnedAchievements["Overall" + exCat] = {
+                        this.achievements[player.name].earnedAchievements["Overall" + exCat] = {
                             level: (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
                             text: exercise.achievementInfo.textOverall,
                             progress: playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
                             percent: 100,
                         };
                         if (levelOverallIterator == exercise.achievementInfo.repsToGetOverall.length) {
-                            delete player.notEarnedAchievements["Overall" + exCat];
+                            delete this.achievements[player.name].notEarnedAchievements["Overall" + exCat];
                         }
                     }
                     else {
@@ -846,7 +490,7 @@ class FitnessManager {
                         else {
                             percent = playerReps / exercise.achievementInfo.repsToGetOverall[levelOverallIterator] * 100;
                         }
-                        player.notEarnedAchievements["Overall" + exCat] = {
+                        this.achievements[player.name].notEarnedAchievements["Overall" + exCat] = {
                             level: (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
                             text: exercise.achievementInfo.textOverall,
                             progress: playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
@@ -862,7 +506,7 @@ class FitnessManager {
             for (var levelMonthIterator = 0; levelMonthIterator < exercise.achievementInfo.repsToGetMonthly.length; levelMonthIterator++) {
                 if (exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] > 0) {
                     if (playerRepsMonthly >= exercise.achievementInfo.repsToGetMonthly[levelMonthIterator]) {
-                        player.earnedAchievements["Month" + exCat] = {
+                        this.achievements[player.name].earnedAchievements["Month" + exCat] = {
                             level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
                             text: exercise.achievementInfo.textMonthly,
                             progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
@@ -881,7 +525,7 @@ class FitnessManager {
                         else {
                             percent = playerRepsMonthly / exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] * 100;
                         }
-                        player.notEarnedAchievements["Month" + exCat] = {
+                        this.achievements[player.name].notEarnedAchievements["Month" + exCat] = {
                             level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
                             text: exercise.achievementInfo.textMonthly,
                             progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
@@ -897,7 +541,7 @@ class FitnessManager {
             for (var levelDayIterator = 0; levelDayIterator < exercise.achievementInfo.repsToGetDaily.length; levelDayIterator++) {
                 if (exercise.achievementInfo.repsToGetDaily[levelDayIterator] > 0) {
                     if (repsToGetDaily >= exercise.achievementInfo.repsToGetDaily[levelDayIterator]) {
-                        player.earnedAchievements["Day" + exCat] = {
+                        this.achievements[player.name].earnedAchievements["Day" + exCat] = {
                             level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
                             text: exercise.achievementInfo.textDaily,
                             progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
@@ -915,7 +559,7 @@ class FitnessManager {
                         else {
                             percent = repsToGetDaily / exercise.achievementInfo.repsToGetDaily[levelDayIterator] * 100;
                         }
-                        player.notEarnedAchievements["Day" + exCat] = {
+                        this.achievements[player.name].notEarnedAchievements["Day" + exCat] = {
                             level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
                             text: exercise.achievementInfo.textDaily,
                             progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
@@ -946,7 +590,7 @@ class FitnessManager {
 
                         for (levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
                             if (player.points.dailyMax >= needArray[levelIterator]) {
-                                player.earnedAchievements[achievementName] = {
+                                this.achievements[player.name].earnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: player.points.dailyMax + "/" + needArray[levelIterator],
@@ -964,7 +608,7 @@ class FitnessManager {
                                 else {
                                     percent = player.points.dailyMax / needArray[levelIterator] * 100;
                                 }
-                                player.notEarnedAchievements[achievementName] = {
+                                this.achievements[player.name].notEarnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: player.points.dailyMax.toFixed(2) + "/" + needArray[levelIterator],
@@ -985,7 +629,7 @@ class FitnessManager {
 
                         for (levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
                             if (player.points.monthlyMax >= needArray[levelIterator]) {
-                                player.earnedAchievements[achievementName] = {
+                                this.achievements[player.name].earnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: player.points.monthlyMax + "/" + needArray[levelIterator],
@@ -1003,7 +647,7 @@ class FitnessManager {
                                 else {
                                     percent = player.points.monthlyMax / needArray[levelIterator] * 100;
                                 }
-                                player.notEarnedAchievements[achievementName] = {
+                                this.achievements[player.name].notEarnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: player.points.monthlyMax.toFixed(2) + "/" + needArray[levelIterator],
@@ -1024,7 +668,7 @@ class FitnessManager {
 
                         for (levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
                             if (player.points.total >= needArray[levelIterator]) {
-                                player.earnedAchievements[achievementName] = {
+                                this.achievements[player.name].earnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: player.points.total + "/" + needArray[levelIterator],
@@ -1042,7 +686,7 @@ class FitnessManager {
                                 else {
                                     percent = player.points.total / needArray[levelIterator] * 100;
                                 }
-                                player.notEarnedAchievements[achievementName] = {
+                                this.achievements[player.name].notEarnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: player.points.total.toFixed(2) + "/" + needArray[levelIterator],
@@ -1067,7 +711,7 @@ class FitnessManager {
 
                         for (levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
                             if (this.dailyWins[player.name] >= needArray[levelIterator]) {
-                                player.earnedAchievements[achievementName] = {
+                                this.achievements[player.name].earnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.dailyWins[player.name] + "/" + needArray[levelIterator],
@@ -1085,7 +729,7 @@ class FitnessManager {
                                 else {
                                     percent = this.dailyWins[player.name] / needArray[levelIterator] * 100;
                                 }
-                                player.notEarnedAchievements[achievementName] = {
+                                this.achievements[player.name].notEarnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.dailyWins[player.name] + "/" + needArray[levelIterator],
@@ -1107,11 +751,13 @@ class FitnessManager {
 
 
         }
-        result("checkForAchievements done");
-
+        this.needsUpload.achievements = true;
+        let end = Date.now();
+        result(`checkForAchievements done in ${end - start} ms`);
     }
 
     getPlayerList(playerList, result) {
+        let start = Date.now();
         var returnList = {};
         for (var idPlayer in playerList) {
             returnList[playerList[idPlayer].name] = playerList[idPlayer].points;
@@ -1122,171 +768,13 @@ class FitnessManager {
                 continue;
             }
             else {
-                returnList[name] = this.calculatePointsFromHistory(name);
+                returnList[name] = this.registeredPlayers[name].points;
                 returnList[name].online = false;
             }
         }
-        return result(returnList);
-    }
-
-    calculatePointsFromHistory(name, toDateNotIncluding) {
-        if (toDateNotIncluding == "") {
-            toDateNotIncluding = calc.createZeroDate("9999-01-01");
-        }
-        else {
-            toDateNotIncluding = calc.createZeroDate(toDateNotIncluding);
-        }
-
-        var sumPoints5Days = 0;
-        var sumPointsToday = 0;
-        var sumPointsNegative = 0;
-        var sumPointsTotal = 0;
-        var sumPointsThisMonth = 0;
-        var sumPointsLastMonth = 0;
-        var sumPointsCardio = 0;
-        var sumPointsStrength = 0;
-        var thisMonthEntries = 0;
-        var thisYear = calc.createZeroDate().getFullYear();
-        var todayDate = calc.createZeroDate();
-        todayDate.setMonth(todayDate.getMonth() - 1);
-        var lastMonth = todayDate.getMonth();
-        var lastMonthYear = todayDate.getFullYear();
-        var thisMonth = calc.createZeroDate().getMonth();
-        var dateMinus5Days = calc.createZeroDate();
-        var dailyMax = 0;
-        var monthlyMax = 0;
-        var resultingMaxPerDay = 0;
-        var resultingMaxPerMonth = 0;
-        var currentMonth;
-        var currentYear;
-        todayDate = calc.createZeroDate();
-        dateMinus5Days.setDate(dateMinus5Days.getDate() - 5);
-        for (var dates in this.history) {
-            var currentDate = calc.createZeroDate(dates);
-            currentDate = calc.createZeroDate(dates);
-
-            if (currentDate.getMonth() > currentMonth && currentDate.getFullYear() >= currentYear ||
-                currentDate.getMonth() == currentMonth && currentDate.getFullYear() > currentYear ||
-                currentDate.getMonth() < currentMonth && currentDate.getFullYear() > currentYear) {
-                monthlyMax = 0;
-            }
-
-            currentMonth = currentDate.getMonth();
-            currentYear = currentDate.getFullYear();
-
-            if (currentDate >= toDateNotIncluding) {
-                continue;
-            }
-            var historyEntry = this.history[dates];
-            dailyMax = 0;
-            for (var iterator in historyEntry.playerName) {
-                var historyName = historyEntry.playerName[iterator];
-                var exerciseId = historyEntry.exerciseId[iterator];
-                if (historyName.toUpperCase() === name.toUpperCase()) {
-                    if (this.exerciseList[exerciseId].type === "Cardio") {
-                        sumPointsCardio += Number(historyEntry.points[iterator]);
-                    }
-                    else if (this.exerciseList[exerciseId].type === "Kraft") {
-                        sumPointsStrength += Number(historyEntry.points[iterator]);
-                    }
-                    sumPointsTotal += Number(historyEntry.points[iterator]);
-                    dailyMax += Number(historyEntry.points[iterator]);
-                    monthlyMax += Number(historyEntry.points[iterator]);
-                    if (currentDate > dateMinus5Days) {
-                        sumPoints5Days += Number(historyEntry.points[iterator]);
-                    }
-                    if (currentDate.getDate() == todayDate.getDate() && currentDate.getMonth() == todayDate.getMonth() && currentDate.getFullYear() == todayDate.getFullYear()) {
-                        sumPointsToday += Number(historyEntry.points[iterator]);
-                    }
-                    if (Number(historyEntry.points[iterator]) < 0) {
-                        sumPointsNegative += Math.abs(Number(historyEntry.points[iterator]));
-                    }
-                    if (currentDate.getMonth() == thisMonth && currentDate.getFullYear() == thisYear) {
-                        sumPointsThisMonth += Number(historyEntry.points[iterator]);
-                        thisMonthEntries++;
-                    }
-                    if (currentDate.getMonth() == lastMonth && currentDate.getFullYear() == lastMonthYear) {
-                        sumPointsLastMonth += Number(historyEntry.points[iterator]);
-                    }
-                }
-            }
-            if (dailyMax > resultingMaxPerDay) {
-                resultingMaxPerDay = dailyMax;
-            }
-            if (monthlyMax > resultingMaxPerMonth) {
-                resultingMaxPerMonth = monthlyMax;
-            }
-        }
-        var averageThisMonth = 0;
-        if (thisMonthEntries > 0) {
-            averageThisMonth = sumPointsThisMonth / thisMonthEntries;
-        }
-        var points = {
-            total: sumPointsTotal,
-            cardio: sumPointsCardio,
-            strength: sumPointsStrength,
-            negative: sumPointsNegative,
-            today: sumPointsToday,
-            diffLastMonth: sumPointsLastMonth - sumPointsThisMonth,
-            last5Days: sumPoints5Days,
-            thisMonth: sumPointsThisMonth,
-            dailyMax: resultingMaxPerDay,
-            monthlyMax: resultingMaxPerMonth,
-            averageThisMonth: averageThisMonth,
-        };
-
-        this.registeredPlayers[name] = sumPointsTotal;
-
-        setTimeout(function () {
-            this.needsUpload.registeredPlayers = true;
-        }.bind(this), 10);
-
-        return points;
-
-    }
-
-    setTime(d, h, m, s) {
-        d.setHours(h);
-        d.setMinutes(m);
-        d.setSeconds(s);
-    }
-
-
-    calculateHistoryDailyMax() {
-        var dailySum = {};
-        this.dailyWins = {};
-        for (var historyDate in this.history) {
-            var historyEntry = this.history[historyDate];
-            for (var historyIterator = 0; historyIterator < historyEntry.exerciseId.length; historyIterator++) {
-                if (dailySum[historyEntry.playerName[historyIterator]] == undefined) {
-                    dailySum[historyEntry.playerName[historyIterator]] = historyEntry.points[historyIterator];
-                }
-                else {
-                    dailySum[historyEntry.playerName[historyIterator]] += historyEntry.points[historyIterator];
-                }
-
-            }
-            this.history[historyDate].dailySum = dailySum;
-
-            var max = 100;
-            var dailyWinner = "Keiner";
-            for (var playerName in this.history[historyDate].dailySum) {
-                if (this.history[historyDate].dailySum[playerName] > max) {
-                    max = this.history[historyDate].dailySum[playerName];
-                    dailyWinner = playerName;
-                }
-            }
-
-            this.history[historyDate].dailyWinner = dailyWinner;
-            if (this.dailyWins[dailyWinner] != undefined) {
-                this.dailyWins[dailyWinner]++;
-            }
-            else {
-                this.dailyWins[dailyWinner] = 1;
-            }
-            dailySum = {};
-        }
-
+        let end = Date.now();
+        logFile.log(`getPlayerList done in ${end - start} ms`, false, 0);
+        result(returnList);
     }
 
     addToEventLog(msg) {
@@ -1305,18 +793,488 @@ class FitnessManager {
             hours = "0" + hours.toString();
         }
 
-        if (this.eventLog.time.length == 50){
+        if (this.eventLog.time.length == 50) {
             this.eventLog.time = this.eventLog.time.slice(1);
             this.eventLog.msg = this.eventLog.msg.slice(1);
         }
         this.eventLog.time.push(calc.getDateFormat(date, "DD.MM.YYYY") + " | " + hours + ":" + minutes + ":" + seconds);
         this.eventLog.msg.push(msg);
 
-        
+
         this.needsUpload.eventLog = true;
     }
 
 
+
+    addNewPlayer(name) {
+        this.registeredPlayers[name] = 0;
+        this.dailyWins[name] = 0;
+        this.needsUpload.registeredPlayers = true;
+    }
+
+
+    fullRefresh(result) {
+        let start = Date.now(); // milliseconds count from 1 Jan 1970
+
+        var chunk = this.getDefinedHistory(new Date("01/08/2000"), new Date("01/08/9999"));
+        //graph
+        var xAxis = {}; //points
+        var yAxis = []; //date
+
+        //exercise counts + reps
+        var repsPerPlayer = {};
+        var pointsPerPlayer = {};
+        var maxExerciseCountsDaily = {};
+        var maxExerciseCountsMonthly = {};
+        var maxExerciseCountsOverall = {};
+
+        var maxExerciseCountsCategoryDaily = {};
+        var maxExerciseCountsCategoryMonthly = {};
+        var maxExerciseCountsCategoryOverall = {};
+
+        //registered players
+        for (var playerName in this.registeredPlayers) {
+
+            var data = {
+                entries: 0,
+                points: {
+                    total: 0,
+                    cardio: 0,
+                    strength: 0,
+                    negative: 0,
+                    today: 0,
+                    diffLastMonth: 0,
+                    last5Days: 0,
+                    thisMonth: 0,
+                    dailyMax: 0,
+                    monthlyMax: 0,
+                    averageThisMonth: 0,
+                }
+            };
+            this.registeredPlayers[playerName] = data;
+        }
+        //daily max
+        var dailySum = {};
+        this.dailyWins = {};
+
+
+
+        //points
+        var MONTHS = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+        var thisYear = calc.createZeroDate().getFullYear();
+        var todayDate = calc.createZeroDate();
+        todayDate.setMonth(todayDate.getMonth() - 1);
+        var lastMonth = todayDate.getMonth();
+        var lastMonthYear = todayDate.getFullYear();
+        var thisMonth = calc.createZeroDate().getMonth();
+        var dateMinus5Days = calc.createZeroDate();
+        var currentMonth;
+        var currentYear;
+        todayDate = calc.createZeroDate();
+        dateMinus5Days.setDate(dateMinus5Days.getDate() - 5);
+        var sumPointsLastMonth = {};
+        var monthlySum = {};
+        var monthlyNegative = {};
+        var monthlySumWithNegative = {};
+        var daysThisMonth = todayDate.getDate();
+        var currentMonthName;
+
+        for (var overallIterator = 0; overallIterator < chunk.length; overallIterator++) {
+            var historyDate = chunk[overallIterator].date[0];
+            var historyEntry = this.history[historyDate];
+            //common
+            var currentDate = calc.createZeroDate(historyDate);
+            //graph
+            yAxis.push(historyDate);
+
+            //points
+
+            //exercise counts + reps
+            maxExerciseCountsDaily = {};
+            maxExerciseCountsCategoryDaily = {};
+
+
+            if (currentDate.getMonth() > currentMonth && currentDate.getFullYear() >= currentYear ||
+                currentDate.getMonth() == currentMonth && currentDate.getFullYear() > currentYear ||
+                currentDate.getMonth() < currentMonth && currentDate.getFullYear() > currentYear) {
+
+
+                monthlySum = {};
+                monthlyNegative = {};
+                monthlySumWithNegative = {};
+                maxExerciseCountsMonthly = {};
+                maxExerciseCountsCategoryMonthly = {};
+                this.monthlyWins = {};
+
+            }
+
+
+            currentMonth = currentDate.getMonth();
+            currentYear = currentDate.getFullYear();
+
+            for (var historyIteratorPerDate = 0; historyIteratorPerDate < historyEntry.playerName.length; historyIteratorPerDate++) {
+                // ENTRIES INSIDE DATE
+                // common
+                var historyName = historyEntry.playerName[historyIteratorPerDate];
+                var exerciseId = historyEntry.exerciseId[historyIteratorPerDate];
+                //set correct exercise names in history
+                this.history[historyDate].exName[historyIteratorPerDate] = this.exerciseList[exerciseId].name;
+
+
+                //exercise counts + reps
+                if (repsPerPlayer[exerciseId] == undefined) {
+                    repsPerPlayer[exerciseId] = {};
+                    repsPerPlayer[exerciseId][historyName] = historyEntry.count[historyIteratorPerDate];
+
+                }
+                else {
+                    if (repsPerPlayer[exerciseId][historyName] == undefined) {
+                        repsPerPlayer[exerciseId][historyName] = historyEntry.count[historyIteratorPerDate];
+                    } else {
+                        repsPerPlayer[exerciseId][historyName] += historyEntry.count[historyIteratorPerDate];
+                    }
+                }
+
+                if (pointsPerPlayer[exerciseId] == undefined) {
+                    pointsPerPlayer[exerciseId] = {};
+                    pointsPerPlayer[exerciseId][historyName] = historyEntry.points[historyIteratorPerDate];
+
+                }
+                else {
+                    if (pointsPerPlayer[exerciseId][historyName] == undefined) {
+                        pointsPerPlayer[exerciseId][historyName] = historyEntry.points[historyIteratorPerDate];
+                    } else {
+                        pointsPerPlayer[exerciseId][historyName] += historyEntry.points[historyIteratorPerDate];
+                    }
+                }
+
+                if (maxExerciseCountsMonthly[exerciseId] == undefined) {
+                    maxExerciseCountsMonthly[exerciseId] = {};
+                    maxExerciseCountsMonthly[exerciseId][historyName] = historyEntry.count[historyIteratorPerDate];
+
+                }
+                else {
+                    if (maxExerciseCountsMonthly[exerciseId][historyName] == undefined) {
+                        maxExerciseCountsMonthly[exerciseId][historyName] = historyEntry.count[historyIteratorPerDate];
+                    } else {
+                        maxExerciseCountsMonthly[exerciseId][historyName] += historyEntry.count[historyIteratorPerDate];
+                    }
+                }
+
+                if (maxExerciseCountsDaily[exerciseId] == undefined) {
+                    maxExerciseCountsDaily[exerciseId] = {};
+                    maxExerciseCountsDaily[exerciseId][historyName] = historyEntry.count[historyIteratorPerDate];
+
+                }
+                else {
+                    if (maxExerciseCountsDaily[exerciseId][historyName] == undefined) {
+                        maxExerciseCountsDaily[exerciseId][historyName] = historyEntry.count[historyIteratorPerDate];
+                    } else {
+                        maxExerciseCountsDaily[exerciseId][historyName] += historyEntry.count[historyIteratorPerDate];
+                    }
+                }
+
+                if (maxExerciseCountsOverall[exerciseId] == undefined) {
+                    maxExerciseCountsOverall[exerciseId] = {};
+                    maxExerciseCountsOverall[exerciseId][historyName] = historyEntry.count[historyIteratorPerDate];
+
+                }
+                else {
+                    if (maxExerciseCountsOverall[exerciseId][historyName] == undefined) {
+                        maxExerciseCountsOverall[exerciseId][historyName] = historyEntry.count[historyIteratorPerDate];
+                    } else {
+                        maxExerciseCountsOverall[exerciseId][historyName] += historyEntry.count[historyIteratorPerDate];
+                    }
+                }
+
+                if (this.maxExerciseCounts[exerciseId] == undefined) {
+                    this.maxExerciseCounts[exerciseId] = {};
+                    this.maxExerciseCounts[exerciseId].daily = {};
+                    this.maxExerciseCounts[exerciseId].monthly = {};
+                    this.maxExerciseCounts[exerciseId].overall = {};
+
+                    this.maxExerciseCounts[exerciseId].daily = maxExerciseCountsDaily[exerciseId];
+                    this.maxExerciseCounts[exerciseId].monthly = maxExerciseCountsMonthly[exerciseId];
+                    this.maxExerciseCounts[exerciseId].overall = maxExerciseCountsOverall[exerciseId];
+                }
+                else {
+                    if (this.maxExerciseCounts[exerciseId].daily[historyName] == undefined) {
+                        this.maxExerciseCounts[exerciseId].daily[historyName] = maxExerciseCountsDaily[exerciseId][historyName]
+                    }
+                    else {
+                        if (this.maxExerciseCounts[exerciseId].daily[historyName] < maxExerciseCountsDaily[exerciseId][historyName]) {
+                            this.maxExerciseCounts[exerciseId].daily[historyName] = maxExerciseCountsDaily[exerciseId][historyName];
+                        }
+                    }
+
+                    if (this.maxExerciseCounts[exerciseId].monthly[historyName] == undefined) {
+                        this.maxExerciseCounts[exerciseId].monthly[historyName] = maxExerciseCountsMonthly[exerciseId][historyName]
+                    }
+                    else {
+                        if (this.maxExerciseCounts[exerciseId].monthly[historyName] < maxExerciseCountsMonthly[exerciseId][historyName]) {
+                            this.maxExerciseCounts[exerciseId].monthly[historyName] = maxExerciseCountsMonthly[exerciseId][historyName];
+                        }
+                    }
+
+
+                    if (this.maxExerciseCounts[exerciseId].overall[historyName] == undefined) {
+                        this.maxExerciseCounts[exerciseId].overall[historyName] = maxExerciseCountsOverall[exerciseId][historyName]
+                    }
+                    else {
+                        if (this.maxExerciseCounts[exerciseId].overall[historyName] < maxExerciseCountsOverall[exerciseId][historyName]) {
+                            this.maxExerciseCounts[exerciseId].overall[historyName] = maxExerciseCountsOverall[exerciseId][historyName];
+                        }
+                    }
+
+
+                }
+
+
+                //Category reps
+                var exCategory = this.exerciseList[exerciseId].achievementInfo.achievementCategory;
+
+                if (maxExerciseCountsCategoryMonthly[exCategory] == undefined) {
+                    maxExerciseCountsCategoryMonthly[exCategory] = {};
+                    maxExerciseCountsCategoryMonthly[exCategory][historyName] = historyEntry.count[historyIteratorPerDate];
+
+                }
+                else {
+                    if (maxExerciseCountsCategoryMonthly[exCategory][historyName] == undefined) {
+                        maxExerciseCountsCategoryMonthly[exCategory][historyName] = historyEntry.count[historyIteratorPerDate];
+                    } else {
+                        maxExerciseCountsCategoryMonthly[exCategory][historyName] += historyEntry.count[historyIteratorPerDate];
+                    }
+                }
+
+                if (maxExerciseCountsCategoryDaily[exCategory] == undefined) {
+                    maxExerciseCountsCategoryDaily[exCategory] = {};
+                    maxExerciseCountsCategoryDaily[exCategory][historyName] = historyEntry.count[historyIteratorPerDate];
+
+                }
+                else {
+                    if (maxExerciseCountsCategoryDaily[exCategory][historyName] == undefined) {
+                        maxExerciseCountsCategoryDaily[exCategory][historyName] = historyEntry.count[historyIteratorPerDate];
+                    } else {
+                        maxExerciseCountsCategoryDaily[exCategory][historyName] += historyEntry.count[historyIteratorPerDate];
+                    }
+                }
+
+                if (maxExerciseCountsCategoryOverall[exCategory] == undefined) {
+                    maxExerciseCountsCategoryOverall[exCategory] = {};
+                    maxExerciseCountsCategoryOverall[exCategory][historyName] = historyEntry.count[historyIteratorPerDate];
+
+                }
+                else {
+                    if (maxExerciseCountsCategoryOverall[exCategory][historyName] == undefined) {
+                        maxExerciseCountsCategoryOverall[exCategory][historyName] = historyEntry.count[historyIteratorPerDate];
+                    } else {
+                        maxExerciseCountsCategoryOverall[exCategory][historyName] += historyEntry.count[historyIteratorPerDate];
+                    }
+                }
+
+                if (this.maxExerciseCountsCategory[exCategory] == undefined) {
+                    this.maxExerciseCountsCategory[exCategory] = {};
+                    this.maxExerciseCountsCategory[exCategory].daily = {};
+                    this.maxExerciseCountsCategory[exCategory].monthly = {};
+                    this.maxExerciseCountsCategory[exCategory].overall = {};
+
+                    this.maxExerciseCountsCategory[exCategory].daily = maxExerciseCountsCategoryDaily[exCategory];
+                    this.maxExerciseCountsCategory[exCategory].monthly = maxExerciseCountsCategoryMonthly[exCategory];
+                    this.maxExerciseCountsCategory[exCategory].overall = maxExerciseCountsCategoryOverall[exCategory];
+                }
+                else {
+                    if (this.maxExerciseCountsCategory[exCategory].daily[historyName] == undefined) {
+                        this.maxExerciseCountsCategory[exCategory].daily[historyName] = maxExerciseCountsCategoryDaily[exCategory][historyName]
+                    }
+                    else {
+                        if (this.maxExerciseCountsCategory[exCategory].daily[historyName] < maxExerciseCountsCategoryDaily[exCategory][historyName]) {
+                            this.maxExerciseCountsCategory[exCategory].daily[historyName] = maxExerciseCountsCategoryDaily[exCategory][historyName];
+                        }
+                    }
+
+                    if (this.maxExerciseCountsCategory[exCategory].monthly[historyName] == undefined) {
+                        this.maxExerciseCountsCategory[exCategory].monthly[historyName] = maxExerciseCountsCategoryMonthly[exCategory][historyName]
+                    }
+                    else {
+                        if (this.maxExerciseCountsCategory[exCategory].monthly[historyName] < maxExerciseCountsCategoryMonthly[exCategory][historyName]) {
+                            this.maxExerciseCountsCategory[exCategory].monthly[historyName] = maxExerciseCountsCategoryMonthly[exCategory][historyName];
+                        }
+                    }
+
+
+                    if (this.maxExerciseCountsCategory[exCategory].overall[historyName] == undefined) {
+                        this.maxExerciseCountsCategory[exCategory].overall[historyName] = maxExerciseCountsCategoryOverall[exCategory][historyName]
+                    }
+                    else {
+                        if (this.maxExerciseCountsCategory[exCategory].overall[historyName] < maxExerciseCountsCategoryOverall[exCategory][historyName]) {
+                            this.maxExerciseCountsCategory[exCategory].overall[historyName] = maxExerciseCountsCategoryOverall[exCategory][historyName];
+                        }
+                    }
+
+
+                }
+
+
+
+                this.exerciseList[exerciseId].repsPerPlayer = repsPerPlayer[exerciseId];
+                this.exerciseList[exerciseId].pointsPerPlayer = pointsPerPlayer[exerciseId];
+
+
+                //registered players
+                this.registeredPlayers[historyName].entries++;
+
+                //daily max
+                if (dailySum[historyName] == undefined) {
+                    dailySum[historyName] = historyEntry.points[historyIteratorPerDate];
+                }
+                else {
+                    dailySum[historyName] += historyEntry.points[historyIteratorPerDate];
+                }
+                //points
+
+                if (this.exerciseList[exerciseId].type === "Cardio") {
+                    this.registeredPlayers[historyName].points.cardio += Number(historyEntry.points[historyIteratorPerDate]);
+                }
+                else if (this.exerciseList[exerciseId].type === "Kraft") {
+                    this.registeredPlayers[historyName].points.strength += Number(historyEntry.points[historyIteratorPerDate]);
+                }
+                this.registeredPlayers[historyName].points.total += Number(historyEntry.points[historyIteratorPerDate]);
+
+
+                if (dailySum[historyName] > this.registeredPlayers[historyName].points.dailyMax) {
+                    this.registeredPlayers[historyName].points.dailyMax = dailySum[historyName];
+                }
+
+                if (dailySum[historyName] > this.registeredPlayers[historyName].points.dailyMax) {
+                    this.registeredPlayers[historyName].points.dailyMax = dailySum[historyName];
+                }
+
+                if (Number(historyEntry.points[historyIteratorPerDate] <= 0)) {
+                    if (monthlyNegative[historyName] == undefined) {
+                        monthlyNegative[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+                    else {
+                        monthlyNegative[historyName] += Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+                }
+                else {
+                    if (monthlySum[historyName] == undefined) {
+                        monthlySum[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+                    else {
+                        monthlySum[historyName] += Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+                }
+
+                if (monthlySumWithNegative[historyName] == undefined) {
+                    monthlySumWithNegative[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
+                }
+                else {
+                    monthlySumWithNegative[historyName] += Number(historyEntry.points[historyIteratorPerDate]);
+                }
+
+
+
+
+                if (monthlySum[historyName] > this.registeredPlayers[historyName].points.monthlyMax) {
+                    var negative = 0;
+                    if (monthlyNegative[historyName] != undefined) {
+                        negative = monthlyNegative[historyName]
+                    }
+                    this.registeredPlayers[historyName].points.monthlyMax = monthlySum[historyName] + negative;
+                }
+
+
+                if (dailySum[historyName] > this.registeredPlayers[historyName].points.dailyMax) {
+                    this.registeredPlayers[historyName].points.dailyMax = dailySum[historyName];
+                }
+
+                if (currentDate > dateMinus5Days) {
+                    this.registeredPlayers[historyName].points.last5Days += Number(historyEntry.points[historyIteratorPerDate]);
+                }
+                if (currentDate.getDate() == todayDate.getDate() && currentDate.getMonth() == todayDate.getMonth() && currentDate.getFullYear() == todayDate.getFullYear()) {
+                    this.registeredPlayers[historyName].points.today += Number(historyEntry.points[historyIteratorPerDate]);
+                }
+                if (Number(historyEntry.points[historyIteratorPerDate]) < 0) {
+                    this.registeredPlayers[historyName].points.negative += Math.abs(Number(historyEntry.points[historyIteratorPerDate]));
+                }
+                if (currentDate.getMonth() == thisMonth && currentDate.getFullYear() == thisYear) {
+                    this.registeredPlayers[historyName].points.thisMonth += Number(historyEntry.points[historyIteratorPerDate]);
+                }
+                if (currentDate.getMonth() == lastMonth && currentDate.getFullYear() == lastMonthYear) {
+                    if (sumPointsLastMonth[historyName] == undefined) {
+                        sumPointsLastMonth[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+                    else {
+                        sumPointsLastMonth[historyName] += Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+
+
+                }
+                if (sumPointsLastMonth[historyName] == undefined) {
+                    sumPointsLastMonth[historyName] = 0;
+                }
+                this.registeredPlayers[historyName].points.diffLastMonth = sumPointsLastMonth[historyName] - this.registeredPlayers[historyName].points.thisMonth;
+                this.registeredPlayers[historyName].points.averageThisMonth = this.registeredPlayers[historyName].points.thisMonth / daysThisMonth;
+            }
+
+            //daily max
+            this.history[historyDate].dailySum = dailySum;
+
+            var max = 100;
+            var dailyWinner = "Keiner";
+            for (var playerName in this.registeredPlayers) {
+                if (this.history[historyDate].dailySum[playerName] != undefined) {
+                    if (this.history[historyDate].dailySum[playerName] > max) {
+                        max = this.history[historyDate].dailySum[playerName];
+                        dailyWinner = playerName;
+                    }
+                    //graph 
+                    if (xAxis[playerName] == undefined) {
+                        xAxis[playerName] = [this.registeredPlayers[playerName].points.total];
+                    }
+                    else {
+                        xAxis[playerName].push(this.registeredPlayers[playerName].points.total);
+                    }
+                }
+                else {
+                    if (xAxis[playerName] == undefined) {
+                        xAxis[playerName] = [this.registeredPlayers[playerName].points.total];
+                    }
+                    else {
+                        xAxis[playerName].push(this.registeredPlayers[playerName].points.total);
+                    }
+                }
+
+                this.fullGraph[playerName] = {
+                    xAxis: xAxis[playerName],
+                    yAxis: yAxis
+                };
+
+
+            }
+
+            this.history[historyDate].dailyWinner = dailyWinner;
+            if (this.dailyWins[dailyWinner] != undefined) {
+                this.dailyWins[dailyWinner]++;
+
+            }
+            else {
+                this.dailyWins[dailyWinner] = 1;
+            }
+            dailySum = {};
+
+            currentMonthName = MONTHS[Number(historyDate.substring(5, 5 + 2)) - 1] + " " + historyDate.substring(0, 0 + 4);
+            this.monthlyData[currentMonthName] = monthlySumWithNegative;
+        } //END FOR
+
+        this.needsUpload.history = true;
+        this.needsUpload.exerciseList = true;
+        this.needsUpload.registeredPlayers = true;
+
+        let end = Date.now(); // done
+        result(`full refresh took ${end - start} ms`);
+    }
 
 }
 

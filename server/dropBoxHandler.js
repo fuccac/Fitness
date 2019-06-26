@@ -37,7 +37,7 @@ function DropboxFunctions() {
             var dbx = new Dropbox({ accessToken: token, fetch });  // creates post-auth dbx instance
             fs.readFile(path.join(__dirname, '../saves/' + id), 'utf8', function (err, contents) {
                 if (err) {
-                    callback({ msg: err, sev: 2 });
+                    callback({ msg: err.message , sev: 2 });
                     return;
                 }
                 dbx.filesUpload({ path: '/' + id, contents: contents, mode: 'overwrite' })
@@ -45,7 +45,14 @@ function DropboxFunctions() {
                         callback({ msg: response.name + " uploaded", sev: 0 });
                     })
                     .catch(function (error) {
-                        callback({ msg: error.error_summary, sev: 2 });
+                        var msg;
+                        if (error.error_summary == undefined){
+                            msg = "Error uploading file " + id;
+                        }
+                        else{
+                            msg = error.error_summary;
+                        }
+                        callback({ msg: msg, sev: 2 });
                     });
             });
         }

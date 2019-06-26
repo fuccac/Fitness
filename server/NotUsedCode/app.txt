@@ -1,0 +1,78 @@
+	var iPlayer;
+	var player;
+	PLAYER_LIST[playerId].points = FITNESS_MANAGER.calculatePointsFromHistory(PLAYER_LIST[playerId].name);
+	FITNESS_MANAGER.checkPlayerStuff(PLAYER_LIST[playerId], function (result) {
+		logFile.log(result, false, 0);
+		FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (playerList) {
+			for (iPlayer in PLAYER_LIST) {
+				player = PLAYER_LIST[iPlayer];
+				if (SOCKET_LIST[player.id] != undefined) {
+					SOCKET_LIST[player.id].emit('refresh', {
+						exercises: FITNESS_MANAGER.exerciseList,
+						player: player,
+						registeredPlayers: FITNESS_MANAGER.registeredPlayers,
+						playerList: playerList,
+						compInfo: FITNESS_MANAGER.dailyWins,
+						eventLog: FITNESS_MANAGER.eventLog,
+					});
+				}
+
+			}
+		});
+	});
+
+    function saveAndRefreshPlayer(playerId) {
+
+
+
+	let start = Date.now(); // milliseconds count from 1 Jan 1970
+	var iPlayer;
+	var player;
+	for (iPlayer in PLAYER_LIST) {
+		player = PLAYER_LIST[iPlayer];
+		FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
+			logFile.log(result, false, 0);
+			player.points = FITNESS_MANAGER.registeredPlayers[player.name].points;
+			logFile.log(result, false, 0);
+			FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (playerList) {
+				if (SOCKET_LIST[player.id] != undefined) {
+					SOCKET_LIST[player.id].emit('refresh', {
+						exercises: FITNESS_MANAGER.exerciseList,
+						player: player,
+						registeredPlayers: FITNESS_MANAGER.registeredPlayers,
+						playerList: playerList,
+						compInfo: FITNESS_MANAGER.dailyWins,
+						eventLog: FITNESS_MANAGER.eventLog,
+					});
+				}
+				let end = Date.now(); // milliseconds count from 1 Jan 1970
+				logFile.log(`full intervall refresh took ${end - start} ms`, false, 0);
+			});
+
+		});
+	}
+}
+
+
+recalculateAllPoints(function (result) {
+		logFile.log(result, false, 0);
+		for (iPlayer in PLAYER_LIST) {
+			player = PLAYER_LIST[iPlayer];
+			FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
+				logFile.log(result, false, 0);
+				FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (playerList) {
+					if (SOCKET_LIST[player.id] != undefined) {
+						SOCKET_LIST[player.id].emit('refresh', {
+							exercises: FITNESS_MANAGER.exerciseList,
+							player: player,
+							registeredPlayers: FITNESS_MANAGER.registeredPlayers,
+							playerList: playerList,
+							compInfo: FITNESS_MANAGER.dailyWins,
+							eventLog: FITNESS_MANAGER.eventLog,
+						});
+					}
+				});
+
+			});
+		}
+	});

@@ -270,7 +270,7 @@ input_graphSwitch.onclick = function () {
 socket.on('signInResponse', function (data) {
     if (data.success) {
         div_login.style.display = "none";
-        Name = input_UserName.value;
+        Name = input_UserName.value.toLowerCase();
         button_tabMainPage.onclick();
         div_navigation.style.display = 'inline-block';
         if (input_RememberMe.checked && loginCookie === "") {
@@ -337,11 +337,15 @@ socket.on("refresh", function (data) {
 });
 
 socket.on("refreshExerciseStatistics", function (data) {
-    if (data.reps == undefined || data.points == undefined) {
+    if (data.reps == undefined || data.points == undefined || data.repsDaily == undefined || data.repsMonthly == undefined) {
         data.reps = 0;
         data.points = 0;
+        data.repsDaily = 0;
+        data.repsMonthly = 0;
     }
-    paragraph_statisticsExercise.innerHTML = "Punkte: " + translate(data.points) + "<br>Wiederholungen: " + data.reps;
+    paragraph_statisticsExercise.innerHTML = "Punkte: " + translate(data.points) + "<br>Wiederholungen: " + data.reps +
+        "<br>Wiederholung (Täglich): " + translate(data.repsDaily) + "<br>Wiederholung (Monatlich): " + translate(data.repsMonthly) +
+        "<br>Kategorie: " + translate(data.category);
 });
 
 
@@ -356,7 +360,7 @@ socket.on("refreshExerciseStatistics", function (data) {
 function requestExerciseStatistic(id) {
     if (id == undefined || id == "") {
         paragraph_statisticsExercise.innerHTML = "Bitte etwas auswählen..";
-        return
+        return;
     }
     socket.emit("requestExerciseStatistic", data = {
         id: id
@@ -1029,7 +1033,7 @@ function generateCompetitionData(data) {
 
 function generateEventLog(data) {
     div_eventLog.innerHTML = "";
-    for (var eventIterator = 0;eventIterator<data.eventLog.time.length;eventIterator++) {
+    for (var eventIterator = 0; eventIterator < data.eventLog.time.length; eventIterator++) {
         div_eventLog.innerHTML = div_eventLog.innerHTML + "<li>" + data.eventLog.time[eventIterator] + " - " + data.eventLog.msg[eventIterator] + "</li>";
     }
 
