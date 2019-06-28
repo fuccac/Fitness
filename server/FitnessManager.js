@@ -285,7 +285,7 @@ class FitnessManager {
     //*********************Graph Handling*************************/
     //************************************************************/
 
-    createGraph(fromDate, toDate,pointType) {
+    createGraph(fromDate, toDate, pointType) {
         fromDate = calc.createZeroDate(fromDate);
         toDate = calc.createZeroDate(toDate);
 
@@ -294,16 +294,16 @@ class FitnessManager {
         var lastIndex = -1;
         var usedGraph;
 
-        if (pointType == "cardio"){
+        if (pointType == "cardio") {
             usedGraph = this.fullCardioGraph;
         }
-        else if(pointType == "strength"){
+        else if (pointType == "strength") {
             usedGraph = this.fullStrengthGraph;
         }
-        else{
+        else {
             usedGraph = this.fullGraph;
         }
-        
+
 
         for (var playerName in usedGraph) {
             var currentGraph = usedGraph[playerName];
@@ -758,6 +758,7 @@ class FitnessManager {
     checkPlayerStuff(player, playerStuffResult) {
         this.fullRefresh(function (fullRefreshResult) {
             logFile.log(fullRefreshResult, false, 0);
+            player.points = this.registeredPlayers[player.name].points;
             this.setBestExerciserNumber(player, function (result) {
                 logFile.log(result, false, 0);
                 this.checkForAchievements(player, function (result) {
@@ -938,7 +939,7 @@ class FitnessManager {
                     this.monthlyWins[monthlyWinner] += 1;
                 }
 
-                
+
 
                 monthlySum = {};
                 monthlyCardioSum = {};
@@ -1250,7 +1251,7 @@ class FitnessManager {
                     this.registeredPlayers[historyName].points.monthlyMax = monthlySum[historyName] + negative;
                 }
 
-            
+
                 if (currentDate > dateMinus5Days) {
                     this.registeredPlayers[historyName].points.last5Days += Number(historyEntry.points[historyIteratorPerDate]);
                 }
@@ -1376,15 +1377,15 @@ class FitnessManager {
             }
         }
 
-        for(var monthName in this.monthlyData){
-            for (playerName in this.registeredPlayers){
-                if(this.monthlyData[monthName][playerName] == undefined){
+        for (var monthName in this.monthlyData) {
+            for (playerName in this.registeredPlayers) {
+                if (this.monthlyData[monthName][playerName] == undefined) {
                     this.monthlyData[monthName][playerName] = 0;
                 }
-                if(this.monthlyCardioData[monthName][playerName] == undefined){
+                if (this.monthlyCardioData[monthName][playerName] == undefined) {
                     this.monthlyCardioData[monthName][playerName] = 0;
                 }
-                if(this.monthlyStrengthData[monthName][playerName] == undefined){
+                if (this.monthlyStrengthData[monthName][playerName] == undefined) {
                     this.monthlyStrengthData[monthName][playerName] = 0;
                 }
             }
