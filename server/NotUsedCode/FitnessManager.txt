@@ -1,3 +1,12 @@
+googleSheetList = require("../saves/googleJSON/exercisesGoogle.json");
+googleSheetHistoryCaf = require("../saves/googleJSON/cafGoogle.json");
+googleSheetHistoryGjf = require("../saves/googleJSON/gjfGoogle.json");
+googleSheetHistoryJonny = require("../saves/googleJSON/jonnyGoogle.json");
+googleSheetHistoryMuch = require("../saves/googleJSON/muchGoogle.json");
+googleSheetHistoryPhilipp = require("../saves/googleJSON/philippGoogle.json");
+googleSheetHistoryLisi = require("../saves/googleJSON/lisiGoogle.json");
+
+
 updateRegisteredPlayers(updateRegisteredPlayersResult) {
         for (var playerName in this.registeredPlayers) {
             this.registeredPlayers[playerName] = 0;

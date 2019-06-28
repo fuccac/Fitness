@@ -26,6 +26,22 @@
 			einen neuen ausdenken.
 		</p>
 		<p>
+			NEWS (28.06.2019):
+			<li>
+				Eventlog - Minimalistischer Chat
+			</li>
+			<li>
+				Chart Handling massiv optimiert - Cardio und Kraft Einteilung. Mehr Nutzerfreundlichkeit, Button
+				entfernt.
+			</li>
+			<li>
+				Monatssiege
+			</li>
+			<li>
+				Nur noch 1 JSON File für alles. (Weniger Uploads, weniger Fehleranfällig)
+			</li>
+		</p>
+		<p>
 			NEWS (26.06.2019):
 			<li>
 				Mehr Statistiken auf Erfolgseite
@@ -98,10 +114,15 @@
 			<label for="input_graphFromDate">Von :</label>
 			<input id="input_graphFromDate" type="date"></input>
 			<label for="input_graphToDate">Bis :</label>
-			<input id="input_graphToDate" type="date"></input><br>
-			<button id="button_updateGraph">Graph erzeugen</button>
+			<input id="input_graphToDate" type="date"></input>
+			<select id="select_chartType">
+				<option value="cardio">Cardio</option>
+				<option value="strength">Kraft</option>
+				<option value="all">Alles</option>
+			</select><br>
 			<label for="input_graphSwitch">Balkendiagramm</label>
 			<input id="input_graphSwitch" type="checkbox"></input>
+
 		</div>
 	</div>
 
@@ -151,7 +172,7 @@
 		</div>
 	</div>
 	<div id="div_ExerciseOverview" class="tab">
-		<p>Seid versichert: Das ändern von bestehenden Übungen verändert auch die vergangen Punkte! Ändert mit bedacht!
+		<p>Verändert die Übungen wies euch taugt! Hat keinen Einfluss mehr auf frühere Eintragungen!
 		</p>
 		<div id="div_addNewExercise">
 			<label for="input_exerciseID" class="hiddenCell"></label>
@@ -272,11 +293,25 @@
 				<tbody></tbody>
 			</table>
 		</div>
+		<div id="div_MonthlyWins">
+			<table id="table_monthlyWins" class="std_table">
+				<thead></thead>
+				<tbody></tbody>
+			</table>
+		</div>
 	</div>
 	<div id="div_events" class="tab">
 		<div id="div_eventLog">
 
 		</div>
+		<div id="div_chatControls">
+			<input id="input_chatText"></input>
+			<button id="button_chatText">Senden</button>
+			<button id="button_link">Link</button>
+			<button id="button_img">Image</button>
+
+		</div>
+
 	</div>
 
 	<div id="div_navigation">

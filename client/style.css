@@ -51,6 +51,11 @@ button:hover {
     overflow: hidden;
 }
 
+#div_eventLog{
+    max-height: 80%;
+    overflow-y: scroll;
+}
+
 /* TAB MAIN INFO*/
 
 #div_allPlayersTable {
@@ -232,6 +237,14 @@ button:hover {
     color: rgb(46, 45, 65);
 }
 
+#table_monthlyWins thead tr td{
+    width:50%
+}
+
+#table_dailyWins thead tr td{
+    width:50%
+}
+
 /* OTHER CLASSES */
 
 .headPara {
@@ -302,4 +315,8 @@ button:hover {
 .hiddenCell {
     visibility: hidden;
     position: absolute;
+}
+
+#input_chatText{
+    width:50%;
 }

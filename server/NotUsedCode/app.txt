@@ -76,3 +76,196 @@ recalculateAllPoints(function (result) {
 			});
 		}
 	});
+
+function recalculateAllPoints(result) {
+	for (var iPlayer in PLAYER_LIST) {
+		player = PLAYER_LIST[iPlayer];
+		player.points = FITNESS_MANAGER.calculatePointsFromHistory(player.name);
+	}
+	result("recalculateAllPoints done");
+}
+
+	storageManager.get(config.EXERCISE_FILE_NAME.replace(".json", "")).then(result => {
+		FITNESS_MANAGER.exerciseList = result.exerciseList;
+		logFile.log("exerciseList Loaded", false, 0);
+		storageManager.get(config.HISTORY_FILE_NAME.replace(".json", "")).then(result => {
+			FITNESS_MANAGER.history = result.history;
+			logFile.log("history Loaded", false, 0);
+			storageManager.get(config.REG_PLAYERS_FILE_NAME.replace(".json", "")).then(result => {
+				FITNESS_MANAGER.registeredPlayers = result.registeredPlayers;
+				logFile.log("registeredPlayers Loaded", false, 0);
+				for (var playerName in FITNESS_MANAGER.registeredPlayers) {
+					dropbox.downloadFile(DB_TOKEN, playerName + ".json", function (callback) {
+						logFile.log(callback.msg, false, callback.sev);
+					});
+				}
+				storageManager.get(config.EVENT_LOG_FILE_NAME.replace(".json", "")).then(result => {
+					FITNESS_MANAGER.eventLog = result.eventLog;
+					logFile.log("eventLog Loaded", false, 0);
+					storageManager.get(config.ACHIEVEMENTS_FILE_NAME.replace(".json", "")).then(result => {
+						FITNESS_MANAGER.achievements = result.achievements;
+						logFile.log("achievements Loaded", false, 0);
+						fitnessManagerStartUpTasks(function (startUpResult) {
+							FITNESS_MANAGER.loadingDone = true;
+							fitnessManagerLoadingResult(startUpResult);
+						});
+
+
+					})
+						.catch((err) => {
+							console.log(err);
+							logFile.log("achievements file missing or corrupted", false, 1);
+							fitnessManagerStartUpTasks(function (startUpResult) {
+								FITNESS_MANAGER.loadingDone = true;
+								fitnessManagerLoadingResult(startUpResult);
+							});
+						});
+
+				})
+					.catch((err) => {
+						console.log(err);
+						logFile.log("eventlog file missing or corrupted", false, 1);
+					});
+			})
+				.catch((err) => {
+					console.log(err);
+					logFile.log("registeredPlayers file missing or corrupted", false, 1);
+				});
+		})
+			.catch((err) => {
+				logFile.log("history file missing or corrupted", false, 1);
+			});
+	})
+		.catch((err) => {
+			logFile.log("exerciseList file missing or corrupted", false, 1);
+		});
+
+
+
+		dropbox.downloadFile(DB_TOKEN, config.LOG_FILE_NAME, function (callback) {
+		logFile.log(callback.msg, false, callback.sev);
+		dropbox.downloadFile(DB_TOKEN, config.USERS_FILE_NAME, function (callback) {
+			logFile.log(callback.msg, false, callback.sev);
+			loadUsers();
+			dropbox.downloadFile(DB_TOKEN, config.EXERCISE_FILE_NAME, function (callback) {
+				logFile.log(callback.msg, false, callback.sev);
+				dropbox.downloadFile(DB_TOKEN, config.HISTORY_FILE_NAME, function (callback) {
+					logFile.log(callback.msg, false, callback.sev);
+					dropbox.downloadFile(DB_TOKEN, config.REG_PLAYERS_FILE_NAME, function (callback) {
+						logFile.log(callback.msg, false, callback.sev);
+						dropbox.downloadFile(DB_TOKEN, config.EVENT_LOG_FILE_NAME, function (callback) {
+							logFile.log(callback.msg, false, callback.sev);
+							dropbox.downloadFile(DB_TOKEN, config.ACHIEVEMENTS_FILE_NAME, function (callback) {
+								logFile.log(callback.msg, false, callback.sev);
+								loadFitnessManager(function (fitnessManagerLoadingResult) {
+									let end = Date.now();
+									logFile.log(`loadSaveFiles + loadFitnessManager init done in ${end - start} ms`, false, 0);
+									loadSaveFilesResult(fitnessManagerLoadingResult);
+								});
+							});
+						});
+					});
+				});
+			});
+		});
+	});
+
+
+	if (FITNESS_MANAGER.needsUpload.history) {
+			saveHistory();
+		}
+		if (FITNESS_MANAGER.needsUpload.registeredPlayers) {
+			saveRegisteredPlayers();
+		}
+		if (FITNESS_MANAGER.needsUpload.exerciseList) {
+			saveExerciseList();
+		}
+		if (FITNESS_MANAGER.needsUpload.eventLog) {
+			saveEventLog();
+		}
+		if (FITNESS_MANAGER.needsUpload.achievements) {
+			saveAchievements();
+		}
+
+
+function saveExerciseList() {
+	storageManager.put({ exerciseList: FITNESS_MANAGER.exerciseList, id: config.EXERCISE_FILE_NAME.replace(".json", "") }).then(result => {
+		logFile.log("exerciseList saved", false, 0);
+		dropbox.uploadFile(DB_TOKEN, config.EXERCISE_FILE_NAME, function (result) {
+			logFile.log(result.msg, false, result.sev);
+			if (result.sev < 2) {
+				FITNESS_MANAGER.needsUpload.exerciseList = false;
+			}
+		});
+	});
+}
+
+function saveHistory() {
+	storageManager.put({ history: FITNESS_MANAGER.history, id: config.HISTORY_FILE_NAME.replace(".json", "") }).then(result => {
+		logFile.log("history saved", false, 0);
+		dropbox.uploadFile(DB_TOKEN, config.HISTORY_FILE_NAME, function (result) {
+			logFile.log(result.msg, false, result.sev);
+			if (result.sev < 2) {
+				FITNESS_MANAGER.needsUpload.history = false;
+			}
+		});
+	});
+}
+function saveRegisteredPlayers() {
+	storageManager.put({ registeredPlayers: FITNESS_MANAGER.registeredPlayers, id: config.REG_PLAYERS_FILE_NAME.replace(".json", "") }).then(result => {
+		logFile.log("registeredPlayers saved", false, 0);
+		dropbox.uploadFile(DB_TOKEN, config.REG_PLAYERS_FILE_NAME, function (result) {
+			logFile.log(result.msg, false, result.sev);
+			if (result.sev < 2) {
+				FITNESS_MANAGER.needsUpload.registeredPlayers = false;
+			}
+		});
+	});
+}
+
+function saveEventLog() {
+	storageManager.put({ eventLog: FITNESS_MANAGER.eventLog, id: config.EVENT_LOG_FILE_NAME.replace(".json", "") }).then(result => {
+		logFile.log("eventlog saved", false, 0);
+		dropbox.uploadFile(DB_TOKEN, config.EVENT_LOG_FILE_NAME, function (result) {
+			logFile.log(result.msg, false, result.sev);
+			if (result.sev < 2) {
+				FITNESS_MANAGER.needsUpload.eventLog = false;
+			}
+		});
+	});
+}
+
+function saveAchievements() {
+	storageManager.put({ achievements: FITNESS_MANAGER.achievements, id: config.ACHIEVEMENTS_FILE_NAME.replace(".json", "") }).then(result => {
+		logFile.log("achievements saved", false, 0);
+		dropbox.uploadFile(DB_TOKEN, config.ACHIEVEMENTS_FILE_NAME, function (result) {
+			logFile.log(result.msg, false, result.sev);
+			if (result.sev < 2) {
+				FITNESS_MANAGER.needsUpload.achievements = false;
+			}
+		});
+	});
+}
+
+/**
+ * @param {{}} users list of users and passwords -> users[username] = password
+ */
+function saveUsers(users) {
+	storageManager.put({ userlist: users, id: config.USERS_FILE_NAME.replace(".json", "") }).then(result => {
+		logFile.log("userlist saved", false, 0);
+		dropbox.uploadFile(DB_TOKEN, config.USERS_FILE_NAME, function (result) {
+			logFile.log(result.msg, false, result.sev);
+		});
+	});
+}
+
+function loadUsers() {
+	storageManager.get(config.USERS_FILE_NAME.replace(".json", "")).then(result => {
+		USERS = result.userlist;
+		logFile.log("Users Loaded", false, 0);
+	})
+		.catch((err) => {
+			logFile.log("users file missing or corrupted", false, 1);
+			logFile.log(err, false, 0);
+		});
+}

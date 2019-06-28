@@ -18,6 +18,7 @@ function Config() {
     this.LOG_FILE_NAME = "log.txt";
     this.EVENT_LOG_FILE_NAME = "eventlog.json";
     this.ACHIEVEMENTS_FILE_NAME = "achievements.json";
+    this.DATA_STORAGE_FILE_NAME = "dataStorage.json";
     this.LOG_PATH = "./saves/log.txt";
     this.RECALCULATE_HISTORY_ON_CHANGES = 0;
 }

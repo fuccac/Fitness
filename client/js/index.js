@@ -20,12 +20,14 @@ var button_tabPersonalOverview = document.getElementById('button_tabPersonalOver
 var button_doneExerciseSend = document.getElementById('button_doneExerciseSend');
 var button_updateHistory = document.getElementById('button_updateHistory');
 var button_tabStatistics = document.getElementById('button_tabStatistics');
-var button_updateGraph = document.getElementById('button_updateGraph');
 var button_tabMainPage = document.getElementById('button_tabMainPage');
 var button_modifyExercise = document.getElementById('button_modifyExercise');
 var button_statisticsExercise = document.getElementById('button_statisticsExercise');
 var button_tabCompetition = document.getElementById('button_tabCompetition');
 var button_tabEventLog = document.getElementById('button_tabEventLog');
+var button_chatText = document.getElementById('button_chatText');
+var button_link = document.getElementById('button_link');
+var button_img = document.getElementById('button_img');
 //CANVAS
 //var canvas_graphHistory = document.getElementById('canvas_graphHistory');
 
@@ -47,6 +49,7 @@ var div_achievementsDone = document.getElementById('div_achievementsDone');
 var div_login = document.getElementById('div_login');
 var div_competition = document.getElementById('div_competition');
 var div_DailyWins = document.getElementById('div_DailyWins');
+var div_MonthlyWins = document.getElementById('div_MonthlyWins');
 var div_events = document.getElementById('div_events');
 var div_eventLog = document.getElementById('div_eventLog');
 //FONTS
@@ -74,6 +77,7 @@ var input_exerciseID = document.getElementById('input_exerciseID');
 var onlineIndicator = document.getElementById('onlineIndicator');
 var input_RememberMe = document.getElementById('input_RememberMe');
 var input_graphSwitch = document.getElementById('input_graphSwitch');
+var input_chatText = document.getElementById('input_chatText');
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
@@ -82,6 +86,7 @@ var select_doneExercise = document.getElementById('select_doneExercise');
 var select_historyShowName = document.getElementById('select_historyShowName');
 var select_bothSides = document.getElementById('select_bothSides');
 var select_statisticsExercise = document.getElementById('select_statisticsExercise');
+var select_chartType =  document.getElementById('select_chartType');
 //TABLES
 var table_exerciseTable = document.getElementById('table_exerciseTable');
 var table_personalTable = document.getElementById('table_personalTable');
@@ -89,6 +94,7 @@ var table_exerciseHistory = document.getElementById('table_exerciseHistory');
 var table_allPlayersTable = document.getElementById('table_allPlayersTable');
 var table_achievementsDone = document.getElementById('table_achievementsDone');
 var table_dailyWins = document.getElementById('table_dailyWins');
+var table_monthlyWins = document.getElementById('table_monthlyWins');
 var socket = io();
 //para
 paragraph_statisticsExercise = document.getElementById('paragraph_statisticsExercise');
@@ -137,10 +143,6 @@ button_updateHistory.onclick = function () {
     socket.emit("requestHistoryUpdate", { fromDate: input_historyFromDate.value, toDate: input_historyToDate.value });
 };
 
-button_updateGraph.onclick = function () {
-    socket.emit("requestGraphUpdate", { fromDate: input_graphFromDate.value, toDate: input_graphToDate.value, type: input_graphSwitch.checked });
-};
-
 button_doneExerciseSend.onclick = function () {
     if (checkForEmptyBoxesDoneExercise()) {
         exerciseDone('addDoneExercise');
@@ -158,7 +160,7 @@ button_tabMainPage.onclick = function () {
     div_MainPage.style.display = "inline-block";
     div_competition.style.display = "none";
     div_events.style.display = "none";
-    button_updateGraph.onclick();
+    requestGraphUpdate();
 };
 
 button_tabPersonalOverview.onclick = function () {
@@ -206,6 +208,7 @@ button_tabEventLog.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
     div_events.style.display = "inline-block";
+    div_eventLog.scrollTop = div_eventLog.scrollHeight;
 };
 
 button_deleteExercise.onclick = function () {
@@ -254,8 +257,35 @@ input_graphSwitch.onclick = function () {
         input_graphToDate.disabled = false;
     }
 
+    requestGraphUpdate();
+
 };
 
+button_chatText.onclick = function(){
+    if(input_chatText.value != ""){
+        sendChatMessage(input_chatText.value);
+    }
+    
+};
+
+button_link.onclick = function(){
+    input_chatText.value += "[LINK][/LINK]";
+};
+
+button_img.onclick = function(){
+    input_chatText.value += "[IMG][/IMG]";
+};
+
+input_graphFromDate.onchange = function(){
+    requestGraphUpdate();
+};
+input_graphToDate.onchange = function(){
+    requestGraphUpdate();
+};
+
+select_chartType.onchange = function(){
+    requestGraphUpdate();
+};
 
 
 
@@ -287,6 +317,10 @@ socket.on('signUpResponse', function (data) {
     }
     else
         alert("Sign Up unsuccessful");
+});
+
+socket.on('refreshEventLog', function (data) {
+    generateEventLog(data);
 });
 
 socket.on("refreshHistory", function (data) {
@@ -343,9 +377,11 @@ socket.on("refreshExerciseStatistics", function (data) {
         data.repsDaily = 0;
         data.repsMonthly = 0;
     }
-    paragraph_statisticsExercise.innerHTML = "Punkte: " + translate(data.points) + "<br>Wiederholungen: " + data.reps +
-        "<br>Wiederholung (Täglich): " + translate(data.repsDaily) + "<br>Wiederholung (Monatlich): " + translate(data.repsMonthly) +
-        "<br>Kategorie: " + translate(data.category);
+    paragraph_statisticsExercise.innerHTML = "";
+
+    for (var key in data) {
+        paragraph_statisticsExercise.innerHTML += translate(key) + ": " + translate(data[key]) + "<br>";
+    }
 });
 
 
@@ -357,6 +393,19 @@ socket.on("refreshExerciseStatistics", function (data) {
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
+function requestGraphUpdate(){
+    socket.emit("requestGraphUpdate", { fromDate: input_graphFromDate.value, toDate: input_graphToDate.value, type: input_graphSwitch.checked,pointType:select_chartType.value});
+}
+function sendChatMessage(msg){
+
+    socket.emit("sendChatMessage", data = {
+        name: Name,
+        msg: msg.toString()
+    });
+    input_chatText.value = "";
+    
+}
+
 function requestExerciseStatistic(id) {
     if (id == undefined || id == "") {
         paragraph_statisticsExercise.innerHTML = "Bitte etwas auswählen..";
@@ -418,7 +467,24 @@ function modifyExercise(emitString) {
 ******************************************************************************************************************/
 var OverallChart;
 function generateGraph(data, canvas, ctx) {
-    if (OverallChart != undefined) {
+    var dataSetMeta = [];
+    var applyFilter = false;
+    var filterSettings = {};
+    if (OverallChart != undefined) {        
+        for (var dataIterator =0;dataIterator<OverallChart.config.data.datasets.length;dataIterator++){
+            dataSetMeta.push(OverallChart.getDatasetMeta(dataIterator));
+
+            if (dataSetMeta[dataIterator].hidden == undefined || dataSetMeta[dataIterator].hidden == undefined == null){
+                dataSetMeta[dataIterator].hidden = OverallChart.config.data.datasets[dataIterator].hidden;
+            }
+            
+            filterSettings[OverallChart.config.data.datasets[dataIterator].label] = dataSetMeta[dataIterator].hidden;
+        }
+        applyFilter = true;
+         
+
+
+
         OverallChart.data.labels.pop();
         OverallChart.data.datasets.forEach((dataset) => {
             dataset.data.pop();
@@ -446,7 +512,6 @@ function generateGraph(data, canvas, ctx) {
     }
 
     if (input_graphSwitch.checked) {
-        var colors = ["green", "blue", "brown", "yellow", "grey", "red", "magenta", "orange"];
         var labels = [];
         var labelIterator = 0;
         var dataPerName = {};
@@ -479,17 +544,32 @@ function generateGraph(data, canvas, ctx) {
             }
 
 
+
         }
         for (playerName in dataPerName) {
             dataset = {
                 label: playerName,
-                backgroundColor: colors[colorIterator],
+                backgroundColor: data.colors[playerName],
                 borderColor: "black",
                 data: dataPerName[playerName],
             };
 
             datasets.push(dataset);
             colorIterator++;
+        }    
+
+        datasets.sort(function(a, b){
+            var x = a.label.toLowerCase();
+            var y = b.label.toLowerCase();
+            if (x < y) {return -1;}
+            if (x > y) {return 1;}
+            return 0;
+          });
+
+        if (applyFilter){
+            for (var dataIterator = 0; dataIterator < datasets.length; dataIterator++){
+                datasets[dataIterator].hidden = filterSettings[datasets[dataIterator].label];
+            }
         }
 
         if (OverallChart == undefined) {
@@ -520,7 +600,6 @@ function generateGraph(data, canvas, ctx) {
         }
     }
     else {
-        var colors = ["green", "red", "blue", "yellow", "brown", "grey", "magenta", "orange"];
         for (var playerGraphName in data.graph) {
             dataset = {
                 label: playerGraphName,
@@ -529,15 +608,30 @@ function generateGraph(data, canvas, ctx) {
                 pointStyle: 'cross',
                 radius: 1,
                 borderColor: [
-                    colors[colorIterator],
+                    data.colors[playerGraphName],
 
                 ],
-                borderWidth: 1
+                borderWidth: 1,
+                hidden:false,
             };
 
             datasets.push(dataset);
             colorIterator++;
 
+        }
+
+        datasets.sort(function(a, b){
+            var x = a.label.toLowerCase();
+            var y = b.label.toLowerCase();
+            if (x < y) {return -1;}
+            if (x > y) {return 1;}
+            return 0;
+          });
+
+        if (applyFilter){
+            for (var dataIterator = 0; dataIterator < datasets.length; dataIterator++){
+                datasets[dataIterator].hidden = filterSettings[datasets[dataIterator].label]
+            }
         }
 
         if (OverallChart == undefined) {
@@ -990,6 +1084,8 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
 
 function generateCompetitionData(data) {
 
+    var cellNumber = 0;
+    var rowNumber = 0;
 
     var theadDailyWinsTable = table_dailyWins.tHead;
     var tBodyDailyWinsTable = table_dailyWins.tBodies[0];
@@ -1011,24 +1107,68 @@ function generateCompetitionData(data) {
 
 
 
-    for (var playerName in data.compInfo) {
+
+    for (var playerName in data.compInfoDaily) {
         if (playerName == "Keiner") {
             continue;
         }
-        var cellNumber = 0;
-        var rowNumber = 0;
+        cellNumber = 0;
+        rowNumber = 0;
         bodyRow = tBodyDailyWinsTable.insertRow(rowNumber);
         cell = bodyRow.insertCell(cellNumber);
         cell.innerHTML = playerName;
         cellNumber++;
         cell = bodyRow.insertCell(cellNumber);
-        cell.innerHTML = data.compInfo[playerName];
+        cell.innerHTML = data.compInfoDaily[playerName];
+        cellNumber++;
+        //month
+        rowNumber++;
+    }
+
+    var theadMonthlyWinsTable = table_monthlyWins.tHead;
+    var tBodyMonthlyWinsTable = table_monthlyWins.tBodies[0];
+
+    theadMonthlyWinsTable.innerHTML = "";
+    tBodyMonthlyWinsTable.innerHTML = "";
+
+    headerRow = theadMonthlyWinsTable.insertRow(0);
+    cell = headerRow.insertCell(0);
+    cell.innerHTML = "Name";
+    cell.onclick = function () {
+        sortTable(this, table_monthlyWins);
+    };
+    cell = headerRow.insertCell(1);
+    cell.innerHTML = "Monatssiege";
+    cell.onclick = function () {
+        sortTable(this, table_monthlyWins);
+    };
+
+
+
+    for (playerName in data.compInfoMonthly) {
+        if (playerName == "Keiner") {
+            continue;
+        }
+        cellNumber = 0;
+        rowNumber = 0;
+        bodyRow = tBodyMonthlyWinsTable.insertRow(rowNumber);
+        cell = bodyRow.insertCell(cellNumber);
+        cell.innerHTML = playerName;
+        cellNumber++;
+        cell = bodyRow.insertCell(cellNumber);
+        cell.innerHTML = data.compInfoMonthly[playerName];
         cellNumber++;
         //month
 
 
         rowNumber++;
     }
+
+    var sortIndex = { cellIndex: 1 };
+    sortTable(sortIndex, table_monthlyWins);
+    sortTable(sortIndex, table_dailyWins);
+    sortTable(sortIndex, table_monthlyWins);
+    sortTable(sortIndex, table_dailyWins);
 }
 
 function generateEventLog(data) {
@@ -1036,6 +1176,8 @@ function generateEventLog(data) {
     for (var eventIterator = 0; eventIterator < data.eventLog.time.length; eventIterator++) {
         div_eventLog.innerHTML = div_eventLog.innerHTML + "<li>" + data.eventLog.time[eventIterator] + " - " + data.eventLog.msg[eventIterator] + "</li>";
     }
+
+    div_eventLog.scrollTop = div_eventLog.scrollHeight;
 
 }
 
@@ -1048,6 +1190,14 @@ function generateEventLog(data) {
 *******************************************************************************************************************
 ******************************************************************************************************************/
 
+input_chatText.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      if(div_events.style.display == "inline-block"){
+        button_chatText.click();
+      }
+      
+    }
+  });
 
 function getDateFormat(date, format, fromFormat) {
     var addZeroMonth = "";
@@ -1484,6 +1634,8 @@ function sortSelect(selElem) {
     return;
 }
 
+
+
 function translate(word) {
     if (checkIfNumber(word)) {
         return word.toFixed(2);
@@ -1589,6 +1741,14 @@ function translate(word) {
             return "Nächstes Level";
         case "monthlyMax":
             return "Monatsbestleistung";
+        case "repsDaily":
+            return "Bestleistung (Täglich)";
+        case "repsMonthly":
+            return "Bestleistung (Monatl.)";
+        case "reps":
+            return "Gesamtwiederholungen";
+        case "category":
+            return "Übungskategorie";
         default:
             if (word.search("Overall") != -1) {
                 return word.replace("Overall", "[Gesamt] - ");
