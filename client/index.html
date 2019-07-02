@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="style.css" />
 
 	<div id="div_login">
-		<h1>Willkommen - Anmeldung erforderlich!</h1> <br><br>
+		<h1>Welcome to <b>GAGS</b> (Geile App zum gemeinsamen Sporteln)</h1> <br><br>
 		<label for="input_Username">Name:</label>
 		<br><input id="input_Username" type="text" placeholder="Username"></input><br>
 		<label for="input_Password">Passwort:</label>
@@ -20,84 +20,133 @@
 		<br><br>
 		<label for="input_RememberMe">Login merken (useless ATM)</label>
 		<input id="input_RememberMe" type="checkbox"></input>
+		<div id="div_changeLog">
+			<p> Anmeldung = Name vom GoogleSheet + selbst ausgedachtes Passwort. Bitte das Passwort merken,
+				es kann nicht wiederhergestellt werden. Falls kein Googlesheetname vorhanden ist,
+				einen neuen ausdenken.
+			</p>
+			<p>
+				NEWS (02.07.2019) v1.64:
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Neues Diagramm: Tagesdaten (Linie)
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Cardio/Stärke Prozentuelle Aufteilung - Player Daten
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Um eine bereits gemachte Übung nochmal zu machen,
+					kann man sie in der History einfach anklicken und die Boxen werden befüllt.
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Markierungsindikation: Die Übung die für die
+					Bearbeitung ausgewählt ist wird ROT markiert in der Übungsliste.
+				</li>
+				<li>
+					<span class="changeLog_Bug">Bug: </span>Der heutige Tag wurde im Graph abgeschnitten - korrigiert.
+				</li>
+				<li>
+					<span class="changeLog_Bug">Bug: </span>Tage an denen NIEMAND etwas eingetragen haben werden nun im
+					Graph korrekt angezeigt
+				</li>
 
-		<p> Anmeldung = Name vom GoogleSheet + selbst ausgedachtes Passwort. Bitte das Passwort merken,
-			es kann nicht wiederhergestellt werden. Falls kein Googlesheetname vorhanden ist,
-			einen neuen ausdenken.
-		</p>
-		<p>
-			NEWS (28.06.2019):
-			<li>
-				Eventlog - Minimalistischer Chat
-			</li>
-			<li>
-				Chart Handling massiv optimiert - Cardio und Kraft Einteilung. Mehr Nutzerfreundlichkeit, Button
-				entfernt.
-			</li>
-			<li>
-				Monatssiege
-			</li>
-			<li>
-				Nur noch 1 JSON File für alles. (Weniger Uploads, weniger Fehleranfällig)
-			</li>
-		</p>
-		<p>
-			NEWS (26.06.2019):
-			<li>
-				Mehr Statistiken auf Erfolgseite
-			</li>
-			<li>
-				Hunderte Zeilen Useless-Code entfernt. Nur mehr eine Refreshfunktion, statt 1000. Es sollte alles was
-				Save-Files verändert zügiger ablaufen.
-			</li>
-			<li>
-				Achievements bekommen eigenes Save-File
-			</li>
-			<li>
-				User-Save-Files werden ordnungsgemäß geladen. (Die wurden nur gepeichert bis jetzt - Hab die LoadUser
-				Funktion vergessen.)
-			</li>
-			<li>
-				Monatsdurchschnitt wird korrekt berechnet.
-			</li>
-			<li>
-				Monatsbestleistung wird korrekt berechnet.
-			</li>
-		</p>
-		<p>
-			NEWS (21.06.2019):
-			<li>
-				Eventlog - Savefile Unterstützung - Maximal 50 Lines of Events
-			</li>
-		</p>
-		<p>
-			NEWS (19.06.2019):
-			<li>
-				Erfolge für Tägliche, Monatliche und Gesamtpunkte erweitert (Mehr Levels)
-			</li>
-			<li>
-				Event Tab (Button Events), Sie an was die anderen gemacht haben
-			</li>
-			<li>
-				Bugfixes die sowieso nur i mitkrieg
-			</li>
+				<li>
+					<b>Usability: </b>Standardauswahl beim Diagramm: "Alles", anstatt "Cardio", um Verwirrungen zu
+					vermeiden.
+				</li>
+				<li>
+					<b>Usability: </b>Diagrammkontrolle aufgeräumt - Dropdown statt Checkbox. Vorbereitet für zukünftige
+					Diagramme.
+				</li>
+				<li>
+					<b>Usability: </b>Hervorhebung der HEUTIGEN Punktzahl
+				</li>
+				<li>
+					<b>Sonstiges: </b>Unnütze On-Click Events entfernt..
+				</li>
+				<li>
+					<b>Sonstiges: </b>Changelog Neugestaltung
+				</li>
+			</p>
+			<p>
+				NEWS (28.06.2019) v1.63:
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Eventlog - Minimalistischer Chat
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Monatssiege
+				</li>
+				<li>
+					<b>Usability: </b>Chart Handling massiv optimiert - Cardio und Kraft Einteilung. Mehr
+					Nutzerfreundlichkeit, Button
+					entfernt.
+				</li>
+				<li>
+					<b>Sonstiges: </b>Nur noch 1 JSON File für alles. (Weniger Uploads, weniger Fehleranfällig)
+				</li>
+			</p>
+			<p>
+				NEWS (26.06.2019) v1.62:
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Mehr Statistiken auf Erfolgseite
+				</li>
+				<li>
+					<span class="changeLog_Bug">Bug: </span>User-Save-Files werden ordnungsgemäß geladen. (Die wurden
+					nur gepeichert bis jetzt - Hab die LoadUser
+					Funktion vergessen.)
+				</li>
+				<li>
+					<span class="changeLog_Bug">Bug: </span>Monatsdurchschnitt wird korrekt berechnet.
+				</li>
+				<li>
+					<span class="changeLog_Bug">Bug: </span>Monatsbestleistung wird korrekt berechnet.
+				</li>
+				<li>
+					<b>Sonstiges: </b>Hunderte Zeilen Useless-Code entfernt. Nur mehr eine Refreshfunktion, statt 1000.
+					Es sollte alles was
+					Save-Files verändert zügiger ablaufen.
+				</li>
+				<li>
+					<b>Sonstiges: </b>Achievements bekommen eigenes Save-File
+				</li>
+			</p>
+			<p>
+				NEWS (21.06.2019) v1.61:
+				<li>
+					<b>Sonstiges: </b>Eventlog - Savefile Unterstützung - Maximal 50 Lines of Events
+				</li>
+			</p>
+			<p>
+				NEWS (19.06.2019) v1.60:
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Erfolge für Tägliche, Monatliche und Gesamtpunkte
+					erweitert (Mehr Levels)
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Event Tab (Button Events), Sie an was die anderen
+					gemacht haben
+				</li>
+				<li>
+					<span class="changeLog_Bug">Bug: </span>Bugfixes die sowieso nur i mitkrieg
+				</li>
 
-		</p>
-		<p>
-			NEWS (18.06.2019):
-			<li>
-				Erfolge für Tägliche, Monatliche und Gesamtpunkte
-			</li>
-			<li>
-				Erfolge für Tagessiege
-			</li>
-			<li>
-				Balkendiagramm: Nutze die Checkbox auf der Hauptseite!
-			</li>
-			<li>
-				Seite "Siege" - dort finden sich Tagessiege!
-			</li>
-		</p>
+			</p>
+			<p>
+				NEWS (18.06.2019) v1.59:
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Erfolge für Tägliche, Monatliche und Gesamtpunkte
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Erfolge für Tagessiege
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Balkendiagramm: Nutze die Checkbox auf der
+					Hauptseite!
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Seite "Siege" - dort finden sich Tagessiege!
+				</li>
+			</p>
+		</div>
 	</div>
 	<div id="div_MainPage" class="tab">
 		<div id="div_allPlayersTable">
@@ -114,14 +163,24 @@
 			<label for="input_graphFromDate">Von :</label>
 			<input id="input_graphFromDate" type="date"></input>
 			<label for="input_graphToDate">Bis :</label>
-			<input id="input_graphToDate" type="date"></input>
+			<input id="input_graphToDate" type="date"></input><br>
+
+			<label for="input_graphSwitch">Diagrammtyp</label>
+			<select id="select_graphSwitch">
+				<optgroup label="Gesamtpunktediagramme">
+					<option value="line">Liniendiagramm</option>
+					<option value="bar">Balkendiagramm</option>
+				</optgroup>
+				<optgroup label="Tagespunktediagramme">
+					<option value="line-day">Liniendiagramm</option>
+				</optgroup>
+			</select><br>
+			<label for="select_chartType">Datenauswahl</label>
 			<select id="select_chartType">
+				<option value="all">Alles</option>
 				<option value="cardio">Cardio</option>
 				<option value="strength">Kraft</option>
-				<option value="all">Alles</option>
-			</select><br>
-			<label for="input_graphSwitch">Balkendiagramm</label>
-			<input id="input_graphSwitch" type="checkbox"></input>
+			</select>
 
 		</div>
 	</div>

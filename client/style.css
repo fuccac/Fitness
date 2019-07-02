@@ -36,6 +36,11 @@ button:hover {
     align-self: center;
 }
 
+#div_changeLog{
+    height:70%;
+    overflow-y:scroll;
+}
+
 #div_login {
     color: rgb(0, 51, 0);
     background-color: var(--mainColor);
@@ -221,6 +226,11 @@ button:hover {
     position: absolute;
 }
 
+.selected{
+    background: rgb(202, 111, 95);
+    font-weight: bold;
+}
+
 .std_table tr:nth-child(even) {
     background-color: rgb(240, 240, 240);
 }
@@ -255,8 +265,23 @@ button:hover {
     font-size: 14px;
 }
 
+.changeLog_Feature{
+    font-weight: bold;
+    color: rgb(42, 136, 29);
+}
+
+.changeLog_Bug{
+    font-weight: bold;
+    color: rgb(179, 49, 49);
+}
+
 .negative {
     color: rgb(255, 0, 0);
+}
+
+.today {
+    color: rgb(30, 117, 38);
+    font-weight: bold;
 }
 
 .total {

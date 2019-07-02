@@ -10,6 +10,7 @@ class Player {
             total: 0,
             cardio: 0,
             strength: 0,
+            cardioStrengthRatio:0,
             negative: 0,
             today: 0,
             diffLastMonth: 0,

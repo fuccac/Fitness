@@ -66,30 +66,32 @@ function uiRefresh() {
 	let start = Date.now();
 	var iPlayer;
 	var player;
-
-	for (iPlayer in PLAYER_LIST) {
-		player = PLAYER_LIST[iPlayer];
-		FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
-			logFile.log(result, false, 0);
+	FITNESS_MANAGER.fullRefresh(function (result) {
+		logFile.log(result, false, 0);
+		for (iPlayer in PLAYER_LIST) {
+			player = PLAYER_LIST[iPlayer];
 			player.points = FITNESS_MANAGER.registeredPlayers[player.name].points;
-			logFile.log(result, false, 0);
-			FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (playerList) {
-				if (SOCKET_LIST[player.id] != undefined) {
-					SOCKET_LIST[player.id].emit('refresh', {
-						exercises: FITNESS_MANAGER.exerciseList,
-						player: player,
-						registeredPlayers: FITNESS_MANAGER.registeredPlayers,
-						playerList: playerList,
-						compInfoDaily: FITNESS_MANAGER.dailyWins,
-						compInfoMonthly: FITNESS_MANAGER.monthlyWins,
-						eventLog: FITNESS_MANAGER.eventLog,
-					});
-				}
-				let end = Date.now();
-				logFile.log(`full intervall refresh took ${end - start} ms`, false, 0);
+			FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
+				logFile.log(result, false, 0);
+				FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (playerList) {
+					if (SOCKET_LIST[player.id] != undefined) {
+						SOCKET_LIST[player.id].emit('refresh', {
+							exercises: FITNESS_MANAGER.exerciseList,
+							player: player,
+							registeredPlayers: FITNESS_MANAGER.registeredPlayers,
+							playerList: playerList,
+							compInfoDaily: FITNESS_MANAGER.dailyWins,
+							compInfoMonthly: FITNESS_MANAGER.monthlyWins,
+							eventLog: FITNESS_MANAGER.eventLog,
+						});
+					}
+					let end = Date.now();
+					logFile.log(`full intervall refresh took ${end - start} ms`, false, 0);
+				});
 			});
-		});
-	}
+		}
+	});
+
 }
 
 /**
@@ -164,8 +166,14 @@ function loadSaveFiles(loadSaveFilesResult) {
 	dropbox.downloadFile(DB_TOKEN, config.DATA_STORAGE_FILE_NAME, function (callback) {
 		logFile.log(callback.msg, false, callback.sev);
 		loadFitnessManager(function (fitnessManagerLoadingResult) {
+			for (let playerName in FITNESS_MANAGER.registeredPlayers) {
+				dropbox.downloadFile(DB_TOKEN, playerName + ".json", function (callback) {
+					logFile.log(callback.msg, false, callback.sev);
+				});
+			}
 			let end = Date.now();
 			logFile.log(`loadSaveFiles + loadFitnessManager init done in ${end - start} ms`, false, 0);
+
 			loadSaveFilesResult(fitnessManagerLoadingResult);
 		});
 	});
@@ -345,7 +353,7 @@ function startServer() {
 				colorsForPlayers[playerName] = colors[colorIterator];
 				colorIterator++;
 			}
-			if (data.type) {
+			if (data.type == "bar") {
 				if (data.pointType == "cardio") {
 					graph = FITNESS_MANAGER.monthlyCardioData;
 				}
@@ -358,7 +366,7 @@ function startServer() {
 
 			}
 			else {
-				graph = FITNESS_MANAGER.createGraph(data.fromDate, data.toDate, data.pointType);
+				graph = FITNESS_MANAGER.createGraph(data.fromDate, data.toDate, data.pointType,data.type);
 			}
 
 			SOCKET_LIST[newPlayer.id].emit('refreshGraph', {
@@ -417,10 +425,10 @@ function startServer() {
 			if (data.loginCookie == undefined) {
 				isValidPassword(data, function (res) {
 					if (res) {
+						FITNESS_MANAGER.addToEventLog(data.username + " hat sich angemeldet!");
 						OnPlayerConnection(socket);
 						loadPlayer(data.username, socket.id, function (res) {
 							logFile.log(res, false, 0);
-							FITNESS_MANAGER.addToEventLog(data.username + " hat sich angemeldet!");
 						});
 						socket.emit('signInResponse', { success: true });
 					}
@@ -430,6 +438,12 @@ function startServer() {
 				});
 			}
 			else {
+				for (var playerId in PLAYER_LIST) {
+					if (PLAYER_LIST[playerId].name == data.loginCookie) {
+						delete PLAYER_LIST[playerId];
+					}
+				}
+				FITNESS_MANAGER.addToEventLog(data.loginCookie + " hat sich angemeldet!");
 				OnPlayerConnection(socket);
 				loadPlayer(data.loginCookie, socket.id, function (res) {
 					logFile.log(res, false, 0);

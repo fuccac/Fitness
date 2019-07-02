@@ -76,7 +76,6 @@ var input_UserName = document.getElementById('input_Username');
 var input_exerciseID = document.getElementById('input_exerciseID');
 var onlineIndicator = document.getElementById('onlineIndicator');
 var input_RememberMe = document.getElementById('input_RememberMe');
-var input_graphSwitch = document.getElementById('input_graphSwitch');
 var input_chatText = document.getElementById('input_chatText');
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
@@ -86,7 +85,8 @@ var select_doneExercise = document.getElementById('select_doneExercise');
 var select_historyShowName = document.getElementById('select_historyShowName');
 var select_bothSides = document.getElementById('select_bothSides');
 var select_statisticsExercise = document.getElementById('select_statisticsExercise');
-var select_chartType =  document.getElementById('select_chartType');
+var select_chartType = document.getElementById('select_chartType');
+var select_graphSwitch = document.getElementById('select_graphSwitch');
 //TABLES
 var table_exerciseTable = document.getElementById('table_exerciseTable');
 var table_personalTable = document.getElementById('table_personalTable');
@@ -101,7 +101,7 @@ paragraph_statisticsExercise = document.getElementById('paragraph_statisticsExer
 
 initialize();
 
-var loginCookie = "";
+var loginCookie = "";//getCookie("loginCookie");//
 div_ExerciseOverview.style.display = "none";
 div_PersonalOverview.style.display = "none";
 div_statistics.style.display = "none";
@@ -135,7 +135,7 @@ input_historyToDate.onchange = function () {
 };
 
 select_historyShowName.onchange = function () {
-    button_updateHistory.onclick();
+    button_updateHistory.click();
 };
 
 
@@ -146,7 +146,7 @@ button_updateHistory.onclick = function () {
 button_doneExerciseSend.onclick = function () {
     if (checkForEmptyBoxesDoneExercise()) {
         exerciseDone('addDoneExercise');
-        button_updateHistory.onclick();
+        button_updateHistory.click();
     }
     else {
         alert("Nicht alle Inputboxen wurden ausgefüllt!");
@@ -170,6 +170,7 @@ button_tabPersonalOverview.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
     div_events.style.display = "none";
+    button_updateHistory.click();
 };
 
 button_tabCompetition.onclick = function () {
@@ -214,7 +215,6 @@ button_tabEventLog.onclick = function () {
 button_deleteExercise.onclick = function () {
     if (checkForEmptyBoxesNewExercise()) {
         modifyExercise('deleteExercise');
-        button_updateHistory.onclick();
     }
     else {
         alert("Nicht alle Inputboxen wurden ausgefüllt!");
@@ -224,7 +224,6 @@ button_deleteExercise.onclick = function () {
 button_createExercise.onclick = function () {
     if (checkForEmptyBoxesNewExercise()) {
         modifyExercise('addExercise');
-        button_updateHistory.onclick();
     }
     else {
         alert("Nicht alle Inputboxen wurden ausgefüllt!");
@@ -233,13 +232,18 @@ button_createExercise.onclick = function () {
 };
 
 button_modifyExercise.onclick = function () {
-    if (checkForEmptyBoxesNewExercise()) {
-        modifyExercise('modifyExercise');
-        button_updateHistory.onclick();
+    if (input_exerciseID.value == "") {
+        alert("Keine Übung zum Bearbeiten ausgewählt");
     }
     else {
-        alert("Nicht alle Inputboxen wurden ausgefüllt!");
+        if (checkForEmptyBoxesNewExercise()) {
+            modifyExercise('modifyExercise');
+        }
+        else {
+            alert("Nicht alle Inputboxen wurden ausgefüllt!");
+        }
     }
+
 
 };
 
@@ -247,8 +251,8 @@ button_statisticsExercise.onclick = function () {
     requestExerciseStatistic(select_statisticsExercise.value);
 };
 
-input_graphSwitch.onclick = function () {
-    if (input_graphSwitch.checked) {
+select_graphSwitch.onchange = function () {
+    if (select_graphSwitch.value == "bar") {
         input_graphFromDate.disabled = true;
         input_graphToDate.disabled = true;
     }
@@ -261,32 +265,43 @@ input_graphSwitch.onclick = function () {
 
 };
 
-button_chatText.onclick = function(){
-    if(input_chatText.value != ""){
+button_chatText.onclick = function () {
+    if (input_chatText.value != "") {
         sendChatMessage(input_chatText.value);
     }
-    
+
 };
 
-button_link.onclick = function(){
+button_link.onclick = function () {
     input_chatText.value += "[LINK][/LINK]";
 };
 
-button_img.onclick = function(){
+button_img.onclick = function () {
     input_chatText.value += "[IMG][/IMG]";
 };
 
-input_graphFromDate.onchange = function(){
+input_graphFromDate.onchange = function () {
     requestGraphUpdate();
 };
-input_graphToDate.onchange = function(){
-    requestGraphUpdate();
-};
-
-select_chartType.onchange = function(){
+input_graphToDate.onchange = function () {
     requestGraphUpdate();
 };
 
+select_chartType.onchange = function () {
+    requestGraphUpdate();
+};
+
+input_exerciseID.onchange = function () {
+
+    for (let tableIterator = 0, row; row = table_exerciseTable.rows[tableIterator]; tableIterator++) {
+        if (input_exerciseID.value == row.getElementsByTagName("td")[0].innerHTML) {
+            row.getElementsByTagName("td")[1].classList.add("selected");
+        }
+        else {
+            row.getElementsByTagName("td")[1].classList.remove("selected");
+        }
+    }
+}
 
 
 
@@ -301,7 +316,7 @@ socket.on('signInResponse', function (data) {
     if (data.success) {
         div_login.style.display = "none";
         Name = input_UserName.value.toLowerCase();
-        button_tabMainPage.onclick();
+        button_tabMainPage.click();
         div_navigation.style.display = 'inline-block';
         if (input_RememberMe.checked && loginCookie === "") {
             setCookie("loginCookie", Name, 1);
@@ -393,17 +408,17 @@ socket.on("refreshExerciseStatistics", function (data) {
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
-function requestGraphUpdate(){
-    socket.emit("requestGraphUpdate", { fromDate: input_graphFromDate.value, toDate: input_graphToDate.value, type: input_graphSwitch.checked,pointType:select_chartType.value});
+function requestGraphUpdate() {
+    socket.emit("requestGraphUpdate", { fromDate: input_graphFromDate.value, toDate: input_graphToDate.value, type: select_graphSwitch.value, pointType: select_chartType.value });
 }
-function sendChatMessage(msg){
+function sendChatMessage(msg) {
 
     socket.emit("sendChatMessage", data = {
         name: Name,
         msg: msg.toString()
     });
     input_chatText.value = "";
-    
+
 }
 
 function requestExerciseStatistic(id) {
@@ -422,7 +437,7 @@ function requestHistoryDeletion(id, date) {
         id: id,
         date: date,
     });
-    button_updateHistory.onclick();
+    button_updateHistory.click();
 }
 function requestAchievementList() {
     socket.emit("requestAchievements", data = {
@@ -454,6 +469,7 @@ function modifyExercise(emitString) {
         comment: input_exerciseComment.value,
         id: input_exerciseID.value
     });
+    resetExerciseEntryMask();
 }
 
 
@@ -470,18 +486,18 @@ function generateGraph(data, canvas, ctx) {
     var dataSetMeta = [];
     var applyFilter = false;
     var filterSettings = {};
-    if (OverallChart != undefined) {        
-        for (var dataIterator =0;dataIterator<OverallChart.config.data.datasets.length;dataIterator++){
+    if (OverallChart != undefined) {
+        for (let dataIterator = 0; dataIterator < OverallChart.config.data.datasets.length; dataIterator++) {
             dataSetMeta.push(OverallChart.getDatasetMeta(dataIterator));
 
-            if (dataSetMeta[dataIterator].hidden == undefined || dataSetMeta[dataIterator].hidden == undefined == null){
+            if (dataSetMeta[dataIterator].hidden == undefined || dataSetMeta[dataIterator].hidden == undefined == null) {
                 dataSetMeta[dataIterator].hidden = OverallChart.config.data.datasets[dataIterator].hidden;
             }
-            
+
             filterSettings[OverallChart.config.data.datasets[dataIterator].label] = dataSetMeta[dataIterator].hidden;
         }
         applyFilter = true;
-         
+
 
 
 
@@ -499,8 +515,6 @@ function generateGraph(data, canvas, ctx) {
 
     var datasets = [];
     var dataset;
-
-    var colorIterator = 0;
     var month;
     var playerName;
 
@@ -511,7 +525,7 @@ function generateGraph(data, canvas, ctx) {
         }
     }
 
-    if (input_graphSwitch.checked) {
+    if (select_graphSwitch.value == "bar") {
         var labels = [];
         var labelIterator = 0;
         var dataPerName = {};
@@ -555,19 +569,18 @@ function generateGraph(data, canvas, ctx) {
             };
 
             datasets.push(dataset);
-            colorIterator++;
-        }    
+        }
 
-        datasets.sort(function(a, b){
+        datasets.sort(function (a, b) {
             var x = a.label.toLowerCase();
             var y = b.label.toLowerCase();
-            if (x < y) {return -1;}
-            if (x > y) {return 1;}
+            if (x < y) { return -1; }
+            if (x > y) { return 1; }
             return 0;
-          });
+        });
 
-        if (applyFilter){
-            for (var dataIterator = 0; dataIterator < datasets.length; dataIterator++){
+        if (applyFilter) {
+            for (let dataIterator = 0; dataIterator < datasets.length; dataIterator++) {
                 datasets[dataIterator].hidden = filterSettings[datasets[dataIterator].label];
             }
         }
@@ -612,24 +625,24 @@ function generateGraph(data, canvas, ctx) {
 
                 ],
                 borderWidth: 1,
-                hidden:false,
+                hidden: false,
             };
 
             datasets.push(dataset);
-            colorIterator++;
+
 
         }
 
-        datasets.sort(function(a, b){
+        datasets.sort(function (a, b) {
             var x = a.label.toLowerCase();
             var y = b.label.toLowerCase();
-            if (x < y) {return -1;}
-            if (x > y) {return 1;}
+            if (x < y) { return -1; }
+            if (x > y) { return 1; }
             return 0;
-          });
+        });
 
-        if (applyFilter){
-            for (var dataIterator = 0; dataIterator < datasets.length; dataIterator++){
+        if (applyFilter) {
+            for (let dataIterator = 0; dataIterator < datasets.length; dataIterator++) {
                 datasets[dataIterator].hidden = filterSettings[datasets[dataIterator].label]
             }
         }
@@ -913,27 +926,39 @@ function generateExerciseList(data) {
 
         bodyRow.onclick = function () {
             var id = this.getElementsByTagName("td")[0].innerHTML;
-            input_exerciseName.value = data.exercises[id].name;
-            input_exerciseID.value = id;
-            if (data.exercises[id].votes[Name] == undefined) {
-                input_exerciseBaseWeight.value = data.exercises[id].baseWeight;
-                input_exerciseDifficulty.value = data.exercises[id].difficulty;
-                input_exerciseDifficulty10.value = data.exercises[id].difficulty10;
-                input_exerciseDifficulty100.value = data.exercises[id].difficulty100;
+            if (input_exerciseID.value == id) {
+                resetExerciseEntryMask();
             }
             else {
-                input_exerciseBaseWeight.value = data.exercises[id].votes[Name].baseWeight;
-                input_exerciseDifficulty.value = data.exercises[id].votes[Name].difficulty;
-                input_exerciseDifficulty10.value = data.exercises[id].votes[Name].difficulty10;
-                input_exerciseDifficulty100.value = data.exercises[id].votes[Name].difficulty100;
-                input_exerciseComment.value = data.exercises[id].votes[Name].comment;
+                input_exerciseName.value = data.exercises[id].name;
+                input_exerciseID.value = id;
+                if (data.exercises[id].votes[Name] == undefined) {
+                    input_exerciseBaseWeight.value = data.exercises[id].baseWeight;
+                    input_exerciseDifficulty.value = data.exercises[id].difficulty;
+                    input_exerciseDifficulty10.value = data.exercises[id].difficulty10;
+                    input_exerciseDifficulty100.value = data.exercises[id].difficulty100;
+                }
+                else {
+                    input_exerciseBaseWeight.value = data.exercises[id].votes[Name].baseWeight;
+                    input_exerciseDifficulty.value = data.exercises[id].votes[Name].difficulty;
+                    input_exerciseDifficulty10.value = data.exercises[id].votes[Name].difficulty10;
+                    input_exerciseDifficulty100.value = data.exercises[id].votes[Name].difficulty100;
+                    input_exerciseComment.value = data.exercises[id].votes[Name].comment;
+                }
+
+                select_exerciseEquipment.value = data.exercises[id].equipment;
+                select_exerciseType.value = data.exercises[id].type;
+                select_exerciseUnit.value = data.exercises[id].unit;
+                select_bothSides.value = data.exercises[id].bothSides;
             }
 
-            select_exerciseEquipment.value = data.exercises[id].equipment;
-            select_exerciseType.value = data.exercises[id].type;
-            select_exerciseUnit.value = data.exercises[id].unit;
-            select_bothSides.value = data.exercises[id].bothSides;
+            input_exerciseID.onchange();
+
         };
+
+
+
+
     }
 
     sortSelect(select_doneExercise);
@@ -957,6 +982,7 @@ function generateExerciseList(data) {
     }
 
     sortTable(exerciseTableSortMode, table_exerciseTable);
+    input_exerciseID.onchange();
 
 }
 
@@ -997,7 +1023,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                         break;
                     }
                     else {
-                        if (historyKeys === "exerciseId" || historyKeys === "playerName" || historyKeys === "dailySum" || historyKeys === "dailyWinner") {
+                        if (historyKeys === "playerName" || historyKeys === "dailySum" || historyKeys === "dailyWinner") {
                             if (historyKeys === "dailyWinner") {
                                 toolTipText = "Tagessieger: " + historyEntry[historyKeys];
                             }
@@ -1007,7 +1033,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                     }
                 }
                 else {
-                    if (historyKeys === "exerciseId" || historyKeys === "dailySum" || historyKeys === "dailyWinner") {
+                    if (historyKeys === "dailySum" || historyKeys === "dailyWinner") {
                         continue;
                     }
                 }
@@ -1031,8 +1057,9 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                 }
 
                 cell = bodyRow.insertCell(cellNumber);
+                cell.classList.add(historyKeys);
                 cell.innerHTML = translate(value);
-                if (historyKeys === "id") {
+                if (historyKeys === "id" || historyKeys === "exerciseId") {
                     cell.classList.add("hiddenCell");
                 }
                 if (historyKeys === "points") {
@@ -1045,8 +1072,8 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
             if (!rowNotUsed) {
                 addToolTip(toolTipText, "tableTooltip", bodyRow);
                 bodyRow.onclick = function () {
-                    var id = this.getElementsByTagName("td")[0].innerHTML;
-                    var date = getDateFormat(this.getElementsByTagName("td")[1].innerHTML, "YYYY-MM-DD", "DD.MM.YYYY");
+                    var id = this.getElementsByClassName("id")[0].innerHTML;
+                    var date = getDateFormat(this.getElementsByClassName("date")[0].innerHTML, "YYYY-MM-DD", "DD.MM.YYYY");
                     if (input_deletionMode.checked) {
                         if (Name.toUpperCase() === select_historyShowName.value.toUpperCase()) {
                             requestHistoryDeletion(id, date);
@@ -1054,6 +1081,14 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                         else {
                             alert("Du kannst ned die Sachen von die anderen löschen, Wirschtl");
                         }
+                    }
+                    else {
+                        let count = this.getElementsByClassName("count")[0].innerHTML;
+                        let weight = this.getElementsByClassName("weight")[0].innerHTML;
+                        let exId  = this.getElementsByClassName("exerciseId")[0].innerHTML;
+                        select_doneExercise.value = exId;
+                        input_doneExercise.value = count;
+                        input_doneExerciseWeight.value = weight;
                     }
                 };
             }
@@ -1190,14 +1225,14 @@ function generateEventLog(data) {
 *******************************************************************************************************************
 ******************************************************************************************************************/
 
-input_chatText.addEventListener("keyup", function(event) {
+input_chatText.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
-      if(div_events.style.display == "inline-block"){
-        button_chatText.click();
-      }
-      
+        if (div_events.style.display == "inline-block") {
+            button_chatText.click();
+        }
+
     }
-  });
+});
 
 function getDateFormat(date, format, fromFormat) {
     var addZeroMonth = "";
@@ -1602,11 +1637,11 @@ function createZeroDate(date) {
 
 setInterval(function () {
     if (socket.connected) {
-        onlineIndicator.color = "green";
+        onlineIndicator.style.color = "green";
         onlineIndicator.checked = true;
     }
     else {
-        onlineIndicator.color = "red";
+        onlineIndicator.style.color = "red";
         onlineIndicator.checked = false;
     }
 }, 1000);
@@ -1632,6 +1667,20 @@ function sortSelect(selElem) {
         selElem.options[i] = op;
     }
     return;
+}
+
+function resetExerciseEntryMask() {
+    input_exerciseName.value = "";
+    input_exerciseDifficulty.value = "";
+    input_exerciseDifficulty10.value = "";
+    input_exerciseDifficulty100.value = "";
+    input_exerciseBaseWeight.value = "";
+    select_exerciseType.value = "";
+    select_exerciseUnit.value = "";
+    select_exerciseEquipment.value = "";
+    select_bothSides.value = "";
+    input_exerciseComment.value = "";
+    input_exerciseID.value = "";
 }
 
 
@@ -1749,6 +1798,8 @@ function translate(word) {
             return "Gesamtwiederholungen";
         case "category":
             return "Übungskategorie";
+        case "cardioStrengthRatio":
+            return "Cardio | Stärke";
         default:
             if (word.search("Overall") != -1) {
                 return word.replace("Overall", "[Gesamt] - ");
