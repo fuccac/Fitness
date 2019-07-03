@@ -1011,7 +1011,9 @@ class FitnessManager {
 
             yAxis.push(historyDate);
             lastDate = currentDate; //remember last Date
-
+            if( historyEntry == undefined){
+                continue; //WORKAROUND FOR DELETION BUG
+            }
             for (let historyIteratorPerDate = 0; historyIteratorPerDate < historyEntry.playerName.length; historyIteratorPerDate++) {
                 // ENTRIES INSIDE DATE
                 // common
