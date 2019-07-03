@@ -1234,7 +1234,13 @@ class FitnessManager {
                 }
 
                 if (this.exerciseList[exerciseId].type === "Cardio") {
-                    dailyCardio[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
+                    if(dailyCardio[historyName]==undefined){
+                        dailyCardio[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+                    else{
+                        dailyCardio[historyName] += Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+                    
                     this.registeredPlayers[historyName].points.cardio += Number(historyEntry.points[historyIteratorPerDate]);
                     if (monthlyCardioSum[historyName] == undefined) {
                         monthlyCardioSum[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
@@ -1244,7 +1250,12 @@ class FitnessManager {
                     }
                 }
                 else if (this.exerciseList[exerciseId].type === "Kraft") {
-                    dailyStrength[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
+                    if(dailyStrength[historyName]==undefined){
+                        dailyStrength[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+                    else{
+                        dailyStrength[historyName] += Number(historyEntry.points[historyIteratorPerDate]);
+                    }
                     this.registeredPlayers[historyName].points.strength += Number(historyEntry.points[historyIteratorPerDate]);
                     if (monthlyStrengthSum[historyName] == undefined) {
                         monthlyStrengthSum[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
