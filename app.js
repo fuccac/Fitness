@@ -70,24 +70,29 @@ function uiRefresh() {
 		logFile.log(result, false, 0);
 		for (iPlayer in PLAYER_LIST) {
 			player = PLAYER_LIST[iPlayer];
-			player.points = FITNESS_MANAGER.registeredPlayers[player.name].points;
 			FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
 				logFile.log(result, false, 0);
-				FITNESS_MANAGER.getPlayerList(PLAYER_LIST, function (playerList) {
-					if (SOCKET_LIST[player.id] != undefined) {
-						SOCKET_LIST[player.id].emit('refresh', {
-							exercises: FITNESS_MANAGER.exerciseList,
-							player: player,
-							registeredPlayers: FITNESS_MANAGER.registeredPlayers,
-							playerList: playerList,
-							compInfoDaily: FITNESS_MANAGER.dailyWins,
-							compInfoMonthly: FITNESS_MANAGER.monthlyWins,
-							eventLog: FITNESS_MANAGER.eventLog,
-						});
-					}
-					let end = Date.now();
-					logFile.log(`full intervall refresh took ${end - start} ms`, false, 0);
-				});
+				if (SOCKET_LIST[player.id] != undefined) {
+					SOCKET_LIST[player.id].emit('refresh', {
+						exercises: FITNESS_MANAGER.exerciseList,
+						player: {
+							points: FITNESS_MANAGER.registeredPlayers[player.name].points,
+							entries: FITNESS_MANAGER.registeredPlayers[player.name].entries,
+							active: player.active,
+							regDate: player.regDate,
+							addedExercises: player.addedExercises,
+							deletedExercises: player.deletedExercises,
+							modifiedExercises: player.modifiedExercises,
+							bestExercises: player.bestExercises,
+						},
+						playerList: FITNESS_MANAGER.registeredPlayers,
+						compInfoDaily: FITNESS_MANAGER.dailyWins,
+						compInfoMonthly: FITNESS_MANAGER.monthlyWins,
+						eventLog: FITNESS_MANAGER.eventLog,
+					});
+				}
+				let end = Date.now();
+				logFile.log(`full intervall refresh took ${end - start} ms`, false, 0);
 			});
 		}
 	});
@@ -98,7 +103,18 @@ function uiRefresh() {
  * @param {Player} player 
  */
 function savePlayer(player) {
-	storageManager.put({ content: player, id: player.name }).then(result => {
+	playerData = {
+		name: player.name,
+		active: player.active,
+		regDate: player.regDate,
+		addedExercises: player.addedExercises,
+		deletedExercises: player.deletedExercises,
+		modifiedExercises: player.modifiedExercises,
+		bestExercises: player.bestExercises,
+		online: player.online
+	};
+
+	storageManager.put({ content: playerData, id: playerData.name }).then(result => {
 		logFile.log("player " + player.name + " saved", false, 0);
 		dropbox.uploadFile(DB_TOKEN, player.name + ".json", function (result) {
 			logFile.log(result.msg, false, result.sev);
@@ -112,39 +128,15 @@ function savePlayer(player) {
  */
 function loadPlayer(name, id, cb) {
 	storageManager.get(name).then(result => {
-		var keyArrayPlayer = Object.keys(PLAYER_LIST[id]);
-		var loadSeparately = [];
-		var doNotLoadDirect = ["id"];
-		var loadSeparatelyKeys = [];
 
-		//Do not load keys which should be loaded separately
-		for (iLoad = 0; iLoad < loadSeparately.length; iLoad++) {
-			doNotLoadDirect.push(loadSeparately[iLoad]);
-		}
-
-		//Load all keys which are save to load
-		for (var iPlayerProp = 0; iPlayerProp < keyArrayPlayer.length; iPlayerProp++) {
-			var moveOn = false;
-			for (var iObjectArray = 0; iObjectArray < doNotLoadDirect.length; iObjectArray++) {
-				if (keyArrayPlayer[iPlayerProp] === doNotLoadDirect[iObjectArray]) {
-					moveOn = true;
-				}
-			}
-			if (!moveOn) {
-				PLAYER_LIST[id][keyArrayPlayer[iPlayerProp]] = result.content[keyArrayPlayer[iPlayerProp]];
-			}
-		}
-
-		//Get array of key arrays which should be loaded
-		for (var iloadSepa = 0; iloadSepa < loadSeparately.length; iloadSepa++) {
-			loadSeparatelyKeys[iloadSepa] = Object.keys(PLAYER_LIST[id][loadSeparately[iloadSepa]]);
-		}
-
-		//load separately player objects
-		for (var k = 0; k < loadSeparatelyKeys.length; k++)
-			for (var l = 0; l < loadSeparatelyKeys[k].length; l++) {
-				PLAYER_LIST[id][loadSeparately[k]][loadSeparatelyKeys[l]] = result.content[loadSeparately[k]][loadSeparatelyKeys[l]];
-			}
+		PLAYER_LIST[id].name = result.content.name;
+		PLAYER_LIST[id].active = result.content.active;
+		PLAYER_LIST[id].regDate = result.content.regDate;
+		PLAYER_LIST[id].addedExercises = result.content.addedExercises;
+		PLAYER_LIST[id].deletedExercises = result.content.deletedExercises;
+		PLAYER_LIST[id].modifiedExercises = result.content.modifiedExercises;
+		PLAYER_LIST[id].bestExercises = result.content.bestExercises;
+		PLAYER_LIST[id].online = result.content.online;
 
 		uiRefresh();
 
@@ -153,7 +145,6 @@ function loadPlayer(name, id, cb) {
 		.catch((err) => {
 
 			PLAYER_LIST[id].name = name;
-
 			uiRefresh();
 			cb("Player <" + name + ">: No Savestate.");
 		});
@@ -297,11 +288,17 @@ function startServer() {
 
 		socket.on("deleteExercise", function (data) {
 			if (data.id != 0) {
-				logFile.log(newPlayer.name + " " + "deletes Exercise " + data.name, false, 0);
-				FITNESS_MANAGER.deleteExercise(data.id, function (result) {
-					uiRefresh();
-				});
-				PLAYER_LIST[newPlayer.id].deletedExercises++;
+				if (FITNESS_MANAGER.exerciseList[data.id].points > 0) {
+					socket.emit('alertMsg', { data: "DARN! Zur Zeit kann man leider keine Übung löschen welche punktebehaftet ist :(" });
+				}
+				else {
+					logFile.log(newPlayer.name + " " + "deletes Exercise " + data.name, false, 0);
+					FITNESS_MANAGER.deleteExercise(data.id, function (result) {
+						PLAYER_LIST[newPlayer.id].deletedExercises++;
+
+					});
+				}
+				uiRefresh();
 			}
 			else {
 				logFile.log("Exercise not found", false, 1);
@@ -366,7 +363,7 @@ function startServer() {
 
 			}
 			else {
-				graph = FITNESS_MANAGER.createGraph(data.fromDate, data.toDate, data.pointType,data.type);
+				graph = FITNESS_MANAGER.createGraph(data.fromDate, data.toDate, data.pointType, data.type);
 			}
 
 			SOCKET_LIST[newPlayer.id].emit('refreshGraph', {

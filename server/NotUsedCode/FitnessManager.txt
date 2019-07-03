@@ -506,3 +506,24 @@ updateRegisteredPlayers(updateRegisteredPlayersResult) {
         logFile.log(`getMaxExerciseCounts done in ${end - start}`, false, 0);
         return sum;
     }
+
+    getPlayerList(playerList, result) {
+        let start = Date.now();
+        var returnList = {};
+        for (let idPlayer in playerList) {
+            returnList[playerList[idPlayer].name] = this.registeredPlayers[playerList[idPlayer].name].points;
+            returnList[playerList[idPlayer].name].online = true;
+        }
+        for (let name in this.registeredPlayers) {
+            if (returnList[name] != undefined) {
+                continue;
+            }
+            else {
+                returnList[name] = this.registeredPlayers[name].points;
+                returnList[name].online = false;
+            }
+        }
+        let end = Date.now();
+        logFile.log(`getPlayerList done in ${end - start} ms`, false, 0);
+        result(returnList);
+    }

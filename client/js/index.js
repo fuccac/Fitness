@@ -334,6 +334,10 @@ socket.on('signUpResponse', function (data) {
         alert("Sign Up unsuccessful");
 });
 
+socket.on('alertMsg', function (data) {
+    alert(data.data);
+});
+
 socket.on('refreshEventLog', function (data) {
     generateEventLog(data);
 });
@@ -366,7 +370,7 @@ socket.on("refreshGraph", function (data) {
 socket.on("refresh", function (data) {
     var selIndex = select_historyShowName.selectedIndex;
     select_historyShowName.innerHTML = "";
-    for (var names in data.registeredPlayers) {
+    for (var names in data.playerList) {
         addOption(select_historyShowName, names, names);
     }
     select_historyShowName.selectedIndex = selIndex;
@@ -774,7 +778,7 @@ function generatePlayerListTable(data) {
 
     for (var playerid in data.playerList) {
         bodyRow = tBodyPlayersTable.insertRow(0);
-        player = data.playerList[playerid];
+        player = data.playerList[playerid].points;
         var cellNumber = 0;
         if (playerIterator == 0) {
             cell = headerRow.insertCell(cellNumber);
@@ -1085,7 +1089,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                     else {
                         let count = this.getElementsByClassName("count")[0].innerHTML;
                         let weight = this.getElementsByClassName("weight")[0].innerHTML;
-                        let exId  = this.getElementsByClassName("exerciseId")[0].innerHTML;
+                        let exId = this.getElementsByClassName("exerciseId")[0].innerHTML;
                         select_doneExercise.value = exId;
                         input_doneExercise.value = count;
                         input_doneExerciseWeight.value = weight;
@@ -1798,8 +1802,10 @@ function translate(word) {
             return "Gesamtwiederholungen";
         case "category":
             return "Übungskategorie";
-        case "cardioStrengthRatio":
+        case "cardioStrengthRatio": 
             return "Cardio | Stärke";
+        case "entries": 
+            return "Historyeinträge";
         default:
             if (word.search("Overall") != -1) {
                 return word.replace("Overall", "[Gesamt] - ");
