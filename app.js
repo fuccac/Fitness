@@ -428,8 +428,10 @@ function startServer() {
 					OnPlayerConnection(socket);
 					loadPlayer(checkPasswortResult.username, socket.id, function (loadPlayerResult) {
 						logFile.log(loadPlayerResult, false, 0);
+						
 					});
 					socket.emit('signInResponse', { success: true, name: checkPasswortResult.username });
+					
 				}
 				else {
 					socket.emit('signInResponse', { success: false, name: checkPasswortResult.username });

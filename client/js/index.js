@@ -102,7 +102,7 @@ var button_logOut = document.getElementById('button_logOut');
 
 initialize();
 
-var loginCookie = getCookie("loginCookie");
+var loginCookie = "";//getCookie("loginCookie");
 
 
 /******************************************************************************************************************
