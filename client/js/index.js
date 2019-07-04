@@ -74,7 +74,7 @@ var input_deletionMode = document.getElementById('input_deletionMode');
 var input_Password = document.getElementById('input_Password');
 var input_UserName = document.getElementById('input_Username');
 var input_exerciseID = document.getElementById('input_exerciseID');
-var onlineIndicator = document.getElementById('onlineIndicator');
+var input_onlineIndicator = document.getElementById('input_onlineIndicator');
 var input_RememberMe = document.getElementById('input_RememberMe');
 var input_chatText = document.getElementById('input_chatText');
 //SELECTS
@@ -97,16 +97,13 @@ var table_dailyWins = document.getElementById('table_dailyWins');
 var table_monthlyWins = document.getElementById('table_monthlyWins');
 var socket = io();
 //para
-paragraph_statisticsExercise = document.getElementById('paragraph_statisticsExercise');
+var paragraph_statisticsExercise = document.getElementById('paragraph_statisticsExercise');
+var button_logOut = document.getElementById('button_logOut');
 
 initialize();
 
-var loginCookie = "";//getCookie("loginCookie");//
-div_ExerciseOverview.style.display = "none";
-div_PersonalOverview.style.display = "none";
-div_statistics.style.display = "none";
-div_MainPage.style.display = "none";
-div_navigation.style.display = "none";
+var loginCookie = getCookie("loginCookie");
+
 
 /******************************************************************************************************************
 *******************************************************************************************************************
@@ -114,10 +111,11 @@ div_navigation.style.display = "none";
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
-//sign in code
+
 button_SignIn.onclick = function () {
-    socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value });
+    socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
 };
+
 button_SignUp.onclick = function () {
     socket.emit('SignUp', { username: input_UserName.value.toLowerCase(), password: input_Password.value });
 };
@@ -243,8 +241,6 @@ button_modifyExercise.onclick = function () {
             alert("Nicht alle Inputboxen wurden ausgefüllt!");
         }
     }
-
-
 };
 
 button_statisticsExercise.onclick = function () {
@@ -260,16 +256,13 @@ select_graphSwitch.onchange = function () {
         input_graphFromDate.disabled = false;
         input_graphToDate.disabled = false;
     }
-
     requestGraphUpdate();
-
 };
 
 button_chatText.onclick = function () {
     if (input_chatText.value != "") {
         sendChatMessage(input_chatText.value);
     }
-
 };
 
 button_link.onclick = function () {
@@ -292,7 +285,6 @@ select_chartType.onchange = function () {
 };
 
 input_exerciseID.onchange = function () {
-
     for (let tableIterator = 0, row; row = table_exerciseTable.rows[tableIterator]; tableIterator++) {
         if (input_exerciseID.value == row.getElementsByTagName("td")[0].innerHTML) {
             row.getElementsByTagName("td")[1].classList.add("selected");
@@ -301,8 +293,7 @@ input_exerciseID.onchange = function () {
             row.getElementsByTagName("td")[1].classList.remove("selected");
         }
     }
-}
-
+};
 
 
 /******************************************************************************************************************
@@ -315,12 +306,11 @@ input_exerciseID.onchange = function () {
 socket.on('signInResponse', function (data) {
     if (data.success) {
         div_login.style.display = "none";
-        Name = input_UserName.value.toLowerCase();
+        Name = data.name;
+        select_historyShowName.value = Name;
         button_tabMainPage.click();
         div_navigation.style.display = 'inline-block';
-        if (input_RememberMe.checked && loginCookie === "") {
-            setCookie("loginCookie", Name, 1);
-        }
+
     }
     else
         alert("Sign in unsuccessful");
@@ -337,6 +327,12 @@ socket.on('signUpResponse', function (data) {
 socket.on('alertMsg', function (data) {
     alert(data.data);
 });
+
+socket.on('loginToken', function (data) {
+    setCookie("loginCookie", data.data, 1);
+});
+
+
 
 socket.on('refreshEventLog', function (data) {
     generateEventLog(data);
@@ -404,14 +400,13 @@ socket.on("refreshExerciseStatistics", function (data) {
 });
 
 
-
-
 /******************************************************************************************************************
 *******************************************************************************************************************
 *                                               SOCKET EMIT 
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
+
 function requestGraphUpdate() {
     socket.emit("requestGraphUpdate", { fromDate: input_graphFromDate.value, toDate: input_graphToDate.value, type: select_graphSwitch.value, pointType: select_chartType.value });
 }
@@ -1107,7 +1102,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
     for (headerContents = 0; headerContents < headerArray.length; headerContents++) {
         cell = headerRow.insertCell(headerContents);
         cell.innerHTML = translate(headerArray[headerContents]);
-        if (headerArray[headerContents] === "id") {
+        if (headerArray[headerContents] === "id" || headerArray[headerContents] === "exerciseId") {
             cell.classList.add("hiddenCell");
         }
         cell.onclick = function () {
@@ -1607,6 +1602,12 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+function deleteCookie(cname) {
+    document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+
+
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -1639,20 +1640,36 @@ function createZeroDate(date) {
     return zeroDate;
 }
 
+function changeCSS(cssFile, cssLinkIndex) {
+
+    var oldlink = document.getElementsByTagName("link").item(cssLinkIndex);
+
+    var newlink = document.createElement("link");
+    newlink.setAttribute("rel", "stylesheet");
+    newlink.setAttribute("type", "text/css");
+    newlink.setAttribute("href", cssFile);
+
+    document.getElementsByTagName("body").item(0).replaceChild(newlink, oldlink);
+}
+
 setInterval(function () {
     if (socket.connected) {
-        onlineIndicator.style.color = "green";
-        onlineIndicator.checked = true;
+        input_onlineIndicator.style.color = "green";
+        input_onlineIndicator.checked = true;
     }
     else {
-        onlineIndicator.style.color = "red";
-        onlineIndicator.checked = false;
+        input_onlineIndicator.style.color = "red";
+        input_onlineIndicator.checked = false;
     }
 }, 1000);
 
 if (loginCookie != "") {
-    input_UserName.value = loginCookie;
-    socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, loginCookie: loginCookie });
+    socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: false, loginToken: loginCookie });
+}
+
+function logout(){
+    deleteCookie("loginCookie");
+    location.reload();
 }
 
 function sortSelect(selElem) {
@@ -1802,9 +1819,9 @@ function translate(word) {
             return "Gesamtwiederholungen";
         case "category":
             return "Übungskategorie";
-        case "cardioStrengthRatio": 
+        case "cardioStrengthRatio":
             return "Cardio | Stärke";
-        case "entries": 
+        case "entries":
             return "Historyeinträge";
         default:
             if (word.search("Overall") != -1) {

@@ -154,20 +154,24 @@ function loadPlayer(name, id, cb) {
 
 function loadSaveFiles(loadSaveFilesResult) {
 	let start = Date.now();
-	dropbox.downloadFile(DB_TOKEN, config.DATA_STORAGE_FILE_NAME, function (callback) {
+	dropbox.downloadFile(DB_TOKEN, config.LOG_FILE_NAME, function (callback) {
 		logFile.log(callback.msg, false, callback.sev);
-		loadFitnessManager(function (fitnessManagerLoadingResult) {
-			for (let playerName in FITNESS_MANAGER.registeredPlayers) {
-				dropbox.downloadFile(DB_TOKEN, playerName + ".json", function (callback) {
-					logFile.log(callback.msg, false, callback.sev);
-				});
-			}
-			let end = Date.now();
-			logFile.log(`loadSaveFiles + loadFitnessManager init done in ${end - start} ms`, false, 0);
-
-			loadSaveFilesResult(fitnessManagerLoadingResult);
+		dropbox.downloadFile(DB_TOKEN, config.DATA_STORAGE_FILE_NAME, function (callback) {
+			logFile.log(callback.msg, false, callback.sev);
+			loadFitnessManager(function (fitnessManagerLoadingResult) {
+				for (let playerName in FITNESS_MANAGER.registeredPlayers) {
+					dropbox.downloadFile(DB_TOKEN, playerName + ".json", function (callback) {
+						logFile.log(callback.msg, false, callback.sev);
+					});
+				}
+				let end = Date.now();
+				logFile.log(`loadSaveFiles + loadFitnessManager init done in ${end - start} ms`, false, 0);
+	
+				loadSaveFilesResult(fitnessManagerLoadingResult);
+			});
 		});
 	});
+	
 }
 
 function loadFitnessManager(fitnessManagerLoadingResult) {
@@ -410,7 +414,6 @@ function startServer() {
 	 * @param {SocketIO.Socket} socket 
 	 */
 	OnSocketConnection = function (socket) {
-
 		//someone connects
 		socket.id = Math.random().toFixed(config.ID_LENGTH).slice(2);
 		SOCKET_LIST[socket.id] = socket;
@@ -419,36 +422,23 @@ function startServer() {
 		//someone signs in
 		socket.on('SignIn', function (data) {
 
-			if (data.loginCookie == undefined) {
-				isValidPassword(data, function (res) {
-					if (res) {
-						FITNESS_MANAGER.addToEventLog(data.username + " hat sich angemeldet!");
-						OnPlayerConnection(socket);
-						loadPlayer(data.username, socket.id, function (res) {
-							logFile.log(res, false, 0);
-						});
-						socket.emit('signInResponse', { success: true });
-					}
-					else {
-						socket.emit('signInResponse', { success: false });
-					}
-				});
-			}
-			else {
-				for (var playerId in PLAYER_LIST) {
-					if (PLAYER_LIST[playerId].name == data.loginCookie) {
-						delete PLAYER_LIST[playerId];
-					}
+			isValidPassword(data, function (checkPasswortResult) {
+				if (checkPasswortResult.success) {
+					FITNESS_MANAGER.addToEventLog(checkPasswortResult.username + " hat sich angemeldet!");
+					OnPlayerConnection(socket);
+					loadPlayer(checkPasswortResult.username, socket.id, function (loadPlayerResult) {
+						logFile.log(loadPlayerResult, false, 0);
+					});
+					socket.emit('signInResponse', { success: true, name: checkPasswortResult.username });
 				}
-				FITNESS_MANAGER.addToEventLog(data.loginCookie + " hat sich angemeldet!");
-				OnPlayerConnection(socket);
-				loadPlayer(data.loginCookie, socket.id, function (res) {
-					logFile.log(res, false, 0);
-				});
-				socket.emit('signInResponse', { success: true });
+				else {
+					socket.emit('signInResponse', { success: false, name: checkPasswortResult.username });
+				}
+				if (data.remember) {
+					socket.emit('loginToken', { data: USERS[checkPasswortResult.username.toUpperCase()].loginToken });
+				}
 
-			}
-
+			});
 
 		});
 
@@ -493,7 +483,57 @@ function startServer() {
 
 	isValidPassword = function (data, cb) {
 		setTimeout(function () {
-			cb(pwHash.verify(data.password, USERS[data.username.toUpperCase()]));
+			//If password is correct, create login token if not available
+			if (data.loginToken != undefined) {
+				//autoLogin
+				for (let name in USERS) {
+					if (data.loginToken == USERS[name].loginToken) {
+						for (let playerId in PLAYER_LIST) {
+							if (PLAYER_LIST[playerId].name == name) {
+								cb({
+									success: false,
+									username: "",
+								});
+								return;
+							}
+						}
+						cb({
+							success: true,
+							username: name.toLowerCase(),
+						});
+						return;
+					}
+
+				}
+				cb({
+					success: false,
+					username: "",
+				});
+
+			}
+			else {
+				for (let playerId in PLAYER_LIST) {
+					if (PLAYER_LIST[playerId].name == data.username) {
+						cb({
+							success: false,
+							username: "",
+						});
+						return;
+					}
+				}
+				if (USERS[data.username.toUpperCase()].password == undefined && pwHash.verify(data.password, USERS[data.username.toUpperCase()])) {
+					USERS[data.username.toUpperCase()] = {
+						password: USERS[data.username.toUpperCase()],
+						loginToken: pwHash.generate(data.username + data.password),
+					};
+
+				}
+				cb({
+					success: pwHash.verify(data.username + data.password, USERS[data.username.toUpperCase()].loginToken),
+					username: data.username,
+				});
+			}
+
 		}, 10);
 	};
 
@@ -516,7 +556,10 @@ function startServer() {
 	addUser = function (data, cb) {
 		FITNESS_MANAGER.addNewPlayer(data.username);
 		setTimeout(function () {
-			USERS[data.username.toUpperCase()] = pwHash.generate(data.password);
+			USERS[data.username.toUpperCase()] = {
+				password: pwHash.generate(data.password),
+				loginToken: pwHash.generate(data.username + data.password),
+			};
 			FITNESS_MANAGER.needsUpload.dataStorage = true;
 			cb();
 		}, 10);

@@ -18,7 +18,7 @@
 		<button id="button_SignIn">Anmelden</button>
 		<button id="button_SignUp">Registrieren</button>
 		<br><br>
-		<label for="input_RememberMe">Login merken (useless ATM)</label>
+		<label for="input_RememberMe">Login merken</label>
 		<input id="input_RememberMe" type="checkbox"></input>
 		<div id="div_changeLog">
 			<p> Anmeldung = Name vom GoogleSheet + selbst ausgedachtes Passwort. Bitte das Passwort merken,
@@ -26,12 +26,19 @@
 				einen neuen ausdenken.
 			</p>
 			<p>
+				NEWS (04.07.2019) v1.68:
+				<li>
+					<span class="changeLog_Feature">Feature: </span>"Login merken" funktioniert nun wie geplant.
+				</li>
+			</p>
+			<p>
 				NEWS (03.07.2019) v1.67:
 				<li>
-					<span class="changeLog_Bug">Bug: </span>Notfallfix - Manchmal crashed der Server beim entfernen der letzten Übung eines Tages.
+					<span class="changeLog_Bug">Bug: </span>Notfallfix - Manchmal crashed der Server beim entfernen der
+					letzten Übung eines Tages.
 				</li>
 				<li>
-					<span class="changeLog_Bug">Bug: </span>Falsche Berechnung Tagesdiagramm
+					<span class="changeLog_Bug">Bug: </span>Falsche Berechnung Tagesdiagramm (Cardio, Kraft)
 				</li>
 				<li>
 					<b>Sonstiges: </b>Usersavefilesänderung - keine Punkte mehr in persönlichen Savefiles speichern.
@@ -380,7 +387,6 @@
 			<button id="button_chatText">Senden</button>
 			<button id="button_link">Link</button>
 			<button id="button_img">Image</button>
-
 		</div>
 
 	</div>
@@ -392,10 +398,13 @@
 		<button id="button_tabStatistics">Erfolge</button>
 		<button id="button_tabCompetition">Siege</button>
 		<button id="button_tabEventLog">Events</button>
-		<input id="onlineIndicator" type="checkbox" disabled="true">Online Status</input>
+		<input id="input_onlineIndicator" type="checkbox" disabled="true">Online Status</input>
 		<a href="https://trello.com/invite/b/aZfDB1r0/d9bb40353771097cb89993e31baef54b/fitnessapp"
 			target="_blank">Feedback</a>
+		<a href="#" id="button_logOut" onclick="logout();">Ausloggen</a>
 	</div>
+
+
 </body>
 
 </html>

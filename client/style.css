@@ -1,13 +1,16 @@
 :root {
     --mainWidth: 98vw;
     --mainColor: rgb(194, 214, 245);
-    --mainFontSize: 10px;
+    --tableHeadColor:rgb(38, 78, 39);
+    --tableNthChildColor:rgb(240, 240, 240);
+    --mainFontColor:rgb(0, 0, 0);
     --mainButtonColor: rgb(187, 198, 228);
     --mainBorderColor: rgb(0, 0, 0);
     --mainInputHeight: 15px;
     --mainInputWidth: 200px;
     --mainSelectHeight: 21px;
     --mainSelectWidth: 204px;
+    --mainFontSize: 10px;
 }
 
 body {
@@ -15,6 +18,7 @@ body {
     overflow: hidden;
     font-size: 12px;
     zoom: 1;
+    color: var(--mainFontColor);
 }
 
 button:hover {
@@ -27,7 +31,6 @@ button:hover {
     width: var(--mainWidth);
     height: 90vh;
     display: none;
-    color: rgb(0, 51, 0);
     background-color: var(--mainColor);
     border-left: 1px solid var(--mainBorderColor);
     border-right: 1px solid var(--mainBorderColor);
@@ -190,6 +193,11 @@ button:hover {
     padding: 1px;
 }
 
+#button_logOut {
+    float: right;
+    padding-top:15px;
+}
+
 /* CANVAS */
 
 #canvas_graphHistory {
@@ -216,7 +224,7 @@ button:hover {
 }
 
 .std_table thead tr td {
-    background: rgb(38, 78, 39);
+    background:  var(--tableHeadColor);
     position: sticky;
     top: 0px;
     z-index: 1;
@@ -232,7 +240,7 @@ button:hover {
 }
 
 .std_table tr:nth-child(even) {
-    background-color: rgb(240, 240, 240);
+    background-color: var(--tableNthChildColor);
 }
 
 .std_table thead tr {
