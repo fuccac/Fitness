@@ -371,7 +371,7 @@ socket.on("refresh", function (data) {
     }
     select_historyShowName.selectedIndex = selIndex;
     if (select_historyShowName.value === "") {
-        select_historyShowName.value = data.player.name;
+        select_historyShowName.value = Name;
     }
 
     if (input_doneExerciseWeight.value === "") {
@@ -1667,7 +1667,7 @@ if (loginCookie != "") {
     socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: false, loginToken: loginCookie });
 }
 
-function logout(){
+function logout() {
     deleteCookie("loginCookie");
     location.reload();
 }
