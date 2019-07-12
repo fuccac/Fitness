@@ -35,12 +35,14 @@ function Calc() {
 			var difficulty10Sum = 0;
 			var difficulty100Sum = 0;
 			var baseWeightSum = 0;
+			var paceConstantSum = 0;
 			var voteCount = 0;
 			for (var i in exercise.votes) {
 				var vote = exercise.votes[i];
 				difficultySum += Number(vote.difficulty);
 				difficulty10Sum += Number(vote.difficulty10);
 				difficulty100Sum += Number(vote.difficulty100);
+				paceConstantSum += Number(vote.paceConstant);
 				baseWeightSum += Number(vote.baseWeight);
 				voteCount++;
 			}
@@ -48,6 +50,7 @@ function Calc() {
 			exercise.difficulty = difficultySum / voteCount;
 			exercise.difficulty10 = difficulty10Sum / voteCount;
 			exercise.difficulty100 = difficulty100Sum / voteCount;
+			exercise.paceConstant = paceConstantSum / voteCount;
 			exercise.baseWeight = baseWeightSum / voteCount;
 			if (exercise.baseWeight > 0) {
 				exercise.usesWeight = true;
@@ -63,20 +66,45 @@ function Calc() {
 		};
 
 
-	this.calculatePoints = function (exercise, weight, count) {
+	this.calculatePoints = function (exercise, weight, count, countAdditional, pace) {
 		var weightFactor = 0;
+		var result;
+
 		if (exercise.usesWeight) {
 			weightFactor = Number(weight) / Number(exercise.baseWeight);
 		}
 		else {
 			weightFactor = 1;
 		}
+		if (countAdditional == undefined) {
 
-		var result = Number(exercise.factor) * Number(count) * Number(weightFactor);
+			result = Number(exercise.factor) * Number(count) * Number(weightFactor);
+			pace[exercise.id] = "-";
+		}
+		else {
+			if (exercise.unit === "min/km") {
+				pace[exercise.id] = Number(count) / Number(countAdditional);
+				result = ((Number(exercise.paceConstant) / (Number(pace[exercise.id]) / Number(countAdditional))) * Number(exercise.factor)) * Number(weightFactor);
+			}
+			if (exercise.unit === "min/m") {
+				pace[exercise.id] = Number(count) / Number((countAdditional));
+				result = ((Number(exercise.paceConstant) / ((Number(pace[exercise.id]) * 1000) / (Number(countAdditional) / 1000))) * Number(exercise.factor)) * Number(weightFactor);
+			}
+			if (exercise.unit === "Wdh/min") {
+				pace[exercise.id] = Number(count) / Number(countAdditional);
+				result = ((Number(exercise.paceConstant) / (1 / (Number(pace[exercise.id])) / Number(count))) * Number(exercise.factor)) * Number(weightFactor);
+			}
+			if (exercise.unit === "Wdh/sec") {
+				pace[exercise.id] = Number(count) / Number(countAdditional);
+				result = ((Number(exercise.paceConstant) / (1 / (Number(pace[exercise.id]) * 60) / Number(count))) * Number(exercise.factor)) * Number(weightFactor);
+			}
+
+		}
 
 		exercise.points += Number(result);
 
 		return result;
+
 	};
 
 	this.sortByKey = function (array, key) {
@@ -166,13 +194,17 @@ function Calc() {
 		return result;
 	};
 
-	this.daysBetween = function( date1, date2 ) {   
-		var one_day=1000*60*60*24;    
-		var date1_ms = date1.getTime();   
-		var date2_ms = date2.getTime();     
-		 var difference_ms = date2_ms - date1_ms;  
-		return Math.abs(Math.round(difference_ms/one_day)); 
-		 };
+	this.daysBetween = function (date1, date2) {
+		var one_day = 1000 * 60 * 60 * 24;
+		var date1_ms = date1.getTime();
+		var date2_ms = date2.getTime();
+		var difference_ms = date2_ms - date1_ms;
+		return Math.abs(Math.round(difference_ms / one_day));
+	};
+
+	this.HTMLBold = function (string) {
+		return "<b>" + string + "</b>";
+	};
 
 }
 

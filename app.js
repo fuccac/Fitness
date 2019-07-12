@@ -14,6 +14,8 @@ var DropBoxHandler = require("./server/dropBoxHandler");
 Log = require("./server/Log");
 Calc = require("./server/calc");
 calc = new Calc();
+TableGenerator= require("./server/TableGenerator");
+tableGenerator= new TableGenerator();
 
 
 //MODULE INITS
@@ -166,12 +168,12 @@ function loadSaveFiles(loadSaveFilesResult) {
 				}
 				let end = Date.now();
 				logFile.log(`loadSaveFiles + loadFitnessManager init done in ${end - start} ms`, false, 0);
-	
+
 				loadSaveFilesResult(fitnessManagerLoadingResult);
 			});
 		});
 	});
-	
+
 }
 
 function loadFitnessManager(fitnessManagerLoadingResult) {
@@ -185,8 +187,14 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 
 		logFile.log("dataStorage Loaded", false, 0);
 		fitnessManagerStartUpTasks(function (startUpResult) {
-			FITNESS_MANAGER.loadingDone = true;
-			fitnessManagerLoadingResult(startUpResult);
+			AddPropertiesToExercises(function (AddPropertiesToExerciseListResult) {
+				logFile.log(AddPropertiesToExerciseListResult, false, 0);
+				FITNESS_MANAGER.loadingDone = true;
+				fitnessManagerLoadingResult(startUpResult);
+				
+
+			});
+
 		});
 
 
@@ -195,10 +203,67 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 			console.log(err);
 			logFile.log("dataStorage file missing or corrupted", false, 2);
 			fitnessManagerStartUpTasks(function (startUpResult) {
-				FITNESS_MANAGER.loadingDone = true;
-				fitnessManagerLoadingResult(startUpResult);
+				AddPropertiesToExercises(function (AddPropertiesToExerciseListResult) {
+					logFile.log(AddPropertiesToExerciseListResult, false, 0);
+					FITNESS_MANAGER.loadingDone = true;
+					fitnessManagerLoadingResult(startUpResult);
+
+				});
 			});
 		});
+}
+
+function AddPropertiesToExercises(result) {
+	let start = Date.now();
+	let addedProperties = 0;
+	let addedPropertiesToVotes = 0;
+
+	let propertiesToAddDirectly = {
+		name: ["paceConstant", "isPaceExercise", "deleted", "isHidden"],
+		value: [1, false, false, {}],
+	};
+
+	let propertiesToAddVotes = {
+		name: ["paceConstant"],
+		value: [1],
+	};
+
+
+	for (let exId in FITNESS_MANAGER.exerciseList) {
+		let currentExercise = FITNESS_MANAGER.exerciseList[exId];
+
+		//Directly
+		for (let iterator = 0; iterator < propertiesToAddDirectly.name.length; iterator++) {
+			if (currentExercise[propertiesToAddDirectly.name[iterator]] == undefined) {
+				if (propertiesToAddDirectly.value[iterator] == {}){
+					currentExercise[propertiesToAddDirectly.name[iterator]] = {};
+				}
+				else{
+					currentExercise[propertiesToAddDirectly.name[iterator]] = propertiesToAddDirectly.value[iterator];
+				}
+				addedProperties++;
+			}
+		}
+
+		//Votes
+		for (let voteName in currentExercise.votes) {
+			let currentVote = currentExercise.votes[voteName];
+			for (let iterator = 0; iterator < propertiesToAddVotes.name.length; iterator++) {
+				if (currentVote[propertiesToAddVotes.name[iterator]] == undefined) {
+					if (propertiesToAddVotes.value[iterator] == {}){
+						currentVote[propertiesToAddVotes.name[iterator]] = {};
+					}
+					else{
+						currentVote[propertiesToAddVotes.name[iterator]] = propertiesToAddVotes.value[iterator];
+					}
+					
+					addedPropertiesToVotes++;
+				}
+			}
+		}
+	}
+	let end = Date.now();
+	result(addedProperties + ' new Properties added directly and ' + addedPropertiesToVotes + ` Properties added to votes in ${end - start} ms`);
 }
 
 function fitnessManagerStartUpTasks(callback) {
@@ -253,6 +318,19 @@ function startServer() {
 	OnPlayerConnection = function (socket) {
 		var newPlayer = new Player(socket.id);
 		PLAYER_LIST[newPlayer.id] = newPlayer;
+		
+		socket.on("hideExercise", function (data) {
+			FITNESS_MANAGER.hideExercise(data.id, newPlayer.name, function (hideExerciseResult) {
+				logFile.log(hideExerciseResult, false, 0);
+				uiRefresh();
+			});
+		});
+
+		socket.on("requestExerciseListUpdate", function (data) {
+			SOCKET_LIST[newPlayer.id].emit('refreshExerciseList', {
+				exercises: FITNESS_MANAGER.exerciseList,
+			});
+		});
 
 
 		socket.on("modifyExercise", function (data) {
@@ -291,28 +369,20 @@ function startServer() {
 		});
 
 		socket.on("deleteExercise", function (data) {
-			if (data.id != 0) {
-				if (FITNESS_MANAGER.exerciseList[data.id].points > 0) {
-					socket.emit('alertMsg', { data: "DARN! Zur Zeit kann man leider keine Übung löschen welche punktebehaftet ist :(" });
-				}
-				else {
-					logFile.log(newPlayer.name + " " + "deletes Exercise " + data.name, false, 0);
-					FITNESS_MANAGER.deleteExercise(data.id, function (result) {
-						PLAYER_LIST[newPlayer.id].deletedExercises++;
-
-					});
-				}
+			FITNESS_MANAGER.deleteExercise(data.id, function (result) {
+				PLAYER_LIST[newPlayer.id].deletedExercises++;
+				logFile.log(newPlayer.name + result, false, 0);
+				FITNESS_MANAGER.addToEventLog(calc.HTMLBold(newPlayer.name) + " hat die Übung '" + calc.HTMLBold(FITNESS_MANAGER.exerciseList[data.id].name) + "' gelöscht.");
 				uiRefresh();
-			}
-			else {
-				logFile.log("Exercise not found", false, 1);
-			}
+			});
+
 		});
+
 
 		socket.on("addDoneExercise", function (data) {
 			logFile.log(newPlayer.name + " " + "adds Workout", false, 0);
 			var id = Math.random().toFixed(config.ID_LENGTH).slice(2);
-			FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.date, function (result) {
+			FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.countAdditional, data.date, function (result) {
 				logFile.log(result, false, 0);
 				uiRefresh();
 			});
@@ -418,6 +488,10 @@ function startServer() {
 		socket.id = Math.random().toFixed(config.ID_LENGTH).slice(2);
 		SOCKET_LIST[socket.id] = socket;
 		logFile.log('new socket connection (' + socket.id + ")", false, 0);
+		socket.emit('configValues', {
+			paceUnits: FITNESS_MANAGER.paceUnits,
+			paceInvert: FITNESS_MANAGER.paceInvert,
+		});
 
 		//someone signs in
 		socket.on('SignIn', function (data) {
@@ -428,10 +502,10 @@ function startServer() {
 					OnPlayerConnection(socket);
 					loadPlayer(checkPasswortResult.username, socket.id, function (loadPlayerResult) {
 						logFile.log(loadPlayerResult, false, 0);
-						
+
 					});
 					socket.emit('signInResponse', { success: true, name: checkPasswortResult.username });
-					
+
 				}
 				else {
 					socket.emit('signInResponse', { success: false, name: checkPasswortResult.username });
@@ -568,6 +642,7 @@ function startServer() {
 	};
 
 }
+
 
 setInterval(function () {
 	var date = calc.createViennaDate();

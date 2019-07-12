@@ -6,7 +6,7 @@ var Config = require("./Config");
 var config = new Config();
 
 class Exercise {
-    constructor(name, difficulty, difficulty10, difficulty100, equipment, usesWeight, baseWeight, comment, creator, type, unit, bothSides) {
+    constructor(name, difficulty, difficulty10, difficulty100,paceConstant,isPaceExercise, equipment, usesWeight, baseWeight, comment, creator, type, unit, bothSides) {
         this.id = Math.random().toFixed(config.ID_LENGTH).slice(2);
         this.name = name;
         this.factor = (Number(difficulty) + Number(difficulty10) + Number(difficulty100)) / 3;
@@ -41,9 +41,14 @@ class Exercise {
             difficulty10: Number(difficulty10),
             difficulty100: Number(difficulty100),
             baseWeight: Number(baseWeight),
-            comment: comment
+            comment: comment,
+            paceConstant:Number(paceConstant),
         };
         this.votes[creator] = newVote;
+        this.paceConstant = Number(paceConstant);
+        this.isPaceExercise = isPaceExercise;
+        this.deleted = false;
+        this.isHidden = {};
     }
 }
 

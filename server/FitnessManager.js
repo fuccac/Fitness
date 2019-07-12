@@ -19,7 +19,7 @@ class FitnessManager {
             dataStorage: false,
         };
         this.loadingDone = false;
-        
+
         //BAR CHARTS
         this.monthlyData = {};
         this.monthlyCardioData = {};
@@ -48,6 +48,8 @@ class FitnessManager {
             time: [],
             msg: []
         };
+        this.paceUnits = "min/km;min/m;Wdh/min;Wdh/sec";
+        this.paceInvert = "0;0;1;1";
 
     }
 
@@ -55,6 +57,23 @@ class FitnessManager {
     //************************************************************/
     //*********************Exercise Handling**********************/
     //************************************************************/
+
+    hideExercise(id,playerName,result){
+      if (this.exerciseList[id].isHidden[playerName] == undefined){
+        this.exerciseList[id].isHidden[playerName] = true;
+      } 
+      else{
+        this.exerciseList[id].isHidden[playerName] = !this.exerciseList[id].isHidden[playerName];
+      }
+      if(this.exerciseList[id].isHidden[playerName]){
+        result(this.exerciseList[id].name + " hidden for player " + playerName);
+      }
+      else{
+        result(this.exerciseList[id].name + " not hidden for player " + playerName);
+      }
+      
+     
+    }
 
     addExerciseAchievement(exId, repsToGetOverall, repsToGetDaily, repsToGetMonthly, achievementCategory) {
         repsToGetOverall = repsToGetOverall.map(Number);
@@ -103,41 +122,99 @@ class FitnessManager {
         return "add Exercise finished";
     }
 
+    
+
+    createExercise(exPack, usesWeight, creator, result) {
+        this.addToEventLog(creator + " erstellt eine neue Übung: " + exPack.name);
+        result(this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.paceConstant, exPack.isPaceExercise, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides)));
+    }
+
+    editExercise(data, editor, result) {
+
+        var exerciseChangeFlags = {
+            difficulty: false,
+            difficulty10: false,
+            difficulty100: false,
+            baseWeight: false,
+            comment: false,
+            bothSides: false,
+            unit: false,
+            name: false,
+            type: false,
+            equipment: false,
+            paceConstant: false,
+        };
+
+        var newVote = {
+            difficulty: data.difficulty,
+            difficulty10: data.difficulty10,
+            difficulty100: data.difficulty100,
+            paceConstant: data.paceConstant,
+            baseWeight: data.baseWeight,
+            comment: data.comment
+        };
+        let votesDestroyed = false;
+        if (this.exerciseList[data.id].unit != data.unit) {
+
+            this.exerciseList[data.id].votes = {};
+            this.exerciseList[data.id].votes[editor] = newVote;
+            votesDestroyed = true;
+        }
+        else {
+            this.exerciseList[data.id].votes[editor] = newVote;
+        }
+
+        for (let exerciseKey in data) {
+            let currentKey = this.exerciseList[data.id][exerciseKey];
+            if (exerciseKey == "bothSides") {
+                currentKey = this.exerciseList[data.id][exerciseKey].toString();
+            }
+
+            if (data[exerciseKey] != currentKey) {
+                exerciseChangeFlags[exerciseKey] = true;
+            }
+        }
+
+        this.addToEventLog(calc.HTMLBold(editor) + " bearbeitet eine Übung: " + calc.HTMLBold(this.exerciseList[data.id].name) + " -> Alter Faktor: '" + calc.HTMLBold(this.exerciseList[data.id].factor) + "'");
+        for (let exerciseKey in exerciseChangeFlags) {
+            if (exerciseChangeFlags[exerciseKey] == true) {
+                this.addToEventLog(calc.HTMLBold(exerciseKey) + " -> Alter Wert: '" + calc.HTMLBold(this.exerciseList[data.id][exerciseKey]) + "' | Neuer Wert: '" + calc.HTMLBold(data[exerciseKey]) + "'");
+
+            }
+        }
+        if (votesDestroyed) {
+            this.addToEventLog(calc.HTMLBold(editor) + " hat ebenfalls die Einheit in '" + calc.HTMLBold(data.unit) + "' geändert. Somit wurden bisherige Votes gelöscht.");
+        }
+
+
+        this.exerciseList[data.id].bothSides = (data.bothSides.toUpperCase() === 'TRUE');
+        this.exerciseList[data.id].unit = data.unit;
+        this.exerciseList[data.id].name = data.name;
+        this.exerciseList[data.id].type = data.type;
+        this.exerciseList[data.id].equipment = data.equipment;
+        this.exerciseList[data.id].isPaceExercise = data.isPaceExercise;
+
+        calc.calculateNewFactor(this.exerciseList[data.id]);
+        this.addToEventLog("Resultierender neuer Faktor: '" + calc.HTMLBold(this.exerciseList[data.id].factor) + "'");
+
+
+
+        result("editExercise done");
+    }
+
     removeExercise(id) {
         delete this.exerciseList[id];
         this.exerciseCount--;
     }
 
-    createExercise(exPack, usesWeight, creator, result) {
-        this.addToEventLog(creator + " erstellt eine neue Übung: " + exPack.name);
-        result(this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides)));
-    }
-
-    editExercise(data, editor, result) {
-        var newVote = {
-            difficulty: data.difficulty,
-            difficulty10: data.difficulty10,
-            difficulty100: data.difficulty100,
-            baseWeight: data.baseWeight,
-            comment: data.comment
-        };
-
-        this.exerciseList[data.id].bothSides = (data.bothSides.toUpperCase() === 'TRUE');
-        this.exerciseList[data.id].votes[editor] = newVote;
-        this.exerciseList[data.id].unit = data.unit;
-        this.exerciseList[data.id].name = data.name;
-        this.exerciseList[data.id].type = data.type;
-        this.exerciseList[data.id].equipment = data.equipment;
-
-        calc.calculateNewFactor(this.exerciseList[data.id]);
-        this.addToEventLog(editor + " bearbeitet eine Übung: " + data.name + " (d1: " + data.difficulty + " d10: " + data.difficulty10 + " d100: " + data.difficulty100 + " -> Neuer Faktor: " + this.exerciseList[data.id].factor + ")");
-        result("editExercise done");
-    }
-
     deleteExercise(id, result) {
-        delete this.exerciseList[id];
-        this.needsUpload.dataStorage = true;
-        result("deleted Exercise");
+        if (this.exerciseList[id].points == 0){
+            this.removeExercise(id);
+        }
+        else{
+            this.exerciseList[id].deleted = true;
+            result(" deleted Exercise" + this.exerciseList[id].name);
+        }
     }
 
     //************************************************************/
@@ -162,11 +239,11 @@ class FitnessManager {
                         this.history[date][historyEntry].splice(historyEntryIterator, 1);
                     }
                 }
-                if(this.history[date].id.length == 0){
+                if (this.history[date].id.length == 0) {
                     delete this.history[date];
                     break;
                 }
-                
+
             }
         }
 
@@ -195,20 +272,28 @@ class FitnessManager {
         return historyChunk;
     }
 
-    addToHistory(id, playerName, exerciseId, weight, count, date, result) {
+    addToHistory(id, playerName, exerciseId, weight, count, countAdditional, date, result) {
+        if (countAdditional == "" || countAdditional == undefined) {
+            countAdditional = undefined;
+        }
+        var pace = {};
+
         if (weight === "" || this.exerciseList[exerciseId].usesWeight === false) {
             weight = 0;
         }
         date = calc.createZeroDate(date);
         date = calc.getDateFormat(date, "YYYY-MM-DD");
-        var points = calc.calculatePoints(this.exerciseList[exerciseId], weight, count);
+        var points = calc.calculatePoints(this.exerciseList[exerciseId], weight, count, countAdditional, pace);
         if (this.history[date] != undefined) {
             for (let iterator in this.history[date].exerciseId) {
                 var exId = this.history[date].exerciseId[iterator];
-                if (exId === exerciseId && this.history[date].weight[iterator] == weight && this.history[date].playerName[iterator].toUpperCase() == playerName.toUpperCase()) {
+                if (exId === exerciseId && this.history[date].weight[iterator] == weight && this.history[date].playerName[iterator].toUpperCase() == playerName.toUpperCase() && countAdditional == undefined) {
                     this.history[date].count[iterator] += Number(count);
                     this.history[date].points[iterator] += Number(points);
                     this.history[date].dailySum[playerName] += Number(points);
+                    this.history[date].countAdditional[iterator] = 0;
+                    this.history[date].pace[iterator] = "-";
+                    this.history[date].exUnit[iterator] = this.exerciseList[exerciseId].unit;
 
                     if (this.exerciseList[exerciseId].pointsPerPlayer[playerName] == undefined) {
                         this.exerciseList[exerciseId].pointsPerPlayer[playerName] = Number(points);
@@ -237,6 +322,15 @@ class FitnessManager {
             this.history[date].points.push(Number(points));
             this.history[date].weight.push(Number(weight));
             this.history[date].exerciseId.push(exerciseId);
+            this.history[date].pace.push(pace[exerciseId]);
+            this.history[date].exUnit.push(this.exerciseList[exerciseId].unit);
+            if (countAdditional != undefined) {
+                this.history[date].countAdditional.push(Number(countAdditional));
+            }
+            else {
+                this.history[date].countAdditional.push(0);
+            }
+
             if (this.history[date].dailySum[playerName] == undefined) {
                 this.history[date].dailySum[playerName] = Number(points);
             }
@@ -245,7 +339,7 @@ class FitnessManager {
             }
         }
         else {
-            var newId = [], newDate = [], newPlayerName = [], newExName = [], newCount = [], newPoints = [], newWeight = [], newExerciseId = [], newDailySum = {};
+            var newId = [], newDate = [], newPlayerName = [], newExName = [], newCount = [], newPoints = [], newWeight = [], newExerciseId = [], newDailySum = {}, newPace = [], newCountAdditional = [], newUnit = [];
             newId.push(id);
             newDate.push(date);
             newPlayerName.push(playerName);
@@ -255,6 +349,15 @@ class FitnessManager {
             newWeight.push(Number(weight));
             newExerciseId.push(exerciseId);
             newDailySum[playerName] = Number(points);
+            newPace.push(pace[exerciseId]);
+            newUnit.push(this.exerciseList[exerciseId].unit);
+            if (countAdditional != undefined) {
+                newCountAdditional.push(Number(countAdditional));
+            }
+            else {
+                newCountAdditional.push(0);
+            }
+
 
             var newHistoryEntry = {
                 id: newId,
@@ -266,6 +369,9 @@ class FitnessManager {
                 weight: newWeight,
                 exerciseId: newExerciseId,
                 dailySum: newDailySum,
+                pace: newPace,
+                countAdditional: newCountAdditional,
+                exUnit: newUnit,
             };
             this.history[date] = newHistoryEntry;
         }
@@ -389,6 +495,11 @@ class FitnessManager {
             var playerRepsMonthly = this.maxExerciseCountsCategory[exCat].monthly[player.name] == undefined ? 0 : this.maxExerciseCountsCategory[exCat].monthly[player.name];
             var repsToGetDaily = this.maxExerciseCountsCategory[exCat].daily[player.name] == undefined ? 0 : this.maxExerciseCountsCategory[exCat].daily[player.name];
             var repsThisLevel;
+
+            if (exCat === "Beinheber") {
+                let x = 5;
+                x++;
+            }
 
             for (let levelOverallIterator = 0; levelOverallIterator < exercise.achievementInfo.repsToGetOverall.length; levelOverallIterator++) {
                 if (exercise.achievementInfo.repsToGetOverall[levelOverallIterator] > 0) {
@@ -787,7 +898,7 @@ class FitnessManager {
             hours = "0" + hours.toString();
         }
 
-        if (this.eventLog.time.length == 50) {
+        if (this.eventLog.time.length == 500) {
             this.eventLog.time = this.eventLog.time.slice(1);
             this.eventLog.msg = this.eventLog.msg.slice(1);
         }
@@ -819,6 +930,45 @@ class FitnessManager {
         this.dailyWins[name] = 0;
         this.needsUpload.dataStorage = true;
     }
+
+
+    getPaceUnitOptions(unit) {
+        let result = {
+            isPaceUnit: false,
+            invert: false,
+            showPaceEntryMask: false,
+            first: "",
+            sec: "",
+        };
+
+        let paceUnitsArray = PACE_UNITS.split(";");
+        for (let iterator = 0; iterator < paceUnitsArray.length; iterator++) {
+            if (paceUnitsArray[iterator] === unit) {
+                result.isPaceUnit = true;
+                result.invert = (PACE_INVERT.split(";")[iterator] === "1");
+                result.first = paceUnitsArray[iterator].split("/")[0];
+                result.sec = paceUnitsArray[iterator].split("/")[1];
+                if (unit == "Wdh/min") {
+                    result.showPaceEntryMask = false;
+                }
+                else {
+                    result.showPaceEntryMask = true;
+                }
+                break;
+            }
+            result.invert = false;
+            result.first = unit;
+            result.sec = "";
+            result.showPaceEntryMask = false;
+            result.isPaceUnit = false;
+
+        }
+
+        return result;
+
+    }
+
+
     /**
      * 
      * @param {function} result 
@@ -877,6 +1027,7 @@ class FitnessManager {
         //points
         this.dailyWins = {};
         this.monthlyWins = {};
+        this.maxExerciseCountsCategory = {};
         var MONTHS = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
         var thisYear = calc.createZeroDate().getFullYear();
         var todayDate = calc.createZeroDate();
@@ -908,6 +1059,22 @@ class FitnessManager {
         for (let overallIterator = 0; overallIterator < chunk.length; overallIterator++) {
             var historyDate = chunk[overallIterator].date[0];
             var historyEntry = this.history[historyDate];
+
+            //MAINENANCE CODE - DELETE AFTER START UP
+            if (this.history[historyDate].pace == undefined) {
+                var newPace = [];
+                newPace.length = this.history[historyDate].playerName.length;
+                newPace.fill("-");
+                this.history[historyDate].pace = newPace;
+            }
+            if (this.history[historyDate].countAdditional == undefined) {
+                var newCountAdditional = [];
+                newCountAdditional.length = this.history[historyDate].playerName.length;
+                newCountAdditional.fill(0);
+                this.history[historyDate].countAdditional = newCountAdditional;
+            }
+            //MAINENANCE CODE - DELETE AFTER START UP
+
             //common
             var currentDate = calc.createZeroDate(historyDate);
 
@@ -977,6 +1144,8 @@ class FitnessManager {
                 }
             }
 
+
+
             yAxis.push(historyDate);
             lastDate = currentDate; //remember last Date
             for (let historyIteratorPerDate = 0; historyIteratorPerDate < historyEntry.playerName.length; historyIteratorPerDate++) {
@@ -986,15 +1155,27 @@ class FitnessManager {
                 var exerciseId = historyEntry.exerciseId[historyIteratorPerDate];
                 //set correct exercise names in history
                 let exerciseExists = true;
-                if(this.exerciseList[exerciseId] != undefined){
+                if (this.exerciseList[exerciseId] != undefined) {
                     this.history[historyDate].exName[historyIteratorPerDate] = this.exerciseList[exerciseId].name;
                     exerciseExists = true;
                 }
-                else{
+                else {
                     this.history[historyDate].exName[historyIteratorPerDate] += " [gelöscht]";
                     exerciseExists = false;
                 }
-                
+                //MAINENANCE CODE - DELETE AFTER START UP
+                if (this.history[historyDate].exUnit == undefined) {
+                    this.history[historyDate].exUnit = [this.exerciseList[exerciseId].unit];
+                }
+                else if (this.history[historyDate].exUnit[historyIteratorPerDate] == undefined) {
+                    this.history[historyDate].exUnit.push(this.exerciseList[exerciseId].unit);
+                }
+
+
+
+
+                //MAINENANCE CODE - DELETE AFTER START UP
+
 
 
 
@@ -1108,7 +1289,7 @@ class FitnessManager {
                     }
                 }
 
-                
+
                 var exCategory = this.exerciseList[exerciseId].achievementInfo.achievementCategory;
 
                 //exercise counts per exercise-category monthly
@@ -1234,13 +1415,13 @@ class FitnessManager {
                 }
 
                 if (this.exerciseList[exerciseId].type === "Cardio") {
-                    if(dailyCardio[historyName]==undefined){
+                    if (dailyCardio[historyName] == undefined) {
                         dailyCardio[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
                     }
-                    else{
+                    else {
                         dailyCardio[historyName] += Number(historyEntry.points[historyIteratorPerDate]);
                     }
-                    
+
                     this.registeredPlayers[historyName].points.cardio += Number(historyEntry.points[historyIteratorPerDate]);
                     if (monthlyCardioSum[historyName] == undefined) {
                         monthlyCardioSum[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
@@ -1250,10 +1431,10 @@ class FitnessManager {
                     }
                 }
                 else if (this.exerciseList[exerciseId].type === "Kraft") {
-                    if(dailyStrength[historyName]==undefined){
+                    if (dailyStrength[historyName] == undefined) {
                         dailyStrength[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
                     }
-                    else{
+                    else {
                         dailyStrength[historyName] += Number(historyEntry.points[historyIteratorPerDate]);
                     }
                     this.registeredPlayers[historyName].points.strength += Number(historyEntry.points[historyIteratorPerDate]);
@@ -1347,14 +1528,14 @@ class FitnessManager {
                         dailyWinner = playerName;
                     }
                 }
-                else{
+                else {
                     this.history[historyDate].dailySum[playerName] = 0;
                 }
 
-                if (dailyCardio[playerName] == undefined){
+                if (dailyCardio[playerName] == undefined) {
                     dailyCardio[playerName] = 0;
                 }
-                if (dailyStrength[playerName] == undefined){
+                if (dailyStrength[playerName] == undefined) {
                     dailyStrength[playerName] = 0;
                 }
 
@@ -1427,7 +1608,19 @@ class FitnessManager {
                     yAxis: yAxis
                 };
             }
+            let lastWinner = this.history[historyDate].dailyWinner;
+            if (lastWinner != dailyWinner) {
+                if (dailyWinner == "Keiner" && lastWinner != "Keiner") {
+                    this.addToEventLog("Der Tagessieg von " + calc.HTMLBold(lastWinner) + " am " + calc.HTMLBold(historyDate) + " ist wieder frei!");
+                }
+                if (dailyWinner != "Keiner" && lastWinner == "Keiner") {
+                    this.addToEventLog("Der Tagessieg am " + calc.HTMLBold(historyDate) + " geht bis jetzt an " + calc.HTMLBold(dailyWinner));
+                }
+                else if (dailyWinner != "Keiner" && lastWinner != "Keiner") {
+                    this.addToEventLog("Der Tagessieg von " + calc.HTMLBold(lastWinner) + " am " + calc.HTMLBold(historyDate) + " geht nun an " + calc.HTMLBold(dailyWinner));
+                }
 
+            }
             this.history[historyDate].dailyWinner = dailyWinner;
             if (this.dailyWins[dailyWinner] != undefined) {
                 this.dailyWins[dailyWinner]++;
