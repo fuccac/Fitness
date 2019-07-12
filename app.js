@@ -14,8 +14,7 @@ var DropBoxHandler = require("./server/dropBoxHandler");
 Log = require("./server/Log");
 Calc = require("./server/calc");
 calc = new Calc();
-TableGenerator= require("./server/TableGenerator");
-tableGenerator= new TableGenerator();
+
 
 
 //MODULE INITS
@@ -191,7 +190,7 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 				logFile.log(AddPropertiesToExerciseListResult, false, 0);
 				FITNESS_MANAGER.loadingDone = true;
 				fitnessManagerLoadingResult(startUpResult);
-				
+
 
 			});
 
@@ -235,10 +234,10 @@ function AddPropertiesToExercises(result) {
 		//Directly
 		for (let iterator = 0; iterator < propertiesToAddDirectly.name.length; iterator++) {
 			if (currentExercise[propertiesToAddDirectly.name[iterator]] == undefined) {
-				if (propertiesToAddDirectly.value[iterator] == {}){
+				if (propertiesToAddDirectly.value[iterator] == {}) {
 					currentExercise[propertiesToAddDirectly.name[iterator]] = {};
 				}
-				else{
+				else {
 					currentExercise[propertiesToAddDirectly.name[iterator]] = propertiesToAddDirectly.value[iterator];
 				}
 				addedProperties++;
@@ -250,13 +249,13 @@ function AddPropertiesToExercises(result) {
 			let currentVote = currentExercise.votes[voteName];
 			for (let iterator = 0; iterator < propertiesToAddVotes.name.length; iterator++) {
 				if (currentVote[propertiesToAddVotes.name[iterator]] == undefined) {
-					if (propertiesToAddVotes.value[iterator] == {}){
+					if (propertiesToAddVotes.value[iterator] == {}) {
 						currentVote[propertiesToAddVotes.name[iterator]] = {};
 					}
-					else{
+					else {
 						currentVote[propertiesToAddVotes.name[iterator]] = propertiesToAddVotes.value[iterator];
 					}
-					
+
 					addedPropertiesToVotes++;
 				}
 			}
@@ -318,7 +317,7 @@ function startServer() {
 	OnPlayerConnection = function (socket) {
 		var newPlayer = new Player(socket.id);
 		PLAYER_LIST[newPlayer.id] = newPlayer;
-		
+
 		socket.on("hideExercise", function (data) {
 			FITNESS_MANAGER.hideExercise(data.id, newPlayer.name, function (hideExerciseResult) {
 				logFile.log(hideExerciseResult, false, 0);
