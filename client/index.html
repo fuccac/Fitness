@@ -30,7 +30,7 @@
 
 				<li>
 					<span class="changeLog_Feature">Feature: </span>Einheitensystem erweitert
-					(min/km,min/m,Wdh/min,Wdh/sec)
+					(min/km,min/m,Wdh/min,Wdh/sec) - für mehr Info Ing. Fuchs direkt ansprechen.
 				</li>
 				<li>
 					<span class="changeLog_Feature">Feature: </span>Neue Buttons in Tab Übungen: "Ausblenden" und "Zeige
@@ -44,6 +44,12 @@
 				<li>
 					<b>Usability: </b>Markierte Übungen werden anschaulicher markiert.
 
+				</li>
+				<li>
+					<b>Usability: </b>Übungstabelle wird serverseitig vorsortiert und anders generiert - bessere Performance (150ms statt 900ms)
+				</li>
+				<li>
+					<b>Usability: </b>Niemand liest dieses Changelog - aber Hauptsache deppat fragen.
 				</li>
 
 			</p>
@@ -373,9 +379,6 @@
 			<button id="button_hideExercise">Ausblenden</button>
 			<button id="button_showHiddenExercises">Zeige alle</button>
 
-
-
-
 		</div>
 
 		<div id="div_exerciseTable">
@@ -396,8 +399,10 @@
 			<br>
 			<label for="select_statisticsExercise">Übung :</label>
 			<select id="select_statisticsExercise"></select>
-			<button id="button_statisticsExercise">Statistik</button>
 			<p id="paragraph_statisticsExercise"></p>
+			<div id="div_graphExercise">
+
+			</div>
 		</div>
 	</div>
 	<div id="div_competition" class="tab">
@@ -447,4 +452,5 @@
 
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+<script type="text/javascript" src="./js/common.js"></script>
 <script type="text/javascript" src="./js/index.js"></script>

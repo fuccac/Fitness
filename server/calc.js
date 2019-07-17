@@ -107,81 +107,27 @@ function Calc() {
 
 	};
 
+	this.calculateCardioStrengthPercents = function(cardioPoints, strengthPoints){
+		let cardioPercent = cardioPoints / (cardioPoints + strengthPoints);
+            let strengthPercent = strengthPoints / (cardioPoints + strengthPoints);
+            cardioPercent = (cardioPercent * 100).toFixed(0);
+            strengthPercent = (strengthPercent * 100).toFixed(0);
+
+            if (isNaN(cardioPercent)) {
+                cardioPercent = 0;
+            }
+            if (isNaN(strengthPercent)) {
+                strengthPercent = 0;
+            }
+
+            return("Cardio: " + cardioPercent + "% | Stärke: " + strengthPercent + "%");
+	};
+
 	this.sortByKey = function (array, key) {
 		return array.sort(function (a, b) {
 			var x = a[key]; var y = b[key];
 			return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 		});
-	};
-
-	this.getDateFormat = function (date, format, fromFormat) {
-		var addZeroMonth = "";
-		var addZeroDay = "";
-		if (typeof fromFormat === 'undefined') { fromFormat = 'default'; }
-
-		if (format === "YYYY-MM-DD") {
-			if (fromFormat === "DD.MM.YYYY") {
-				var day = date.substring(0, 2);
-				var month = date.substring(3, 5);
-				var year = date.substring(6);
-				date = year + "-" + month + "-" + day;
-			}
-			else {
-				if (date.getMonth() < 9) {
-					addZeroMonth = "0";
-				}
-				if (date.getDate() < 10) {
-					addZeroDay = "0";
-				}
-				date = date.getFullYear() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + addZeroDay + date.getDate();
-			}
-		}
-		if (format === "DD-MM-YYYY") {
-			if (date.getMonth() < 9) {
-				addZeroMonth = "0";
-			}
-			if (date.getDate() < 10) {
-				addZeroDay = "0";
-			}
-			date = addZeroDay + date.getDate() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + date.getFullYear();
-		}
-		if (format === "DD.MM.YYYY") {
-			if (date.getMonth() < 9) {
-				addZeroMonth = "0";
-			}
-			if (date.getDate() < 10) {
-				addZeroDay = "0";
-			}
-			date = addZeroDay + date.getDate() + "." + addZeroMonth + (date.getMonth() + 1) + "." + date.getFullYear();
-		}
-
-		return date;
-
-	};
-
-	this.createViennaDate = function () {
-		viennaDate = new Date().toLocaleString("en-US", { timeZone: "Europe/Vienna" });
-		viennaDate = new Date(viennaDate);
-		return viennaDate;
-	};
-
-
-
-	this.createZeroDate = function (date) {
-		if (typeof date === 'undefined') {
-			zeroDate = new Date()//.toLocaleString("en-US", {timeZone: "Europe/Vienna"});
-			zeroDate = new Date(zeroDate);
-			zeroDate.setHours(0);
-			zeroDate.setMinutes(0);
-			zeroDate.setSeconds(0);
-		}
-		else {
-			zeroDate = new Date(date);
-			zeroDate.setHours(0);
-			zeroDate.setMinutes(0);
-			zeroDate.setSeconds(0);
-		}
-		return zeroDate;
 	};
 
 	this.getNonZeroValuesOfArray = function (array) {
@@ -194,18 +140,12 @@ function Calc() {
 		return result;
 	};
 
-	this.daysBetween = function (date1, date2) {
-		var one_day = 1000 * 60 * 60 * 24;
-		var date1_ms = date1.getTime();
-		var date2_ms = date2.getTime();
-		var difference_ms = date2_ms - date1_ms;
-		return Math.abs(Math.round(difference_ms / one_day));
-	};
+	
 
-	this.HTMLBold = function (string) {
-		return "<b>" + string + "</b>";
-	};
+	
 
 }
+
+
 
 module.exports = Calc;

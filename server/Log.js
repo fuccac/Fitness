@@ -39,12 +39,12 @@ class Log {
         }
 
 
-        var date = calc.createViennaDate();
-        fs.appendFile(config.LOG_PATH, calc.getDateFormat(date, "DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " - " + str + "\r\n", function (err) {
+        var date = common.createViennaDate();
+        fs.appendFile(config.LOG_PATH, common.getDateFormat(date, "DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " - " + str + "\r\n", function (err) {
 
         });
         if (showInConsole) {
-            console.log(calc.getDateFormat(date, "DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " - " + str);
+            console.log(common.getDateFormat(date, "DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " - " + str);
         }
     }
 
