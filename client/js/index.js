@@ -1336,7 +1336,7 @@ function generateExerciseList(data) {
     select_statisticsExercise.selectedIndex = selIndex;
 
     let end = Date.now();
-    sendChatMessage(`exercise table generation took ${end - start} ms`);
+    //sendChatMessage(`exercise table generation took ${end - start} ms`);
 }
 
 function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) {

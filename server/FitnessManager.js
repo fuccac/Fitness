@@ -367,7 +367,6 @@ class FitnessManager {
                         this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
                     }
 
-                    logFile.log(updateSingleStatsResult, false, 0);
                     this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte)");
                     result("added workout to existing history");
                     return;

@@ -478,11 +478,24 @@ function startServer() {
 		});
 
 		socket.on("requestExerciseStatistic", function (data) {
+			let repsDaily;
+			let repsMonthly;
+			
+			try{
+				repsDaily= FITNESS_MANAGER.maxExerciseCounts[data.id].daily[PLAYER_LIST[socket.id].name];
+				repsMonthly= FITNESS_MANAGER.maxExerciseCounts[data.id].daily[PLAYER_LIST[socket.id].name];
+			}
+			catch(e){
+				repsDaily = 0;
+				repsMonthly = 0;
+			}
+			 
+			
 			SOCKET_LIST[newPlayer.id].emit('refreshExerciseStatistics', {
 				points: FITNESS_MANAGER.exerciseList[data.id].pointsPerPlayer[PLAYER_LIST[socket.id].name],
 				reps: FITNESS_MANAGER.exerciseList[data.id].repsPerPlayer[PLAYER_LIST[socket.id].name],
-				repsDaily: FITNESS_MANAGER.maxExerciseCounts[data.id].daily[PLAYER_LIST[socket.id].name],
-				repsMonthly: FITNESS_MANAGER.maxExerciseCounts[data.id].monthly[PLAYER_LIST[socket.id].name],
+				repsDaily: repsDaily,
+				repsMonthly: repsMonthly,
 				category: FITNESS_MANAGER.exerciseList[data.id].achievementInfo.achievementCategory,
 			});
 		});
