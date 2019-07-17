@@ -527,3 +527,522 @@ updateRegisteredPlayers(updateRegisteredPlayersResult) {
         logFile.log(`getPlayerList done in ${end - start} ms`, false, 0);
         result(returnList);
     }
+
+        updateSingleStats(options, updateSingleStatsResult) {
+        let start = Date.now();
+        /*
+            options = {
+                date:date,
+                playerName:name,
+                points:points,
+                pointsCardio:pointsCardio,
+                pointsStrength:pointsStrength,
+                exerciseCount:count,
+                exerciseId:id,
+                exerciseCategory:cat,
+                isCardio:false,
+                isStrength:false,
+                isDeletion:false,
+            }
+
+        */
+        let dateInfo = common.getDateInfo(options.date);
+
+        if (this.monthlyData[dateInfo.currentMonthName] == undefined) {
+            this.monthlyData[dateInfo.currentMonthName] = {};
+            for (let playerName in this.registeredPlayers) {
+                if (playerName === options.playerName) {
+                    this.monthlyData[dateInfo.currentMonthName][options.playerName] = Number(options.points);
+                }
+                else {
+                    this.monthlyData[dateInfo.currentMonthName][options.playerName] = 0;
+                }
+            }
+        }
+        else {
+            this.monthlyData[dateInfo.currentMonthName][options.playerName] += Number(options.points);
+        }
+
+        if (options.isCardio) {
+            if (this.monthlyCardioData[dateInfo.currentMonthName] == undefined) {
+                this.monthlyCardioData[dateInfo.currentMonthName] = {};
+                for (let playerName in this.registeredPlayers) {
+                    if (playerName === options.playerName) {
+                        this.monthlyCardioData[dateInfo.currentMonthName][options.playerName] = options.pointsCardio;
+                    }
+                    else {
+                        this.monthlyCardioData[dateInfo.currentMonthName][options.playerName] = 0;
+                    }
+                }
+            }
+            else {
+                this.monthlyCardioData[dateInfo.currentMonthName][options.playerName] += Number(options.points);
+            }
+        }
+
+        if (options.isStrength) {
+            if (this.monthlyStrengthData[dateInfo.currentMonthName] == undefined) {
+                this.monthlyStrengthData[dateInfo.currentMonthName] = {};
+                for (let playerName in this.registeredPlayers) {
+                    if (playerName === options.playerName) {
+                        this.monthlyStrengthData[dateInfo.currentMonthName][options.playerName] = options.pointsStrength;
+                    }
+                    else {
+                        this.monthlyStrengthData[dateInfo.currentMonthName][options.playerName] = 0;
+                    }
+                }
+            }
+            else {
+                this.monthlyStrengthData[dateInfo.currentMonthName][options.playerName] += Number(options.points);
+            }
+        }
+
+        if (this.monthlyDataExercise[dateInfo.currentMonthName] == undefined) {
+            let newData = {};
+            let newPlayerData = {};
+            newPlayerData[options.playerName] = Number(options.exerciseCount);
+            newData[options.exerciseId] = newPlayerData;
+            this.monthlyDataExercise[dateInfo.currentMonthName] = newData;
+        }
+        else if (this.monthlyDataExercise[dateInfo.currentMonthName][options.exerciseId] == undefined) {
+            let newPlayerData = {};
+            newPlayerData[options.playerName] = Number(options.exerciseCount);
+            this.monthlyDataExercise[dateInfo.currentMonthName][options.exerciseId] = newPlayerData;
+        }
+        else if (this.monthlyDataExercise[dateInfo.currentMonthName][options.exerciseId][options.playerName] == undefined) {
+            this.monthlyDataExercise[dateInfo.currentMonthName][options.exerciseId][options.playerName] = Number(options.exerciseCount);
+        }
+        else {
+            this.monthlyDataExercise[dateInfo.currentMonthName][options.exerciseId][options.playerName] += Number(options.exerciseCount);
+        }
+
+        if (this.monthlyDataExerciseCategory[dateInfo.currentMonthName] == undefined) {
+            let newData = {};
+            let newPlayerData = {};
+            newPlayerData[options.playerName] = Number(options.exerciseCount);
+            newData[options.exerciseCategory] = newPlayerData;
+            this.monthlyDataExerciseCategory[dateInfo.currentMonthName] = newData;
+        }
+        else if (this.monthlyDataExerciseCategory[dateInfo.currentMonthName][options.exerciseCategory] == undefined) {
+            let newPlayerData = {};
+            newPlayerData[options.playerName] = Number(options.exerciseCount);
+            this.monthlyDataExerciseCategory[dateInfo.currentMonthName][options.exerciseCategory] = newPlayerData;
+        }
+        else if (this.monthlyDataExerciseCategory[dateInfo.currentMonthName][options.exerciseCategory][options.playerName] == undefined) {
+            this.monthlyDataExerciseCategory[dateInfo.currentMonthName][options.exerciseCategory][options.playerName] = Number(options.exerciseCount);
+        }
+        else {
+            this.monthlyDataExerciseCategory[dateInfo.currentMonthName][options.exerciseCategory][options.playerName] += Number(options.exerciseCount);
+        }
+
+
+        //DAILY
+        if (this.dailyDataExercise[dateInfo.historyDateString] == undefined) {
+            let newData = {};
+            let newPlayerData = {};
+            newPlayerData[options.playerName] = Number(options.exerciseCount);
+            newData[options.exerciseId] = newPlayerData;
+            this.dailyDataExercise[dateInfo.historyDateString] = newData;
+        }
+        else if (this.dailyDataExercise[dateInfo.historyDateString][options.exerciseId] == undefined) {
+            let newPlayerData = {};
+            newPlayerData[options.playerName] = Number(options.exerciseCount);
+            this.dailyDataExercise[dateInfo.historyDateString][options.exerciseId] = newPlayerData;
+        }
+        else if (this.dailyDataExercise[dateInfo.historyDateString][options.exerciseId][options.playerName] == undefined) {
+            this.dailyDataExercise[dateInfo.historyDateString][options.exerciseId][options.playerName] = Number(options.exerciseCount);
+        }
+        else {
+            this.dailyDataExercise[dateInfo.historyDateString][options.exerciseId][options.playerName] += Number(options.exerciseCount);
+        }
+
+        if (this.dailyDataExerciseCategory[dateInfo.historyDateString] == undefined) {
+            let newData = {};
+            let newPlayerData = {};
+            newPlayerData[options.playerName] = Number(options.exerciseCount);
+            newData[options.exerciseCategory] = newPlayerData;
+            this.dailyDataExerciseCategory[dateInfo.historyDateString] = newData;
+        }
+        else if (this.dailyDataExerciseCategory[dateInfo.historyDateString][options.exerciseCategory] == undefined) {
+            let newPlayerData = {};
+            newPlayerData[options.playerName] = Number(options.exerciseCount);
+            this.dailyDataExerciseCategory[dateInfo.historyDateString][options.exerciseCategory] = newPlayerData;
+        }
+        else if (this.dailyDataExerciseCategory[dateInfo.historyDateString][options.exerciseCategory][options.playerName] == undefined) {
+            this.dailyDataExerciseCategory[dateInfo.historyDateString][options.exerciseCategory][options.playerName] = Number(options.exerciseCount);
+        }
+        else {
+            this.dailyDataExerciseCategory[dateInfo.historyDateString][options.exerciseCategory][options.playerName] += Number(options.exerciseCount);
+        }
+
+
+
+
+        //POINTS REG PLAYERS
+        if (options.isDeletion) {
+            this.registeredPlayers[options.playerName].entries--;
+        }
+        else if (options.isNewEntry) {
+            this.registeredPlayers[options.playerName].entries++;
+        }
+
+        this.registeredPlayers[options.playerName].points.total += Number(options.points);
+
+        if (options.isCardio) {
+            this.registeredPlayers[options.playerName].points.cardio += Number(options.points);
+        }
+
+        if (options.isStrength) {
+            this.registeredPlayers[options.playerName].points.strength += Number(options.points);
+        }
+        this.registeredPlayers[options.playerName].points.cardioStrengthRatio = calc.calculateCardioStrengthPercents(this.registeredPlayers[options.playerName].points.cardio, this.registeredPlayers[options.playerName].points.strength);
+        if (options.isNegative) {
+            this.registeredPlayers[options.playerName].points.negative += Number(options.points);
+        }
+
+        if (dateInfo.isToday) {
+            this.registeredPlayers[options.playerName].points.today += Number(options.points);
+        }
+
+        if (dateInfo.isThisMonth) {
+            this.registeredPlayers[options.playerName].points.thisMonth += Number(options.points);
+            this.registeredPlayers[options.playerName].points.diffLastMonth -= Number(options.points);
+            this.registeredPlayers[options.playerName].points.averageThisMonth = this.registeredPlayers[options.playerName].points.thisMonth / Number(dateInfo.day);
+        }
+
+
+        if (dateInfo.isLast5Days) {
+            this.registeredPlayers[options.playerName].points.last5Days += Number(options.points);
+        }
+
+
+
+
+
+
+
+        let found = false;
+
+        let dailyMax = 0;
+        try {
+            for (let graphIterator = 0; graphIterator < this.fullGraph[options.playerName].yAxis.length; graphIterator++) {
+                if (this.fullGraph[options.playerName].yAxis[graphIterator] == dateInfo.historyDateString) {
+                    found = true;
+                    this.fullGraph[options.playerName].xAxis[graphIterator] += Number(options.points);
+                    if (options.isCardio) {
+                        this.fullCardioGraph[options.playerName].xAxis[graphIterator] += Number(options.points);
+                    }
+                    if (options.isStrength) {
+                        this.fullStrengthGraph[options.playerName].xAxis[graphIterator] += Number(options.points);
+                    }
+
+                    this.fullDailyResetGraph[options.playerName].xAxis[graphIterator] += Number(options.points);
+                    if (options.isCardio) {
+                        this.fullDailyResetCardioGraph[options.playerName].xAxis[graphIterator] += Number(options.points);
+                    }
+                    if (options.isStrength) {
+                        this.fullDailyResetStrengthGraph[options.playerName].xAxis[graphIterator] += Number(options.points);
+                    }
+
+                    if (this.fullDailyResetGraph[options.playerName].xAxis[graphIterator] > dailyMax) {
+                        dailyMax = this.fullDailyResetGraph[options.playerName].xAxis[graphIterator];
+                    }
+                    continue;
+                }
+                if (found) {
+                    this.fullGraph[options.playerName].xAxis[graphIterator] += Number(options.points);
+                    if (options.isCardio) {
+                        this.fullCardioGraph[options.playerName].xAxis[graphIterator] += Number(options.points);
+                    }
+                    if (options.isStrength) {
+                        this.fullStrengthGraph[options.playerName].xAxis[graphIterator] += Number(options.points);
+                    }
+                }
+
+                if (this.fullDailyResetGraph[options.playerName].xAxis[graphIterator] > dailyMax) {
+                    dailyMax = this.fullDailyResetGraph[options.playerName].xAxis[graphIterator];
+                }
+
+
+            }
+        }
+        catch (e) {
+            logFile.log("no graph available - skipped in 'updateSingleStats'", false, 0);
+        }
+
+
+
+
+        // DAILY WINS
+        let max = 100;
+        var dailyWinner = "Keiner";
+        for (let playerName in this.registeredPlayers) {
+            if (this.history[dateInfo.historyDateString].dailySum[playerName] != undefined) {
+                if (this.history[dateInfo.historyDateString].dailySum[playerName] > max) {
+                    max = this.history[dateInfo.historyDateString].dailySum[playerName];
+                    dailyWinner = playerName;
+                }
+            }
+            else {
+                this.history[dateInfo.historyDateString].dailySum[playerName] = 0;
+            }
+
+            if (!found) {
+                if (this.fullGraph[playerName] == undefined) {
+                    this.fullGraph[playerName] = {};
+                    this.fullCardioGraph[playerName] = {};
+                    this.fullStrengthGraph[playerName] = {};
+                    this.fullDailyResetGraph[playerName] = {};
+                    this.fullDailyResetCardioGraph[playerName] = {};
+                    this.fullDailyResetStrengthGraph[playerName] = {};
+                }
+                if (this.fullGraph[playerName].xAxis == undefined) {
+                    this.fullGraph[playerName].xAxis = [];
+                    this.fullGraph[playerName].yAxis = [];
+
+                    this.fullCardioGraph[playerName].xAxis = [];
+                    this.fullCardioGraph[playerName].yAxis = [];
+
+                    this.fullStrengthGraph[playerName].xAxis = [];
+                    this.fullStrengthGraph[playerName].yAxis = [];
+
+                    this.fullDailyResetGraph[playerName].xAxis = [];
+                    this.fullDailyResetGraph[playerName].yAxis = [];
+
+                    this.fullDailyResetCardioGraph[playerName].xAxis = [];
+                    this.fullDailyResetCardioGraph[playerName].yAxis = [];
+
+                    this.fullDailyResetStrengthGraph[playerName].xAxis = [];
+                    this.fullDailyResetStrengthGraph[playerName].yAxis = [];
+
+                    this.fullGraph[playerName].xAxis.push(this.registeredPlayers[playerName].points.total);
+                    this.fullGraph[playerName].yAxis.push(dateInfo.historyDateString);
+
+                    this.fullCardioGraph[playerName].xAxis.push(this.registeredPlayers[playerName].points.cardio);
+                    this.fullCardioGraph[playerName].yAxis.push(dateInfo.historyDateString);
+
+                    this.fullStrengthGraph[playerName].xAxis.push(this.registeredPlayers[playerName].points.strength);
+                    this.fullStrengthGraph[playerName].yAxis.push(dateInfo.historyDateString);
+
+                    this.fullDailyResetGraph[playerName].xAxis.push(Number(options.points));
+                    this.fullDailyResetGraph[playerName].yAxis.push(dateInfo.historyDateString);
+
+                    this.fullDailyResetCardioGraph[playerName].xAxis.push(Number(options.pointsCardio));
+                    this.fullDailyResetCardioGraph[playerName].yAxis.push(dateInfo.historyDateString);
+
+                    this.fullDailyResetStrengthGraph[playerName].xAxis.push(Number(options.pointsStrength));
+                    this.fullDailyResetStrengthGraph[playerName].yAxis.push(dateInfo.historyDateString);
+                }
+
+
+
+
+                if (this.fullDailyResetGraph[playerName].xAxis[this.fullDailyResetGraph[playerName].xAxis.length - 1] > dailyMax && options.playerName == playerName) {
+                    dailyMax = Number(options.points);
+                }
+
+            }
+
+        }
+
+        let monthlyMax = 0;
+        for (let monthName in this.monthlyData) {
+            let data = this.monthlyData[monthName];
+            if (data[options.playerName] > monthlyMax) {
+                monthlyMax = data[options.playerName];
+            }
+        }
+        this.registeredPlayers[options.playerName].points.dailyMax = dailyMax;
+        this.registeredPlayers[options.playerName].points.monthlyMax = monthlyMax;
+
+        let lastWinner = this.history[dateInfo.historyDateString].dailyWinner;
+        if (lastWinner != dailyWinner) {
+            if (dailyWinner == "Keiner" && lastWinner != "Keiner") {
+                this.addToEventLog("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(dateInfo.historyDateString) + " ist wieder frei!");
+            }
+            if (dailyWinner != "Keiner" && lastWinner == "Keiner") {
+                this.addToEventLog("Der Tagessieg am " + common.HTMLBold(dateInfo.historyDateString) + " geht bis jetzt an " + common.HTMLBold(dailyWinner));
+            }
+            else if (dailyWinner != "Keiner" && lastWinner != "Keiner") {
+                this.addToEventLog("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(dateInfo.historyDateString) + " geht nun an " + common.HTMLBold(dailyWinner));
+            }
+
+        }
+        this.history[dateInfo.historyDateString].dailyWinner = dailyWinner;
+        if (this.dailyWins[dailyWinner] != undefined) {
+            this.dailyWins[dailyWinner]++;
+
+        }
+        else {
+            this.dailyWins[dailyWinner] = 1;
+        }
+
+        if (lastWinner != "Keiner" && lastWinner != undefined) {
+            this.dailyWins[lastWinner]--;
+        }
+
+
+        // MONTHLY WINS
+        max = 100;
+        var monthlyWinner = "Keiner";
+        this.monthlyWins[options.playerName] = 0;
+        for (let date in this.monthlyData) {
+            if (date == dateInfo.currentMonthName) {
+                break;
+            }
+            max = 0;
+            for (let playerName in this.registeredPlayers) {
+                if (this.monthlyData[date][playerName] > max) {
+                    max = this.monthlyData[date][playerName];
+                    monthlyWinner = playerName;
+                }
+                if (this.monthlyWins[playerName] == undefined) {
+                    this.monthlyWins[playerName] = 0;
+                }
+
+
+
+            }
+
+            this.monthlyWins[monthlyWinner]++;
+
+        }
+
+
+
+
+
+        let maxExerciseCountDaily = 0;
+        for (let date in this.dailyDataExercise) {
+            try {
+                if (this.dailyDataExercise[date][options.exerciseId][options.playerName] > maxExerciseCountDaily) {
+                    maxExerciseCountDaily = this.dailyDataExercise[date][options.exerciseId][options.playerName];
+                }
+            }
+            catch (e) {
+
+            }
+
+        }
+
+        let maxExerciseCountMonthly = 0;
+        for (let date in this.monthlyDataExercise) {
+            try {
+                if (this.monthlyDataExercise[date][options.exerciseId][options.playerName] > maxExerciseCountMonthly) {
+                    maxExerciseCountMonthly = this.monthlyDataExercise[date][options.exerciseId][options.playerName];
+                }
+            }
+            catch (e) {
+
+            }
+        }
+
+        let maxExerciseCountDailyCategory = 0;
+        for (let date in this.dailyDataExerciseCategory) {
+            try {
+                if (this.dailyDataExerciseCategory[date][options.exerciseCategory][options.playerName] > maxExerciseCountDailyCategory) {
+                    maxExerciseCountDailyCategory = this.dailyDataExerciseCategory[date][options.exerciseCategory][options.playerName];
+                }
+            }
+            catch (e) {
+
+            }
+        }
+
+        let maxExerciseCountMonthlyCategory = 0;
+        for (let date in this.monthlyDataExerciseCategory) {
+            try {
+                if (this.monthlyDataExerciseCategory[date][options.exerciseCategory][options.playerName] > maxExerciseCountMonthlyCategory) {
+                    maxExerciseCountMonthly = this.monthlyDataExerciseCategory[date][options.exerciseCategory][options.playerName];
+                }
+            }
+            catch (e) {
+
+            }
+        }
+
+
+
+        if (this.maxExerciseCounts[options.exerciseId] == undefined) {
+            this.maxExerciseCounts[options.exerciseId] = {};
+            this.maxExerciseCounts[options.exerciseId].daily = {};
+            this.maxExerciseCounts[options.exerciseId].monthly = {};
+            this.maxExerciseCounts[options.exerciseId].overall = {};
+
+            this.maxExerciseCounts[options.exerciseId].daily[options.playerName] = this.dailyDataExercise[dateInfo.historyDateString][options.exerciseId][options.playerName];
+            this.maxExerciseCounts[options.exerciseId].monthly[options.playerName] = this.monthlyDataExercise[dateInfo.currentMonthName][options.exerciseId][options.playerName];
+            this.maxExerciseCounts[options.exerciseId].overall[options.playerName] = Number(options.exerciseCount);
+        }
+        else {
+            if (this.maxExerciseCounts[options.exerciseId].daily[options.playerName] == undefined) {
+                this.maxExerciseCounts[options.exerciseId].daily[options.playerName] = this.dailyDataExercise[dateInfo.historyDateString][options.exerciseId][options.playerName];
+            }
+            else {
+
+                this.maxExerciseCounts[options.exerciseId].daily[options.playerName] = maxExerciseCountDaily;
+
+            }
+
+            if (this.maxExerciseCounts[options.exerciseId].monthly[options.playerName] == undefined) {
+                this.maxExerciseCounts[options.exerciseId].monthly[options.playerName] = this.monthlyDataExercise[dateInfo.currentMonthName][options.exerciseId][options.playerName];
+            }
+            else {
+                this.maxExerciseCounts[options.exerciseId].monthly[options.playerName] = maxExerciseCountMonthly;
+            }
+
+
+            if (this.maxExerciseCounts[options.exerciseId].overall[options.playerName] == undefined) {
+                this.maxExerciseCounts[options.exerciseId].overall[options.playerName] = Number(options.exerciseCount);
+            }
+            else {
+                this.maxExerciseCounts[options.exerciseId].overall[options.playerName] += Number(options.exerciseCount);
+            }
+        }
+
+        //category
+        if (this.maxExerciseCountsCategory[options.exerciseCategory] == undefined) {
+            this.maxExerciseCountsCategory[options.exerciseCategory] = {};
+            this.maxExerciseCountsCategory[options.exerciseCategory].daily = {};
+            this.maxExerciseCountsCategory[options.exerciseCategory].monthly = {};
+            this.maxExerciseCountsCategory[options.exerciseCategory].overall = {};
+
+            this.maxExerciseCountsCategory[options.exerciseCategory].daily[options.playerName] = this.dailyDataExerciseCategory[dateInfo.historyDateString][options.exerciseCategory][options.playerName];
+            this.maxExerciseCountsCategory[options.exerciseCategory].monthly[options.playerName] = this.monthlyDataExerciseCategory[dateInfo.currentMonthName][options.exerciseCategory][options.playerName];
+            this.maxExerciseCountsCategory[options.exerciseCategory].overall[options.playerName] = Number(options.exerciseCount);
+        }
+        else {
+            if (this.maxExerciseCountsCategory[options.exerciseCategory].daily[options.playerName] == undefined) {
+                this.maxExerciseCountsCategory[options.exerciseCategory].daily[options.playerName] = this.dailyDataExerciseCategory[dateInfo.historyDateString][options.exerciseCategory][options.playerName];
+            }
+            else {
+
+                this.maxExerciseCountsCategory[options.exerciseCategory].daily[options.playerName] = maxExerciseCountDailyCategory;
+
+            }
+
+            if (this.maxExerciseCountsCategory[options.exerciseCategory].monthly[options.playerName] == undefined) {
+                this.maxExerciseCountsCategory[options.exerciseCategory].monthly[options.playerName] = this.monthlyDataExerciseCategory[dateInfo.currentMonthName][options.exerciseCategory][options.playerName];
+            }
+            else {
+
+                this.maxExerciseCountsCategory[options.exerciseCategory].monthly[options.playerName] = maxExerciseCountMonthlyCategory;
+
+            }
+
+
+            if (this.maxExerciseCountsCategory[options.exerciseCategory].overall[options.playerName] == undefined) {
+                this.maxExerciseCountsCategory[options.exerciseCategory].overall[options.playerName] = Number(options.exerciseCount);
+            }
+            else {
+                this.maxExerciseCountsCategory[options.exerciseCategory].overall[options.playerName] += Number(options.exerciseCount);
+            }
+        }
+
+        let end = Date.now();
+        updateSingleStatsResult(`updateSingleStatsResult took ${end - start} ms`);
+
+
+
+    }
+
+  

@@ -26,6 +26,34 @@
 				einen neuen ausdenken.
 			</p>
 			<p>
+				NEWS (XX.XX.XXXX) v1.72:
+
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Einheitensystem erweitert
+					(min/km,min/m,Wdh/min,Wdh/sec) - für mehr Info Ing. Fuchs direkt ansprechen.
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Neue Buttons in Tab Übungen: "Ausblenden" und "Zeige
+					alle". Damit blendet man Übungen die uninteressant sind aus.
+				</li>
+				<li>
+					<b>Usability: </b>Löschen von eingetragenen Übungen funktioniert jetzt anders - Benutzerfreundlicher
+					mit einem "BIG DELETE BUTTON" in der Zeile.
+
+				</li>
+				<li>
+					<b>Usability: </b>Markierte Übungen werden anschaulicher markiert.
+
+				</li>
+				<li>
+					<b>Usability: </b>Übungstabelle wird serverseitig vorsortiert und anders generiert - bessere Performance (150ms statt 900ms)
+				</li>
+				<li>
+					<b>Usability: </b>Niemand liest dieses Changelog - aber Hauptsache deppat fragen.
+				</li>
+
+			</p>
+			<p>
 				NEWS (08.07.2019) v1.71:
 				<li>
 					<span class="changeLog_Bug">Bug: </span>Das Namesfeld im Historytab wird wieder ordnunggemäß
@@ -37,6 +65,7 @@
 				<li>
 					<span class="changeLog_Feature">Feature: </span>"Login merken" funktioniert nun wie geplant. <-
 						FUNKTIONIERT NICHT </li> </p> <p>
+
 						NEWS (03.07.2019) v1.67:
 				<li>
 					<span class="changeLog_Bug">Bug: </span>Notfallfix - Manchmal crashed der Server beim entfernen der
@@ -220,13 +249,15 @@
 			</div>
 		</div>
 		<div id="div_addWorkout">
-			<label for="input_doneExerciseDate">Übung Datum :</label>
+			<label for="input_doneExerciseDate">Übung Datum:</label>
 			<input id="input_doneExerciseDate" type="date"></input><br>
-			<label for="select_doneExercise">Übung :</label>
+			<label for="select_doneExercise">Übung:</label>
 			<select id="select_doneExercise"></select><br>
-			<label for="input_doneExercise">Übung Anzahl :</label>
-			<input id="input_doneExercise" type="number" min="0" placeholder="Anzahl"
-				oninput="validity.valid||(value='');"></input><br>
+			<label for="input_doneExercise">Übung Anzahl:</label>
+			<input id="input_doneExercise" type="number" min="0" step="0.01" placeholder="Anzahl"
+				oninput="validity.valid||(value='');"></input>
+			<input id="input_doneExerciseAdditional" type="number" min="0" step="0.01" placeholder="Anzahl Zusatz"
+				oninput="validity.valid||(value='');" disabled="true"></input><br>
 			<label for="input_doneExerciseWeight">Übung Gewicht [kg]:</label>
 			<input id="input_doneExerciseWeight" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number"
 				placeholder="Benutzes Gewicht" min="0" oninput="validity.valid||(value='');"></input><br>
@@ -244,8 +275,6 @@
 			<label for="input_avgSelection">Mittlw. Auswahl:</label>
 			<input id="input_avgSelection" type="text" placeholder="Auswertung starten..." disabled></input><br>
 			<button id="button_updateHistory">Update</button><br>
-			<label for="input_deletionMode">Löschmodus (Tabelle anklicken):</label>
-			<input type="checkbox" id="input_deletionMode"></input><br>
 		</div>
 		<div id="div_exerciseHistory">
 			<table id="table_exerciseHistory" class="std_table">
@@ -255,8 +284,7 @@
 		</div>
 	</div>
 	<div id="div_ExerciseOverview" class="tab">
-		<p>Verändert die Übungen wies euch taugt! Hat keinen Einfluss mehr auf frühere Eintragungen!
-		</p>
+		<p id="paragraph_paceUnitNotice"></p>
 		<div id="div_addNewExercise">
 			<label for="input_exerciseID" class="hiddenCell"></label>
 			<input id="input_exerciseID" type="number" class="hiddenCell"></input>
@@ -264,13 +292,15 @@
 			<label for="input_exerciseName">Name:</label>
 			<br><input id="input_exerciseName" type="text" placeholder="Übungsname" required></input><br>
 
-			<label for="input_exerciseDifficulty">Schwierigkeit (1,10,100):</label>
+			<label id="label_input_exerciseDifficulty" for="input_exerciseDifficulty">Schwierigkeit (1,10,100):</label>
 			<br><input id="input_exerciseDifficulty" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
 				placeholder="Faktor für 1x" min="-50" max="5" oninput="validity.valid||(value='');">
 			<input id="input_exerciseDifficulty10" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
 				placeholder="Faktor für 10x" min="-50" max="5" oninput="validity.valid||(value='');">
 			<input id="input_exerciseDifficulty100" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
-				placeholder="Faktor für 100x" min="-50" max="5" oninput="validity.valid||(value='');"></input><br>
+				placeholder="Faktor für 100x" min="-50" max="5" oninput="validity.valid||(value='');"></input>
+			<input id="input_paceConstant" disabled="true" pattern="[0-9]+([\.,][0-9]+)?" step="0.001" type="number"
+				placeholder="Pace Konstante" min="0" oninput="validity.valid||(value='');"></input><br>
 
 			<label for="input_exerciseBaseWeight">Basisgewicht:</label>
 			<label for="select_exerciseType">Typ:</label>
@@ -317,6 +347,8 @@
 					<option value="Hantel">Hantel</option>
 					<option value="2x Hantel">2x Hantel</option>
 					<option value="Gewichtball">Gewichtball</option>
+					<option value="Kettleball">Kettleball</option>
+					<option value="Irgend ein Gewicht">Irgend ein Gewicht</option>
 				</optgroup>
 				<optgroup label="Bänder">
 					<option value="Widerstandsband (Leicht)">Widerstandsband (Leicht)</option>
@@ -344,6 +376,8 @@
 			<button id="button_createExercise">Anlegen</button>
 			<button id="button_modifyExercise">Bearbeiten</button>
 			<button id="button_deleteExercise">Löschen</button>
+			<button id="button_hideExercise">Ausblenden</button>
+			<button id="button_showHiddenExercises">Zeige alle</button>
 
 		</div>
 
@@ -365,8 +399,10 @@
 			<br>
 			<label for="select_statisticsExercise">Übung :</label>
 			<select id="select_statisticsExercise"></select>
-			<button id="button_statisticsExercise">Statistik</button>
 			<p id="paragraph_statisticsExercise"></p>
+			<div id="div_graphExercise">
+
+			</div>
 		</div>
 	</div>
 	<div id="div_competition" class="tab">
@@ -416,4 +452,5 @@
 
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+<script type="text/javascript" src="./js/common.js"></script>
 <script type="text/javascript" src="./js/index.js"></script>

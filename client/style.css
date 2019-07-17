@@ -78,10 +78,20 @@ button:hover {
     padding-bottom: 5px;
 }
 
+#div_graphExercise {
+    background-color: var(--mainColor);
+    height: 70%;
+    padding-bottom: 5px;
+}
+
 #div_GraphControl {
     background-color: var(--mainColor);
     max-height: 10%;
     padding-bottom: 5px;
+}
+
+#div_exerciseStatistics{
+    height:60%;
 }
 
 #div_exerciseHistory {
@@ -106,7 +116,7 @@ button:hover {
 /* TAB STATISTICS INFO*/
 
 #div_achievementsDone {
-    height: 50%;
+    height: 40%;
     overflow: auto;
 }
 
@@ -207,6 +217,18 @@ button:hover {
 
 /* TABLES */
 
+
+.deleteButton:hover{
+    background: rgb(202, 111, 95);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.hiddenExercise{
+    color:rgb(252, 0, 0);
+}
+
+
 .std_table {
     font-family: Helvetica, "Trebuchet MS", Arial, sans-serif;
     font-size: var(--mainFontSize);
@@ -235,7 +257,7 @@ button:hover {
 }
 
 .selected{
-    background: rgb(202, 111, 95);
+    background: rgb(107, 156, 115)!important; 
     font-weight: bold;
 }
 
@@ -251,9 +273,7 @@ button:hover {
     color: white;
 }
 
-.std_table tbody tr:hover {
-    color: rgb(46, 45, 65);
-}
+
 
 #table_monthlyWins thead tr td{
     width:50%

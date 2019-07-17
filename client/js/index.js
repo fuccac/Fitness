@@ -9,6 +9,7 @@
 ******************************************************************************************************************/
 var Name = "";
 var exerciseTableSortMode = { cellIndex: 1 };
+var common = new Common();
 
 //BUTTONS
 var button_SignIn = document.getElementById('button_SignIn');
@@ -22,38 +23,30 @@ var button_updateHistory = document.getElementById('button_updateHistory');
 var button_tabStatistics = document.getElementById('button_tabStatistics');
 var button_tabMainPage = document.getElementById('button_tabMainPage');
 var button_modifyExercise = document.getElementById('button_modifyExercise');
-var button_statisticsExercise = document.getElementById('button_statisticsExercise');
 var button_tabCompetition = document.getElementById('button_tabCompetition');
 var button_tabEventLog = document.getElementById('button_tabEventLog');
 var button_chatText = document.getElementById('button_chatText');
 var button_link = document.getElementById('button_link');
 var button_img = document.getElementById('button_img');
-//CANVAS
-//var canvas_graphHistory = document.getElementById('canvas_graphHistory');
+var button_hideExercise = document.getElementById('button_hideExercise');
+var button_showHiddenExercises = document.getElementById('button_showHiddenExercises');
 
-//CTX
-//var ctx_graphHistory = canvas_graphHistory.getContext("2d");
 //DIVS
 var div_ExerciseOverview = document.getElementById('div_ExerciseOverview');
-var div_addNewExercise = document.getElementById('div_addNewExercise');
 var div_navigation = document.getElementById('div_navigation');
 var div_PersonalOverview = document.getElementById('div_PersonalOverview');
-var div_addWorkout = document.getElementById('div_addWorkout');
-var div_PersonalInfo = document.getElementById('div_PersonalInfo');
 var div_exerciseHistory = document.getElementById('div_exerciseHistory');
 var div_exerciseHistoryControl = document.getElementById('div_exerciseHistoryControl');
 var div_statistics = document.getElementById('div_statistics');
 var div_graph = document.getElementById('div_graph');
 var div_MainPage = document.getElementById('div_MainPage');
-var div_achievementsDone = document.getElementById('div_achievementsDone');
 var div_login = document.getElementById('div_login');
 var div_competition = document.getElementById('div_competition');
-var div_DailyWins = document.getElementById('div_DailyWins');
-var div_MonthlyWins = document.getElementById('div_MonthlyWins');
 var div_events = document.getElementById('div_events');
 var div_eventLog = document.getElementById('div_eventLog');
-//FONTS
-var font_Courier = "Courier New";
+var div_graphExercise = document.getElementById('div_graphExercise');
+
+
 //INPUTS
 var input_exerciseName = document.getElementById('input_exerciseName');
 var input_exerciseDifficulty = document.getElementById('input_exerciseDifficulty');
@@ -70,13 +63,14 @@ var input_sumSelection = document.getElementById('input_sumSelection');
 var input_avgSelection = document.getElementById('input_avgSelection');
 var input_graphFromDate = document.getElementById('input_graphFromDate');
 var input_graphToDate = document.getElementById('input_graphToDate');
-var input_deletionMode = document.getElementById('input_deletionMode');
 var input_Password = document.getElementById('input_Password');
 var input_UserName = document.getElementById('input_Username');
 var input_exerciseID = document.getElementById('input_exerciseID');
 var input_onlineIndicator = document.getElementById('input_onlineIndicator');
 var input_RememberMe = document.getElementById('input_RememberMe');
 var input_chatText = document.getElementById('input_chatText');
+var input_doneExerciseAdditional = document.getElementById('input_doneExerciseAdditional');
+var input_paceConstant = document.getElementById('input_paceConstant');
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
@@ -95,15 +89,20 @@ var table_allPlayersTable = document.getElementById('table_allPlayersTable');
 var table_achievementsDone = document.getElementById('table_achievementsDone');
 var table_dailyWins = document.getElementById('table_dailyWins');
 var table_monthlyWins = document.getElementById('table_monthlyWins');
-var socket = io();
+
 //para
 var paragraph_statisticsExercise = document.getElementById('paragraph_statisticsExercise');
-var button_logOut = document.getElementById('button_logOut');
+var paragraph_paceUnitNotice = document.getElementById('paragraph_paceUnitNotice');
+//label
+var label_input_exerciseDifficulty = document.getElementById('label_input_exerciseDifficulty');
 
-initialize();
-
-var loginCookie = "";//getCookie("loginCookie");
-
+var SOCKET = io();
+var LOGIN_COOKIE = "";//getCookie("loginCookie");
+var PACE_UNITS = "";
+var PACE_INVERT = "";
+var RUNTIME_CONFIG = {
+    showHiddenExercises: false,
+};
 
 /******************************************************************************************************************
 *******************************************************************************************************************
@@ -113,22 +112,22 @@ var loginCookie = "";//getCookie("loginCookie");
 ******************************************************************************************************************/
 
 button_SignIn.onclick = function () {
-    socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
+    SOCKET.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
 };
 
 button_SignUp.onclick = function () {
-    socket.emit('SignUp', { username: input_UserName.value.toLowerCase(), password: input_Password.value });
+    SOCKET.emit('SignUp', { username: input_UserName.value.toLowerCase(), password: input_Password.value });
 };
 
 input_historyFromDate.onchange = function () {
-    if (!isValidDate(createZeroDate(input_historyFromDate.value))) {
-        input_historyFromDate.value = getDateFormat(createZeroDate(), "YYYY-MM-DD");
+    if (!common.isValidDate(common.createZeroDate(input_historyFromDate.value))) {
+        input_historyFromDate.value = common.getDateFormat(common.createZeroDate(), "YYYY-MM-DD");
     }
 };
 
 input_historyToDate.onchange = function () {
-    if (!isValidDate(createZeroDate(input_historyToDate.value))) {
-        input_historyToDate.value = getDateFormat(createZeroDate(), "YYYY-MM-DD");
+    if (!common.isValidDate(common.createZeroDate(input_historyToDate.value))) {
+        input_historyToDate.value = common.getDateFormat(common.createZeroDate(), "YYYY-MM-DD");
     }
 };
 
@@ -138,13 +137,14 @@ select_historyShowName.onchange = function () {
 
 
 button_updateHistory.onclick = function () {
-    socket.emit("requestHistoryUpdate", { fromDate: input_historyFromDate.value, toDate: input_historyToDate.value });
+    SOCKET.emit("requestHistoryUpdate", { fromDate: input_historyFromDate.value, toDate: input_historyToDate.value });
 };
 
 button_doneExerciseSend.onclick = function () {
     if (checkForEmptyBoxesDoneExercise()) {
+
         exerciseDone('addDoneExercise');
-        button_updateHistory.click();
+        button_updateHistory.click();//ARSCH
     }
     else {
         alert("Nicht alle Inputboxen wurden ausgefüllt!");
@@ -243,9 +243,7 @@ button_modifyExercise.onclick = function () {
     }
 };
 
-button_statisticsExercise.onclick = function () {
-    requestExerciseStatistic(select_statisticsExercise.value);
-};
+
 
 select_graphSwitch.onchange = function () {
     if (select_graphSwitch.value == "bar") {
@@ -287,26 +285,143 @@ select_chartType.onchange = function () {
 input_exerciseID.onchange = function () {
     for (let tableIterator = 0, row; row = table_exerciseTable.rows[tableIterator]; tableIterator++) {
         if (input_exerciseID.value == row.getElementsByTagName("td")[0].innerHTML) {
-            row.getElementsByTagName("td")[1].classList.add("selected");
+            //row.getElementsByTagName("td")[1].classList.add("selected");
+            row.classList.add("selected");
         }
         else {
-            row.getElementsByTagName("td")[1].classList.remove("selected");
+            //row.getElementsByTagName("td")[1].classList.remove("selected");
+            row.classList.remove("selected");
         }
     }
 };
 
+select_doneExercise.onchange = function () {
+    let paceUnitsArray = PACE_UNITS.split(";");
+    let selectedUnit = "";
+    for (let iterator = 0; iterator < paceUnitsArray.length; iterator++) {
+        if (select_doneExercise.selectedOptions[0].innerText.includes("(" + paceUnitsArray[iterator] + ")")) {
+            selectedUnit = paceUnitsArray[iterator];
 
+        }
+    }
+    if (selectedUnit != "") {
+        input_doneExerciseAdditional.style.display = "inline-block";
+        input_doneExerciseAdditional.disabled = false;
+        let units = selectedUnit.split("/");
+
+
+        input_doneExerciseAdditional.placeholder = units[1];
+        input_doneExercise.placeholder = units[0];
+
+    }
+
+    else {
+        input_doneExercise.type = "number";
+        input_doneExerciseAdditional.type = "number";
+        input_doneExerciseAdditional.style.display = "none";
+        input_doneExerciseAdditional.disabled = true;
+        input_doneExerciseAdditional.placeholder = "";
+        input_doneExerciseAdditional.value = "";
+        input_doneExercise.placeholder = "Anzahl";
+    }
+
+
+};
+
+select_exerciseUnit.onchange = function () {
+
+    let paceUnitOptions = common.getPaceUnitOptions(select_exerciseUnit.value);
+
+
+    if (paceUnitOptions.isPaceUnit && paceUnitOptions.showPaceEntryMask) {
+        input_exerciseDifficulty10.disabled = true;
+        input_exerciseDifficulty100.disabled = true;
+        input_exerciseDifficulty10.style.display = "none";
+        input_exerciseDifficulty100.style.display = "none";
+        input_paceConstant.style.display = "inline-block";
+        label_input_exerciseDifficulty.innerHTML = "Übungsfaktor | Pace Konstante:";
+        if (paceUnitOptions.invert) {
+            paragraph_paceUnitNotice.innerHTML = "Die Einheit '" + select_exerciseUnit.value +
+                "' bewirkt folgende Berechnung: <b>(( Konstante / ((" + paceUnitOptions.sec + " / " + paceUnitOptions.first + ") / " + paceUnitOptions.first + ")) * Übungsfaktor) * Gewichtsfaktor</b> | (Bedenke: Die Einheiten 'sec' und 'm' werden für die Punkteberechnung in 'min' und 'km' umgerechnet)";
+        }
+        else {
+            paragraph_paceUnitNotice.innerHTML = "Die Einheit '" + select_exerciseUnit.value +
+                "' bewirkt folgende Berechnung: <b>(( Konstante / ((" + paceUnitOptions.first + " / " + paceUnitOptions.sec + ") / " + paceUnitOptions.sec + ")) * Übungsfaktor) * Gewichtsfaktor</b> | (Bedenke: Die Einheiten 'sec' und 'm' werden für die Punkteberechnung in 'min' und 'km' umgerechnet)";
+        }
+
+    }
+    else if (select_exerciseUnit.value != "") {
+
+        input_exerciseDifficulty10.disabled = false;
+        input_exerciseDifficulty100.disabled = false;
+        input_exerciseDifficulty10.style.display = "inline-block";
+        input_exerciseDifficulty100.style.display = "inline-block";
+        input_paceConstant.style.display = "none";
+        paragraph_paceUnitNotice.innerHTML = "Die Einheit '" + select_exerciseUnit.value +
+            "' bewirkt folgende Berechnung: <b>([" + select_exerciseUnit.value + "] * ((Diff1 + Diff10 + Diff100) / 3)) * Gewichtsfaktor</b>";
+        label_input_exerciseDifficulty.innerHTML = "Schwierigkeit (1,10,100):";
+    }
+    else {
+        input_exerciseDifficulty10.disabled = false;
+        input_exerciseDifficulty100.disabled = false;
+        input_exerciseDifficulty10.style.display = "inline-block";
+        input_exerciseDifficulty100.style.display = "inline-block";
+        input_paceConstant.style.display = "none";
+        paragraph_paceUnitNotice.innerHTML = "Keine Auswahl getroffen";
+        label_input_exerciseDifficulty.innerHTML = "Schwierigkeit (1,10,100):";
+    }
+};
+
+button_hideExercise.onclick = function () {
+    hideExercise(input_exerciseID.value);
+};
+
+button_showHiddenExercises.onclick = function () {
+    RUNTIME_CONFIG.showHiddenExercises = !RUNTIME_CONFIG.showHiddenExercises;
+    if (RUNTIME_CONFIG.showHiddenExercises) {
+        button_showHiddenExercises.style.backgroundColor = "green";
+    }
+    else {
+        button_showHiddenExercises.style.backgroundColor = "";
+    }
+    requestExerciseListUpdate();
+};
+
+select_statisticsExercise.onchange = function () {
+    requestExerciseStatistic(select_statisticsExercise.value);
+    requestExerciseGraphUpdate();
+};
+
+initialize();
 /******************************************************************************************************************
 *******************************************************************************************************************
 *                                               SOCKET ON 
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
+SOCKET.on('configValues', function (data) {
+    PACE_UNITS = data.paceUnits;
+    PACE_INVERT = data.paceInvert;
+    var paceUnitsArray = PACE_UNITS.split(";");
+    for (let iterator = 0; iterator < paceUnitsArray.length; iterator++) {
+        common.addOption(document, select_exerciseUnit, paceUnitsArray[iterator], paceUnitsArray[iterator]);
+    }
+    resetExerciseEntryMask();
 
-socket.on('signInResponse', function (data) {
+});
+
+
+SOCKET.on('refreshExerciseList', function (data) {
+    generateExerciseList(data);
+});
+
+SOCKET.on('signInResponse', function (data) {
     if (data.success) {
         div_login.style.display = "none";
         Name = data.name;
+        if (Name.toLowerCase() === "caf") {
+            input_paceConstant.disabled = false;
+        }
         select_historyShowName.value = Name;
         button_tabMainPage.click();
         div_navigation.style.display = 'inline-block';
@@ -316,7 +431,7 @@ socket.on('signInResponse', function (data) {
         alert("Sign in unsuccessful");
 });
 
-socket.on('signUpResponse', function (data) {
+SOCKET.on('signUpResponse', function (data) {
     if (data.success) {
         alert("Sign Up successful");
     }
@@ -324,31 +439,31 @@ socket.on('signUpResponse', function (data) {
         alert("Sign Up unsuccessful");
 });
 
-socket.on('alertMsg', function (data) {
+SOCKET.on('alertMsg', function (data) {
     alert(data.data);
 });
 
-socket.on('loginToken', function (data) {
+SOCKET.on('loginToken', function (data) {
     setCookie("loginCookie", data.data, 1);
 });
 
 
 
-socket.on('refreshEventLog', function (data) {
+SOCKET.on('refreshEventLog', function (data) {
     generateEventLog(data);
 });
 
-socket.on("refreshHistory", function (data) {
-    fromDate = createZeroDate(input_historyFromDate.value);
-    toDate = createZeroDate(input_historyToDate.value);
+SOCKET.on("refreshHistory", function (data) {
+    fromDate = common.createZeroDate(input_historyFromDate.value);
+    toDate = common.createZeroDate(input_historyToDate.value);
     generateHistoryList(data, table_exerciseHistory, true, select_historyShowName.value, fromDate, toDate);
 });
 
-socket.on("refreshAchievements", function (data) {
+SOCKET.on("refreshAchievements", function (data) {
     generateAchievementListTable(data, Name);
 });
 
-socket.on("refreshGraph", function (data) {
+SOCKET.on("refreshGraph", function (data) {
     var border = 2;
     if (document.getElementById("canvas_graphHistory")) {
         canvas_graphHistory = document.getElementById("canvas_graphHistory");
@@ -360,14 +475,29 @@ socket.on("refreshGraph", function (data) {
     var ctx_graphHistory = canvas_graphHistory.getContext("2d");
     canvas_graphHistory.height = div_graph.clientHeight - border;
     canvas_graphHistory.width = div_graph.clientWidth - border;
-    generateGraph(data, canvas_graphHistory, ctx_graphHistory);
+    generateMainGraph(data, canvas_graphHistory, ctx_graphHistory);
 });
 
-socket.on("refresh", function (data) {
+SOCKET.on("refreshExerciseGraph", function (data) {
+    var border = 2;
+    if (document.getElementById("canvas_graphExercise")) {
+        canvas_graphExercise = document.getElementById("canvas_graphExercise");
+        canvas_graphExercise.remove();
+    }
+    canvas_graphExercise = document.createElement("canvas");
+    canvas_graphExercise.id = "canvas_graphExercise";
+    div_graphExercise.appendChild(canvas_graphExercise);
+    var ctx_graphHistory = canvas_graphExercise.getContext("2d");
+    canvas_graphExercise.height = div_graphExercise.clientHeight - border;
+    canvas_graphExercise.width = div_graphExercise.clientWidth - border;
+    generateExerciseGraph(data, canvas_graphExercise, ctx_graphHistory);
+});
+
+SOCKET.on("refresh", function (data) {
     var selIndex = select_historyShowName.selectedIndex;
     select_historyShowName.innerHTML = "";
     for (var names in data.playerList) {
-        addOption(select_historyShowName, names, names);
+        common.addOption(document, select_historyShowName, names, names);
     }
     select_historyShowName.selectedIndex = selIndex;
     if (select_historyShowName.value === "") {
@@ -385,7 +515,7 @@ socket.on("refresh", function (data) {
 
 });
 
-socket.on("refreshExerciseStatistics", function (data) {
+SOCKET.on("refreshExerciseStatistics", function (data) {
     if (data.reps == undefined || data.points == undefined || data.repsDaily == undefined || data.repsMonthly == undefined) {
         data.reps = 0;
         data.points = 0;
@@ -395,7 +525,7 @@ socket.on("refreshExerciseStatistics", function (data) {
     paragraph_statisticsExercise.innerHTML = "";
 
     for (var key in data) {
-        paragraph_statisticsExercise.innerHTML += translate(key) + ": " + translate(data[key]) + "<br>";
+        paragraph_statisticsExercise.innerHTML += " | " + common.HTMLBold(common.translate(key)) + ": " + common.translate(data[key]);
     }
 });
 
@@ -408,11 +538,21 @@ socket.on("refreshExerciseStatistics", function (data) {
 ******************************************************************************************************************/
 
 function requestGraphUpdate() {
-    socket.emit("requestGraphUpdate", { fromDate: input_graphFromDate.value, toDate: input_graphToDate.value, type: select_graphSwitch.value, pointType: select_chartType.value });
+    SOCKET.emit("requestGraphUpdate", { fromDate: input_graphFromDate.value, toDate: input_graphToDate.value, type: select_graphSwitch.value, pointType: select_chartType.value });
 }
+
+function requestExerciseGraphUpdate() {
+    SOCKET.emit("requestExerciseGraphUpdate", { id: select_statisticsExercise.value });
+}
+
+function requestExerciseListUpdate() {
+    SOCKET.emit("requestExerciseListUpdate", { data: true });
+}
+
+
 function sendChatMessage(msg) {
 
-    socket.emit("sendChatMessage", data = {
+    SOCKET.emit("sendChatMessage", data = {
         name: Name,
         msg: msg.toString()
     });
@@ -425,50 +565,76 @@ function requestExerciseStatistic(id) {
         paragraph_statisticsExercise.innerHTML = "Bitte etwas auswählen..";
         return;
     }
-    socket.emit("requestExerciseStatistic", data = {
+    SOCKET.emit("requestExerciseStatistic", data = {
         id: id
     });
 }
 
 
 function requestHistoryDeletion(id, date) {
-    socket.emit("deleteHistory", data = {
+    SOCKET.emit("deleteHistory", data = {
         id: id,
         date: date,
     });
     button_updateHistory.click();
+
 }
 function requestAchievementList() {
-    socket.emit("requestAchievements", data = {
+    SOCKET.emit("requestAchievements", data = {
         name: Name
     });
 }
 
 
 function exerciseDone(emitString) {
-    socket.emit(emitString, exPack = {
+    SOCKET.emit(emitString, exPack = {
         exId: select_doneExercise.value,
         date: input_doneExerciseDate.value,
         count: input_doneExercise.value,
+        countAdditional: input_doneExerciseAdditional.value,
         weight: input_doneExerciseWeight.value,
     });
 }
 
 function modifyExercise(emitString) {
-    socket.emit(emitString, exPack = {
+    let paceUnitOptions = common.getPaceUnitOptions(select_exerciseUnit.value);
+
+    let diff10 = input_exerciseDifficulty10.value;
+    let diff100 = input_exerciseDifficulty100.value;
+
+    let isPaceExercise = paceUnitOptions.isPaceUnit;
+    if (isPaceExercise) {
+        if (paceUnitOptions.showPaceEntryMask) {
+            diff10 = input_exerciseDifficulty.value;
+            diff100 = input_exerciseDifficulty.value;
+        }
+        else {
+            input_paceConstant.value = 1;
+        }
+    }
+    SOCKET.emit(emitString, exPack = {
         name: input_exerciseName.value,
         difficulty: input_exerciseDifficulty.value,
-        difficulty10: input_exerciseDifficulty10.value,
-        difficulty100: input_exerciseDifficulty100.value,
+        difficulty10: diff10,
+        difficulty100: diff100,
+        paceConstant: input_paceConstant.value,
+        isPaceExercise: isPaceExercise,
         baseWeight: input_exerciseBaseWeight.value,
         type: select_exerciseType.value,
         unit: select_exerciseUnit.value,
         equipment: select_exerciseEquipment.value,
         bothSides: select_bothSides.value,
         comment: input_exerciseComment.value,
-        id: input_exerciseID.value
+        id: input_exerciseID.value,
+        paceUnitOptions: paceUnitOptions,
     });
     resetExerciseEntryMask();
+}
+
+function hideExercise(id) {
+    SOCKET.emit("hideExercise", data = {
+        id: id,
+    });
 }
 
 
@@ -481,7 +647,135 @@ function modifyExercise(emitString) {
 *******************************************************************************************************************
 ******************************************************************************************************************/
 var OverallChart;
-function generateGraph(data, canvas, ctx) {
+var ExerciseChart;
+
+function generateExerciseGraph(data, canvas, ctx) {
+    var dataSetMeta = [];
+    var applyFilter = false;
+    var filterSettings = {};
+    if (ExerciseChart != undefined) {
+        for (let dataIterator = 0; dataIterator < ExerciseChart.config.data.datasets.length; dataIterator++) {
+            dataSetMeta.push(ExerciseChart.getDatasetMeta(dataIterator));
+
+            if (dataSetMeta[dataIterator].hidden == undefined || dataSetMeta[dataIterator].hidden == undefined == null) {
+                dataSetMeta[dataIterator].hidden = ExerciseChart.config.data.datasets[dataIterator].hidden;
+            }
+
+            filterSettings[ExerciseChart.config.data.datasets[dataIterator].label] = dataSetMeta[dataIterator].hidden;
+        }
+        applyFilter = true;
+
+        ExerciseChart.data.labels.pop();
+        ExerciseChart.data.datasets.forEach((dataset) => {
+            dataset.data.pop();
+        });
+        ExerciseChart.update();
+        canvas.height = div_graphExercise.clientHeight;
+        canvas.width = div_graphExercise.clientWidth - 10;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    ExerciseChart = undefined;
+
+    var datasets = [];
+    var dataset;
+    var month;
+    var playerName;
+
+    var allPlayerNames = {};
+    for (month in data.graph) {
+        for (playerName in data.graph[month]) {
+            allPlayerNames[playerName] = 0;
+        }
+    }
+
+    var labels = [];
+    var labelIterator = 0;
+    var dataPerName = {};
+
+
+    for (month in data.graph) {
+        labels[labelIterator] = month;
+        labelIterator++;
+
+        for (playerName in data.graph[month]) {
+            if (dataPerName[playerName] == undefined) {
+                dataPerName[playerName] = [data.graph[month][playerName]];
+            }
+            else {
+                dataPerName[playerName].push(data.graph[month][playerName]);
+            }
+            allPlayerNames[playerName] = 1;
+
+        }
+        for (var lostPlayer in allPlayerNames) {
+            if (allPlayerNames[lostPlayer] == 0) {
+                if (dataPerName[lostPlayer] == undefined) {
+                    dataPerName[lostPlayer] = [0];
+                }
+                else {
+                    dataPerName[lostPlayer].push(0);
+                }
+            }
+            allPlayerNames[lostPlayer] = 0;
+        }
+
+
+
+    }
+    for (playerName in dataPerName) {
+        dataset = {
+            label: playerName,
+            backgroundColor: data.colors[playerName],
+            borderColor: "black",
+            data: dataPerName[playerName],
+        };
+
+        datasets.push(dataset);
+    }
+
+    datasets.sort(function (a, b) {
+        var x = a.label.toLowerCase();
+        var y = b.label.toLowerCase();
+        if (x < y) { return -1; }
+        if (x > y) { return 1; }
+        return 0;
+    });
+
+    if (applyFilter) {
+        for (let dataIterator = 0; dataIterator < datasets.length; dataIterator++) {
+            datasets[dataIterator].hidden = filterSettings[datasets[dataIterator].label];
+        }
+    }
+
+    if (ExerciseChart == undefined) {
+        ExerciseChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: datasets,
+            },
+
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                },
+            }
+        });
+        Chart.defaults.global.defaultColor = 'rgba(255, 255, 255, 1)';
+    }
+    else {
+        ExerciseChart.config.type = 'bar';
+        ExerciseChart.data.datasets = datasets;
+        ExerciseChart.data.labels = labels;
+        ExerciseChart.update();
+    }
+
+}
+function generateMainGraph(data, canvas, ctx) {
     var dataSetMeta = [];
     var applyFilter = false;
     var filterSettings = {};
@@ -690,8 +984,6 @@ function generateAchievementListTable(data, name) {
     headerRow = theadAchievementTable.insertRow(0);
 
     achievementListPlayer = data.achievementList[name];
-    var rowNumber = 0;
-    var cellNumber = 0;
     var bodyRow;
     var achievementKey;
     var progressNumbers;
@@ -704,17 +996,17 @@ function generateAchievementListTable(data, name) {
     headerRow = theadAchievementTable.insertRow(0);
 
     for (achievementIterator = 0; achievementIterator < achievementListPlayer.notEarnedAchievements.length; achievementIterator++) {
-        bodyRow = tBodyAchievementTable.insertRow(rowNumber);
+        bodyRow = tBodyAchievementTable.insertRow(tBodyAchievementTable.rows.length);
 
         for (achievementKey in achievementListPlayer.notEarnedAchievements[achievementIterator]) {
             if (achievementKey === "achievementPercent" || achievementKey === "achievementLevel") {
                 continue;
             }
-            if (rowNumber == 0) {
-                cell = headerRow.insertCell(cellNumber);
-                cell.innerHTML += translate(achievementKey);
+            if (tBodyAchievementTable.rows.length == 1) {
+                cell = headerRow.insertCell(headerRow.cells.length);
+                cell.innerHTML += common.translate(achievementKey);
                 cell.onclick = function () {
-                    sortTable(this, table_achievementsDone);
+                    common.sortTable(this, table_achievementsDone);
                 };
             }
 
@@ -740,25 +1032,25 @@ function generateAchievementListTable(data, name) {
                 div = document.createElement("div");
 
                 div.style = "background:" + color + ";position:relative;height:100%;width:" + percent + "%";
-                cell = bodyRow.insertCell(cellNumber);
+                cell = bodyRow.insertCell(bodyRow.cells.length);
                 cell.appendChild(div);
-                div.innerHTML += "Level " + achievementListPlayer.notEarnedAchievements[achievementIterator].achievementLevel + " - " + translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]);
-                cellNumber++;
+                div.innerHTML += "Level " + achievementListPlayer.notEarnedAchievements[achievementIterator].achievementLevel + " - " + common.translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]);
+
             }
             else {
-                cell = bodyRow.insertCell(cellNumber);
-                cell.innerHTML += translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]);
-                cellNumber++;
+                cell = bodyRow.insertCell(bodyRow.cells.length);
+                cell.innerHTML += common.translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]);
+
             }
         }
 
-        rowNumber++;
-        cellNumber = 0;
+
+
 
 
 
     }
-    sortTable({ cellIndex: 0 }, table_achievementsDone);
+    common.sortTable({ cellIndex: 0 }, table_achievementsDone);
 }
 
 function generatePlayerListTable(data) {
@@ -774,31 +1066,27 @@ function generatePlayerListTable(data) {
     for (var playerid in data.playerList) {
         bodyRow = tBodyPlayersTable.insertRow(0);
         player = data.playerList[playerid].points;
-        var cellNumber = 0;
         if (playerIterator == 0) {
-            cell = headerRow.insertCell(cellNumber);
-            cell.innerHTML += translate("Name");
+            cell = headerRow.insertCell(headerRow.cells.length);
+            cell.innerHTML += common.translate("Name");
         }
-        cell = bodyRow.insertCell(cellNumber);
-        cell.innerHTML += translate(playerid);
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML += common.translate(playerid);
 
 
-
-        cellNumber++;
         for (var playerKeyName in player) {
             playerKeyContent = player[playerKeyName];
             if (playerIterator == 0) {
-                cell = headerRow.insertCell(cellNumber);
-                cell.innerHTML += translate(playerKeyName);
+                cell = headerRow.insertCell(headerRow.cells.length);
+                cell.innerHTML += common.translate(playerKeyName);
                 cell.onclick = function () {
-                    sortTable(this, table_allPlayersTable);
+                    common.sortTable(this, table_allPlayersTable);
                 };
             }
 
-            cell = bodyRow.insertCell(cellNumber);
-            cell.innerHTML += translate(playerKeyContent);
+            cell = bodyRow.insertCell(bodyRow.cells.length);
+            cell.innerHTML += common.translate(playerKeyContent);
             cell.classList.add(playerKeyName);
-            cellNumber++;
 
         }
         playerIterator++;
@@ -815,174 +1103,240 @@ function generatePlayerInfoTable(data) {
 
     headerRow = theadPersonalTable.insertRow(0);
     bodyRow = tBodyPersonalTable.insertRow(0);
-    var cellNumber = 0;
     for (var playerKeyName in data.player) {
         playerKeyContent = data.player[playerKeyName];
         if (playerKeyName === "regDate") {
-            playerKeyContent = createZeroDate(playerKeyContent);
-            playerKeyContent = getDateFormat(playerKeyContent, "DD.MM.YYYY");
+            playerKeyContent = common.createZeroDate(playerKeyContent);
+            playerKeyContent = common.getDateFormat(playerKeyContent, "DD.MM.YYYY");
         }
         if (playerKeyName === "earnedAchievements" || playerKeyName === "notEarnedAchievements") {
             continue;
         }
-        if (Object.keys(playerKeyContent).length > 0 && !checkIfString(playerKeyContent)) {
+        if (Object.keys(playerKeyContent).length > 0 && !common.checkIfString(playerKeyContent)) {
             for (var objectKeyName in playerKeyContent) {
                 objectKeyContent = playerKeyContent[objectKeyName];
-                cell = headerRow.insertCell(cellNumber);
-                cell.innerHTML += translate(objectKeyName);
-                cell = bodyRow.insertCell(cellNumber);
-                cell.innerHTML += translate(objectKeyContent);
-                cellNumber++;
+                cell = headerRow.insertCell(headerRow.cells.length);
+                cell.innerHTML += common.translate(objectKeyName);
+                cell = bodyRow.insertCell(bodyRow.cells.length);
+                cell.innerHTML += common.translate(objectKeyContent);
             }
         }
         else {
-            cell = headerRow.insertCell(cellNumber);
-            cell.innerHTML += translate(playerKeyName);
-            cell = bodyRow.insertCell(cellNumber);
-            cell.innerHTML += translate(playerKeyContent);
-            cellNumber++;
+            cell = headerRow.insertCell(headerRow.cells.length);
+            cell.innerHTML += common.translate(playerKeyName);
+            cell = bodyRow.insertCell(bodyRow.cells.length);
+            cell.innerHTML += common.translate(playerKeyContent);
         }
     }
 }
 
 function generateExerciseList(data) {
+    let start = Date.now();
+
     var theadExerciseTable = table_exerciseTable.tHead;
     var tBodyExerciseTable = table_exerciseTable.tBodies[0];
     tBodyExerciseTable.innerHTML = "";
     theadExerciseTable.innerHTML = "";
     var headerArray = [];
     var cell;
-    var rowNumber = 0;
     var selIndex = select_doneExercise.selectedIndex;
     select_doneExercise.innerHTML = "";
     select_statisticsExercise.innerHTML = "";
+    var exercisesInTable = 0;
+    var isHiddenExercise = false;
 
-    for (var exerciseId in data.exercises) {
-        exercise = data.exercises[exerciseId];
 
-        addOption(select_doneExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + translate(exercise.factor));
+    for (var exerciseIterator = 0; exerciseIterator < data.exercises.length; exerciseIterator++) {
 
-        bodyRow = tBodyExerciseTable.insertRow(rowNumber);
-        rowNumber++;
-        var cellNumber = 0;
-        var toolTipText = "";
-        var bestPlayer;
-        var playerName;
-        for (var exerciseKeys in exercise) {
-            key = exercise[exerciseKeys];
+        var exercise = data.exercises[exerciseIterator];
+        var exerciseId = exercise.id;
+        isHiddenExercise = false;
 
-            if (exerciseKeys === "comment" || exerciseKeys === "achievementInfo") {
-                continue;
-            }
-            if (exerciseKeys === "votes") {
-                for (var voters in key) {
-                    content = key[voters];
-                    toolTipText += voters + ": <br>";
-                    for (var contentItemNum in content) {
-                        contentItem = content[contentItemNum];
-                        toolTipText += translate(contentItemNum) + ": " + translate(contentItem) + "<br>";
-                    }
-                }
-                continue;
-            }
-            if (exerciseKeys === "pointsPerPlayer") {
-                var max = 0;
-                bestPlayer = "Keiner";
-                for (playerName in key) {
-                    var points = key[playerName];
-                    if (points > max) {
-                        max = points;
-                        bestPlayer = playerName;
-                    }
-
-                }
-                key = bestPlayer + ": " + translate(max);
-            }
-            if (exerciseKeys === "repsPerPlayer") {
-                var maxReps = 0;
-                bestPlayer = "Keiner";
-                for (playerName in key) {
-                    var reps = key[playerName];
-                    if (reps > maxReps) {
-                        maxReps = reps;
-                        bestPlayer = playerName;
-                    }
-
-                }
-                key = bestPlayer + ": " + translate(maxReps);
-            }
-            if (rowNumber == 1) {
-                headerArray.push(exerciseKeys);
-            }
-            cell = bodyRow.insertCell(cellNumber);
-            cell.innerHTML = translate(key);
-            if (exerciseKeys === "id") {
-                cell.classList.add("hiddenCell");
-            }
-            cellNumber++;
+        if (exercise.deleted) {
+            continue;
         }
-        addToolTip(toolTipText, "tableTooltip", bodyRow);
-
-        bodyRow.onclick = function () {
-            var id = this.getElementsByTagName("td")[0].innerHTML;
-            if (input_exerciseID.value == id) {
-                resetExerciseEntryMask();
-            }
-            else {
-                input_exerciseName.value = data.exercises[id].name;
-                input_exerciseID.value = id;
-                if (data.exercises[id].votes[Name] == undefined) {
-                    input_exerciseBaseWeight.value = data.exercises[id].baseWeight;
-                    input_exerciseDifficulty.value = data.exercises[id].difficulty;
-                    input_exerciseDifficulty10.value = data.exercises[id].difficulty10;
-                    input_exerciseDifficulty100.value = data.exercises[id].difficulty100;
-                }
-                else {
-                    input_exerciseBaseWeight.value = data.exercises[id].votes[Name].baseWeight;
-                    input_exerciseDifficulty.value = data.exercises[id].votes[Name].difficulty;
-                    input_exerciseDifficulty10.value = data.exercises[id].votes[Name].difficulty10;
-                    input_exerciseDifficulty100.value = data.exercises[id].votes[Name].difficulty100;
-                    input_exerciseComment.value = data.exercises[id].votes[Name].comment;
+        if (exercise.isHidden[Name] != undefined) {
+            //defined!
+            if (exercise.isHidden[Name]) {
+                isHiddenExercise = true;
+                if (!RUNTIME_CONFIG.showHiddenExercises) {
+                    continue;
                 }
 
-                select_exerciseEquipment.value = data.exercises[id].equipment;
-                select_exerciseType.value = data.exercises[id].type;
-                select_exerciseUnit.value = data.exercises[id].unit;
-                select_bothSides.value = data.exercises[id].bothSides;
+            }
+        }
+
+        exercisesInTable++;
+        common.addOption(document, select_doneExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + common.translate(exercise.factor));
+
+        bodyRow = tBodyExerciseTable.insertRow(tBodyExerciseTable.rows.length);
+        var toolTipText = "";
+        var playerName;
+
+        for (var voters in exercise.votes) {
+            content = exercise.votes[voters];
+            toolTipText += voters + ": <br>";
+            for (var contentItemNum in content) {
+                contentItem = content[contentItemNum];
+                toolTipText += common.translate(contentItemNum) + ": " + common.translate(contentItem) + "<br>";
+            }
+        }
+
+        //id
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = exercise.id;
+        cell.classList.add("id");
+        cell.classList.add("hiddenCell");
+
+        //name
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = exercise.name;
+        cell.classList.add("name");
+
+        //factor
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = common.translate(exercise.factor);
+        cell.classList.add("factor");
+
+        //points
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = common.translate(exercise.points);
+        cell.classList.add("points");
+
+        //difficulty
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = common.translate(exercise.difficulty);
+        cell.classList.add("difficulty");
+
+        //difficulty10
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = common.translate(exercise.difficulty10);
+        cell.classList.add("difficulty10");
+
+        //difficulty100
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = common.translate(exercise.difficulty100);
+        cell.classList.add("difficulty100");
+
+        //type
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = exercise.type;
+        cell.classList.add("type");
+
+        //bothSides
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = common.translate(exercise.bothSides);
+        cell.classList.add("bothSides");
+
+        //unit
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = exercise.unit;
+        cell.classList.add("unit");
+
+        //equipment
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = exercise.equipment;
+        cell.classList.add("equipment");
+
+        //usesWeight
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = common.translate(exercise.usesWeight);
+        cell.classList.add("usesWeight");
+
+        //baseWeight
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = common.translate(exercise.baseWeight);
+        cell.classList.add("baseWeight");
+
+        //creator
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = exercise.creator;
+        cell.classList.add("creator");
+
+        //pointsPerPlayer
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        let max = 0;
+        let bestPlayer = "Keiner";
+        for (playerName in exercise.pointsPerPlayer) {
+            let points = exercise.pointsPerPlayer[playerName];
+            if (points > max) {
+                max = points;
+                bestPlayer = playerName;
             }
 
-            input_exerciseID.onchange();
+        }
 
-        };
+        cell.innerHTML = bestPlayer + ": " + common.translate(max);
+        cell.classList.add("pointsPerPlayer");
 
+        //repsPerPlayer
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        max = 0;
+        bestPlayer = "Keiner";
+        for (playerName in exercise.repsPerPlayer) {
+            let points = exercise.repsPerPlayer[playerName];
+            if (points > max) {
+                max = points;
+                bestPlayer = playerName;
+            }
+        }
+        cell.innerHTML = bestPlayer + ": " + common.translate(max);
+        cell.classList.add("repsPerPlayer");
 
+        //paceConstant
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = exercise.paceConstant;
+        cell.classList.add("paceConstant");
 
+        //isPaceExercise
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = exercise.isPaceExercise;
+        cell.classList.add("isPaceExercise");
+
+        //iterator
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = exerciseIterator;
+        cell.classList.add("iterator");
+        cell.classList.add("hiddenCell");
+
+        if (tBodyExerciseTable.rows.length == 1) {
+            for (let cellIds = 0; cellIds < bodyRow.cells.length; cellIds++) {
+                headerArray.push(bodyRow.cells[cellIds].className);
+            }
+        }
+
+        common.addToolTip(toolTipText, "tableTooltip", bodyRow);
+        if (isHiddenExercise) {
+            bodyRow.classList.add("hiddenExercise");
+        }
+        bodyRow.onclick = function () { exerciseTableBodyRowClick(this, data); };
 
     }
-
-    sortSelect(select_doneExercise);
-    select_statisticsExercise.innerHTML = select_doneExercise.innerHTML;
-    select_doneExercise.selectedIndex = selIndex;
-    select_statisticsExercise.selectedIndex = selIndex;
 
     headerRow = theadExerciseTable.insertRow(0);
 
     for (headerContents = 0; headerContents < headerArray.length; headerContents++) {
-
         cell = headerRow.insertCell(headerContents);
-        cell.innerHTML = translate(headerArray[headerContents]);
-        if (headerArray[headerContents] === "id") {
+        cell.innerHTML = common.translate(headerArray[headerContents]);
+        if (headerArray[headerContents].includes("hiddenCell")) {
             cell.classList.add("hiddenCell");
         }
         cell.onclick = function () {
-            sortTable(this, table_exerciseTable);
+            common.sortTable(this, table_exerciseTable);
             exerciseTableSortMode = this;
         };
     }
+    if (exercisesInTable > 0) {
+        input_exerciseID.onchange();
+    }
 
-    sortTable(exerciseTableSortMode, table_exerciseTable);
-    input_exerciseID.onchange();
+    common.sortSelect(document, select_doneExercise);
+    select_statisticsExercise.innerHTML = select_doneExercise.innerHTML;
+    select_doneExercise.selectedIndex = selIndex;
+    select_statisticsExercise.selectedIndex = selIndex;
 
+    let end = Date.now();
+    sendChatMessage(`exercise table generation took ${end - start} ms`);
 }
 
 function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) {
@@ -996,9 +1350,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
     theadTable.innerHTML = "";
     var headerArray = [];
     var cell;
-    var rowNumber = 0;
     var rowNotUsed = false;
-    var cellNumber = 0;
 
     var maxDate = fromDate;
     var minDate = toDate;
@@ -1006,13 +1358,13 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
     for (var historyIterator = 0; historyIterator < data.history.length; historyIterator++) {
         var historyEntry = data.history[historyIterator];
         var toolTipText = "";
+        var pace = "-";
+        var unit;
+        var countAdditional = 0;
         for (var historyItemsIterator = 0; historyItemsIterator < historyEntry.id.length; historyItemsIterator++) {
             if (!rowNotUsed) {
-                bodyRow = tBodyTable.insertRow(rowNumber);
-                rowNumber++;
-                cellNumber = 0;
+                bodyRow = tBodyTable.insertRow(tBodyTable.rows.length);
             }
-
             rowNotUsed = false;
             for (var historyKeys in historyEntry) {
                 key = historyEntry[historyKeys];
@@ -1036,28 +1388,40 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                         continue;
                     }
                 }
+                if (historyKeys == "pace") {
+                    pace = key[historyItemsIterator];
+                    continue;
+                }
+                if (historyKeys == "exUnit") {
+                    unit = key[historyItemsIterator];
+                    continue;
+                }
+                if (historyKeys == "countAdditional") {
+                    countAdditional = key[historyItemsIterator];
+                    continue;
+                }
                 var value = "";
                 if (historyKeys === "date") {
-                    value = createZeroDate(key[historyItemsIterator]);
+                    value = common.createZeroDate(key[historyItemsIterator]);
                     if (value < minDate) {
                         minDate = value;
                     }
                     if (maxDate < value) {
                         maxDate = value;
                     }
-                    value = getDateFormat(value, "DD.MM.YYYY");
+                    value = common.getDateFormat(value, "DD.MM.YYYY");
 
                 }
                 else {
                     value = key[historyItemsIterator];
                 }
-                if (rowNumber == 1) {
+                if (tBodyTable.rows.length == 1) {
                     headerArray.push(historyKeys);
                 }
 
-                cell = bodyRow.insertCell(cellNumber);
+                cell = bodyRow.insertCell(bodyRow.cells.length);
                 cell.classList.add(historyKeys);
-                cell.innerHTML = translate(value);
+                cell.innerHTML = common.translate(value);
                 if (historyKeys === "id" || historyKeys === "exerciseId") {
                     cell.classList.add("hiddenCell");
                 }
@@ -1065,61 +1429,89 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                     selectionSum += Number(value);
 
                 }
-
-                cellNumber++;
             }
+
+
             if (!rowNotUsed) {
-                addToolTip(toolTipText, "tableTooltip", bodyRow);
-                bodyRow.onclick = function () {
-                    var id = this.getElementsByClassName("id")[0].innerHTML;
-                    var date = getDateFormat(this.getElementsByClassName("date")[0].innerHTML, "YYYY-MM-DD", "DD.MM.YYYY");
-                    if (input_deletionMode.checked) {
-                        if (Name.toUpperCase() === select_historyShowName.value.toUpperCase()) {
-                            requestHistoryDeletion(id, date);
-                        }
-                        else {
-                            alert("Du kannst ned die Sachen von die anderen löschen, Wirschtl");
-                        }
-                    }
-                    else {
+                common.addToolTip(toolTipText, "tableTooltip", bodyRow);
+                let paceUnitOptions = common.getPaceUnitOptions(unit);
+                if (paceUnitOptions.isPaceUnit) {
+                    bodyRow.getElementsByClassName("count")[0].innerHTML += " " + paceUnitOptions.first + ", " + common.translate(countAdditional) + " " + paceUnitOptions.sec + " (" + common.translate(pace) + " " + paceUnitOptions.first + "/" + paceUnitOptions.sec + ")";
+                }
+                for (let cellIds = 0; cellIds < bodyRow.cells.length; cellIds++) {
+                    currentCell = bodyRow.cells[cellIds];
+                    currentCell.onclick = function () {
                         let count = this.getElementsByClassName("count")[0].innerHTML;
                         let weight = this.getElementsByClassName("weight")[0].innerHTML;
                         let exId = this.getElementsByClassName("exerciseId")[0].innerHTML;
-                        select_doneExercise.value = exId;
-                        input_doneExercise.value = count;
-                        input_doneExerciseWeight.value = weight;
-                    }
-                };
-            }
-        }
 
+                        if (paceUnitOptions.isPaceUnit) {
+                            let result = extractPaceCounts(count);
+                            input_doneExercise.value = result.first;
+                            input_doneExerciseAdditional.value = result.sec;
+                        }
+                        else {
+                            input_doneExercise.value = count;
+                        }
+
+                        select_doneExercise.value = exId;
+                        input_doneExerciseWeight.value = weight;
+                        select_doneExercise.onchange();
+
+                    }.bind(bodyRow);
+                }
+                let deleteCell = bodyRow.insertCell(bodyRow.cells.length);
+                deleteCell.classList.add("deleteButton");
+                deleteCell.innerHTML = common.translate("Löschen");
+                if (tBodyTable.rows.length == 1) {
+                    headerArray.push("Löschtaste");
+                }
+                deleteCell.onclick = function () {
+                    var id = this.getElementsByClassName("id")[0].innerHTML;
+                    var date = common.getDateFormat(this.getElementsByClassName("date")[0].innerHTML, "YYYY-MM-DD", "DD.MM.YYYY");
+
+                    if (Name.toUpperCase() === select_historyShowName.value.toUpperCase()) {
+                        requestHistoryDeletion(id, date);
+                    }
+                    else {
+                        alert("Du kannst ned die Sachen von die anderen löschen, Wirschtl");
+                    }
+                }.bind(bodyRow);
+
+            }
+
+        }
     }
+
     if (rowNotUsed) {
-        table.deleteRow(rowNumber - 1);
+        table.deleteRow(tBodyTable.rows.length - 1);
     }
 
     headerRow = theadTable.insertRow(0);
     for (headerContents = 0; headerContents < headerArray.length; headerContents++) {
         cell = headerRow.insertCell(headerContents);
-        cell.innerHTML = translate(headerArray[headerContents]);
+        cell.innerHTML = common.translate(headerArray[headerContents]);
         if (headerArray[headerContents] === "id" || headerArray[headerContents] === "exerciseId") {
             cell.classList.add("hiddenCell");
         }
         cell.onclick = function () {
-            sortTable(this, table);
+            common.sortTable(this, table);
         };
+
+
+
     }
-    input_sumSelection.value = translate(selectionSum);
+
+
+
+    input_sumSelection.value = common.translate(selectionSum);
     var selectionCount = dateDiff(minDate, maxDate);
-    input_avgSelection.value = translate(Number(selectionSum) / (selectionCount + 1));
+    input_avgSelection.value = common.translate(Number(selectionSum) / (selectionCount + 1));
 
 
 }
 
 function generateCompetitionData(data) {
-
-    var cellNumber = 0;
-    var rowNumber = 0;
 
     var theadDailyWinsTable = table_dailyWins.tHead;
     var tBodyDailyWinsTable = table_dailyWins.tBodies[0];
@@ -1131,12 +1523,12 @@ function generateCompetitionData(data) {
     var cell = headerRow.insertCell(0);
     cell.innerHTML = "Name";
     cell.onclick = function () {
-        sortTable(this, table_dailyWins);
+        common.sortTable(this, table_dailyWins);
     };
     cell = headerRow.insertCell(1);
     cell.innerHTML = "Tagessiege";
     cell.onclick = function () {
-        sortTable(this, table_dailyWins);
+        common.sortTable(this, table_dailyWins);
     };
 
 
@@ -1146,17 +1538,13 @@ function generateCompetitionData(data) {
         if (playerName == "Keiner") {
             continue;
         }
-        cellNumber = 0;
-        rowNumber = 0;
-        bodyRow = tBodyDailyWinsTable.insertRow(rowNumber);
-        cell = bodyRow.insertCell(cellNumber);
+
+        bodyRow = tBodyDailyWinsTable.insertRow(tBodyDailyWinsTable.rows.length);
+        cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML = playerName;
-        cellNumber++;
-        cell = bodyRow.insertCell(cellNumber);
+        cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML = data.compInfoDaily[playerName];
-        cellNumber++;
         //month
-        rowNumber++;
     }
 
     var theadMonthlyWinsTable = table_monthlyWins.tHead;
@@ -1169,12 +1557,12 @@ function generateCompetitionData(data) {
     cell = headerRow.insertCell(0);
     cell.innerHTML = "Name";
     cell.onclick = function () {
-        sortTable(this, table_monthlyWins);
+        common.sortTable(this, table_monthlyWins);
     };
     cell = headerRow.insertCell(1);
     cell.innerHTML = "Monatssiege";
     cell.onclick = function () {
-        sortTable(this, table_monthlyWins);
+        common.sortTable(this, table_monthlyWins);
     };
 
 
@@ -1183,26 +1571,22 @@ function generateCompetitionData(data) {
         if (playerName == "Keiner") {
             continue;
         }
-        cellNumber = 0;
-        rowNumber = 0;
-        bodyRow = tBodyMonthlyWinsTable.insertRow(rowNumber);
-        cell = bodyRow.insertCell(cellNumber);
+        bodyRow = tBodyMonthlyWinsTable.insertRow(tBodyMonthlyWinsTable.rows.length);
+        cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML = playerName;
-        cellNumber++;
-        cell = bodyRow.insertCell(cellNumber);
+        cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML = data.compInfoMonthly[playerName];
-        cellNumber++;
+
         //month
 
 
-        rowNumber++;
     }
 
     var sortIndex = { cellIndex: 1 };
-    sortTable(sortIndex, table_monthlyWins);
-    sortTable(sortIndex, table_dailyWins);
-    sortTable(sortIndex, table_monthlyWins);
-    sortTable(sortIndex, table_dailyWins);
+    common.sortTable(sortIndex, table_monthlyWins);
+    common.sortTable(sortIndex, table_dailyWins);
+    common.sortTable(sortIndex, table_monthlyWins);
+    common.sortTable(sortIndex, table_dailyWins);
 }
 
 function generateEventLog(data) {
@@ -1233,87 +1617,13 @@ input_chatText.addEventListener("keyup", function (event) {
     }
 });
 
-function getDateFormat(date, format, fromFormat) {
-    var addZeroMonth = "";
-    var addZeroDay = "";
-    if (typeof fromFormat === 'undefined') { fromFormat = 'default'; }
 
-    if (format === "YYYY-MM-DD") {
-        if (fromFormat === "DD.MM.YYYY") {
-            var day = date.substring(0, 2);
-            var month = date.substring(3, 5);
-            var year = date.substring(6);
-            date = year + "-" + month + "-" + day;
-        }
-        else {
-            if (date.getMonth() < 9) {
-                addZeroMonth = "0";
-            }
-            if (date.getDate() < 10) {
-                addZeroDay = "0";
-            }
-            date = date.getFullYear() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + addZeroDay + date.getDate();
-        }
-    }
-    if (format === "DD-MM-YYYY") {
-        if (date.getMonth() < 9) {
-            addZeroMonth = "0";
-        }
-        if (date.getDate() < 10) {
-            addZeroDay = "0";
-        }
-        date = addZeroDay + date.getDate() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + date.getFullYear();
-    }
-    if (format === "DD.MM.YYYY") {
-        if (date.getMonth() < 9) {
-            addZeroMonth = "0";
-        }
-        if (date.getDate() < 10) {
-            addZeroDay = "0";
-        }
-        date = addZeroDay + date.getDate() + "." + addZeroMonth + (date.getMonth() + 1) + "." + date.getFullYear();
-    }
-
-    return date;
-
-
-}
-
-function isValidDate(d) {
-    return d instanceof Date && !isNaN(d);
-}
 
 
 function dateDiff(date1, date2) {
     return Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
 }
 
-function addOption(select, key, Name, group) {
-    var option = document.createElement('option');
-
-    if (group == undefined) {
-        option.text = Name;
-        option.value = key;
-        select.add(option);
-        return;
-    }
-
-    var optionGroup = document.getElementById(group);
-    if (optionGroup == undefined) {
-        addOptionGroup(select, group);
-        optionGroup = document.getElementById(group);
-    }
-    option.text = Name;
-    option.value = key;
-    optionGroup.appendChild(option);
-}
-
-function addOptionGroup(select, Name) {
-    var option = document.createElement('OPTGROUP');
-    option.label = Name;
-    option.id = Name;
-    select.add(option);
-}
 
 function checkForEmptyBoxesDoneExercise() {
     if (input_doneExercise.value != "" &&
@@ -1328,249 +1638,48 @@ function checkForEmptyBoxesDoneExercise() {
 }
 
 function checkForEmptyBoxesNewExercise() {
-    if (input_exerciseName.value != "" &&
-        input_exerciseDifficulty.value != "" &&
-        input_exerciseDifficulty10.value != "" &&
-        input_exerciseDifficulty100.value != "" &&
-        select_exerciseType.value != "" &&
-        select_exerciseUnit.value != "" &&
-        select_exerciseEquipment.value != "" &&
-        select_bothSides.value != "" &&
-        input_exerciseComment.value != ""
-    ) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-function checkIfString(value) {
-    return Object.prototype.toString.call(value) === "[object String]";
-}
-
-function checkIfDate(value) {
-    return Object.prototype.toString.call(value) === "[object Date]";
-}
-
-function checkIfNumber(value) {
-    return (typeof value == 'number');
-}
-
-function addToolTip(toolTipText, toolTipClass, element) {
-    element.classList.add(toolTipClass);
-    element.innerHTML += "<span class=\"tooltiptext\">" + toolTipText + "</span>";
-}
-
-//Creates an Image on a given canvas
-function createImage(ctx, pictureUrl, x, y) {
-    ctx.beginPath();
-    drawing = new Image();
-    drawing.src = "/client/img/" + pictureUrl;
-    ctx.drawImage(drawing, x, y);
-    ctx.stroke();
-    ctx.closePath();
-}
-
-//Creates a Sprite Image on a given canvas
-function createSprite(ctx, sx, sy, sWidth, sHeight, x, y, dWidth, dHeight) {
-    ctx.beginPath();
-    ctx.drawImage(gameAssets.spriteSheet, sx, sy, sWidth, sHeight, x, y, dWidth, dHeight);
-    ctx.stroke();
-    ctx.closePath();
-}
-//Creates simple good old text on a given canvas
-function createText(ctx, fillStyle, font, fontsize, text, x, y) {
-    fontAndSize = fontsize.toString() + "px " + font;
-    ctx.beginPath();
-    ctx.font = fontAndSize;
-    ctx.fillStyle = fillStyle;
-    ctx.fillText(text, x, y);
-    ctx.stroke();
-    ctx.closePath();
-}
-
-function drawLine(ctx, strokeStyle, x0, y0, x, y) {
-    ctx.beginPath();
-    ctx.moveTo(x0, y0);
-    ctx.lineTo(x, y);
-    ctx.strokeStyle = strokeStyle;
-    ctx.stroke();
-}
-//Creates rect (filled or unfilled) on a given canvas
-function createRect(ctx, fillStyle, fill, x, y, w, h) {
-    ctx.beginPath();
-    ctx.fillStyle = fillStyle;
-    if (fill) {
-        ctx.fillRect(x, y, w, h);
-    }
-    else {
-        ctx.rect(x, y, w, h);
-    }
-    ctx.stroke();
-    ctx.closePath();
-}
-
-function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    if (document.getElementById(elmnt.id)) {
-        // if present, the header is where you move the DIV from:
-        document.getElementById(elmnt.id).onmousedown = dragMouseDown;
-    } else {
-        // otherwise, move the DIV from anywhere inside the DIV: 
-        elmnt.onmousedown = dragMouseDown;
-    }
-
-    function dragMouseDown(e) {
-        e = e || window.event;
-        e.preventDefault();
-        // get the mouse cursor position at startup:
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        // call a function whenever the cursor moves:
-        document.onmousemove = elementDrag;
-    }
-
-    function elementDrag(e) {
-        e = e || window.event;
-        e.preventDefault();
-        // calculate the new cursor position:
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        // set the element's new position:
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-    }
-
-    function closeDragElement() {
-        // stop moving when mouse button is released:
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
-}
-
-function sortTable(n, table) {
-    table.style.cursor = "wait";
-    m = n.cellIndex;
-    matcher = /(\d{2}).(\d{2}).(\d{4})/;
-    bestRepMatcher = /([a-zA-Z]+): (\d+).(\d{2})/;
-    var startOfRepX = 0;
-    var startOfRepY = 0;
-    var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    var valX, valY = "";
-    switching = true;
-    dir = "asc";
-    while (switching) {
-        switching = false;
-        rows = table.rows;
-        for (i = 1; i < (rows.length - 1); i++) {
-            shouldSwitch = false;
-            x = rows[i].getElementsByTagName("td")[m];
-            y = rows[i + 1].getElementsByTagName("td")[m];
-            if (dir == "asc") {
-                if (x.innerHTML.includes("Level")) {
-                    startOfRepX = x.children[0].innerHTML.substring(6, 6 + 2);
-                    startOfRepY = y.children[0].innerHTML.substring(6, 6 + 2);
-                    if (startOfRepX.includes("/")) {
-                        startOfRepX = startOfRepX.substring(0, 1);
-                    }
-                    if (startOfRepY.includes("/")) {
-                        startOfRepY = startOfRepY.substring(0, 1);
-                    }
-                    valX = Number(startOfRepX);
-                    valY = Number(startOfRepY);
-                }
-                else if (x.innerHTML.match(bestRepMatcher) != null) {
-                    startOfRepX = x.innerHTML.indexOf(":");
-                    startOfRepY = y.innerHTML.indexOf(":");
-                    valX = Number(x.innerHTML.substring(startOfRepX + 2));
-                    valY = Number(y.innerHTML.substring(startOfRepY + 2));
-                }
-                else if (x.innerHTML.match(matcher) != null) {
-                    valX = createZeroDate(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
-                    valY = createZeroDate(getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
-                }
-                else if (!isNaN(Number(x.innerHTML))) {
-                    valX = Number(x.innerHTML);
-                    valY = Number(y.innerHTML);
-                }
-                else {
-                    valX = x.innerHTML.toLowerCase();
-                    valY = y.innerHTML.toLowerCase();
-                }
-                if (valX > valY) {
-                    shouldSwitch = true;
-                    break;
-                }
-            } else if (dir == "desc") {
-
-                if (x.innerHTML.includes("Level")) {
-                    startOfRepX = x.children[0].innerHTML.substring(6, 6 + 2);
-                    startOfRepY = y.children[0].innerHTML.substring(6, 6 + 2);
-                    if (startOfRepX.includes("/")) {
-                        startOfRepX = startOfRepX.substring(0, 1);
-                    }
-                    if (startOfRepY.includes("/")) {
-                        startOfRepY = startOfRepY.substring(0, 1);
-                    }
-                    valX = Number(startOfRepX);
-                    valY = Number(startOfRepY);
-                }
-                else if (x.innerHTML.match(bestRepMatcher) != null) {
-                    startOfRepX = x.innerHTML.indexOf(":");
-                    startOfRepY = y.innerHTML.indexOf(":");
-                    valX = Number(x.innerHTML.substring(startOfRepX + 2));
-                    valY = Number(y.innerHTML.substring(startOfRepY + 2));
-                }
-                else if (x.innerHTML.match(matcher) != null) {
-                    valX = createZeroDate(getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
-                    valY = createZeroDate(getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
-                }
-                else if (!isNaN(Number(x.innerHTML))) {
-                    valX = Number(x.innerHTML);
-                    valY = Number(y.innerHTML);
-                }
-                else {
-                    valX = x.innerHTML.toLowerCase();
-                    valY = y.innerHTML.toLowerCase();
-                }
-                if (valX < valY) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
+    let paceUnitOptions = common.getPaceUnitOptions(select_exerciseUnit.value);
+    if (!paceUnitOptions.isPaceUnit) {
+        if (input_exerciseName.value != "" &&
+            input_exerciseDifficulty.value != "" &&
+            input_exerciseDifficulty10.value != "" &&
+            input_exerciseDifficulty100.value != "" &&
+            select_exerciseType.value != "" &&
+            select_exerciseUnit.value != "" &&
+            select_exerciseEquipment.value != "" &&
+            select_bothSides.value != "" &&
+            input_exerciseComment.value != ""
+        ) {
+            return true;
         }
-        if (shouldSwitch) {
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            switchcount++;
-        } else {
-            if (switchcount == 0 && dir == "asc") {
-                dir = "desc";
-                switching = true;
-            }
+        else {
+            return false;
         }
     }
-    table.style.cursor = "default";
-}
-
-function addSpaces(count) {
-    var spaces = "";
-    for (i = 0; i < count; i++) {
-        spaces += " ";
+    else {
+        if (input_exerciseName.value != "" &&
+            input_exerciseDifficulty.value != "" &&
+            input_paceConstant.value != "" &&
+            select_exerciseType.value != "" &&
+            select_exerciseUnit.value != "" &&
+            select_exerciseEquipment.value != "" &&
+            select_bothSides.value != "" &&
+            input_exerciseComment.value != ""
+        ) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
-    return spaces;
 }
 
 function initialize() {
     //this month
     var thisMonth = function () {
-        var today = createZeroDate();
-        var thisMonthBegin = createZeroDate(new Date(today.getFullYear(), today.getMonth(), 1));
-        var thisMonthEnd = createZeroDate(new Date(today.getFullYear(), today.getMonth() + 1, 1));
+        var today = common.createZeroDate();
+        var thisMonthBegin = common.createZeroDate(new Date(today.getFullYear(), today.getMonth(), 1));
+        var thisMonthEnd = common.createZeroDate(new Date(today.getFullYear(), today.getMonth() + 1, 1));
         thisMonthEnd.setDate(thisMonthEnd.getDate() - 1);
 
         return {
@@ -1581,17 +1690,20 @@ function initialize() {
 
     thisMonthBegin = thisMonth().thisMonthBegin;
     thisMonthEnd = thisMonth().thisMonthEnd;
-    thisMonthBegin = getDateFormat(thisMonthBegin, "YYYY-MM-DD");
-    thisMonthEnd = getDateFormat(thisMonthEnd, "YYYY-MM-DD");
+    thisMonthBegin = common.getDateFormat(thisMonthBegin, "YYYY-MM-DD");
+    thisMonthEnd = common.getDateFormat(thisMonthEnd, "YYYY-MM-DD");
 
     input_historyFromDate.value = thisMonthBegin;
     input_historyToDate.value = thisMonthEnd;
 
     //Today
-    today = createZeroDate();
-    input_doneExerciseDate.value = getDateFormat(today, "YYYY-MM-DD");
+    today = common.createZeroDate();
+    input_doneExerciseDate.value = common.getDateFormat(today, "YYYY-MM-DD");
     input_graphFromDate.value = "2018-08-01";
-    input_graphToDate.value = getDateFormat(today, "YYYY-MM-DD");
+    input_graphToDate.value = common.getDateFormat(today, "YYYY-MM-DD");
+
+    input_doneExerciseAdditional.style.display = "none";
+    input_doneExerciseAdditional.disabled = true;
 
 }
 
@@ -1605,8 +1717,6 @@ function setCookie(cname, cvalue, exdays) {
 function deleteCookie(cname) {
     document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
-
-
 
 function getCookie(cname) {
     var name = cname + "=";
@@ -1624,22 +1734,6 @@ function getCookie(cname) {
     return "";
 }
 
-function createZeroDate(date) {
-    if (date == undefined) {
-        zeroDate = new Date();
-        zeroDate.setHours(0);
-        zeroDate.setMinutes(0);
-        zeroDate.setSeconds(0);
-    }
-    else {
-        zeroDate = new Date(date);
-        zeroDate.setHours(0);
-        zeroDate.setMinutes(0);
-        zeroDate.setSeconds(0);
-    }
-    return zeroDate;
-}
-
 function changeCSS(cssFile, cssLinkIndex) {
 
     var oldlink = document.getElementsByTagName("link").item(cssLinkIndex);
@@ -1653,7 +1747,7 @@ function changeCSS(cssFile, cssLinkIndex) {
 }
 
 setInterval(function () {
-    if (socket.connected) {
+    if (SOCKET.connected) {
         input_onlineIndicator.style.color = "green";
         input_onlineIndicator.checked = true;
     }
@@ -1663,8 +1757,8 @@ setInterval(function () {
     }
 }, 1000);
 
-if (loginCookie != "") {
-    socket.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: false, loginToken: loginCookie });
+if (LOGIN_COOKIE != "") {
+    SOCKET.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: false, loginToken: LOGIN_COOKIE });
 }
 
 function logout() {
@@ -1672,29 +1766,13 @@ function logout() {
     location.reload();
 }
 
-function sortSelect(selElem) {
-    var tmpAry = new Array();
-    for (var i = 0; i < selElem.options.length; i++) {
-        tmpAry[i] = new Array();
-        tmpAry[i][0] = selElem.options[i].text;
-        tmpAry[i][1] = selElem.options[i].value;
-    }
-    tmpAry.sort();
-    while (selElem.options.length > 0) {
-        selElem.options[0] = null;
-    }
-    for (var i = 0; i < tmpAry.length; i++) {
-        var op = new Option(tmpAry[i][0], tmpAry[i][1]);
-        selElem.options[i] = op;
-    }
-    return;
-}
 
 function resetExerciseEntryMask() {
     input_exerciseName.value = "";
     input_exerciseDifficulty.value = "";
     input_exerciseDifficulty10.value = "";
     input_exerciseDifficulty100.value = "";
+    input_paceConstant.value = "";
     input_exerciseBaseWeight.value = "";
     select_exerciseType.value = "";
     select_exerciseUnit.value = "";
@@ -1702,137 +1780,89 @@ function resetExerciseEntryMask() {
     select_bothSides.value = "";
     input_exerciseComment.value = "";
     input_exerciseID.value = "";
+    select_exerciseUnit.onchange();
+    button_hideExercise.innerHTML = "Ausblenden";
+
+}
+
+function resetHistoryEntryMask() {
+    input_doneExercise.value = "";
+    input_doneExerciseWeight.value = "";
+    select_doneExercise.value = "";
+}
+
+function extractPaceCounts(extractString) {
+    let valueArray = extractString.split(" ");
+    let firstNumber = false;
+    let secNumber = false;
+    let result = {
+        first: 0,
+        sec: 0,
+    };
+    for (let iterator = 0; iterator < valueArray.length; iterator++) {
+        if (!isNaN(Number(valueArray[iterator]))) {
+            if (!firstNumber) {
+                result.first = Number(valueArray[iterator]);
+                firstNumber = true;
+            }
+            else if (!secNumber) {
+                result.sec = Number(valueArray[iterator]);
+                secNumber = true;
+            }
+        }
+    }
+
+    return result;
+}
+
+
+function exerciseTableBodyRowClick(bodyRow, data) {
+    var id = bodyRow.getElementsByTagName("td")[0].innerHTML;
+    var iterator = bodyRow.getElementsByClassName("iterator")[0].innerHTML;
+    if (input_exerciseID.value == id) {
+        resetExerciseEntryMask();
+    }
+    else {
+
+        input_exerciseName.value = data.exercises[iterator].name;
+        input_exerciseID.value = id;
+
+        select_exerciseEquipment.value = data.exercises[iterator].equipment;
+        select_exerciseType.value = data.exercises[iterator].type;
+        select_exerciseUnit.value = data.exercises[iterator].unit;
+        select_bothSides.value = data.exercises[iterator].bothSides;
+
+        if (data.exercises[iterator].votes[Name] == undefined) {
+            input_exerciseBaseWeight.value = data.exercises[iterator].baseWeight;
+            input_exerciseDifficulty.value = data.exercises[iterator].difficulty;
+            input_exerciseDifficulty10.value = data.exercises[iterator].difficulty10;
+            input_exerciseDifficulty100.value = data.exercises[iterator].difficulty100;
+            input_paceConstant.value = data.exercises[iterator].paceConstant;
+        }
+        else {
+            input_exerciseBaseWeight.value = data.exercises[iterator].votes[Name].baseWeight;
+            input_exerciseDifficulty.value = data.exercises[iterator].votes[Name].difficulty;
+            input_exerciseDifficulty10.value = data.exercises[iterator].votes[Name].difficulty10;
+            input_exerciseDifficulty100.value = data.exercises[iterator].votes[Name].difficulty100;
+            input_paceConstant.value = data.exercises[iterator].votes[Name].paceConstant;
+            input_exerciseComment.value = data.exercises[iterator].votes[Name].comment;
+        }
+
+        if (bodyRow.classList.contains("hiddenExercise")) {
+            button_hideExercise.innerHTML = "Einblenden";
+        }
+        else {
+            button_hideExercise.innerHTML = "Ausblenden";
+        }
+
+    }
+
+    input_exerciseID.onchange();
+    select_exerciseUnit.onchange();
 }
 
 
 
-function translate(word) {
-    if (checkIfNumber(word)) {
-        return word.toFixed(2);
-    }
-    word = word.toString();
 
-    switch (word) {
-        case "achievementCategory":
-            return "Achievement Kategorie";
-        case "achievementText":
-            return "Achievement Text";
-        case "exName":
-            return "Übung";
-        case "name":
-            return "Name";
-        case "factor":
-            return "Faktor";
-        case "points":
-            return "Punkte";
-        case "difficulty":
-            return "Schwierigkeit";
-        case "type":
-            return "Typ";
-        case "unit":
-            return "Einheit";
-        case "usesWeight":
-            return "Gewichtsabhängig";
-        case "baseWeight":
-            return "Basisgewicht";
-        case "creator":
-            return "Ersteller";
-        case "false":
-            return "Nein";
-        case "true":
-            return "Ja";
-        case "cardio":
-            return "Cardio";
-        case "non-cardio":
-            return "Kraft";
-        case "equipment":
-            return "Ausrüstung";
-        case "0":
-            return "-";
-        case "difficulty10":
-            return "Schwierigkeit für 10";
-        case "difficulty100":
-            return "Schwierigkeit für 100";
-        case "id":
-            return "Id-Nummer";
-        case "active":
-            return "Aktiv";
-        case "regDate":
-            return "Registrierungsdatum";
-        case "points":
-            return "Punkte";
-        case "today":
-            return "Heute";
-        case "last5Days":
-            return "Letzte 5 Tage";
-        case "total":
-            return "Total";
-        case "comment":
-            return "Kommentar";
-        case "addedExercises":
-            return "Übungen angelegt";
-        case "deletedExercises":
-            return "Übungen gelöscht";
-        case "modifiedExercises":
-            return "Übungen angepasst";
-        case "negative":
-            return "Negativpunkte";
-        case "thisMonth":
-            return "Dieser Monat";
-        case "diffLastMonth":
-            return "Differenz Vormonat";
-        case "averageThisMonth":
-            return "Durchschnitt (Monat)";
-        case "date":
-            return "Datum";
-        case "playerName":
-            return "Name";
-        case "count":
-            return "Anzahl";
-        case "weight":
-            return "Benutztes Gewicht";
-        case "dailyMax":
-            return "Tagesbestleistung";
-        case "pointsPerPlayer":
-            return "Bester (Punkte)";
-        case "repsPerPlayer":
-            return "Bester (Reps)";
-        case "bestExercises":
-            return "Best @ Übungen";
-        case "bothSides":
-            return "Beidseitig";
-        case "online":
-            return "Online";
-        case "strength":
-            return "Stärke";
-        case "achievementProgress":
-            return "Achievement Fortschritt";
-        case "achievementNextLevel":
-            return "Nächstes Level";
-        case "monthlyMax":
-            return "Monatsbestleistung";
-        case "repsDaily":
-            return "Bestleistung (Täglich)";
-        case "repsMonthly":
-            return "Bestleistung (Monatl.)";
-        case "reps":
-            return "Gesamtwiederholungen";
-        case "category":
-            return "Übungskategorie";
-        case "cardioStrengthRatio":
-            return "Cardio | Stärke";
-        case "entries":
-            return "Historyeinträge";
-        default:
-            if (word.search("Overall") != -1) {
-                return word.replace("Overall", "[Gesamt] - ");
-            }
-            if (word.search("Day") != -1) {
-                return word.replace("Day", "[Täglich] - ");
-            }
-            if (word.search("Month") != -1) {
-                return word.replace("Month", "[Monatlich] - ");
-            }
-            return word;
-    }
-}
+
+
