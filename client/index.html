@@ -26,11 +26,14 @@
 				einen neuen ausdenken.
 			</p>
 			<p>
-				NEWS (XX.XX.XXXX) v1.72:
+				NEWS (17.07.2019) v1.72:
 
 				<li>
 					<span class="changeLog_Feature">Feature: </span>Einheitensystem erweitert
-					(min/km,min/m,Wdh/min,Wdh/sec)
+					(min/km,min/m,Wdh/min,Wdh/sec) - für mehr Info Ing. Fuchs direkt ansprechen.
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Neues Diagramm im Statistik Tab
 				</li>
 				<li>
 					<span class="changeLog_Feature">Feature: </span>Neue Buttons in Tab Übungen: "Ausblenden" und "Zeige
@@ -44,6 +47,13 @@
 				<li>
 					<b>Usability: </b>Markierte Übungen werden anschaulicher markiert.
 
+				</li>
+				<li>
+					<b>Usability: </b>Übungstabelle wird serverseitig vorsortiert und anders generiert - bessere
+					Performance (150ms statt 900ms)
+				</li>
+				<li>
+					<b>Usability: </b>Niemand liest dieses Changelog - aber Hauptsache deppat fragen.
 				</li>
 
 			</p>
@@ -244,16 +254,16 @@
 		</div>
 		<div id="div_addWorkout">
 			<label for="input_doneExerciseDate">Übung Datum:</label>
-			<input id="input_doneExerciseDate" type="date"></input><br>
+			<input id="input_doneExerciseDate" type="date" class="addWorkOut"></input><br>
 			<label for="select_doneExercise">Übung:</label>
-			<select id="select_doneExercise"></select><br>
+			<select id="select_doneExercise" class="addWorkOut"></select><br>
 			<label for="input_doneExercise">Übung Anzahl:</label>
-			<input id="input_doneExercise" type="number" min="0" step="0.01" placeholder="Anzahl"
+			<input id="input_doneExercise" class="addWorkOut" type="number" min="0" step="0.01" placeholder="Anzahl"
 				oninput="validity.valid||(value='');"></input>
-			<input id="input_doneExerciseAdditional" type="number" min="0" step="0.01" placeholder="Anzahl Zusatz"
-				oninput="validity.valid||(value='');" disabled="true"></input><br>
+			<input id="input_doneExerciseAdditional" class="addWorkOut" type="number" min="0" step="0.01"
+				placeholder="Anzahl Zusatz" oninput="validity.valid||(value='');" disabled="true"></input><br>
 			<label for="input_doneExerciseWeight">Übung Gewicht [kg]:</label>
-			<input id="input_doneExerciseWeight" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number"
+			<input id="input_doneExerciseWeight"  class="addWorkOut" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number"
 				placeholder="Benutzes Gewicht" min="0" oninput="validity.valid||(value='');"></input><br>
 			<button id="button_doneExerciseSend">Anlegen</button>
 		</div>
@@ -280,20 +290,20 @@
 	<div id="div_ExerciseOverview" class="tab">
 		<p id="paragraph_paceUnitNotice"></p>
 		<div id="div_addNewExercise">
-			<label for="input_exerciseID" class="hiddenCell"></label>
-			<input id="input_exerciseID" type="number" class="hiddenCell"></input>
+			<label for="input_exerciseID" hidden="true" style="position: absolute"></label>
+			<input id="input_exerciseID"  class="modifyExercise" type="number" hidden="true" style="position: absolute"></input>
 
 			<label for="input_exerciseName">Name:</label>
-			<br><input id="input_exerciseName" type="text" placeholder="Übungsname" required></input><br>
+			<br><input id="input_exerciseName" class="modifyExercise" type="text" placeholder="Übungsname" required></input><br>
 
 			<label id="label_input_exerciseDifficulty" for="input_exerciseDifficulty">Schwierigkeit (1,10,100):</label>
-			<br><input id="input_exerciseDifficulty" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
+			<br><input id="input_exerciseDifficulty" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
 				placeholder="Faktor für 1x" min="-50" max="5" oninput="validity.valid||(value='');">
-			<input id="input_exerciseDifficulty10" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
+			<input id="input_exerciseDifficulty10" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
 				placeholder="Faktor für 10x" min="-50" max="5" oninput="validity.valid||(value='');">
-			<input id="input_exerciseDifficulty100" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
+			<input id="input_exerciseDifficulty100" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
 				placeholder="Faktor für 100x" min="-50" max="5" oninput="validity.valid||(value='');"></input>
-			<input id="input_paceConstant" disabled="true" pattern="[0-9]+([\.,][0-9]+)?" step="0.001" type="number"
+			<input id="input_paceConstant" class="modifyExercise" disabled="true" pattern="[0-9]+([\.,][0-9]+)?" step="0.001" type="number"
 				placeholder="Pace Konstante" min="0" oninput="validity.valid||(value='');"></input><br>
 
 			<label for="input_exerciseBaseWeight">Basisgewicht:</label>
@@ -301,18 +311,18 @@
 			<label for="select_bothSides">Beidseitig :</label>
 
 
-			<br><input id="input_exerciseBaseWeight" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number"
+			<br><input id="input_exerciseBaseWeight" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number"
 				placeholder="Standardgewicht" min="0" oninput="validity.valid||(value='');"></input>
 
 
-			<select id="select_exerciseType">
+			<select id="select_exerciseType" class="modifyExercise" >
 				<option value="Cardio">Cardio</option>
 				<option value="Kraft">Kraft</option>
 				<option value="-">-</option>
 				<option value="Strafe">Strafe</option>
 			</select>
 
-			<select id="select_bothSides">
+			<select id="select_bothSides" class="modifyExercise" >
 				<option value="true">Ja</option>
 				<option value="false">Nein</option>
 			</select><br>
@@ -322,7 +332,7 @@
 			<label for="select_exerciseEquipment">Ausrüstung:</label>
 			<label for="input_exerciseComment">Kommentar:</label>
 
-			<br><select id="select_exerciseUnit">
+			<br><select id="select_exerciseUnit" class="modifyExercise" >
 				<option value="km">km</option>
 				<option value="m">m</option>
 				<option value="Wdh">Wdh</option>
@@ -335,7 +345,7 @@
 				<option value="pro Tschick">pro Tschick</option>
 			</select>
 
-			<select id="select_exerciseEquipment">
+			<select id="select_exerciseEquipment" class="modifyExercise" >
 				<optgroup label="Hanteln/Gewichte">
 					<option value="Langhantel">Langhantel</option>
 					<option value="Hantel">Hantel</option>
@@ -364,7 +374,7 @@
 			</select>
 
 
-			<input id="input_exerciseComment" type="text" placeholder="Kommentarfeld"></input>
+			<input id="input_exerciseComment" class="modifyExercise"  type="text" placeholder="Kommentarfeld"></input>
 			<br>
 			<br>
 			<button id="button_createExercise">Anlegen</button>
@@ -372,9 +382,6 @@
 			<button id="button_deleteExercise">Löschen</button>
 			<button id="button_hideExercise">Ausblenden</button>
 			<button id="button_showHiddenExercises">Zeige alle</button>
-
-
-
 
 		</div>
 
@@ -396,8 +403,10 @@
 			<br>
 			<label for="select_statisticsExercise">Übung :</label>
 			<select id="select_statisticsExercise"></select>
-			<button id="button_statisticsExercise">Statistik</button>
 			<p id="paragraph_statisticsExercise"></p>
+			<div id="div_graphExercise">
+
+			</div>
 		</div>
 	</div>
 	<div id="div_competition" class="tab">
@@ -444,7 +453,8 @@
 </body>
 
 </html>
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+<script type="text/javascript" src="./js/common.js"></script>
 <script type="text/javascript" src="./js/index.js"></script>

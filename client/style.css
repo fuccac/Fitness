@@ -78,10 +78,20 @@ button:hover {
     padding-bottom: 5px;
 }
 
+#div_graphExercise {
+    background-color: var(--mainColor);
+    height: 70%;
+    padding-bottom: 5px;
+}
+
 #div_GraphControl {
     background-color: var(--mainColor);
     max-height: 10%;
     padding-bottom: 5px;
+}
+
+#div_exerciseStatistics{
+    height:60%;
 }
 
 #div_exerciseHistory {
@@ -106,7 +116,7 @@ button:hover {
 /* TAB STATISTICS INFO*/
 
 #div_achievementsDone {
-    height: 50%;
+    height: 40%;
     overflow: auto;
 }
 
