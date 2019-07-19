@@ -45,6 +45,7 @@ class FitnessManager {
         this.maxExerciseCountsCategory = {};
         this.dailyWins = {};
         this.monthlyWins = {};
+        this.featuredExerciseId = 0;
 
         //WORK OBJECTS WITH SAVE FILE SUPPORT
         this.registeredPlayers = {};
@@ -58,7 +59,22 @@ class FitnessManager {
         this.paceUnits = "min/km;min/m;Wdh/min;Wdh/sec";
         this.paceInvert = "0;0;1;1";
 
+
     }
+
+    featureNewExercise() {
+        let randomNumber = Math.floor(Math.random() * Object.keys(this.exerciseList).length);
+        let counter = 0;
+        for (let exId in this.exerciseList) {
+            if (counter == randomNumber) {
+                this.featuredExerciseId = exId;
+                this.addToEventLog(common.HTMLBold(common.HTMLColor("EINE NEUE DOUBLE TIME ÜBUNG WURDE FESTGELEGT: " + this.exerciseList[this.featuredExerciseId].name, "red")));
+            }
+            counter++;
+
+        }
+    }
+
 
 
     //************************************************************/
@@ -330,6 +346,7 @@ class FitnessManager {
     }
 
     addToHistory(id, playerName, exerciseId, weight, count, countAdditional, date, result) {
+
         if (countAdditional == "" || countAdditional == undefined) {
             countAdditional = undefined;
         }
@@ -342,10 +359,18 @@ class FitnessManager {
         date = common.getDateFormat(date, "YYYY-MM-DD");
         var points = calc.calculatePoints(this.exerciseList[exerciseId], weight, count, countAdditional, pace);
 
+        let doubleTimeMessage = "";
+        if (this.featuredExerciseId == exerciseId) {
+            //doubleTime
+            points *= 2;
+            doubleTimeMessage = "+ Double Time Bonus";
+
+        }
         if (this.history[date] != undefined) {
             for (let iterator in this.history[date].exerciseId) {
                 var exId = this.history[date].exerciseId[iterator];
                 if (exId === exerciseId && this.history[date].weight[iterator] == weight && this.history[date].playerName[iterator].toUpperCase() == playerName.toUpperCase() && countAdditional == undefined) {
+                    //HISTORY ENTRY IS AVAILABLE - AND NEW ENTRY IS STACKABLE! 
                     this.history[date].count[iterator] += Number(count);
                     this.history[date].points[iterator] += Number(points);
                     this.history[date].dailySum[playerName] += Number(points);
@@ -353,26 +378,13 @@ class FitnessManager {
                     this.history[date].pace[iterator] = "-";
                     this.history[date].exUnit[iterator] = this.exerciseList[exerciseId].unit;
 
-                    if (this.exerciseList[exerciseId].pointsPerPlayer[playerName] == undefined) {
-                        this.exerciseList[exerciseId].pointsPerPlayer[playerName] = Number(points);
-                    }
-                    else {
-                        this.exerciseList[exerciseId].pointsPerPlayer[playerName] += Number(points);
-                    }
-
-                    if (this.exerciseList[exerciseId].repsPerPlayer[playerName] == undefined) {
-                        this.exerciseList[exerciseId].repsPerPlayer[playerName] = Number(count);
-                    }
-                    else {
-                        this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
-                    }
-
-                    this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte)");
+                    this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte "+doubleTimeMessage +")");
                     result("added workout to existing history");
                     return;
                 }
             }
 
+            //HISTORY ENTRY IS AVAILABLE - BUT NEW ENTRY IS NOT STACKABLE!
             this.history[date].id.push(id);
             this.history[date].date.push(date);
             this.history[date].playerName.push(playerName);
@@ -398,6 +410,7 @@ class FitnessManager {
             }
         }
         else {
+            //HISTORY ENTRY IS NOT AVAILABLE - CREATING
             var newId = [], newDate = [], newPlayerName = [], newExName = [], newCount = [], newPoints = [], newWeight = [], newExerciseId = [], newDailySum = {}, newPace = [], newCountAdditional = [], newUnit = [];
             newId.push(id);
             newDate.push(date);
@@ -417,7 +430,6 @@ class FitnessManager {
                 newCountAdditional.push(0);
             }
 
-
             var newHistoryEntry = {
                 id: newId,
                 date: newDate,
@@ -435,21 +447,7 @@ class FitnessManager {
             this.history[date] = newHistoryEntry;
         }
 
-        if (this.exerciseList[exerciseId].pointsPerPlayer[playerName] == undefined) {
-            this.exerciseList[exerciseId].pointsPerPlayer[playerName] = Number(points);
-        }
-        else {
-            this.exerciseList[exerciseId].pointsPerPlayer[playerName] += Number(points);
-        }
-
-        if (this.exerciseList[exerciseId].repsPerPlayer[playerName] == undefined) {
-            this.exerciseList[exerciseId].repsPerPlayer[playerName] = Number(count);
-        }
-        else {
-            this.exerciseList[exerciseId].repsPerPlayer[playerName] += Number(count);
-        }
-
-        this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte)");
+        this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte "+doubleTimeMessage +")");
         result("added workout to existing history");
 
 
@@ -1717,17 +1715,20 @@ class FitnessManager {
                 };
             }
             let lastWinner = this.history[historyDate].dailyWinner;
+
+            if (dailyWinner == undefined) dailyWinner = "Keiner";
+            if (lastWinner == undefined) lastWinner = "Keiner";
+
             if (lastWinner != dailyWinner) {
                 if (dailyWinner == "Keiner" && lastWinner != "Keiner") {
-                    this.addToEventLog("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " ist wieder frei!");
+                    this.addToEventLog(common.HTMLColor("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " ist wieder frei!", "red"));
                 }
                 if (dailyWinner != "Keiner" && lastWinner == "Keiner") {
-                    this.addToEventLog("Der Tagessieg am " + common.HTMLBold(historyDate) + " geht bis jetzt an " + common.HTMLBold(dailyWinner));
+                    this.addToEventLog(common.HTMLColor("Der Tagessieg am " + common.HTMLBold(historyDate) + " geht bis jetzt an " + common.HTMLBold(dailyWinner), "red"));
                 }
                 else if (dailyWinner != "Keiner" && lastWinner != "Keiner") {
-                    this.addToEventLog("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " geht nun an " + common.HTMLBold(dailyWinner));
+                    this.addToEventLog(common.HTMLColor("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " geht nun an " + common.HTMLBold(dailyWinner), "red"));
                 }
-
             }
             this.history[historyDate].dailyWinner = dailyWinner;
             if (this.dailyWins[dailyWinner] != undefined) {

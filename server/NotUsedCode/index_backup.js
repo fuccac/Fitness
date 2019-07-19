@@ -64,7 +64,7 @@ var input_avgSelection = document.getElementById('input_avgSelection');
 var input_graphFromDate = document.getElementById('input_graphFromDate');
 var input_graphToDate = document.getElementById('input_graphToDate');
 var input_Password = document.getElementById('input_Password');
-var input_Username = document.getElementById('input_Username');
+var input_UserName = document.getElementById('input_Username');
 var input_exerciseID = document.getElementById('input_exerciseID');
 var input_onlineIndicator = document.getElementById('input_onlineIndicator');
 var input_RememberMe = document.getElementById('input_RememberMe');
@@ -104,8 +104,6 @@ var RUNTIME_CONFIG = {
     showHiddenExercises: false,
 };
 
-
-
 /******************************************************************************************************************
 *******************************************************************************************************************
 *                                               ONCLICK, ONCHANGE 
@@ -113,13 +111,12 @@ var RUNTIME_CONFIG = {
 *******************************************************************************************************************
 ******************************************************************************************************************/
 
-
 button_SignIn.onclick = function () {
-    SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
+    SOCKET.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
 };
 
 button_SignUp.onclick = function () {
-    SOCKET.emit('SignUp', { username: input_Username.value.toLowerCase(), password: input_Password.value });
+    SOCKET.emit('SignUp', { username: input_UserName.value.toLowerCase(), password: input_Password.value });
 };
 
 input_historyFromDate.onchange = function () {
@@ -1754,7 +1751,7 @@ setInterval(function () {
 }, 1000);
 
 if (LOGIN_COOKIE != "") {
-    SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: false, loginToken: LOGIN_COOKIE });
+    SOCKET.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: false, loginToken: LOGIN_COOKIE });
 }
 
 function logout() {
@@ -1764,7 +1761,18 @@ function logout() {
 
 
 function resetExerciseEntryMask() {
-    $(".modifyExercise").val("");
+    input_exerciseName.value = "";
+    input_exerciseDifficulty.value = "";
+    input_exerciseDifficulty10.value = "";
+    input_exerciseDifficulty100.value = "";
+    input_paceConstant.value = "";
+    input_exerciseBaseWeight.value = "";
+    select_exerciseType.value = "";
+    select_exerciseUnit.value = "";
+    select_exerciseEquipment.value = "";
+    select_bothSides.value = "";
+    input_exerciseComment.value = "";
+    input_exerciseID.value = "";
     select_exerciseUnit.onchange();
     button_hideExercise.innerHTML = "Ausblenden";
 
@@ -1835,7 +1843,7 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
         if (bodyRow.classList.contains("hiddenExercise")) {
             button_hideExercise.innerHTML = "Einblenden";
-            $("#button_hideExercise").html( "Next Step..." );
+            $("#button_hideExercise" ).html( "Next Step..." );
         }
         else {
             button_hideExercise.innerHTML = "Ausblenden";

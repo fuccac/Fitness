@@ -1,7 +1,7 @@
 {
-  "name": "fitnessapp",
+  "name": "gags",
   "version": "1.0.0",
-  "description": "track an funnify your workout like a boss",
+  "description": "track and funnify your workout like a boss",
   "main": "app.js",
   "dependencies": {
     "dropbox": "^4.0.16",

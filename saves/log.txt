@@ -9363,3 +9363,1274 @@
 17.07.2019 | I | 11:36:41 - dataStorage saved
 17.07.2019 | W | 11:36:41 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
 17.07.2019 | I | 11:36:42 - caf requests Achievement update
+17.07.2019 | W | 12:32:43 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:32:43 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | I | 12:32:43 - dataStorage Loaded
+17.07.2019 | I | 12:32:43 - full refresh took 121 ms
+17.07.2019 | I | 12:32:43 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+17.07.2019 | W | 12:32:43 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:32:43 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:32:43 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:32:43 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:32:43 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:32:43 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:32:43 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | I | 12:32:43 - loadSaveFiles + loadFitnessManager init done in 195 ms
+17.07.2019 | I | 12:32:43 - FITNESS_MANAGER - loading done
+17.07.2019 | I | 12:32:43 - Started Server
+17.07.2019 | I | 12:32:46 - new socket connection (6663877474467126)
+17.07.2019 | I | 12:32:49 - full refresh took 111 ms
+17.07.2019 | I | 12:32:49 - setBestExerciserNumber done in 0
+17.07.2019 | I | 12:32:49 - checkForAchievements done in 2 ms
+17.07.2019 | I | 12:32:49 - checkPlayerStuff done
+17.07.2019 | I | 12:32:49 - full intervall refresh took 144 ms
+17.07.2019 | I | 12:32:49 - player caf loaded
+17.07.2019 | I | 12:32:55 - caf adds new Exercise Burpees 2
+17.07.2019 | I | 12:32:55 - full refresh took 50 ms
+17.07.2019 | I | 12:32:55 - setBestExerciserNumber done in 0
+17.07.2019 | I | 12:32:55 - checkPlayerStuff done
+17.07.2019 | I | 12:32:55 - checkForAchievements done in 0 ms
+17.07.2019 | I | 12:32:55 - full intervall refresh took 59 ms
+17.07.2019 | I | 12:32:56 - caf requests Achievement update
+17.07.2019 | I | 12:32:58 - dataStorage saved
+17.07.2019 | W | 12:32:58 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:37:50 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:37:50 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | I | 12:37:50 - dataStorage Loaded
+17.07.2019 | I | 12:37:50 - full refresh took 144 ms
+17.07.2019 | I | 12:37:50 - 0 new Properties added directly and 0 Properties added to votes in 1 ms
+17.07.2019 | W | 12:37:50 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:37:50 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:37:50 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:37:50 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:37:50 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:37:50 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:37:50 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | I | 12:37:50 - loadSaveFiles + loadFitnessManager init done in 214 ms
+17.07.2019 | I | 12:37:50 - FITNESS_MANAGER - loading done
+17.07.2019 | I | 12:37:50 - Started Server
+17.07.2019 | I | 12:37:51 - new socket connection (6709288188903970)
+17.07.2019 | I | 12:37:53 - full refresh took 76 ms
+17.07.2019 | I | 12:37:53 - setBestExerciserNumber done in 0
+17.07.2019 | I | 12:37:53 - checkForAchievements done in 2 ms
+17.07.2019 | I | 12:37:53 - full intervall refresh took 101 ms
+17.07.2019 | I | 12:37:53 - checkPlayerStuff done
+17.07.2019 | I | 12:37:53 - player caf loaded
+17.07.2019 | I | 12:37:55 - caf requests Achievement update
+17.07.2019 | I | 12:38:5 - dataStorage saved
+17.07.2019 | W | 12:38:5 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+17.07.2019 | I | 12:38:58 - caf requests History update
+17.07.2019 | I | 12:39:7 - caf requests History update
+17.07.2019 | I | 12:39:12 - caf adds Workout
+17.07.2019 | I | 12:39:12 - added workout to existing history
+17.07.2019 | I | 12:39:12 - setBestExerciserNumber done in 1
+17.07.2019 | I | 12:39:12 - full refresh took 58 ms
+17.07.2019 | I | 12:39:12 - checkForAchievements done in 1 ms
+17.07.2019 | I | 12:39:12 - checkPlayerStuff done
+17.07.2019 | I | 12:39:12 - full intervall refresh took 64 ms
+17.07.2019 | I | 12:39:12 - caf requests History update
+17.07.2019 | I | 12:39:17 - caf requests Achievement update
+17.07.2019 | I | 12:39:20 - dataStorage saved
+17.07.2019 | W | 12:39:20 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+17.07.2019 | I | 12:39:36 - caf requests History update
+17.07.2019 | I | 12:39:47 - caf adds Workout
+17.07.2019 | I | 12:39:47 - added workout to existing history
+17.07.2019 | I | 12:39:47 - full refresh took 75 ms
+17.07.2019 | I | 12:39:47 - checkForAchievements done in 0 ms
+17.07.2019 | I | 12:39:47 - setBestExerciserNumber done in 0
+17.07.2019 | I | 12:39:47 - checkPlayerStuff done
+17.07.2019 | I | 12:39:47 - full intervall refresh took 82 ms
+17.07.2019 | I | 12:39:47 - caf requests History update
+17.07.2019 | I | 12:39:50 - dataStorage saved
+17.07.2019 | W | 12:39:50 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:40:17 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:40:17 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | I | 12:40:17 - dataStorage Loaded
+17.07.2019 | I | 12:40:17 - full refresh took 161 ms
+17.07.2019 | I | 12:40:17 - 0 new Properties added directly and 0 Properties added to votes in 1 ms
+17.07.2019 | W | 12:40:17 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:40:17 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:40:17 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:40:17 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:40:17 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:40:17 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | W | 12:40:17 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+17.07.2019 | I | 12:40:17 - loadSaveFiles + loadFitnessManager init done in 241 ms
+17.07.2019 | I | 12:40:17 - FITNESS_MANAGER - loading done
+17.07.2019 | I | 12:40:17 - Started Server
+17.07.2019 | I | 12:40:17 - new socket connection (7859767982945070)
+17.07.2019 | I | 12:40:32 - dataStorage saved
+17.07.2019 | W | 12:40:32 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:32:40 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:32:40 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:32:40 - dataStorage Loaded
+18.07.2019 | I | 9:32:40 - full refresh took 106 ms
+18.07.2019 | I | 9:32:40 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+18.07.2019 | W | 9:32:40 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:32:40 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:32:40 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:32:40 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:32:40 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:32:40 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:32:40 - loadSaveFiles + loadFitnessManager init done in 172 ms
+18.07.2019 | I | 9:32:40 - FITNESS_MANAGER - loading done
+18.07.2019 | W | 9:32:40 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:32:40 - Started Server
+18.07.2019 | I | 9:32:46 - new socket connection (8888010793028853)
+18.07.2019 | I | 9:32:55 - dataStorage saved
+18.07.2019 | W | 9:32:55 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:36:28 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:36:28 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:36:29 - dataStorage Loaded
+18.07.2019 | I | 9:36:29 - full refresh took 115 ms
+18.07.2019 | I | 9:36:29 - 0 new Properties added directly and 0 Properties added to votes in 1 ms
+18.07.2019 | W | 9:36:29 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:36:29 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:36:29 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:36:29 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:36:29 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:36:29 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:36:29 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:36:29 - loadSaveFiles + loadFitnessManager init done in 182 ms
+18.07.2019 | I | 9:36:29 - FITNESS_MANAGER - loading done
+18.07.2019 | I | 9:36:29 - Started Server
+18.07.2019 | I | 9:36:32 - new socket connection (8211696789170233)
+18.07.2019 | I | 9:36:34 - full refresh took 81 ms
+18.07.2019 | I | 9:36:34 - setBestExerciserNumber done in 0
+18.07.2019 | I | 9:36:34 - checkForAchievements done in 1 ms
+18.07.2019 | I | 9:36:34 - checkPlayerStuff done
+18.07.2019 | I | 9:36:34 - full intervall refresh took 103 ms
+18.07.2019 | I | 9:36:34 - player caf loaded
+18.07.2019 | I | 9:36:44 - dataStorage saved
+18.07.2019 | W | 9:36:44 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:36:45 - caf requests Achievement update
+18.07.2019 | I | 9:36:48 - caf requests History update
+18.07.2019 | W | 9:37:10 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:37:10 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:37:10 - dataStorage Loaded
+18.07.2019 | I | 9:37:10 - full refresh took 160 ms
+18.07.2019 | I | 9:37:10 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+18.07.2019 | W | 9:37:10 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:37:10 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:37:10 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:37:10 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:37:10 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:37:10 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:37:10 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:37:10 - loadSaveFiles + loadFitnessManager init done in 237 ms
+18.07.2019 | I | 9:37:10 - FITNESS_MANAGER - loading done
+18.07.2019 | I | 9:37:10 - Started Server
+18.07.2019 | I | 9:37:11 - new socket connection (4123017169921155)
+18.07.2019 | I | 9:37:11 - new socket connection (0050527903617732)
+18.07.2019 | I | 9:37:13 - full refresh took 77 ms
+18.07.2019 | I | 9:37:13 - setBestExerciserNumber done in 0
+18.07.2019 | I | 9:37:13 - checkForAchievements done in 1 ms
+18.07.2019 | I | 9:37:13 - checkPlayerStuff done
+18.07.2019 | I | 9:37:13 - full intervall refresh took 101 ms
+18.07.2019 | I | 9:37:13 - player caf loaded
+18.07.2019 | I | 9:37:14 - caf requests History update
+18.07.2019 | W | 9:39:30 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:39:30 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:39:30 - dataStorage Loaded
+18.07.2019 | I | 9:39:30 - full refresh took 139 ms
+18.07.2019 | I | 9:39:30 - 0 new Properties added directly and 0 Properties added to votes in 1 ms
+18.07.2019 | W | 9:39:30 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:39:30 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:39:30 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:39:30 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:39:30 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:39:30 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:39:30 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:39:30 - loadSaveFiles + loadFitnessManager init done in 206 ms
+18.07.2019 | I | 9:39:30 - FITNESS_MANAGER - loading done
+18.07.2019 | I | 9:39:30 - Started Server
+18.07.2019 | I | 9:39:30 - new socket connection (8649402133588935)
+18.07.2019 | I | 9:39:32 - socket connection lost (8649402133588935)
+18.07.2019 | I | 9:39:32 - new socket connection (5771543061926478)
+18.07.2019 | I | 9:39:34 - full refresh took 79 ms
+18.07.2019 | I | 9:39:34 - setBestExerciserNumber done in 0
+18.07.2019 | I | 9:39:34 - checkForAchievements done in 1 ms
+18.07.2019 | I | 9:39:34 - checkPlayerStuff done
+18.07.2019 | I | 9:39:34 - full intervall refresh took 103 ms
+18.07.2019 | I | 9:39:34 - player caf loaded
+18.07.2019 | I | 9:39:36 - caf requests History update
+18.07.2019 | I | 9:39:45 - dataStorage saved
+18.07.2019 | W | 9:39:45 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:40:43 - socket connection lost (5771543061926478)
+18.07.2019 | I | 9:40:43 - player caf saved
+18.07.2019 | W | 9:40:43 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:40:44 - new socket connection (6425953911781606)
+18.07.2019 | I | 9:40:45 - dataStorage saved
+18.07.2019 | W | 9:40:45 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:40:46 - full refresh took 63 ms
+18.07.2019 | I | 9:40:46 - setBestExerciserNumber done in 0
+18.07.2019 | I | 9:40:46 - checkForAchievements done in 1 ms
+18.07.2019 | I | 9:40:46 - checkPlayerStuff done
+18.07.2019 | I | 9:40:46 - full intervall refresh took 74 ms
+18.07.2019 | I | 9:40:46 - player caf loaded
+18.07.2019 | I | 9:40:48 - caf requests History update
+18.07.2019 | I | 9:40:51 - caf adds Workout
+18.07.2019 | I | 9:40:51 - added workout to existing history
+18.07.2019 | I | 9:40:51 - full refresh took 85 ms
+18.07.2019 | I | 9:40:51 - setBestExerciserNumber done in 0
+18.07.2019 | I | 9:40:51 - checkForAchievements done in 1 ms
+18.07.2019 | I | 9:40:51 - checkPlayerStuff done
+18.07.2019 | I | 9:40:51 - full intervall refresh took 93 ms
+18.07.2019 | I | 9:40:51 - caf requests History update
+18.07.2019 | I | 9:41:0 - dataStorage saved
+18.07.2019 | W | 9:41:0 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:41:28 - socket connection lost (6425953911781606)
+18.07.2019 | I | 9:41:28 - player caf saved
+18.07.2019 | W | 9:41:28 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:41:28 - new socket connection (7910903809362555)
+18.07.2019 | I | 9:41:30 - dataStorage saved
+18.07.2019 | W | 9:41:30 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:48:45 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:48:45 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:48:45 - dataStorage Loaded
+18.07.2019 | I | 9:48:45 - full refresh took 112 ms
+18.07.2019 | I | 9:48:45 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+18.07.2019 | W | 9:48:45 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:48:45 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:48:45 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:48:45 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:48:45 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:48:45 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:48:45 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:48:45 - loadSaveFiles + loadFitnessManager init done in 180 ms
+18.07.2019 | I | 9:48:45 - FITNESS_MANAGER - loading done
+18.07.2019 | I | 9:48:45 - Started Server
+18.07.2019 | I | 9:48:57 - new socket connection (7898508696790507)
+18.07.2019 | I | 9:49:0 - dataStorage saved
+18.07.2019 | W | 9:49:0 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:50:13 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:50:13 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:50:13 - dataStorage Loaded
+18.07.2019 | I | 9:50:13 - full refresh took 115 ms
+18.07.2019 | I | 9:50:13 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+18.07.2019 | W | 9:50:13 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:50:13 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:50:13 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:50:13 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:50:13 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:50:13 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 9:50:13 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:50:13 - loadSaveFiles + loadFitnessManager init done in 180 ms
+18.07.2019 | I | 9:50:13 - FITNESS_MANAGER - loading done
+18.07.2019 | I | 9:50:13 - Started Server
+18.07.2019 | I | 9:50:28 - dataStorage saved
+18.07.2019 | W | 9:50:28 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:50:52 - new socket connection (3854900975767117)
+18.07.2019 | I | 9:51:2 - full refresh took 86 ms
+18.07.2019 | I | 9:51:2 - setBestExerciserNumber done in 0
+18.07.2019 | I | 9:51:2 - checkForAchievements done in 1 ms
+18.07.2019 | I | 9:51:2 - checkPlayerStuff done
+18.07.2019 | I | 9:51:2 - full intervall refresh took 112 ms
+18.07.2019 | I | 9:51:2 - player caf loaded
+18.07.2019 | I | 9:51:10 - caf requests History update
+18.07.2019 | I | 9:51:13 - dataStorage saved
+18.07.2019 | W | 9:51:13 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:51:14 - caf adds Workout
+18.07.2019 | I | 9:51:14 - added workout to existing history
+18.07.2019 | I | 9:51:14 - full refresh took 55 ms
+18.07.2019 | I | 9:51:14 - setBestExerciserNumber done in 0
+18.07.2019 | I | 9:51:14 - checkForAchievements done in 1 ms
+18.07.2019 | I | 9:51:14 - checkPlayerStuff done
+18.07.2019 | I | 9:51:14 - full intervall refresh took 65 ms
+18.07.2019 | I | 9:51:14 - caf requests History update
+18.07.2019 | I | 9:51:21 - caf adds Workout
+18.07.2019 | I | 9:51:21 - added workout to existing history
+18.07.2019 | I | 9:51:21 - full refresh took 76 ms
+18.07.2019 | I | 9:51:21 - checkForAchievements done in 1 ms
+18.07.2019 | I | 9:51:21 - setBestExerciserNumber done in 0
+18.07.2019 | I | 9:51:21 - checkPlayerStuff done
+18.07.2019 | I | 9:51:21 - full intervall refresh took 83 ms
+18.07.2019 | I | 9:51:21 - caf requests History update
+18.07.2019 | I | 9:51:28 - dataStorage saved
+18.07.2019 | W | 9:51:28 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:51:43 - socket connection lost (3854900975767117)
+18.07.2019 | I | 9:51:43 - player caf saved
+18.07.2019 | W | 9:51:43 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 9:51:43 - dataStorage saved
+18.07.2019 | W | 9:51:43 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 10:42:48 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 10:42:48 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 10:42:48 - dataStorage Loaded
+18.07.2019 | I | 10:42:48 - full refresh took 136 ms
+18.07.2019 | I | 10:42:48 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+18.07.2019 | W | 10:42:48 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 10:42:48 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 10:42:48 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 10:42:48 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 10:42:48 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 10:42:48 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 10:42:48 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 10:42:48 - loadSaveFiles + loadFitnessManager init done in 206 ms
+18.07.2019 | I | 10:42:48 - FITNESS_MANAGER - loading done
+18.07.2019 | I | 10:42:48 - Started Server
+18.07.2019 | I | 10:42:53 - new socket connection (8196230701225748)
+18.07.2019 | I | 10:42:56 - full refresh took 88 ms
+18.07.2019 | I | 10:42:56 - setBestExerciserNumber done in 0
+18.07.2019 | I | 10:42:56 - checkForAchievements done in 1 ms
+18.07.2019 | I | 10:42:56 - checkPlayerStuff done
+18.07.2019 | I | 10:42:56 - full intervall refresh took 110 ms
+18.07.2019 | I | 10:42:56 - player caf loaded
+18.07.2019 | I | 10:43:3 - dataStorage saved
+18.07.2019 | W | 10:43:3 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 10:43:32 - socket connection lost (8196230701225748)
+18.07.2019 | I | 10:43:32 - player caf saved
+18.07.2019 | W | 10:43:32 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 10:43:33 - new socket connection (8332376742599026)
+18.07.2019 | I | 10:43:33 - dataStorage saved
+18.07.2019 | W | 10:43:33 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 10:43:34 - full refresh took 66 ms
+18.07.2019 | I | 10:43:34 - setBestExerciserNumber done in 0
+18.07.2019 | I | 10:43:34 - checkForAchievements done in 1 ms
+18.07.2019 | I | 10:43:34 - checkPlayerStuff done
+18.07.2019 | I | 10:43:34 - full intervall refresh took 76 ms
+18.07.2019 | I | 10:43:34 - player caf loaded
+18.07.2019 | I | 10:43:36 - caf requests History update
+18.07.2019 | I | 10:43:39 - caf requests Achievement update
+18.07.2019 | I | 10:43:39 - caf requests History update
+18.07.2019 | I | 10:43:48 - dataStorage saved
+18.07.2019 | W | 10:43:48 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 10:45:51 - socket connection lost (8332376742599026)
+18.07.2019 | I | 10:45:51 - player caf saved
+18.07.2019 | W | 10:45:51 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 10:45:51 - new socket connection (2927213699423454)
+18.07.2019 | I | 10:45:54 - full refresh took 84 ms
+18.07.2019 | I | 10:45:54 - setBestExerciserNumber done in 0
+18.07.2019 | I | 10:45:54 - checkPlayerStuff done
+18.07.2019 | I | 10:45:54 - checkForAchievements done in 0 ms
+18.07.2019 | I | 10:45:54 - full intervall refresh took 91 ms
+18.07.2019 | I | 10:45:54 - player caf loaded
+18.07.2019 | I | 10:45:56 - caf requests History update
+18.07.2019 | I | 10:46:3 - dataStorage saved
+18.07.2019 | W | 10:46:3 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:16:58 - socket connection lost (2927213699423454)
+18.07.2019 | I | 11:16:58 - player caf saved
+18.07.2019 | W | 11:16:58 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:16:59 - new socket connection (0046144921203146)
+18.07.2019 | I | 11:17:3 - dataStorage saved
+18.07.2019 | W | 11:17:3 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:17:37 - socket connection lost (0046144921203146)
+18.07.2019 | I | 11:17:38 - new socket connection (5852973356864219)
+18.07.2019 | I | 11:17:39 - full refresh took 86 ms
+18.07.2019 | I | 11:17:39 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:17:39 - checkPlayerStuff done
+18.07.2019 | I | 11:17:39 - checkForAchievements done in 1 ms
+18.07.2019 | I | 11:17:39 - full intervall refresh took 106 ms
+18.07.2019 | I | 11:17:39 - player caf loaded
+18.07.2019 | I | 11:17:48 - dataStorage saved
+18.07.2019 | W | 11:17:48 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:19:8 - socket connection lost (5852973356864219)
+18.07.2019 | I | 11:19:8 - player caf saved
+18.07.2019 | W | 11:19:8 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:19:8 - new socket connection (4545044303080377)
+18.07.2019 | I | 11:19:19 - dataStorage saved
+18.07.2019 | W | 11:19:19 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:21:2 - socket connection lost (4545044303080377)
+18.07.2019 | I | 11:21:2 - new socket connection (6172683732949373)
+18.07.2019 | I | 11:21:5 - full refresh took 97 ms
+18.07.2019 | I | 11:21:5 - setBestExerciserNumber done in 1
+18.07.2019 | I | 11:21:5 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:21:5 - checkPlayerStuff done
+18.07.2019 | I | 11:21:5 - full intervall refresh took 104 ms
+18.07.2019 | I | 11:21:5 - player caf loaded
+18.07.2019 | I | 11:21:19 - dataStorage saved
+18.07.2019 | W | 11:21:19 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:21:34 - socket connection lost (6172683732949373)
+18.07.2019 | I | 11:21:34 - player caf saved
+18.07.2019 | W | 11:21:34 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:21:35 - new socket connection (4902611973007647)
+18.07.2019 | I | 11:21:37 - full refresh took 120 ms
+18.07.2019 | I | 11:21:37 - setBestExerciserNumber done in 1
+18.07.2019 | I | 11:21:37 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:21:37 - checkPlayerStuff done
+18.07.2019 | I | 11:21:37 - full intervall refresh took 138 ms
+18.07.2019 | I | 11:21:37 - player caf loaded
+18.07.2019 | I | 11:21:49 - dataStorage saved
+18.07.2019 | W | 11:21:49 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:24:21 - socket connection lost (4902611973007647)
+18.07.2019 | I | 11:24:21 - player caf saved
+18.07.2019 | W | 11:24:21 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:24:21 - new socket connection (3160290581692766)
+18.07.2019 | I | 11:24:23 - full refresh took 96 ms
+18.07.2019 | I | 11:24:23 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:24:23 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:24:23 - checkPlayerStuff done
+18.07.2019 | I | 11:24:23 - full intervall refresh took 104 ms
+18.07.2019 | I | 11:24:23 - player caf loaded
+18.07.2019 | I | 11:24:34 - dataStorage saved
+18.07.2019 | W | 11:24:34 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:25:30 - socket connection lost (3160290581692766)
+18.07.2019 | I | 11:25:30 - player caf saved
+18.07.2019 | W | 11:25:30 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:25:31 - new socket connection (4197032287103009)
+18.07.2019 | I | 11:25:34 - dataStorage saved
+18.07.2019 | W | 11:25:34 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:25:36 - full refresh took 81 ms
+18.07.2019 | I | 11:25:36 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:25:36 - checkForAchievements done in 1 ms
+18.07.2019 | I | 11:25:36 - checkPlayerStuff done
+18.07.2019 | I | 11:25:36 - full intervall refresh took 102 ms
+18.07.2019 | I | 11:25:36 - player caf loaded
+18.07.2019 | I | 11:25:49 - dataStorage saved
+18.07.2019 | W | 11:25:49 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:26:58 - socket connection lost (4197032287103009)
+18.07.2019 | W | 11:26:58 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:26:58 - player caf saved
+18.07.2019 | I | 11:26:58 - new socket connection (5637543576097457)
+18.07.2019 | I | 11:27:0 - full refresh took 96 ms
+18.07.2019 | I | 11:27:0 - setBestExerciserNumber done in 1
+18.07.2019 | I | 11:27:0 - checkForAchievements done in 1 ms
+18.07.2019 | I | 11:27:0 - checkPlayerStuff done
+18.07.2019 | I | 11:27:0 - full intervall refresh took 104 ms
+18.07.2019 | I | 11:27:0 - player caf loaded
+18.07.2019 | I | 11:27:4 - dataStorage saved
+18.07.2019 | W | 11:27:4 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:28:49 - socket connection lost (5637543576097457)
+18.07.2019 | I | 11:28:49 - player caf saved
+18.07.2019 | W | 11:28:49 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:28:50 - new socket connection (2883256476671126)
+18.07.2019 | I | 11:28:52 - full refresh took 91 ms
+18.07.2019 | I | 11:28:52 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:28:52 - checkForAchievements done in 1 ms
+18.07.2019 | I | 11:28:52 - full intervall refresh took 110 ms
+18.07.2019 | I | 11:28:52 - checkPlayerStuff done
+18.07.2019 | I | 11:28:52 - player caf loaded
+18.07.2019 | I | 11:29:4 - dataStorage saved
+18.07.2019 | W | 11:29:4 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:31:44 - socket connection lost (2883256476671126)
+18.07.2019 | I | 11:31:44 - player caf saved
+18.07.2019 | W | 11:31:44 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:31:45 - new socket connection (6783272580008890)
+18.07.2019 | I | 11:31:47 - full refresh took 72 ms
+18.07.2019 | I | 11:31:47 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:31:47 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:31:47 - checkPlayerStuff done
+18.07.2019 | I | 11:31:47 - full intervall refresh took 79 ms
+18.07.2019 | I | 11:31:47 - player caf loaded
+18.07.2019 | I | 11:31:49 - dataStorage saved
+18.07.2019 | W | 11:31:49 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:32:4 - socket connection lost (6783272580008890)
+18.07.2019 | I | 11:32:4 - player caf saved
+18.07.2019 | W | 11:32:4 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:32:5 - new socket connection (1902861140263745)
+18.07.2019 | I | 11:32:7 - full refresh took 83 ms
+18.07.2019 | I | 11:32:7 - setBestExerciserNumber done in 1
+18.07.2019 | I | 11:32:7 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:32:7 - checkPlayerStuff done
+18.07.2019 | I | 11:32:7 - full intervall refresh took 101 ms
+18.07.2019 | I | 11:32:7 - player caf loaded
+18.07.2019 | I | 11:32:19 - dataStorage saved
+18.07.2019 | W | 11:32:19 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:32:55 - socket connection lost (1902861140263745)
+18.07.2019 | I | 11:32:55 - player caf saved
+18.07.2019 | W | 11:32:55 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:32:55 - new socket connection (7773982981011864)
+18.07.2019 | I | 11:32:58 - full refresh took 64 ms
+18.07.2019 | I | 11:32:58 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:32:58 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:32:58 - checkPlayerStuff done
+18.07.2019 | I | 11:32:58 - full intervall refresh took 69 ms
+18.07.2019 | I | 11:32:58 - player caf loaded
+18.07.2019 | I | 11:33:4 - dataStorage saved
+18.07.2019 | W | 11:33:4 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:35:38 - socket connection lost (7773982981011864)
+18.07.2019 | I | 11:35:38 - player caf saved
+18.07.2019 | W | 11:35:38 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:35:39 - new socket connection (0958403500958895)
+18.07.2019 | I | 11:35:41 - full refresh took 93 ms
+18.07.2019 | I | 11:35:41 - setBestExerciserNumber done in 1
+18.07.2019 | I | 11:35:41 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:35:41 - checkPlayerStuff done
+18.07.2019 | I | 11:35:41 - full intervall refresh took 112 ms
+18.07.2019 | I | 11:35:41 - player caf loaded
+18.07.2019 | I | 11:35:42 - caf requests History update
+18.07.2019 | I | 11:35:49 - dataStorage saved
+18.07.2019 | W | 11:35:49 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:35:49 - caf requests History update
+18.07.2019 | I | 11:36:57 - socket connection lost (0958403500958895)
+18.07.2019 | I | 11:36:57 - player caf saved
+18.07.2019 | W | 11:36:57 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:36:57 - new socket connection (7630595894887047)
+18.07.2019 | I | 11:36:59 - full refresh took 61 ms
+18.07.2019 | I | 11:36:59 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:36:59 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:36:59 - checkPlayerStuff done
+18.07.2019 | I | 11:36:59 - full intervall refresh took 68 ms
+18.07.2019 | I | 11:36:59 - player caf loaded
+18.07.2019 | I | 11:37:1 - caf requests History update
+18.07.2019 | I | 11:37:4 - dataStorage saved
+18.07.2019 | W | 11:37:4 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:37:29 - socket connection lost (7630595894887047)
+18.07.2019 | I | 11:37:29 - player caf saved
+18.07.2019 | W | 11:37:29 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:37:29 - new socket connection (9195515559019487)
+18.07.2019 | I | 11:37:32 - full refresh took 83 ms
+18.07.2019 | I | 11:37:32 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:37:32 - checkPlayerStuff done
+18.07.2019 | I | 11:37:32 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:37:32 - full intervall refresh took 89 ms
+18.07.2019 | I | 11:37:32 - player caf loaded
+18.07.2019 | I | 11:37:34 - dataStorage saved
+18.07.2019 | W | 11:37:34 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:37:55 - socket connection lost (9195515559019487)
+18.07.2019 | I | 11:37:55 - player caf saved
+18.07.2019 | W | 11:37:55 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:37:56 - new socket connection (0217013747605719)
+18.07.2019 | I | 11:37:57 - full refresh took 88 ms
+18.07.2019 | I | 11:37:57 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:37:57 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:37:57 - checkPlayerStuff done
+18.07.2019 | I | 11:37:57 - full intervall refresh took 107 ms
+18.07.2019 | I | 11:37:57 - player caf loaded
+18.07.2019 | I | 11:38:4 - dataStorage saved
+18.07.2019 | W | 11:38:4 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 11:42:49 - FILE log.txt NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:44:5 - socket connection lost (0217013747605719)
+18.07.2019 | I | 11:44:5 - player caf saved
+18.07.2019 | W | 11:44:5 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:44:6 - new socket connection (6793317650719382)
+18.07.2019 | I | 11:44:8 - full refresh took 60 ms
+18.07.2019 | I | 11:44:8 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:44:8 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:44:8 - checkPlayerStuff done
+18.07.2019 | I | 11:44:8 - full intervall refresh took 68 ms
+18.07.2019 | I | 11:44:8 - player caf loaded
+18.07.2019 | I | 11:44:19 - dataStorage saved
+18.07.2019 | W | 11:44:19 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:44:32 - caf edits Exercise Alkohol
+18.07.2019 | I | 11:44:32 - full refresh took 77 ms
+18.07.2019 | I | 11:44:32 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:44:32 - checkPlayerStuff done
+18.07.2019 | I | 11:44:32 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:44:32 - full intervall refresh took 83 ms
+18.07.2019 | I | 11:44:34 - dataStorage saved
+18.07.2019 | W | 11:44:34 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:44:37 - caf edits Exercise Alkohol
+18.07.2019 | I | 11:44:37 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:44:37 - full refresh took 78 ms
+18.07.2019 | I | 11:44:37 - checkForAchievements done in 1 ms
+18.07.2019 | I | 11:44:37 - checkPlayerStuff done
+18.07.2019 | I | 11:44:37 - full intervall refresh took 95 ms
+18.07.2019 | I | 11:44:49 - dataStorage saved
+18.07.2019 | W | 11:44:49 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:48:21 - socket connection lost (6793317650719382)
+18.07.2019 | I | 11:48:21 - player caf saved
+18.07.2019 | W | 11:48:21 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:48:22 - new socket connection (8975801684325302)
+18.07.2019 | I | 11:48:24 - full refresh took 58 ms
+18.07.2019 | I | 11:48:24 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:48:24 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:48:24 - checkPlayerStuff done
+18.07.2019 | I | 11:48:24 - full intervall refresh took 65 ms
+18.07.2019 | I | 11:48:24 - player caf loaded
+18.07.2019 | I | 11:48:34 - dataStorage saved
+18.07.2019 | W | 11:48:34 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:49:21 - socket connection lost (8975801684325302)
+18.07.2019 | I | 11:49:21 - player caf saved
+18.07.2019 | W | 11:49:21 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:49:21 - new socket connection (5220133332771542)
+18.07.2019 | I | 11:49:23 - full refresh took 58 ms
+18.07.2019 | I | 11:49:23 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:49:23 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:49:23 - checkPlayerStuff done
+18.07.2019 | I | 11:49:23 - full intervall refresh took 65 ms
+18.07.2019 | I | 11:49:23 - player caf loaded
+18.07.2019 | I | 11:49:34 - dataStorage saved
+18.07.2019 | W | 11:49:34 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:50:20 - socket connection lost (5220133332771542)
+18.07.2019 | I | 11:50:20 - player caf saved
+18.07.2019 | W | 11:50:20 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:50:20 - new socket connection (9856310968589233)
+18.07.2019 | I | 11:50:22 - full refresh took 60 ms
+18.07.2019 | I | 11:50:22 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:50:22 - checkPlayerStuff done
+18.07.2019 | I | 11:50:22 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:50:22 - full intervall refresh took 68 ms
+18.07.2019 | I | 11:50:22 - player caf loaded
+18.07.2019 | I | 11:50:30 - caf edits Exercise Curls
+18.07.2019 | I | 11:50:31 - full refresh took 51 ms
+18.07.2019 | I | 11:50:31 - setBestExerciserNumber done in 1
+18.07.2019 | I | 11:50:31 - checkPlayerStuff done
+18.07.2019 | I | 11:50:31 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:50:31 - full intervall refresh took 58 ms
+18.07.2019 | I | 11:50:34 - dataStorage saved
+18.07.2019 | W | 11:50:34 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:51:0 - caf edits Exercise Russian Twist mit Gewicht
+18.07.2019 | I | 11:51:0 - full refresh took 54 ms
+18.07.2019 | I | 11:51:0 - setBestExerciserNumber done in 1
+18.07.2019 | I | 11:51:0 - checkForAchievements done in 1 ms
+18.07.2019 | I | 11:51:0 - checkPlayerStuff done
+18.07.2019 | I | 11:51:0 - full intervall refresh took 63 ms
+18.07.2019 | I | 11:51:4 - dataStorage saved
+18.07.2019 | W | 11:51:4 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:51:46 - caf edits Exercise Russian Twist mit Gewicht
+18.07.2019 | I | 11:51:47 - full refresh took 62 ms
+18.07.2019 | I | 11:51:47 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:51:47 - checkPlayerStuff done
+18.07.2019 | I | 11:51:47 - checkForAchievements done in 1 ms
+18.07.2019 | I | 11:51:47 - full intervall refresh took 70 ms
+18.07.2019 | I | 11:51:49 - dataStorage saved
+18.07.2019 | W | 11:51:49 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 11:52:9 - caf edits Exercise Russian Twist mit Gewicht
+18.07.2019 | I | 11:52:9 - full refresh took 60 ms
+18.07.2019 | I | 11:52:9 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:52:9 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:52:9 - checkPlayerStuff done
+18.07.2019 | I | 11:52:9 - full intervall refresh took 69 ms
+18.07.2019 | I | 11:52:18 - caf edits Exercise Russian Twist mit Gewicht
+18.07.2019 | I | 11:52:18 - full refresh took 59 ms
+18.07.2019 | I | 11:52:18 - setBestExerciserNumber done in 0
+18.07.2019 | I | 11:52:18 - checkPlayerStuff done
+18.07.2019 | I | 11:52:18 - checkForAchievements done in 0 ms
+18.07.2019 | I | 11:52:18 - full intervall refresh took 67 ms
+18.07.2019 | I | 11:52:19 - dataStorage saved
+18.07.2019 | W | 11:52:19 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 12:5:24 - socket connection lost (9856310968589233)
+18.07.2019 | I | 12:5:24 - player caf saved
+18.07.2019 | W | 12:5:24 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 12:5:34 - dataStorage saved
+18.07.2019 | W | 12:5:34 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 21:11:45 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 21:11:45 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 21:11:45 - dataStorage Loaded
+18.07.2019 | I | 21:11:45 - full refresh took 119 ms
+18.07.2019 | W | 21:11:45 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 21:11:45 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+18.07.2019 | W | 21:11:45 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 21:11:45 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 21:11:45 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 21:11:45 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 21:11:45 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | W | 21:11:45 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 21:11:45 - loadSaveFiles + loadFitnessManager init done in 208 ms
+18.07.2019 | I | 21:11:45 - FITNESS_MANAGER - loading done
+18.07.2019 | I | 21:11:45 - Started Server
+18.07.2019 | I | 21:11:46 - new socket connection (5369540753907989)
+18.07.2019 | I | 21:11:49 - full refresh took 104 ms
+18.07.2019 | I | 21:11:49 - setBestExerciserNumber done in 1
+18.07.2019 | I | 21:11:49 - checkForAchievements done in 1 ms
+18.07.2019 | I | 21:11:49 - checkPlayerStuff done
+18.07.2019 | I | 21:11:49 - full intervall refresh took 148 ms
+18.07.2019 | I | 21:11:49 - player caf loaded
+18.07.2019 | I | 21:12:0 - dataStorage saved
+18.07.2019 | W | 21:12:0 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 21:12:34 - socket connection lost (5369540753907989)
+18.07.2019 | I | 21:12:34 - player caf saved
+18.07.2019 | W | 21:12:34 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 21:12:34 - new socket connection (8165483644849478)
+18.07.2019 | I | 21:12:37 - full refresh took 84 ms
+18.07.2019 | I | 21:12:37 - setBestExerciserNumber done in 0
+18.07.2019 | I | 21:12:37 - checkForAchievements done in 1 ms
+18.07.2019 | I | 21:12:37 - checkPlayerStuff done
+18.07.2019 | I | 21:12:37 - full intervall refresh took 100 ms
+18.07.2019 | I | 21:12:37 - player caf loaded
+18.07.2019 | I | 21:12:45 - dataStorage saved
+18.07.2019 | W | 21:12:45 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 21:12:51 - socket connection lost (8165483644849478)
+18.07.2019 | I | 21:12:51 - player caf saved
+18.07.2019 | W | 21:12:51 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 21:12:51 - new socket connection (5421381296324985)
+18.07.2019 | I | 21:12:54 - full refresh took 118 ms
+18.07.2019 | I | 21:12:54 - setBestExerciserNumber done in 0
+18.07.2019 | I | 21:12:54 - checkForAchievements done in 0 ms
+18.07.2019 | I | 21:12:54 - checkPlayerStuff done
+18.07.2019 | I | 21:12:54 - full intervall refresh took 128 ms
+18.07.2019 | I | 21:12:54 - player caf loaded
+18.07.2019 | I | 21:13:0 - dataStorage saved
+18.07.2019 | W | 21:13:0 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 21:13:19 - socket connection lost (5421381296324985)
+18.07.2019 | I | 21:13:19 - player caf saved
+18.07.2019 | W | 21:13:19 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 21:13:19 - new socket connection (5271567985541190)
+18.07.2019 | I | 21:13:30 - dataStorage saved
+18.07.2019 | W | 21:13:30 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+18.07.2019 | I | 21:16:37 - socket connection lost (5271567985541190)
+19.07.2019 | W | 9:26:24 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 9:26:24 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:26:24 - dataStorage Loaded
+19.07.2019 | I | 9:26:24 - full refresh took 105 ms
+19.07.2019 | W | 9:26:24 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:26:24 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+19.07.2019 | W | 9:26:24 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 9:26:24 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 9:26:24 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 9:26:24 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 9:26:24 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 9:26:24 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:26:24 - loadSaveFiles + loadFitnessManager init done in 177 ms
+19.07.2019 | I | 9:26:24 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 9:26:24 - Started Server
+19.07.2019 | I | 9:26:25 - new socket connection (6266033684014458)
+19.07.2019 | I | 9:26:28 - full refresh took 85 ms
+19.07.2019 | I | 9:26:28 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:26:28 - checkForAchievements done in 1 ms
+19.07.2019 | I | 9:26:28 - checkPlayerStuff done
+19.07.2019 | I | 9:26:28 - full intervall refresh took 112 ms
+19.07.2019 | I | 9:26:28 - player caf loaded
+19.07.2019 | I | 9:26:36 - socket connection lost (6266033684014458)
+19.07.2019 | I | 9:26:36 - player caf saved
+19.07.2019 | W | 9:26:36 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:26:36 - new socket connection (1712719071377546)
+19.07.2019 | I | 9:26:39 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:26:39 - checkForAchievements done in 1 ms
+19.07.2019 | I | 9:26:39 - checkPlayerStuff done
+19.07.2019 | I | 9:26:39 - full refresh took 60 ms
+19.07.2019 | I | 9:26:39 - full intervall refresh took 68 ms
+19.07.2019 | I | 9:26:39 - player caf loaded
+19.07.2019 | I | 9:26:39 - dataStorage saved
+19.07.2019 | W | 9:26:39 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:28:34 - new socket connection (8756443600379551)
+19.07.2019 | I | 9:31:2 - socket connection lost (1712719071377546)
+19.07.2019 | I | 9:31:2 - player caf saved
+19.07.2019 | W | 9:31:2 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:31:3 - full refresh took 105 ms
+19.07.2019 | I | 9:31:3 - checkForAchievements done in 1 ms
+19.07.2019 | I | 9:31:3 - setBestExerciserNumber done in 1
+19.07.2019 | I | 9:31:3 - checkPlayerStuff done
+19.07.2019 | I | 9:31:3 - full intervall refresh took 113 ms
+19.07.2019 | I | 9:31:3 - player caf loaded
+19.07.2019 | I | 9:31:9 - dataStorage saved
+19.07.2019 | W | 9:31:9 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:35:29 - caf requests History update
+19.07.2019 | I | 9:35:43 - caf requests Achievement update
+19.07.2019 | I | 9:37:34 - caf requests History update
+19.07.2019 | I | 9:37:57 - caf requests History update
+19.07.2019 | I | 9:38:45 - caf requests History update
+19.07.2019 | I | 9:39:19 - socket connection lost (8756443600379551)
+19.07.2019 | I | 9:39:19 - player caf saved
+19.07.2019 | W | 9:39:19 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:39:24 - dataStorage saved
+19.07.2019 | W | 9:39:24 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:41:43 - new socket connection (2517155746314164)
+19.07.2019 | I | 9:41:51 - socket connection lost (2517155746314164)
+19.07.2019 | I | 9:41:51 - new socket connection (4682363790451793)
+19.07.2019 | I | 9:42:10 - full refresh took 89 ms
+19.07.2019 | I | 9:42:10 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:42:10 - checkForAchievements done in 1 ms
+19.07.2019 | I | 9:42:10 - checkPlayerStuff done
+19.07.2019 | I | 9:42:10 - full intervall refresh took 107 ms
+19.07.2019 | I | 9:42:10 - player caf loaded
+19.07.2019 | I | 9:42:25 - dataStorage saved
+19.07.2019 | W | 9:42:25 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:43:33 - socket connection lost (4682363790451793)
+19.07.2019 | I | 9:43:33 - player caf saved
+19.07.2019 | W | 9:43:33 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:43:33 - new socket connection (6456303011509121)
+19.07.2019 | I | 9:43:37 - full refresh took 61 ms
+19.07.2019 | I | 9:43:37 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:43:37 - checkForAchievements done in 0 ms
+19.07.2019 | I | 9:43:37 - checkPlayerStuff done
+19.07.2019 | I | 9:43:37 - full intervall refresh took 68 ms
+19.07.2019 | I | 9:43:37 - player caf loaded
+19.07.2019 | I | 9:43:40 - dataStorage saved
+19.07.2019 | W | 9:43:40 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:44:7 - socket connection lost (6456303011509121)
+19.07.2019 | I | 9:44:7 - player caf saved
+19.07.2019 | W | 9:44:7 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:44:7 - new socket connection (2087313273369640)
+19.07.2019 | I | 9:44:10 - dataStorage saved
+19.07.2019 | W | 9:44:10 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:44:17 - full refresh took 88 ms
+19.07.2019 | I | 9:44:17 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:44:17 - checkForAchievements done in 0 ms
+19.07.2019 | I | 9:44:17 - checkPlayerStuff done
+19.07.2019 | I | 9:44:17 - full intervall refresh took 94 ms
+19.07.2019 | I | 9:44:17 - player caf loaded
+19.07.2019 | I | 9:44:25 - dataStorage saved
+19.07.2019 | W | 9:44:25 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:47:41 - socket connection lost (2087313273369640)
+19.07.2019 | I | 9:47:41 - player caf saved
+19.07.2019 | W | 9:47:41 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:47:42 - new socket connection (2594223263068605)
+19.07.2019 | I | 9:47:44 - full refresh took 83 ms
+19.07.2019 | I | 9:47:44 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:47:44 - checkForAchievements done in 1 ms
+19.07.2019 | I | 9:47:44 - checkPlayerStuff done
+19.07.2019 | I | 9:47:44 - full intervall refresh took 103 ms
+19.07.2019 | I | 9:47:44 - player caf loaded
+19.07.2019 | I | 9:47:55 - dataStorage saved
+19.07.2019 | W | 9:47:55 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:48:29 - socket connection lost (2594223263068605)
+19.07.2019 | I | 9:48:29 - player caf saved
+19.07.2019 | W | 9:48:29 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:48:29 - new socket connection (0196602006636859)
+19.07.2019 | I | 9:48:31 - full refresh took 89 ms
+19.07.2019 | I | 9:48:31 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:48:31 - full intervall refresh took 96 ms
+19.07.2019 | I | 9:48:31 - checkPlayerStuff done
+19.07.2019 | I | 9:48:31 - checkForAchievements done in 0 ms
+19.07.2019 | I | 9:48:31 - player caf loaded
+19.07.2019 | I | 9:48:40 - dataStorage saved
+19.07.2019 | W | 9:48:40 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:49:33 - socket connection lost (0196602006636859)
+19.07.2019 | I | 9:49:33 - player caf saved
+19.07.2019 | W | 9:49:33 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:49:33 - new socket connection (4743539638451955)
+19.07.2019 | I | 9:49:36 - full refresh took 79 ms
+19.07.2019 | I | 9:49:36 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:49:36 - checkForAchievements done in 0 ms
+19.07.2019 | I | 9:49:36 - checkPlayerStuff done
+19.07.2019 | I | 9:49:36 - full intervall refresh took 99 ms
+19.07.2019 | I | 9:49:36 - player caf loaded
+19.07.2019 | I | 9:49:40 - dataStorage saved
+19.07.2019 | W | 9:49:40 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:50:30 - socket connection lost (4743539638451955)
+19.07.2019 | I | 9:50:30 - player caf saved
+19.07.2019 | W | 9:50:30 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:50:30 - new socket connection (2564096718142268)
+19.07.2019 | I | 9:50:32 - full refresh took 86 ms
+19.07.2019 | I | 9:50:32 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:50:32 - checkPlayerStuff done
+19.07.2019 | I | 9:50:32 - checkForAchievements done in 0 ms
+19.07.2019 | I | 9:50:32 - full intervall refresh took 94 ms
+19.07.2019 | I | 9:50:32 - player caf loaded
+19.07.2019 | I | 9:50:40 - dataStorage saved
+19.07.2019 | W | 9:50:40 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:53:28 - socket connection lost (2564096718142268)
+19.07.2019 | I | 9:53:28 - player caf saved
+19.07.2019 | W | 9:53:28 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:53:28 - new socket connection (0946352839009714)
+19.07.2019 | I | 9:53:33 - full refresh took 84 ms
+19.07.2019 | I | 9:53:33 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:53:33 - checkForAchievements done in 1 ms
+19.07.2019 | I | 9:53:33 - checkPlayerStuff done
+19.07.2019 | I | 9:53:33 - full intervall refresh took 104 ms
+19.07.2019 | I | 9:53:33 - player caf loaded
+19.07.2019 | I | 9:53:40 - dataStorage saved
+19.07.2019 | W | 9:53:40 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:55:19 - caf requests History update
+19.07.2019 | I | 9:59:5 - socket connection lost (0946352839009714)
+19.07.2019 | I | 9:59:5 - player caf saved
+19.07.2019 | W | 9:59:5 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:59:6 - new socket connection (9936846175514773)
+19.07.2019 | I | 9:59:8 - full refresh took 67 ms
+19.07.2019 | I | 9:59:8 - setBestExerciserNumber done in 0
+19.07.2019 | I | 9:59:8 - checkForAchievements done in 0 ms
+19.07.2019 | I | 9:59:8 - checkPlayerStuff done
+19.07.2019 | I | 9:59:8 - full intervall refresh took 73 ms
+19.07.2019 | I | 9:59:8 - player caf loaded
+19.07.2019 | I | 9:59:10 - dataStorage saved
+19.07.2019 | W | 9:59:10 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 9:59:15 - caf requests History update
+19.07.2019 | I | 10:2:23 - socket connection lost (9936846175514773)
+19.07.2019 | I | 10:2:23 - player caf saved
+19.07.2019 | W | 10:2:23 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:2:23 - new socket connection (4347438590822426)
+19.07.2019 | I | 10:2:25 - dataStorage saved
+19.07.2019 | W | 10:2:25 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:2:30 - full refresh took 74 ms
+19.07.2019 | I | 10:2:30 - setBestExerciserNumber done in 0
+19.07.2019 | I | 10:2:30 - checkForAchievements done in 0 ms
+19.07.2019 | I | 10:2:30 - checkPlayerStuff done
+19.07.2019 | I | 10:2:30 - full intervall refresh took 93 ms
+19.07.2019 | I | 10:2:30 - player caf loaded
+19.07.2019 | I | 10:2:40 - dataStorage saved
+19.07.2019 | W | 10:2:40 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:3:10 - socket connection lost (4347438590822426)
+19.07.2019 | I | 10:3:10 - player caf saved
+19.07.2019 | W | 10:3:10 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:3:10 - dataStorage saved
+19.07.2019 | W | 10:3:10 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:3:10 - new socket connection (2173986681782392)
+19.07.2019 | I | 10:3:13 - full refresh took 59 ms
+19.07.2019 | I | 10:3:13 - setBestExerciserNumber done in 0
+19.07.2019 | I | 10:3:13 - checkPlayerStuff done
+19.07.2019 | I | 10:3:13 - checkForAchievements done in 0 ms
+19.07.2019 | I | 10:3:13 - full intervall refresh took 65 ms
+19.07.2019 | I | 10:3:13 - player caf loaded
+19.07.2019 | I | 10:3:25 - dataStorage saved
+19.07.2019 | W | 10:3:25 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:3:40 - caf requests History update
+19.07.2019 | I | 10:3:44 - caf requests Achievement update
+19.07.2019 | I | 10:3:52 - caf requests Achievement update
+19.07.2019 | I | 10:5:24 - socket connection lost (2173986681782392)
+19.07.2019 | I | 10:5:24 - player caf saved
+19.07.2019 | W | 10:5:24 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:5:25 - new socket connection (9256769452872684)
+19.07.2019 | I | 10:5:25 - dataStorage saved
+19.07.2019 | W | 10:5:25 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:5:28 - full refresh took 100 ms
+19.07.2019 | I | 10:5:28 - setBestExerciserNumber done in 0
+19.07.2019 | I | 10:5:28 - checkForAchievements done in 1 ms
+19.07.2019 | I | 10:5:28 - checkPlayerStuff done
+19.07.2019 | I | 10:5:28 - full intervall refresh took 124 ms
+19.07.2019 | I | 10:5:28 - player caf loaded
+19.07.2019 | I | 10:5:40 - dataStorage saved
+19.07.2019 | W | 10:5:40 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:7:33 - caf requests History update
+19.07.2019 | I | 10:7:59 - caf requests Achievement update
+19.07.2019 | I | 10:8:19 - socket connection lost (9256769452872684)
+19.07.2019 | I | 10:8:19 - player caf saved
+19.07.2019 | W | 10:8:19 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:8:19 - new socket connection (7204428740809428)
+19.07.2019 | I | 10:8:22 - full refresh took 89 ms
+19.07.2019 | I | 10:8:22 - setBestExerciserNumber done in 0
+19.07.2019 | I | 10:8:22 - checkForAchievements done in 0 ms
+19.07.2019 | I | 10:8:22 - checkPlayerStuff done
+19.07.2019 | I | 10:8:22 - full intervall refresh took 103 ms
+19.07.2019 | I | 10:8:22 - player caf loaded
+19.07.2019 | I | 10:8:25 - dataStorage saved
+19.07.2019 | W | 10:8:25 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:9:10 - caf requests History update
+19.07.2019 | I | 10:9:22 - socket connection lost (7204428740809428)
+19.07.2019 | I | 10:9:22 - player caf saved
+19.07.2019 | W | 10:9:22 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:9:22 - new socket connection (0251043914465978)
+19.07.2019 | I | 10:9:25 - dataStorage saved
+19.07.2019 | W | 10:9:25 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:9:25 - full refresh took 119 ms
+19.07.2019 | I | 10:9:25 - setBestExerciserNumber done in 1
+19.07.2019 | I | 10:9:25 - checkForAchievements done in 0 ms
+19.07.2019 | I | 10:9:25 - checkPlayerStuff done
+19.07.2019 | I | 10:9:25 - full intervall refresh took 125 ms
+19.07.2019 | I | 10:9:25 - player caf loaded
+19.07.2019 | I | 10:9:40 - dataStorage saved
+19.07.2019 | W | 10:9:40 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:12:19 - socket connection lost (0251043914465978)
+19.07.2019 | I | 10:12:19 - player caf saved
+19.07.2019 | W | 10:12:19 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:12:19 - new socket connection (6276014161270813)
+19.07.2019 | I | 10:12:22 - full refresh took 105 ms
+19.07.2019 | I | 10:12:22 - setBestExerciserNumber done in 1
+19.07.2019 | I | 10:12:22 - checkForAchievements done in 0 ms
+19.07.2019 | I | 10:12:22 - checkPlayerStuff done
+19.07.2019 | I | 10:12:22 - full intervall refresh took 126 ms
+19.07.2019 | I | 10:12:22 - player caf loaded
+19.07.2019 | I | 10:12:25 - caf requests History update
+19.07.2019 | I | 10:12:25 - caf requests History update
+19.07.2019 | I | 10:12:25 - dataStorage saved
+19.07.2019 | W | 10:12:25 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:13:47 - caf requests History update
+19.07.2019 | I | 10:13:52 - caf requests History update
+19.07.2019 | I | 10:14:1 - caf requests Achievement update
+19.07.2019 | I | 10:15:48 - caf requests History update
+19.07.2019 | I | 10:15:52 - caf requests Achievement update
+19.07.2019 | I | 10:16:39 - socket connection lost (6276014161270813)
+19.07.2019 | I | 10:16:39 - player caf saved
+19.07.2019 | W | 10:16:39 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:16:40 - dataStorage saved
+19.07.2019 | W | 10:16:40 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:26:25 - FILE log.txt NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:33 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:33 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:57:34 - dataStorage Loaded
+19.07.2019 | I | 10:57:34 - full refresh took 101 ms
+19.07.2019 | I | 10:57:34 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+19.07.2019 | W | 10:57:34 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:34 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:34 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:34 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:34 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:34 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:34 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:57:34 - loadSaveFiles + loadFitnessManager init done in 166 ms
+19.07.2019 | I | 10:57:34 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 10:57:34 - Started Server
+19.07.2019 | W | 10:57:46 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:46 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:57:46 - dataStorage Loaded
+19.07.2019 | I | 10:57:46 - full refresh took 100 ms
+19.07.2019 | I | 10:57:46 - 0 new Properties added directly and 0 Properties added to votes in 1 ms
+19.07.2019 | W | 10:57:46 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:46 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:46 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:46 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:46 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:46 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:57:46 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:57:46 - loadSaveFiles + loadFitnessManager init done in 157 ms
+19.07.2019 | I | 10:57:46 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 10:57:46 - Started Server
+19.07.2019 | W | 10:59:52 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:59:52 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:59:52 - dataStorage Loaded
+19.07.2019 | I | 10:59:52 - full refresh took 99 ms
+19.07.2019 | I | 10:59:52 - 0 new Properties added directly and 0 Properties added to votes in 1 ms
+19.07.2019 | W | 10:59:52 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:59:52 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:59:52 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:59:52 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:59:52 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:59:52 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 10:59:52 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 10:59:52 - loadSaveFiles + loadFitnessManager init done in 162 ms
+19.07.2019 | I | 10:59:52 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 10:59:52 - Started Server
+19.07.2019 | W | 11:8:51 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:8:51 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:8:51 - dataStorage Loaded
+19.07.2019 | I | 11:8:51 - full refresh took 108 ms
+19.07.2019 | I | 11:8:51 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+19.07.2019 | W | 11:8:51 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:8:51 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:8:51 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:8:51 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:8:51 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:8:51 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:8:51 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:8:51 - loadSaveFiles + loadFitnessManager init done in 168 ms
+19.07.2019 | I | 11:8:51 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 11:8:51 - Started Server
+19.07.2019 | W | 11:9:15 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:15 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:9:15 - dataStorage Loaded
+19.07.2019 | I | 11:9:16 - full refresh took 123 ms
+19.07.2019 | I | 11:9:16 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+19.07.2019 | W | 11:9:16 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:16 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:16 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:16 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:16 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:16 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:16 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:9:16 - loadSaveFiles + loadFitnessManager init done in 197 ms
+19.07.2019 | I | 11:9:16 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 11:9:16 - Started Server
+19.07.2019 | I | 11:9:16 - new socket connection (6384477184093751)
+19.07.2019 | W | 11:9:37 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:37 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:9:37 - dataStorage Loaded
+19.07.2019 | I | 11:9:37 - full refresh took 99 ms
+19.07.2019 | I | 11:9:37 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+19.07.2019 | W | 11:9:37 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:37 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:37 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:37 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:37 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:37 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:9:37 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:9:37 - loadSaveFiles + loadFitnessManager init done in 165 ms
+19.07.2019 | I | 11:9:37 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 11:9:37 - Started Server
+19.07.2019 | I | 11:9:37 - new socket connection (2968308454571493)
+19.07.2019 | I | 11:9:38 - socket connection lost (2968308454571493)
+19.07.2019 | I | 11:9:38 - new socket connection (4552838042501801)
+19.07.2019 | I | 11:9:40 - full refresh took 80 ms
+19.07.2019 | I | 11:9:40 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:9:40 - checkForAchievements done in 1 ms
+19.07.2019 | I | 11:9:40 - checkPlayerStuff done
+19.07.2019 | I | 11:9:40 - full intervall refresh took 105 ms
+19.07.2019 | I | 11:9:40 - player caf loaded
+19.07.2019 | I | 11:9:52 - dataStorage saved
+19.07.2019 | W | 11:9:52 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:10:7 - dataStorage saved
+19.07.2019 | W | 11:10:7 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:10:11 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:10:11 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:10:11 - dataStorage Loaded
+19.07.2019 | I | 11:10:11 - full refresh took 104 ms
+19.07.2019 | I | 11:10:11 - 0 new Properties added directly and 0 Properties added to votes in 1 ms
+19.07.2019 | W | 11:10:11 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:10:11 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:10:11 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:10:11 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:10:11 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:10:11 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:10:11 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:10:11 - loadSaveFiles + loadFitnessManager init done in 171 ms
+19.07.2019 | I | 11:10:11 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 11:10:11 - Started Server
+19.07.2019 | I | 11:10:11 - new socket connection (1597604729951771)
+19.07.2019 | I | 11:10:12 - socket connection lost (1597604729951771)
+19.07.2019 | I | 11:10:12 - new socket connection (3554527757826951)
+19.07.2019 | I | 11:10:14 - full refresh took 84 ms
+19.07.2019 | I | 11:10:14 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:10:14 - checkForAchievements done in 1 ms
+19.07.2019 | I | 11:10:14 - checkPlayerStuff done
+19.07.2019 | I | 11:10:14 - full intervall refresh took 109 ms
+19.07.2019 | I | 11:10:14 - player caf loaded
+19.07.2019 | W | 11:11:31 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:11:31 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:11:31 - dataStorage Loaded
+19.07.2019 | I | 11:11:31 - full refresh took 89 ms
+19.07.2019 | I | 11:11:31 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+19.07.2019 | W | 11:11:31 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:11:31 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:11:31 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:11:31 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:11:31 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:11:31 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:11:31 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:11:31 - loadSaveFiles + loadFitnessManager init done in 155 ms
+19.07.2019 | I | 11:11:31 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 11:11:31 - Started Server
+19.07.2019 | I | 11:11:32 - new socket connection (5416292162005358)
+19.07.2019 | I | 11:11:34 - full refresh took 90 ms
+19.07.2019 | I | 11:11:34 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:11:34 - checkForAchievements done in 2 ms
+19.07.2019 | I | 11:11:34 - checkPlayerStuff done
+19.07.2019 | I | 11:11:34 - full intervall refresh took 116 ms
+19.07.2019 | I | 11:11:34 - player caf loaded
+19.07.2019 | I | 11:11:46 - dataStorage saved
+19.07.2019 | W | 11:11:46 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:24:0 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:24:0 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:24:0 - dataStorage Loaded
+19.07.2019 | I | 11:24:0 - full refresh took 112 ms
+19.07.2019 | I | 11:24:0 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+19.07.2019 | W | 11:24:0 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:24:0 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:24:0 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:24:0 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:24:0 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:24:0 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:24:0 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:24:0 - loadSaveFiles + loadFitnessManager init done in 176 ms
+19.07.2019 | I | 11:24:0 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 11:24:0 - Started Server
+19.07.2019 | I | 11:24:0 - new socket connection (1266041051561635)
+19.07.2019 | I | 11:24:3 - socket connection lost (1266041051561635)
+19.07.2019 | I | 11:24:3 - new socket connection (1714245692629761)
+19.07.2019 | I | 11:24:5 - full refresh took 79 ms
+19.07.2019 | I | 11:24:5 - setBestExerciserNumber done in 1
+19.07.2019 | I | 11:24:5 - checkForAchievements done in 1 ms
+19.07.2019 | I | 11:24:5 - checkPlayerStuff done
+19.07.2019 | I | 11:24:5 - full intervall refresh took 104 ms
+19.07.2019 | I | 11:24:5 - player caf loaded
+19.07.2019 | I | 11:24:14 - caf requests History update
+19.07.2019 | I | 11:24:15 - dataStorage saved
+19.07.2019 | W | 11:24:15 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:24:19 - caf adds Workout
+19.07.2019 | I | 11:24:19 - added workout to existing history
+19.07.2019 | I | 11:24:19 - full refresh took 61 ms
+19.07.2019 | I | 11:24:19 - setBestExerciserNumber done in 1
+19.07.2019 | I | 11:24:19 - checkForAchievements done in 1 ms
+19.07.2019 | I | 11:24:19 - checkPlayerStuff done
+19.07.2019 | I | 11:24:19 - full intervall refresh took 73 ms
+19.07.2019 | I | 11:24:19 - caf requests History update
+19.07.2019 | I | 11:24:25 - caf requests Achievement update
+19.07.2019 | I | 11:24:26 - caf requests History update
+19.07.2019 | I | 11:24:30 - dataStorage saved
+19.07.2019 | W | 11:24:30 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:24:32 - caf adds Workout
+19.07.2019 | I | 11:24:32 - added workout to existing history
+19.07.2019 | I | 11:24:32 - full refresh took 84 ms
+19.07.2019 | I | 11:24:32 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:24:32 - checkForAchievements done in 1 ms
+19.07.2019 | I | 11:24:32 - checkPlayerStuff done
+19.07.2019 | I | 11:24:32 - full intervall refresh took 93 ms
+19.07.2019 | I | 11:24:32 - caf requests History update
+19.07.2019 | I | 11:24:45 - dataStorage saved
+19.07.2019 | W | 11:24:45 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:24:48 - caf requests Achievement update
+19.07.2019 | I | 11:24:49 - caf requests History update
+19.07.2019 | I | 11:24:52 - caf deletes Workout
+19.07.2019 | I | 11:24:52 - deleted History Entry: 8842803653695392
+19.07.2019 | I | 11:24:53 - full refresh took 80 ms
+19.07.2019 | I | 11:24:53 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:24:53 - checkForAchievements done in 1 ms
+19.07.2019 | I | 11:24:53 - checkPlayerStuff done
+19.07.2019 | I | 11:24:53 - full intervall refresh took 99 ms
+19.07.2019 | I | 11:24:53 - caf requests History update
+19.07.2019 | I | 11:24:54 - caf deletes Workout
+19.07.2019 | I | 11:24:54 - deleted History Entry: 7988167060491065
+19.07.2019 | I | 11:24:54 - full refresh took 74 ms
+19.07.2019 | I | 11:24:54 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:24:54 - checkForAchievements done in 0 ms
+19.07.2019 | I | 11:24:54 - checkPlayerStuff done
+19.07.2019 | I | 11:24:54 - full intervall refresh took 80 ms
+19.07.2019 | I | 11:24:54 - caf requests History update
+19.07.2019 | I | 11:25:0 - dataStorage saved
+19.07.2019 | W | 11:25:0 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:25:17 - caf requests History update
+19.07.2019 | I | 11:25:26 - caf adds Workout
+19.07.2019 | I | 11:25:26 - added workout to existing history
+19.07.2019 | I | 11:25:58 - full refresh took 32198 ms
+19.07.2019 | I | 11:25:58 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:25:58 - checkForAchievements done in 0 ms
+19.07.2019 | I | 11:25:58 - checkPlayerStuff done
+19.07.2019 | I | 11:25:58 - full intervall refresh took 32205 ms
+19.07.2019 | I | 11:25:58 - caf requests History update
+19.07.2019 | I | 11:26:2 - dataStorage saved
+19.07.2019 | W | 11:26:2 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:26:18 - caf deletes Workout
+19.07.2019 | I | 11:26:18 - deleted History Entry: 8842803653695392
+19.07.2019 | I | 11:26:18 - full refresh took 76 ms
+19.07.2019 | I | 11:26:18 - setBestExerciserNumber done in 1
+19.07.2019 | I | 11:26:18 - checkForAchievements done in 0 ms
+19.07.2019 | I | 11:26:18 - checkPlayerStuff done
+19.07.2019 | I | 11:26:18 - full intervall refresh took 82 ms
+19.07.2019 | I | 11:26:18 - caf requests History update
+19.07.2019 | I | 11:26:32 - dataStorage saved
+19.07.2019 | W | 11:26:32 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:26:49 - caf requests History update
+19.07.2019 | I | 11:26:54 - added workout to existing history
+19.07.2019 | I | 11:26:54 - caf adds Workout
+19.07.2019 | I | 11:26:58 - full refresh took 4496 ms
+19.07.2019 | I | 11:26:58 - checkForAchievements done in 0 ms
+19.07.2019 | I | 11:26:58 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:26:58 - full intervall refresh took 4503 ms
+19.07.2019 | I | 11:26:58 - checkPlayerStuff done
+19.07.2019 | I | 11:26:58 - caf requests History update
+19.07.2019 | I | 11:27:3 - caf deletes Workout
+19.07.2019 | I | 11:27:3 - deleted History Entry: 8842803653695392
+19.07.2019 | I | 11:27:8 - full refresh took 5170 ms
+19.07.2019 | I | 11:27:8 - setBestExerciserNumber done in 1
+19.07.2019 | I | 11:27:8 - checkForAchievements done in 1 ms
+19.07.2019 | I | 11:27:8 - checkPlayerStuff done
+19.07.2019 | I | 11:27:8 - full intervall refresh took 5177 ms
+19.07.2019 | I | 11:27:8 - caf requests History update
+19.07.2019 | I | 11:27:11 - dataStorage saved
+19.07.2019 | W | 11:27:11 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:30:52 - socket connection lost (1714245692629761)
+19.07.2019 | I | 11:30:52 - player caf saved
+19.07.2019 | W | 11:30:52 - FILE caf.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:30:52 - new socket connection (4138135444431685)
+19.07.2019 | I | 11:30:54 - full refresh took 89 ms
+19.07.2019 | I | 11:30:54 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:30:54 - checkForAchievements done in 0 ms
+19.07.2019 | I | 11:30:54 - checkPlayerStuff done
+19.07.2019 | I | 11:30:54 - full intervall refresh took 96 ms
+19.07.2019 | I | 11:30:54 - player caf loaded
+19.07.2019 | I | 11:30:56 - dataStorage saved
+19.07.2019 | W | 11:30:56 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:31:26 - FILE log.txt NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:31:26 - FILE dataStorage.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:31:26 - dataStorage Loaded
+19.07.2019 | I | 11:31:27 - full refresh took 135 ms
+19.07.2019 | I | 11:31:27 - 0 new Properties added directly and 0 Properties added to votes in 0 ms
+19.07.2019 | W | 11:31:27 - FILE caf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:31:27 - FILE gjf.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:31:27 - FILE jonny.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:31:27 - FILE much.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:31:27 - FILE philipp.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:31:27 - FILE lisi.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | W | 11:31:27 - FILE ada.json NOT DOWNLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:31:27 - loadSaveFiles + loadFitnessManager init done in 211 ms
+19.07.2019 | I | 11:31:27 - FITNESS_MANAGER - loading done
+19.07.2019 | I | 11:31:27 - Started Server
+19.07.2019 | I | 11:31:29 - new socket connection (4693182976052854)
+19.07.2019 | I | 11:31:31 - full refresh took 81 ms
+19.07.2019 | I | 11:31:31 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:31:31 - checkForAchievements done in 1 ms
+19.07.2019 | I | 11:31:31 - full intervall refresh took 93 ms
+19.07.2019 | I | 11:31:31 - checkPlayerStuff done
+19.07.2019 | I | 11:31:31 - player caf loaded
+19.07.2019 | I | 11:31:38 - caf requests History update
+19.07.2019 | I | 11:31:41 - dataStorage saved
+19.07.2019 | W | 11:31:41 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:32:5 - caf adds Workout
+19.07.2019 | I | 11:32:5 - added workout to existing history
+19.07.2019 | I | 11:32:10 - full refresh took 4518 ms
+19.07.2019 | I | 11:32:10 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:32:10 - checkForAchievements done in 1 ms
+19.07.2019 | I | 11:32:10 - checkPlayerStuff done
+19.07.2019 | I | 11:32:10 - full intervall refresh took 4531 ms
+19.07.2019 | I | 11:32:10 - caf requests History update
+19.07.2019 | I | 11:32:15 - dataStorage saved
+19.07.2019 | W | 11:32:15 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE
+19.07.2019 | I | 11:33:1 - caf requests History update
+19.07.2019 | I | 11:33:2 - caf adds Workout
+19.07.2019 | I | 11:33:2 - added workout to existing history
+19.07.2019 | I | 11:33:2 - full refresh took 96 ms
+19.07.2019 | I | 11:33:2 - setBestExerciserNumber done in 0
+19.07.2019 | I | 11:33:2 - checkForAchievements done in 0 ms
+19.07.2019 | I | 11:33:2 - checkPlayerStuff done
+19.07.2019 | I | 11:33:2 - full intervall refresh took 103 ms
+19.07.2019 | I | 11:33:2 - caf requests History update
+19.07.2019 | I | 11:33:15 - dataStorage saved
+19.07.2019 | W | 11:33:15 - FILE dataStorage.json NOT UPLOADED - PROXY MODE ACTIVE

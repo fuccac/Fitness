@@ -1,22 +1,71 @@
-:root {
-    --mainWidth: 98vw;
-    --mainColor: rgb(194, 214, 245);
-    --tableHeadColor:rgb(38, 78, 39);
-    --tableNthChildColor:rgb(240, 240, 240);
-    --mainFontColor:rgb(0, 0, 0);
-    --mainButtonColor: rgb(187, 198, 228);
-    --mainBorderColor: rgb(0, 0, 0);
-    --mainInputHeight: 15px;
-    --mainInputWidth: 200px;
-    --mainSelectHeight: 21px;
-    --mainSelectWidth: 204px;
-    --mainFontSize: 10px;
-}
+
+@media only screen and (min-width: 1110px) {
+    :root {
+        --mainWidth: 98vw;
+        --mainColor: rgb(194, 214, 245);
+        --tableHeadColor: rgb(38, 78, 39);
+        --tableNthChildColor: rgb(240, 240, 240);
+        --mainFontColor: rgb(0, 0, 0);
+        --mainButtonColor: rgb(187, 198, 228);
+        --mainBorderColor: rgb(0, 0, 0);
+        --mainInputHeight: 15px;
+        --mainInputWidth: 200px;
+        --mainSelectHeight: 21px;
+        --mainSelectWidth: 204px;
+        --mainFontSize: 11px;
+        --stdTable_td_th_padding:6px;
+        --tab_labelWidth: 10em;
+        --mainButtonWidth: 100px;
+        --mainButtonHeight: 30px;
+    }
+  }
+
+  @media only screen and (max-width: 1109px) {
+    :root {
+        --mainWidth: 98vw;
+        --mainColor: rgb(194, 214, 245);
+        --tableHeadColor: rgb(38, 78, 39);
+        --tableNthChildColor: rgb(240, 240, 240);
+        --mainFontColor: rgb(0, 0, 0);
+        --mainButtonColor: rgb(187, 198, 228);
+        --mainBorderColor: rgb(0, 0, 0);
+        --mainInputHeight: 15px;
+        --mainInputWidth: 150px;
+        --mainSelectHeight: 21px;
+        --mainSelectWidth: 155px;
+        --mainFontSize: 8px;
+        --stdTable_td_th_padding:4px;
+        --tab_labelWidth: 5em;
+        --mainButtonWidth: 80px;
+        --mainButtonHeight: 20px;
+    }
+  }
+
+  @media only screen and (max-width: 808px) {
+    :root {
+        --mainWidth: 98vw;
+        --mainColor: rgb(194, 214, 245);
+        --tableHeadColor: rgb(38, 78, 39);
+        --tableNthChildColor: rgb(240, 240, 240);
+        --mainFontColor: rgb(0, 0, 0);
+        --mainButtonColor: rgb(187, 198, 228);
+        --mainBorderColor: rgb(0, 0, 0);
+        --mainInputHeight: 15px;
+        --mainInputWidth: 125px;
+        --mainSelectHeight: 21px;
+        --mainSelectWidth: 130px;
+        --mainFontSize: 7px;
+        --stdTable_td_th_padding:3px;
+        --tab_labelWidth: 4em;
+        --mainButtonWidth: 70px;
+        --mainButtonHeight: 15px;
+    }
+  }
 
 body {
     font-family: Helvetica, "Trebuchet MS", Arial, sans-serif !important;
     overflow: hidden;
-    font-size: 12px;
+    font-size: var(--mainFontSize);
     zoom: 1;
     color: var(--mainFontColor);
 }
@@ -39,9 +88,9 @@ button:hover {
     align-self: center;
 }
 
-#div_changeLog{
-    height:70%;
-    overflow-y:scroll;
+#div_changeLog {
+    height: 70%;
+    overflow-y: scroll;
 }
 
 #div_login {
@@ -59,7 +108,7 @@ button:hover {
     overflow: hidden;
 }
 
-#div_eventLog{
+#div_eventLog {
     max-height: 80%;
     overflow-y: scroll;
 }
@@ -86,12 +135,11 @@ button:hover {
 
 #div_GraphControl {
     background-color: var(--mainColor);
-    max-height: 10%;
     padding-bottom: 5px;
 }
 
-#div_exerciseStatistics{
-    height:60%;
+#div_exerciseStatistics {
+    height: 60%;
 }
 
 #div_exerciseHistory {
@@ -173,7 +221,7 @@ button:hover {
 .tab label {
     display: inline-block;
     height: 10px;
-    width: 10em;
+    width: var(--tab_labelWidth);
     font-size: 10px;
     padding-left: 5px;
 }
@@ -186,8 +234,8 @@ button:hover {
     background-color: var(--mainButtonColor);
     text-align: center;
     font-size: var(--mainFontSize);
-    width: 100px;
-    height: 30px;
+    width: var(--mainButtonWidth);
+    height: var(--mainButtonHeight);
     padding: 10px;
 }
 
@@ -205,7 +253,7 @@ button:hover {
 
 #button_logOut {
     float: right;
-    padding-top:15px;
+    padding-top: 15px;
 }
 
 /* CANVAS */
@@ -217,17 +265,15 @@ button:hover {
 
 /* TABLES */
 
-
-.deleteButton:hover{
+.deleteButton:hover {
     background: rgb(202, 111, 95);
     cursor: pointer;
     font-weight: bold;
 }
 
-.hiddenExercise{
-    color:rgb(252, 0, 0);
+.hiddenExercise {
+    color: rgb(252, 0, 0);
 }
-
 
 .std_table {
     font-family: Helvetica, "Trebuchet MS", Arial, sans-serif;
@@ -238,7 +284,7 @@ button:hover {
 
 .std_table td, .std_table th {
     border: 1px solid rgb(221, 221, 211);
-    padding: 8px;
+    padding: var(--stdTable_td_th_padding);;
 }
 
 .std_table td:first-child {
@@ -246,7 +292,7 @@ button:hover {
 }
 
 .std_table thead tr td {
-    background:  var(--tableHeadColor);
+    background: var(--tableHeadColor);
     position: sticky;
     top: 0px;
     z-index: 1;
@@ -256,8 +302,8 @@ button:hover {
     position: absolute;
 }
 
-.selected{
-    background: rgb(107, 156, 115)!important; 
+.selected {
+    background: rgb(107, 156, 115)!important;
     font-weight: bold;
 }
 
@@ -273,14 +319,12 @@ button:hover {
     color: white;
 }
 
-
-
-#table_monthlyWins thead tr td{
-    width:50%
+#table_monthlyWins thead tr td {
+    width: 50%
 }
 
-#table_dailyWins thead tr td{
-    width:50%
+#table_dailyWins thead tr td {
+    width: 50%
 }
 
 /* OTHER CLASSES */
@@ -293,12 +337,12 @@ button:hover {
     font-size: 14px;
 }
 
-.changeLog_Feature{
+.changeLog_Feature {
     font-weight: bold;
     color: rgb(42, 136, 29);
 }
 
-.changeLog_Bug{
+.changeLog_Bug {
     font-weight: bold;
     color: rgb(179, 49, 49);
 }
@@ -370,6 +414,6 @@ button:hover {
     position: absolute;
 }
 
-#input_chatText{
-    width:50%;
+#input_chatText {
+    width: 50%;
 }

@@ -1,9 +1,8 @@
 // @ts-nocheck
 /*jshint esversion: 6 */
-
 function Common() {
 
-    this.sortSelect = function(doc, selElem) {
+    this.sortSelect = function (doc, selElem) {
         var tmpAry = new Array();
         for (let i = 0; i < selElem.options.length; i++) {
             tmpAry[i] = new Array();
@@ -24,39 +23,39 @@ function Common() {
         return;
     };
 
-    this.addOptionGroup = function(doc, select, Name) {
+    this.addOptionGroup = function (doc, select, Name) {
         var option = doc.createElement('OPTGROUP');
         option.label = Name;
         option.id = Name;
         select.add(option);
     };
-    
-    this.addToolTip = function(toolTipText, toolTipClass, element) {
+
+    this.addToolTip = function (toolTipText, toolTipClass, element) {
         element.classList.add(toolTipClass);
         element.innerHTML += "<span class=\"tooltiptext\">" + toolTipText + "</span>";
     };
-    
-    this.addOption = function(doc, select, key, Name, group) {
+
+    this.addOption = function (doc, select, key, Name, group) {
         var option = doc.createElement('option');
-    
+
         if (group == undefined) {
             option.text = Name;
             option.value = key;
             select.add(option);
             return;
         }
-    
+
         var optionGroup = doc.getElementById(group);
         if (optionGroup == undefined) {
-            this.addOptionGroup(doc,select, group);
+            this.addOptionGroup(doc, select, group);
             optionGroup = doc.getElementById(group);
         }
         option.text = Name;
         option.value = key;
         optionGroup.appendChild(option);
     };
-    
-    this.sortTable = function(n, table) {
+
+    this.sortTable = function (n, table) {
         table.style.cursor = "wait";
         m = n.cellIndex;
         matcher = /(\d{2}).(\d{2}).(\d{4})/;
@@ -110,7 +109,7 @@ function Common() {
                         break;
                     }
                 } else if (dir == "desc") {
-    
+
                     if (x.innerHTML.includes("Level")) {
                         startOfRepX = x.children[0].innerHTML.substring(6, 6 + 2);
                         startOfRepY = y.children[0].innerHTML.substring(6, 6 + 2);
@@ -161,11 +160,11 @@ function Common() {
         table.style.cursor = "default";
     };
 
-    this.isValidDate = function(d) {
+    this.isValidDate = function (d) {
         return d instanceof Date && !isNaN(d);
     };
 
-    this.getPaceUnitOptions = function(unit) {
+    this.getPaceUnitOptions = function (unit) {
         let result = {
             isPaceUnit: false,
             invert: false,
@@ -173,7 +172,7 @@ function Common() {
             first: "",
             sec: "",
         };
-    
+
         let paceUnitsArray = PACE_UNITS.split(";");
         for (let iterator = 0; iterator < paceUnitsArray.length; iterator++) {
             if (paceUnitsArray[iterator] === unit) {
@@ -189,24 +188,24 @@ function Common() {
             result.sec = "";
             result.showPaceEntryMask = false;
             result.isPaceUnit = false;
-    
+
         }
-    
+
         return result;
-    
+
     };
 
-    this.getDateInfo = function(date){
+    this.getDateInfo = function (date) {
         let dateInfo = {
-            isToday : false,
-            isLast5Days : false,
-            isThisMonth : false,
-            isLastMonth : false,
-            day:0,
-            month:0,
-            year:0,
-            historyDateString:"",
-            currentMonthName:"",
+            isToday: false,
+            isLast5Days: false,
+            isThisMonth: false,
+            isLastMonth: false,
+            day: 0,
+            month: 0,
+            year: 0,
+            historyDateString: "",
+            currentMonthName: "",
         };
         let MONTHS = ['Jänner', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
         let todayDate = this.createZeroDate(new Date());
@@ -216,13 +215,13 @@ function Common() {
         let dateMinus5Days = this.createZeroDate(new Date());
         dateMinus5Days.setDate(dateMinus5Days.getDate() - 5);
 
-        lastMonth= this.createZeroDate(new Date());
+        lastMonth = this.createZeroDate(new Date());
         lastMonth.setMonth(lastMonth.getMonth() - 1);
         let lastMonthYear = lastMonth.getFullYear();
         lastMonth = lastMonth.getMonth();
 
-        
-        
+
+
         if (currentDate.getDate() == todayDate.getDate() && currentDate.getMonth() == todayDate.getMonth() && currentDate.getFullYear() == todayDate.getFullYear()) {
             dateInfo.isToday = true;
         }
@@ -242,7 +241,7 @@ function Common() {
         dateInfo.day = currentDate.getDate();
         dateInfo.month = currentDate.getMonth();
         dateInfo.year = currentDate.getFullYear();
-        dateInfo.historyDateString = this.getDateFormat(currentDate,"YYYY-MM-DD");
+        dateInfo.historyDateString = this.getDateFormat(currentDate, "YYYY-MM-DD");
         dateInfo.currentMonthName = MONTHS[Number(dateInfo.historyDateString.substring(5, 5 + 2)) - 1] + " " + dateInfo.historyDateString.substring(0, 0 + 4);
 
         return dateInfo;
@@ -250,98 +249,104 @@ function Common() {
     };
 
     this.getDateFormat = function (date, format, fromFormat) {
-		var addZeroMonth = "";
-		var addZeroDay = "";
-		if (typeof fromFormat === 'undefined') { fromFormat = 'default'; }
+        var addZeroMonth = "";
+        var addZeroDay = "";
+        if (typeof fromFormat === 'undefined') { fromFormat = 'default'; }
 
-		if (format === "YYYY-MM-DD") {
-			if (fromFormat === "DD.MM.YYYY") {
-				var day = date.substring(0, 2);
-				var month = date.substring(3, 5);
-				var year = date.substring(6);
-				date = year + "-" + month + "-" + day;
-			}
-			else {
-				if (date.getMonth() < 9) {
-					addZeroMonth = "0";
-				}
-				if (date.getDate() < 10) {
-					addZeroDay = "0";
-				}
-				date = date.getFullYear() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + addZeroDay + date.getDate();
-			}
-		}
-		if (format === "DD-MM-YYYY") {
-			if (date.getMonth() < 9) {
-				addZeroMonth = "0";
-			}
-			if (date.getDate() < 10) {
-				addZeroDay = "0";
-			}
-			date = addZeroDay + date.getDate() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + date.getFullYear();
-		}
-		if (format === "DD.MM.YYYY") {
-			if (date.getMonth() < 9) {
-				addZeroMonth = "0";
-			}
-			if (date.getDate() < 10) {
-				addZeroDay = "0";
-			}
-			date = addZeroDay + date.getDate() + "." + addZeroMonth + (date.getMonth() + 1) + "." + date.getFullYear();
-		}
+        if (format === "YYYY-MM-DD") {
+            if (fromFormat === "DD.MM.YYYY") {
+                var day = date.substring(0, 2);
+                var month = date.substring(3, 5);
+                var year = date.substring(6);
+                date = year + "-" + month + "-" + day;
+            }
+            else {
+                if (date.getMonth() < 9) {
+                    addZeroMonth = "0";
+                }
+                if (date.getDate() < 10) {
+                    addZeroDay = "0";
+                }
+                date = date.getFullYear() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + addZeroDay + date.getDate();
+            }
+        }
+        if (format === "DD-MM-YYYY") {
+            if (date.getMonth() < 9) {
+                addZeroMonth = "0";
+            }
+            if (date.getDate() < 10) {
+                addZeroDay = "0";
+            }
+            date = addZeroDay + date.getDate() + "-" + addZeroMonth + (date.getMonth() + 1) + "-" + date.getFullYear();
+        }
+        if (format === "DD.MM.YYYY") {
+            if (date.getMonth() < 9) {
+                addZeroMonth = "0";
+            }
+            if (date.getDate() < 10) {
+                addZeroDay = "0";
+            }
+            date = addZeroDay + date.getDate() + "." + addZeroMonth + (date.getMonth() + 1) + "." + date.getFullYear();
+        }
 
-		return date;
+        return date;
 
-	};
-
-	this.createViennaDate = function () {
-		viennaDate = new Date().toLocaleString("en-US", { timeZone: "Europe/Vienna" });
-		viennaDate = new Date(viennaDate);
-		return viennaDate;
-	};
-
-
-
-	this.createZeroDate = function (date) {
-		if (typeof date === 'undefined') {
-			zeroDate = new Date();//.toLocaleString("en-US", {timeZone: "Europe/Vienna"});
-			zeroDate = new Date(zeroDate);
-			zeroDate.setHours(0);
-			zeroDate.setMinutes(0);
-			zeroDate.setSeconds(0);
-		}
-		else {
-			zeroDate = new Date(date);
-			zeroDate.setHours(0);
-			zeroDate.setMinutes(0);
-			zeroDate.setSeconds(0);
-		}
-		return zeroDate;
-	};
-
-	
-
-	this.daysBetween = function (date1, date2) {
-		var one_day = 1000 * 60 * 60 * 24;
-		var date1_ms = date1.getTime();
-		var date2_ms = date2.getTime();
-		var difference_ms = date2_ms - date1_ms;
-		return Math.abs(Math.round(difference_ms / one_day));
-	};
-
-	this.HTMLBold = function (string) {
-		return "<b>" + string + "</b>";
     };
-    
-    this.checkIfString= function(value) {
+
+    this.createViennaDate = function () {
+        viennaDate = new Date().toLocaleString("en-US", { timeZone: "Europe/Vienna" });
+        viennaDate = new Date(viennaDate);
+        return viennaDate;
+    };
+
+
+
+    this.createZeroDate = function (date) {
+        if (typeof date === 'undefined') {
+            zeroDate = new Date();//.toLocaleString("en-US", {timeZone: "Europe/Vienna"});
+            zeroDate = new Date(zeroDate);
+            zeroDate.setHours(0);
+            zeroDate.setMinutes(0);
+            zeroDate.setSeconds(0);
+        }
+        else {
+            zeroDate = new Date(date);
+            zeroDate.setHours(0);
+            zeroDate.setMinutes(0);
+            zeroDate.setSeconds(0);
+        }
+        return zeroDate;
+    };
+
+
+
+    this.daysBetween = function (date1, date2) {
+        var one_day = 1000 * 60 * 60 * 24;
+        var date1_ms = date1.getTime();
+        var date2_ms = date2.getTime();
+        var difference_ms = date2_ms - date1_ms;
+        return Math.abs(Math.round(difference_ms / one_day));
+    };
+
+    this.HTMLBold = function (string) {
+        return "<b>" + string + "</b>";
+    };
+
+    this.HTMLColor = function (string, color) {
+        return "<span style=\"color:" + color + "\">" + string + "</span>";
+    };
+
+
+
+    this.checkIfString = function (value) {
         return Object.prototype.toString.call(value) === "[object String]";
     };
-    
-    this.checkIfDate= function(value) {
+
+    this.checkIfDate = function (value) {
         return Object.prototype.toString.call(value) === "[object Date]";
     };
-    
-    this.checkIfNumber= function(value) {
+
+    this.checkIfNumber = function (value) {
         return (typeof value == 'number');
     };
 
@@ -483,9 +488,9 @@ function Common() {
 
 if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
-      exports = module.exports = Common;
+        exports = module.exports = Common;
     }
     exports.Common = Common;
-  } else {
+} else {
     window.Common = Common;
-  }
+}

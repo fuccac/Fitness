@@ -460,16 +460,16 @@ function startServer() {
 				graphData[monthName] = FITNESS_MANAGER.monthlyDataExercise[monthName][data.id];
 
 				for (let playerName in FITNESS_MANAGER.registeredPlayers) {
-					if(graphData[monthName] == undefined){
+					if (graphData[monthName] == undefined) {
 						graphData[monthName] = {};
 					}
-					if(graphData[monthName][playerName]==undefined){
+					if (graphData[monthName][playerName] == undefined) {
 						graphData[monthName][playerName] = 0;
 					}
-					
+
 				}
 			}
-			
+
 
 			SOCKET_LIST[newPlayer.id].emit('refreshExerciseGraph', {
 				graph: graphData,
@@ -480,20 +480,42 @@ function startServer() {
 		socket.on("requestExerciseStatistic", function (data) {
 			let repsDaily;
 			let repsMonthly;
-			
-			try{
-				repsDaily= FITNESS_MANAGER.maxExerciseCounts[data.id].daily[PLAYER_LIST[socket.id].name];
-				repsMonthly= FITNESS_MANAGER.maxExerciseCounts[data.id].daily[PLAYER_LIST[socket.id].name];
+			let points;
+			let reps;
+
+			try {
+				repsDaily = FITNESS_MANAGER.maxExerciseCounts[data.id].daily[PLAYER_LIST[socket.id].name];
 			}
-			catch(e){
+			catch (e) {
+				logFile.log("ExerciseStatistic: repsDaily for player " + PLAYER_LIST[socket.id].name + "not available", false, 0);
 				repsDaily = 0;
+			}
+			try {
+				repsMonthly = FITNESS_MANAGER.maxExerciseCounts[data.id].monthly[PLAYER_LIST[socket.id].name];
+			}
+			catch (e) {
+				logFile.log("ExerciseStatistic: repsMonthly for player " + PLAYER_LIST[socket.id].name + "not available", false, 0);
 				repsMonthly = 0;
 			}
-			 
-			
+			try {
+				points = FITNESS_MANAGER.exerciseList[data.id].pointsPerPlayer[PLAYER_LIST[socket.id].name];
+			}
+			catch (e) {
+				logFile.log("ExerciseStatistic: points for player " + PLAYER_LIST[socket.id].name + "not available", false, 0);
+				points = 0;
+			}
+			try {
+				reps = FITNESS_MANAGER.exerciseList[data.id].repsPerPlayer[PLAYER_LIST[socket.id].name];
+			}
+			catch (e) {
+				logFile.log("ExerciseStatistic: reps for player " + PLAYER_LIST[socket.id].name + "not available", false, 0);
+				reps = 0;
+			}
+
+
 			SOCKET_LIST[newPlayer.id].emit('refreshExerciseStatistics', {
-				points: FITNESS_MANAGER.exerciseList[data.id].pointsPerPlayer[PLAYER_LIST[socket.id].name],
-				reps: FITNESS_MANAGER.exerciseList[data.id].repsPerPlayer[PLAYER_LIST[socket.id].name],
+				points: points,
+				reps: reps,
 				repsDaily: repsDaily,
 				repsMonthly: repsMonthly,
 				category: FITNESS_MANAGER.exerciseList[data.id].achievementInfo.achievementCategory,
@@ -714,7 +736,9 @@ setInterval(function () {
 		}
 	}
 
-
+	if (common.getDateInfo(FITNESS_MANAGER.today).isToday == false || FITNESS_MANAGER.featuredExerciseId == 0){
+		FITNESS_MANAGER.featureNewExercise();
+	}
 	FITNESS_MANAGER.today = date;
 }, config.INTERVAL);
 
