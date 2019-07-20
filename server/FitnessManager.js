@@ -21,6 +21,8 @@ class FitnessManager {
             dataStorage: false,
         };
         this.loadingDone = false;
+        this.totalHistoryEntries = 0;
+        this.featuredExerciseId = 0;
 
         //BAR CHARTS
         this.monthlyData = {};
@@ -37,6 +39,11 @@ class FitnessManager {
         this.fullDailyResetStrengthGraph = {};
 
         //WORK OBJECTS
+
+        this.exerciseEntryCount = {};
+        this.exerciseTotalReps = {};
+        this.exerciseRepsPerEntryAverage = {};
+
         this.monthlyDataExercise = {};
         this.monthlyDataExerciseCategory = {};
         this.dailyDataExercise = {};
@@ -45,6 +52,8 @@ class FitnessManager {
         this.maxExerciseCountsCategory = {};
         this.dailyWins = {};
         this.monthlyWins = {};
+        this.featuredExerciseId = 0;
+
 
         //WORK OBJECTS WITH SAVE FILE SUPPORT
         this.registeredPlayers = {};
@@ -58,8 +67,24 @@ class FitnessManager {
         this.paceUnits = "min/km;min/m;Wdh/min;Wdh/sec";
         this.paceInvert = "0;0;1;1";
 
-
     }
+
+    featureNewExercise() {
+        let randomNumber = Math.floor(Math.random() * Object.keys(this.exerciseList).length);
+        let counter = 0;
+        for (let exId in this.exerciseList) {
+            if (counter == randomNumber) {
+                this.featuredExerciseId = exId;
+                this.addToEventLog(common.HTMLBold(common.HTMLColor("EINE NEUE DOUBLE TIME ÜBUNG WURDE FESTGELEGT: " + this.exerciseList[this.featuredExerciseId].name, "red")));
+            }
+            counter++;
+
+        }
+    }
+
+
+
+
 
 
     //************************************************************/
@@ -331,7 +356,7 @@ class FitnessManager {
     }
 
     addToHistory(id, playerName, exerciseId, weight, count, countAdditional, date, result) {
-        
+
         if (countAdditional == "" || countAdditional == undefined) {
             countAdditional = undefined;
         }
@@ -344,6 +369,13 @@ class FitnessManager {
         date = common.getDateFormat(date, "YYYY-MM-DD");
         var points = calc.calculatePoints(this.exerciseList[exerciseId], weight, count, countAdditional, pace);
 
+        let doubleTimeMessage = "";
+        if (this.featuredExerciseId == exerciseId) {
+            //doubleTime
+            points *= 2;
+            doubleTimeMessage = "+ Double Time Bonus";
+
+        }
         if (this.history[date] != undefined) {
             for (let iterator in this.history[date].exerciseId) {
                 var exId = this.history[date].exerciseId[iterator];
@@ -355,8 +387,8 @@ class FitnessManager {
                     this.history[date].countAdditional[iterator] = 0;
                     this.history[date].pace[iterator] = "-";
                     this.history[date].exUnit[iterator] = this.exerciseList[exerciseId].unit;
+                    this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte " + doubleTimeMessage + ")");
 
-                    this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte)");
                     result("added workout to existing history");
                     return;
                 }
@@ -425,7 +457,7 @@ class FitnessManager {
             this.history[date] = newHistoryEntry;
         }
 
-        this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte)");
+        this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte " + doubleTimeMessage + ")");
         result("added workout to existing history");
 
 
@@ -1008,6 +1040,38 @@ class FitnessManager {
         var maxExerciseCountsCategoryDaily = {};
         var maxExerciseCountsCategoryMonthly = {};
         var maxExerciseCountsCategoryOverall = {};
+        this.exerciseEntryCount = {};
+        this.exerciseRepsPerEntryAverage = {};
+
+        //points
+        this.dailyWins = {};
+        this.monthlyWins = {};
+        this.maxExerciseCountsCategory = {};
+        this.monthlyDataExercise = {};
+        this.monthlyDataExerciseCategory = {};
+        this.dailyDataExercise = {};
+        this.dailyDataExerciseCategory = {};
+
+        var todayDate = common.createZeroDate();
+        var currentMonth;
+        var currentYear;
+
+
+        var sumPointsLastMonth = {};
+        var monthlySum = {};
+        var monthlyNegative = {};
+        var monthlySumWithNegative = {};
+        var monthlyCardioSum = {};
+        var monthlyStrengthSum = {};
+        var dailySum = {};
+        var dailyCardio = {};
+        var dailyStrength = {};
+        var dailySumNegative = {};
+        var dailySumWithNegative = {};
+        var daysThisMonth = todayDate.getDate();
+
+
+
 
 
         //points
@@ -1166,6 +1230,27 @@ class FitnessManager {
                 var historyName = historyEntry.playerName[historyIteratorPerDate];
                 var exerciseId = historyEntry.exerciseId[historyIteratorPerDate];
                 var exCategory = this.exerciseList[exerciseId].achievementInfo.achievementCategory;
+
+
+                this.totalHistoryEntries++;
+
+                if (this.exerciseEntryCount[exerciseId] != undefined) {
+                    this.exerciseEntryCount[exerciseId]++;
+                }
+                else {
+                    this.exerciseEntryCount[exerciseId] = 1;
+                }
+
+                if (this.exerciseTotalReps[exerciseId] != undefined) {
+                    this.exerciseTotalReps[exerciseId] += historyEntry.count[historyIteratorPerDate];
+                }
+                else {
+                    this.exerciseTotalReps[exerciseId] = historyEntry.count[historyIteratorPerDate];
+                }
+
+
+                this.exerciseRepsPerEntryAverage[exerciseId] = this.exerciseTotalReps[exerciseId] / this.exerciseEntryCount[exerciseId];
+
                 //set correct exercise names in history
                 if (this.exerciseList[exerciseId].deleted) {
                     this.history[historyDate].exName[historyIteratorPerDate] += " [gelöscht]";
@@ -1693,17 +1778,20 @@ class FitnessManager {
                 };
             }
             let lastWinner = this.history[historyDate].dailyWinner;
+
+            if (dailyWinner == undefined) dailyWinner = "Keiner";
+            if (lastWinner == undefined) lastWinner = "Keiner";
+
             if (lastWinner != dailyWinner) {
                 if (dailyWinner == "Keiner" && lastWinner != "Keiner") {
-                    this.addToEventLog("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " ist wieder frei!");
+                    this.addToEventLog(common.HTMLColor("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " ist wieder frei!", "red"));
                 }
                 if (dailyWinner != "Keiner" && lastWinner == "Keiner") {
-                    this.addToEventLog("Der Tagessieg am " + common.HTMLBold(historyDate) + " geht bis jetzt an " + common.HTMLBold(dailyWinner));
+                    this.addToEventLog(common.HTMLColor("Der Tagessieg am " + common.HTMLBold(historyDate) + " geht bis jetzt an " + common.HTMLBold(dailyWinner), "red"));
                 }
                 else if (dailyWinner != "Keiner" && lastWinner != "Keiner") {
-                    this.addToEventLog("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " geht nun an " + common.HTMLBold(dailyWinner));
+                    this.addToEventLog(common.HTMLColor("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " geht nun an " + common.HTMLBold(dailyWinner), "red"));
                 }
-
             }
             this.history[historyDate].dailyWinner = dailyWinner;
             if (this.dailyWins[dailyWinner] != undefined) {
@@ -1745,9 +1833,7 @@ class FitnessManager {
             }
 
 
-
             this.registeredPlayers[playerName].points.cardioStrengthRatio = calc.calculateCardioStrengthPercents(this.registeredPlayers[playerName].points.cardio, this.registeredPlayers[playerName].points.strength);
-
 
         }
 

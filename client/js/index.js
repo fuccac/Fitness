@@ -30,6 +30,8 @@ var button_link = document.getElementById('button_link');
 var button_img = document.getElementById('button_img');
 var button_hideExercise = document.getElementById('button_hideExercise');
 var button_showHiddenExercises = document.getElementById('button_showHiddenExercises');
+var button_tabProfile = document.getElementById('button_tabProfile');
+var button_saveProfileData = document.getElementById('button_saveProfileData');
 
 //DIVS
 var div_ExerciseOverview = document.getElementById('div_ExerciseOverview');
@@ -45,7 +47,7 @@ var div_competition = document.getElementById('div_competition');
 var div_events = document.getElementById('div_events');
 var div_eventLog = document.getElementById('div_eventLog');
 var div_graphExercise = document.getElementById('div_graphExercise');
-
+var div_profile = document.getElementById('div_profile');
 
 //INPUTS
 var input_exerciseName = document.getElementById('input_exerciseName');
@@ -71,6 +73,9 @@ var input_RememberMe = document.getElementById('input_RememberMe');
 var input_chatText = document.getElementById('input_chatText');
 var input_doneExerciseAdditional = document.getElementById('input_doneExerciseAdditional');
 var input_paceConstant = document.getElementById('input_paceConstant');
+var input_personalEmailAddress = document.getElementById('input_personalEmailAddress');
+var input_personalColor = document.getElementById('input_personalColor');
+var input_allowEmails = document.getElementById('input_allowEmails');
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
@@ -116,8 +121,6 @@ var RUNTIME_CONFIG = {
 
 button_SignIn.onclick = function () {
     SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
-    var value = $("#input_Username").val();
-    alert(value);
 };
 
 button_SignUp.onclick = function () {
@@ -163,6 +166,7 @@ button_tabMainPage.onclick = function () {
     div_MainPage.style.display = "inline-block";
     div_competition.style.display = "none";
     div_events.style.display = "none";
+    div_profile.style.display = "none";
     requestGraphUpdate();
 };
 
@@ -173,6 +177,7 @@ button_tabPersonalOverview.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
     div_events.style.display = "none";
+    div_profile.style.display = "none";
     button_updateHistory.click();
 };
 
@@ -183,6 +188,7 @@ button_tabCompetition.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "inline-block";
     div_events.style.display = "none";
+    div_profile.style.display = "none";
 };
 
 button_tabStatistics.onclick = function () {
@@ -192,6 +198,7 @@ button_tabStatistics.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
     div_events.style.display = "none";
+    div_profile.style.display = "none";
     requestAchievementList();
 };
 
@@ -203,6 +210,7 @@ button_tabExerciseOverview.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
     div_events.style.display = "none";
+    div_profile.style.display = "none";
 };
 
 button_tabEventLog.onclick = function () {
@@ -212,7 +220,18 @@ button_tabEventLog.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
     div_events.style.display = "inline-block";
+    div_profile.style.display = "none";
     div_eventLog.scrollTop = div_eventLog.scrollHeight;
+};
+
+button_tabProfile.onclick = function () {
+    div_ExerciseOverview.style.display = "none";
+    div_PersonalOverview.style.display = "none";
+    div_statistics.style.display = "none";
+    div_MainPage.style.display = "none";
+    div_competition.style.display = "none";
+    div_events.style.display = "none";
+    div_profile.style.display = "inline-block";
 };
 
 button_deleteExercise.onclick = function () {
@@ -397,6 +416,10 @@ select_statisticsExercise.onchange = function () {
     requestExerciseGraphUpdate();
 };
 
+button_saveProfileData.onclick = function () {
+    sendPersonalProfileData();
+};
+
 initialize();
 /******************************************************************************************************************
 *******************************************************************************************************************
@@ -428,6 +451,10 @@ SOCKET.on('signInResponse', function (data) {
             input_paceConstant.disabled = false;
         }
         select_historyShowName.value = Name;
+        input_personalEmailAddress.value = data.profileData.email;
+        input_personalColor.value = data.profileData.color;
+        input_allowEmails.checked = data.profileData.allowEmail;
+
         button_tabMainPage.click();
         div_navigation.style.display = 'inline-block';
 
@@ -632,6 +659,14 @@ function modifyExercise(emitString) {
 function hideExercise(id) {
     SOCKET.emit("hideExercise", data = {
         id: id,
+    });
+}
+
+function sendPersonalProfileData() {
+    SOCKET.emit("requestProfileUpdate", data = {
+        email: input_personalEmailAddress.value,
+        allowEmail: input_allowEmails.checked,
+        color: input_personalColor.value,
     });
 }
 
@@ -1837,7 +1872,7 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
         if (bodyRow.classList.contains("hiddenExercise")) {
             button_hideExercise.innerHTML = "Einblenden";
-            $("#button_hideExercise").html( "Next Step..." );
+            $("#button_hideExercise").html("Next Step...");
         }
         else {
             button_hideExercise.innerHTML = "Ausblenden";

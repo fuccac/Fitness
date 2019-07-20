@@ -333,9 +333,6 @@ function Common() {
     };
 
     this.HTMLColor = function (string, color) {
-        if (color == undefined) {
-            color = "black";
-        }
         return "<span style=\"color:" + color + "\">" + string + "</span>";
     };
 

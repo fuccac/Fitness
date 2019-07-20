@@ -24,9 +24,25 @@
 			<p> Anmeldung = Name vom GoogleSheet + selbst ausgedachtes Passwort. Bitte das Passwort merken,
 				es kann nicht wiederhergestellt werden. Falls kein Googlesheetname vorhanden ist,
 				einen neuen ausdenken.
+
 			</p>
 			<p>
-				NEWS (17.07.2019) v1.72:
+				NEWS (XX.XX.XXXX) v1.77:
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Double Time: Jeden Tag wird eine neue Übung
+					ausgewählt, welche dann doppelt zählt!
+				</li>
+				<li>
+					<b>Usability: </b>Manche Nachrichten im Eventlog werden ROT markiert für bessere Übersicht.
+
+				</li>
+				<li>
+					<b>Usability: </b>Anzeige für kleinere Displays mittlels dynamischem CSS lesbarer gemacht.
+
+				</li>
+			</p>
+			<p>
+				NEWS (17.07.2019) v1.76:
 
 				<li>
 					<span class="changeLog_Feature">Feature: </span>Einheitensystem erweitert
@@ -263,8 +279,8 @@
 			<input id="input_doneExerciseAdditional" class="addWorkOut" type="number" min="0" step="0.01"
 				placeholder="Anzahl Zusatz" oninput="validity.valid||(value='');" disabled="true"></input><br>
 			<label for="input_doneExerciseWeight">Übung Gewicht [kg]:</label>
-			<input id="input_doneExerciseWeight"  class="addWorkOut" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number"
-				placeholder="Benutzes Gewicht" min="0" oninput="validity.valid||(value='');"></input><br>
+			<input id="input_doneExerciseWeight" class="addWorkOut" pattern="[0-9]+([\.,][0-9]+)?" step="0.1"
+				type="number" placeholder="Benutzes Gewicht" min="0" oninput="validity.valid||(value='');"></input><br>
 			<button id="button_doneExerciseSend">Anlegen</button>
 		</div>
 		<div id="div_exerciseHistoryControl">
@@ -291,38 +307,42 @@
 		<p id="paragraph_paceUnitNotice"></p>
 		<div id="div_addNewExercise">
 			<label for="input_exerciseID" hidden="true" style="position: absolute"></label>
-			<input id="input_exerciseID"  class="modifyExercise" type="number" hidden="true" style="position: absolute"></input>
+			<input id="input_exerciseID" class="modifyExercise" type="number" hidden="true"
+				style="position: absolute"></input>
 
 			<label for="input_exerciseName">Name:</label>
-			<br><input id="input_exerciseName" class="modifyExercise" type="text" placeholder="Übungsname" required></input><br>
+			<br><input id="input_exerciseName" class="modifyExercise" type="text" placeholder="Übungsname"
+				required></input><br>
 
 			<label id="label_input_exerciseDifficulty" for="input_exerciseDifficulty">Schwierigkeit (1,10,100):</label>
-			<br><input id="input_exerciseDifficulty" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
-				placeholder="Faktor für 1x" min="-50" max="5" oninput="validity.valid||(value='');">
-			<input id="input_exerciseDifficulty10" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
-				placeholder="Faktor für 10x" min="-50" max="5" oninput="validity.valid||(value='');">
-			<input id="input_exerciseDifficulty100" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" type="number"
-				placeholder="Faktor für 100x" min="-50" max="5" oninput="validity.valid||(value='');"></input>
-			<input id="input_paceConstant" class="modifyExercise" disabled="true" pattern="[0-9]+([\.,][0-9]+)?" step="0.001" type="number"
-				placeholder="Pace Konstante" min="0" oninput="validity.valid||(value='');"></input><br>
+			<br><input id="input_exerciseDifficulty" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01"
+				type="number" placeholder="Faktor für 1x" min="-50" max="5" oninput="validity.valid||(value='');">
+			<input id="input_exerciseDifficulty10" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01"
+				type="number" placeholder="Faktor für 10x" min="-50" max="5" oninput="validity.valid||(value='');">
+			<input id="input_exerciseDifficulty100" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01"
+				type="number" placeholder="Faktor für 100x" min="-50" max="5"
+				oninput="validity.valid||(value='');"></input>
+			<input id="input_paceConstant" class="modifyExercise" disabled="true" pattern="[0-9]+([\.,][0-9]+)?"
+				step="0.001" type="number" placeholder="Pace Konstante" min="0"
+				oninput="validity.valid||(value='');"></input><br>
 
 			<label for="input_exerciseBaseWeight">Basisgewicht:</label>
 			<label for="select_exerciseType">Typ:</label>
 			<label for="select_bothSides">Beidseitig :</label>
 
 
-			<br><input id="input_exerciseBaseWeight" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.1" type="number"
-				placeholder="Standardgewicht" min="0" oninput="validity.valid||(value='');"></input>
+			<br><input id="input_exerciseBaseWeight" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.1"
+				type="number" placeholder="Standardgewicht" min="0" oninput="validity.valid||(value='');"></input>
 
 
-			<select id="select_exerciseType" class="modifyExercise" >
+			<select id="select_exerciseType" class="modifyExercise">
 				<option value="Cardio">Cardio</option>
 				<option value="Kraft">Kraft</option>
 				<option value="-">-</option>
 				<option value="Strafe">Strafe</option>
 			</select>
 
-			<select id="select_bothSides" class="modifyExercise" >
+			<select id="select_bothSides" class="modifyExercise">
 				<option value="true">Ja</option>
 				<option value="false">Nein</option>
 			</select><br>
@@ -332,7 +352,7 @@
 			<label for="select_exerciseEquipment">Ausrüstung:</label>
 			<label for="input_exerciseComment">Kommentar:</label>
 
-			<br><select id="select_exerciseUnit" class="modifyExercise" >
+			<br><select id="select_exerciseUnit" class="modifyExercise">
 				<option value="km">km</option>
 				<option value="m">m</option>
 				<option value="Wdh">Wdh</option>
@@ -345,7 +365,7 @@
 				<option value="pro Tschick">pro Tschick</option>
 			</select>
 
-			<select id="select_exerciseEquipment" class="modifyExercise" >
+			<select id="select_exerciseEquipment" class="modifyExercise">
 				<optgroup label="Hanteln/Gewichte">
 					<option value="Langhantel">Langhantel</option>
 					<option value="Hantel">Hantel</option>
@@ -374,7 +394,7 @@
 			</select>
 
 
-			<input id="input_exerciseComment" class="modifyExercise"  type="text" placeholder="Kommentarfeld"></input>
+			<input id="input_exerciseComment" class="modifyExercise" type="text" placeholder="Kommentarfeld"></input>
 			<br>
 			<br>
 			<button id="button_createExercise">Anlegen</button>
@@ -436,18 +456,32 @@
 
 	</div>
 
-	<div id="div_navigation">
-		<button id="button_tabMainPage">Übersicht</button>
-		<button id="button_tabExerciseOverview">Übungen</button>
-		<button id="button_tabPersonalOverview">Eintragen</button>
-		<button id="button_tabStatistics">Erfolge</button>
-		<button id="button_tabCompetition">Siege</button>
-		<button id="button_tabEventLog">Events</button>
-		<input id="input_onlineIndicator" type="checkbox" disabled="true">Online Status</input>
-		<a href="https://trello.com/invite/b/aZfDB1r0/d9bb40353771097cb89993e31baef54b/fitnessapp"
-			target="_blank">Feedback</a>
-		<a href="#" id="button_logOut" onclick="logout();">Ausloggen</a>
+	<div id="div_profile" class="tab">
+		<label for="input_personalEmailAddress">Email Adresse:</label>
+		<input id="input_personalEmailAddress" type="text" pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/"
+			placeholder="herbert@beispiel.com"></input>
+		<label for="input_allowEmails">Erlaube Emails von GAGS:</label>
+		<input id="input_allowEmails" type="checkbox" checked="false"></input><br>
+		<label for="input_personalColor">Farbe:</label>
+		<input id="input_personalColor" type="color"></input>
+		<button id="button_saveProfileData">Speichern</button>
 	</div>
+
+	<footer>
+		<div id="div_navigation">
+			<button id="button_tabMainPage">Übersicht</button>
+			<button id="button_tabExerciseOverview">Übungen</button>
+			<button id="button_tabPersonalOverview">Eintragen</button>
+			<button id="button_tabStatistics">Erfolge</button>
+			<button id="button_tabCompetition">Siege</button>
+			<button id="button_tabEventLog">Events</button>
+			<button id="button_tabProfile">Profil</button>
+			<input id="input_onlineIndicator" type="checkbox" disabled="true">Online Status</input>
+			<a href="https://trello.com/invite/b/aZfDB1r0/d9bb40353771097cb89993e31baef54b/fitnessapp"
+				target="_blank">Feedback</a>
+			<a href="#" id="button_logOut" onclick="logout();">Ausloggen</a>
+		</div>
+	</footer>
 
 
 </body>
