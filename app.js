@@ -13,10 +13,8 @@ var FitnessManager = require("./server/FitnessManager");
 var DropBoxHandler = require("./server/dropBoxHandler");
 Log = require("./server/Log");
 Common = require("./client/js/common");
-<<<<<<< HEAD
 EmailManager = require("./server/EmailManager");
-=======
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
+
 
 
 //MODULE INITS
@@ -29,10 +27,8 @@ var io = require('socket.io')(server, {
 var dropbox = new DropBoxHandler();
 var logFile = new Log();
 var common = new Common();
-<<<<<<< HEAD
 var mailer = new EmailManager();
-=======
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
+
 
 
 

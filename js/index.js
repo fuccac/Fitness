@@ -30,11 +30,8 @@ var button_link = document.getElementById('button_link');
 var button_img = document.getElementById('button_img');
 var button_hideExercise = document.getElementById('button_hideExercise');
 var button_showHiddenExercises = document.getElementById('button_showHiddenExercises');
-<<<<<<< HEAD
 var button_tabProfile = document.getElementById('button_tabProfile');
 var button_saveProfileData =document.getElementById('button_saveProfileData');
-=======
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
 
 //DIVS
 var div_ExerciseOverview = document.getElementById('div_ExerciseOverview');
@@ -50,11 +47,8 @@ var div_competition = document.getElementById('div_competition');
 var div_events = document.getElementById('div_events');
 var div_eventLog = document.getElementById('div_eventLog');
 var div_graphExercise = document.getElementById('div_graphExercise');
-<<<<<<< HEAD
 var div_profile = document.getElementById('div_profile');
-=======
 
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
 
 //INPUTS
 var input_exerciseName = document.getElementById('input_exerciseName');
@@ -423,13 +417,10 @@ select_statisticsExercise.onchange = function () {
     requestExerciseGraphUpdate();
 };
 
-<<<<<<< HEAD
 button_saveProfileData.onclick = function (){
     sendPersonalProfileData();
 };
 
-=======
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
 initialize();
 /******************************************************************************************************************
 *******************************************************************************************************************
@@ -669,7 +660,6 @@ function modifyExercise(emitString) {
 function hideExercise(id) {
     SOCKET.emit("hideExercise", data = {
         id: id,
-<<<<<<< HEAD
     });
 }
 
@@ -678,8 +668,6 @@ function sendPersonalProfileData(){
         email: input_personalEmailAddress.value,
         allowEmail: input_allowEmails.checked,
         color: input_personalColor.value,
-=======
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
     });
 }
 
@@ -1885,11 +1873,6 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
         if (bodyRow.classList.contains("hiddenExercise")) {
             button_hideExercise.innerHTML = "Einblenden";
-<<<<<<< HEAD
-            $("#button_hideExercise").html("Next Step...");
-=======
-            $("#button_hideExercise").html( "Next Step..." );
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
         }
         else {
             button_hideExercise.innerHTML = "Ausblenden";

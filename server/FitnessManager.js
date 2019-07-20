@@ -39,12 +39,11 @@ class FitnessManager {
         this.fullDailyResetStrengthGraph = {};
 
         //WORK OBJECTS
-<<<<<<< HEAD
+
         this.exerciseEntryCount = {};
         this.exerciseTotalReps = {};
         this.exerciseRepsPerEntryAverage = {};
-=======
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
+
         this.monthlyDataExercise = {};
         this.monthlyDataExerciseCategory = {};
         this.dailyDataExercise = {};
@@ -68,23 +67,6 @@ class FitnessManager {
         this.paceUnits = "min/km;min/m;Wdh/min;Wdh/sec";
         this.paceInvert = "0;0;1;1";
 
-
-<<<<<<< HEAD
-=======
-    }
-
-    featureNewExercise() {
-        let randomNumber = Math.floor(Math.random() * Object.keys(this.exerciseList).length);
-        let counter = 0;
-        for (let exId in this.exerciseList) {
-            if (counter == randomNumber) {
-                this.featuredExerciseId = exId;
-                this.addToEventLog(common.HTMLBold(common.HTMLColor("EINE NEUE DOUBLE TIME ÜBUNG WURDE FESTGELEGT: " + this.exerciseList[this.featuredExerciseId].name, "red")));
-            }
-            counter++;
-
-        }
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
     }
 
     featureNewExercise() {
@@ -99,6 +81,8 @@ class FitnessManager {
 
         }
     }
+
+
 
 
 
@@ -233,7 +217,6 @@ class FitnessManager {
                     exerciseChangeFlags[exerciseKey] = true;
                     this.addToEventLog(common.HTMLBold(common.translate(exerciseKey)) + " -> Alter Wert: '" + common.HTMLBold(this.exerciseList[data.id].votes[editor][exerciseKey]) + "' | Neuer Wert: '" + common.HTMLBold(common.translate(data[exerciseKey])) + "'");
                 }
-<<<<<<< HEAD
             }
             else if (
                 (exerciseKey == "difficulty" ||
@@ -251,25 +234,6 @@ class FitnessManager {
                     this.addToEventLog(common.HTMLBold(common.translate(exerciseKey)) + " -> Alter Wert: '" + common.HTMLBold(currentKey) + "' | Neuer Wert: '" + common.HTMLBold(common.translate(data[exerciseKey])) + "'");
                 }
             }
-=======
-            }
-            else if (
-                (exerciseKey == "difficulty" ||
-                    exerciseKey == "difficulty10" ||
-                    exerciseKey == "difficulty100" ||
-                    exerciseKey == "paceConstant" ||
-                    exerciseKey == "baseWeight" ||
-                    exerciseKey == "comment") &&
-                this.exerciseList[data.id].votes[editor] == undefined) {
-                this.addToEventLog(common.HTMLBold(common.translate(exerciseKey)) + " -> Alter Wert: '" + common.HTMLBold("'Kein Vote'") + "' | Neuer Wert: '" + common.HTMLBold(common.translate(data[exerciseKey])) + "'");
-            }
-            else {
-                if (data[exerciseKey] != currentKey) {
-                    exerciseChangeFlags[exerciseKey] = true;
-                    this.addToEventLog(common.HTMLBold(common.translate(exerciseKey)) + " -> Alter Wert: '" + common.HTMLBold(currentKey) + "' | Neuer Wert: '" + common.HTMLBold(common.translate(data[exerciseKey])) + "'");
-                }
-            }
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
 
         }
 
@@ -423,12 +387,8 @@ class FitnessManager {
                     this.history[date].countAdditional[iterator] = 0;
                     this.history[date].pace[iterator] = "-";
                     this.history[date].exUnit[iterator] = this.exerciseList[exerciseId].unit;
-
-<<<<<<< HEAD
                     this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte " + doubleTimeMessage + ")");
-=======
-                    this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte "+doubleTimeMessage +")");
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
+
                     result("added workout to existing history");
                     return;
                 }
@@ -1274,7 +1234,7 @@ class FitnessManager {
                 var historyName = historyEntry.playerName[historyIteratorPerDate];
                 var exerciseId = historyEntry.exerciseId[historyIteratorPerDate];
                 var exCategory = this.exerciseList[exerciseId].achievementInfo.achievementCategory;
-<<<<<<< HEAD
+
 
                 this.totalHistoryEntries++;
                 
@@ -1297,10 +1257,6 @@ class FitnessManager {
 
                 this.exerciseRepsPerEntryAverage[exerciseId] = this.exerciseTotalReps[exerciseId] / this.exerciseEntryCount[exerciseId];
 
-
-
-=======
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
                 //set correct exercise names in history
                 if (this.exerciseList[exerciseId].deleted) {
                     this.history[historyDate].exName[historyIteratorPerDate] += " [gelöscht]";
@@ -1882,16 +1838,9 @@ class FitnessManager {
                 }
             }
 
-<<<<<<< HEAD
-            this.registeredPlayers[playerName].points.cardioStrengthRatio = calc.calculateCardioStrengthPercents(this.registeredPlayers[playerName].points.cardio, this.registeredPlayers[playerName].points.strength);
-            
-=======
-
 
             this.registeredPlayers[playerName].points.cardioStrengthRatio = calc.calculateCardioStrengthPercents(this.registeredPlayers[playerName].points.cardio, this.registeredPlayers[playerName].points.strength);
 
-
->>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
         }
 
         this.needsUpload.dataStorage = true;
