@@ -1,3 +1,35 @@
+<<<<<<< HEAD
+{
+  "name": "gags",
+  "version": "1.0.0",
+  "description": "track and funnify your workout like a boss",
+  "main": "app.js",
+  "dependencies": {
+    "dropbox": "^4.0.16",
+    "es6-promise": "^4.2.6",
+    "express": "^4.16.4",
+    "isomorphic-fetch": "^2.2.1",
+    "jshint": "^2.10.1",
+    "jsonfile-storage": "0.0.16",
+    "nodemailer": "^6.3.0",
+    "password-hash": "^1.2.2",
+    "popper.js": "^1.15.0",
+    "socket.io": "^2.2.0"
+  },
+  "engines": {
+    "node": "10.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "caf",
+  "license": "ISC",
+  "keywords": [
+    "test"
+  ]
+}
+=======
 {
   "name": "gags",
   "version": "1.0.0",
@@ -27,3 +59,4 @@
     "test"
   ]
 }
+>>>>>>> 773ce2bacec0dae39ed3d1e1e102c7b18c789e7a
