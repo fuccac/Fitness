@@ -31,7 +31,7 @@ var button_img = document.getElementById('button_img');
 var button_hideExercise = document.getElementById('button_hideExercise');
 var button_showHiddenExercises = document.getElementById('button_showHiddenExercises');
 var button_tabProfile = document.getElementById('button_tabProfile');
-var button_saveProfileData =document.getElementById('button_saveProfileData');
+var button_saveProfileData = document.getElementById('button_saveProfileData');
 
 //DIVS
 var div_ExerciseOverview = document.getElementById('div_ExerciseOverview');
@@ -76,7 +76,7 @@ var input_doneExerciseAdditional = document.getElementById('input_doneExerciseAd
 var input_paceConstant = document.getElementById('input_paceConstant');
 var input_personalEmailAddress = document.getElementById('input_personalEmailAddress');
 var input_personalColor = document.getElementById('input_personalColor');
-var input_allowEmails =  document.getElementById('input_allowEmails');
+var input_allowEmails = document.getElementById('input_allowEmails');
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
@@ -417,7 +417,7 @@ select_statisticsExercise.onchange = function () {
     requestExerciseGraphUpdate();
 };
 
-button_saveProfileData.onclick = function (){
+button_saveProfileData.onclick = function () {
     sendPersonalProfileData();
 };
 
@@ -663,7 +663,7 @@ function hideExercise(id) {
     });
 }
 
-function sendPersonalProfileData(){
+function sendPersonalProfileData() {
     SOCKET.emit("requestProfileUpdate", data = {
         email: input_personalEmailAddress.value,
         allowEmail: input_allowEmails.checked,
