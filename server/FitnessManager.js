@@ -4,12 +4,15 @@ Exercise = require("./Exercise");
 Calc = require("./calc");
 Common = require("../client/js/common");
 Log = require("./Log");
+EmailManager = require("./EmailManager");
+
 
 achievementList = require("../saves/config/achievementList");
 
 var logFile = new Log();
 calc = new Calc();
 common = new Common();
+var mailer = new EmailManager();
 
 class FitnessManager {
     constructor() {
@@ -62,34 +65,38 @@ class FitnessManager {
         this.exerciseList = {};
         this.eventLog = {
             time: [],
-            msg: []
+            msg: [],
+            html:""
         };
         this.paceUnits = "min/km;min/m;Wdh/min;Wdh/sec";
         this.paceInvert = "0;0;1;1";
 
     }
 
-    featureNewExercise() {
-        let randomNumber = Math.floor(Math.random() * Object.keys(this.exerciseList).length);
-        let counter = 0;
-        for (let exId in this.exerciseList) {
-            if (counter == randomNumber) {
-                this.featuredExerciseId = exId;
-                this.addToEventLog(common.HTMLBold(common.HTMLColor("EINE NEUE DOUBLE TIME ÜBUNG WURDE FESTGELEGT: " + this.exerciseList[this.featuredExerciseId].name, "red")));
-            }
-            counter++;
-
-        }
-    }
-
-
-
-
+    
 
 
     //************************************************************/
     //*********************Exercise Handling**********************/
     //************************************************************/
+    featureNewExercise() {
+        let randomNumber = Math.floor(Math.random() * Object.keys(this.exerciseList).length);
+        let counter = 0;
+        for (let exId in this.exerciseList) {
+            if (counter == randomNumber) {
+                if (this.exerciseList[exId].factor > 0) {
+                    this.featuredExerciseId = exId;
+                    this.addToEventLog(common.HTMLBold(common.HTMLColor("EINE NEUE DOUBLE TIME ÜBUNG WURDE FESTGELEGT: " + this.exerciseList[this.featuredExerciseId].name, "red")));
+                    return this.exerciseList[this.featuredExerciseId].name;
+                }
+                else {
+                    randomNumber++;
+                }
+
+            }
+            counter++;
+        }
+    }
 
     hideExercise(id, playerName, result) {
         if (this.exerciseList[id].isHidden[playerName] == undefined) {
@@ -580,10 +587,6 @@ class FitnessManager {
             var repsToGetDaily = this.maxExerciseCountsCategory[exCat].daily[player.name] == undefined ? 0 : this.maxExerciseCountsCategory[exCat].daily[player.name];
             var repsThisLevel;
 
-            if (exCat === "Beinheber") {
-                let x = 5;
-                x++;
-            }
 
             for (let levelOverallIterator = 0; levelOverallIterator < exercise.achievementInfo.repsToGetOverall.length; levelOverallIterator++) {
                 if (exercise.achievementInfo.repsToGetOverall[levelOverallIterator] > 0) {
@@ -981,14 +984,34 @@ class FitnessManager {
             hours = "0" + hours.toString();
         }
 
-        if (this.eventLog.time.length == 500) {
+        let FirstDateEntry = common.createZeroDate(common.getDateFormat(this.eventLog.time[0].split(" | ")[0],"YYYY-MM-DD","DD.MM.YYYY")).getTime();
+        let dateMinusThreeMonths =  common.createZeroDate(date);
+        dateMinusThreeMonths.setMonth(date.getMonth()-3);
+        dateMinusThreeMonths = dateMinusThreeMonths.getTime();
+
+        if (this.eventLog.time.length > 500 && FirstDateEntry < dateMinusThreeMonths) {
             this.eventLog.time = this.eventLog.time.slice(1);
             this.eventLog.msg = this.eventLog.msg.slice(1);
         }
         this.eventLog.time.push(common.getDateFormat(date, "DD.MM.YYYY") + " | " + hours + ":" + minutes + ":" + seconds);
         this.eventLog.msg.push(msg);
+        this.eventLog.html = this.eventLog.html + "<li>" + this.eventLog.time[this.eventLog.time.length-1] + " - " + this.eventLog.msg[this.eventLog.msg.length-1] + "</li>";
+
+
 
         this.needsUpload.dataStorage = true;
+    }
+
+    createHTMLEventLog() {
+        let start = Date.now();
+        this.eventLog.html = "";
+        for (var eventIterator = 0; eventIterator < this.eventLog.time.length; eventIterator++) {
+            this.eventLog.html = this.eventLog.html + "<li>" + this.eventLog.time[eventIterator] + " - " + this.eventLog.msg[eventIterator] + "</li>";
+        }
+
+
+        let end = Date.now();
+        logFile.log(`eventlog generation took ${end - start} ms`, false, 0);
     }
 
     addNewPlayer(name) {
@@ -1056,7 +1079,6 @@ class FitnessManager {
         var currentMonth;
         var currentYear;
 
-
         var sumPointsLastMonth = {};
         var monthlySum = {};
         var monthlyNegative = {};
@@ -1069,9 +1091,6 @@ class FitnessManager {
         var dailySumNegative = {};
         var dailySumWithNegative = {};
         var daysThisMonth = todayDate.getDate();
-
-
-
 
 
         //points
@@ -1082,25 +1101,6 @@ class FitnessManager {
         this.monthlyDataExerciseCategory = {};
         this.dailyDataExercise = {};
         this.dailyDataExerciseCategory = {};
-
-        var todayDate = common.createZeroDate();
-        var currentMonth;
-        var currentYear;
-
-
-        var sumPointsLastMonth = {};
-        var monthlySum = {};
-        var monthlyNegative = {};
-        var monthlySumWithNegative = {};
-        var monthlyCardioSum = {};
-        var monthlyStrengthSum = {};
-        var dailySum = {};
-        var dailyCardio = {};
-        var dailyStrength = {};
-        var dailySumNegative = {};
-        var dailySumWithNegative = {};
-        var daysThisMonth = todayDate.getDate();
-
 
 
 
@@ -1783,14 +1783,18 @@ class FitnessManager {
             if (lastWinner == undefined) lastWinner = "Keiner";
 
             if (lastWinner != dailyWinner) {
+                let msg;
                 if (dailyWinner == "Keiner" && lastWinner != "Keiner") {
-                    this.addToEventLog(common.HTMLColor("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " ist wieder frei!", "red"));
+                    msg = common.HTMLColor("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " ist wieder frei!", "red");
+                    this.addToEventLog(msg);
                 }
                 if (dailyWinner != "Keiner" && lastWinner == "Keiner") {
-                    this.addToEventLog(common.HTMLColor("Der Tagessieg am " + common.HTMLBold(historyDate) + " geht bis jetzt an " + common.HTMLBold(dailyWinner), "red"));
+                    msg = common.HTMLColor("Der Tagessieg am " + common.HTMLBold(historyDate) + " geht bis jetzt an " + common.HTMLBold(dailyWinner), "red");
+                    this.addToEventLog(msg);
                 }
                 else if (dailyWinner != "Keiner" && lastWinner != "Keiner") {
-                    this.addToEventLog(common.HTMLColor("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " geht nun an " + common.HTMLBold(dailyWinner), "red"));
+                    msg = common.HTMLColor("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " geht nun an " + common.HTMLBold(dailyWinner), "red");
+                    this.addToEventLog();
                 }
             }
             this.history[historyDate].dailyWinner = dailyWinner;
