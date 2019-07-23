@@ -188,14 +188,14 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		FITNESS_MANAGER.registeredPlayers = result.dataStorage.registeredPlayers;
 		FITNESS_MANAGER.eventLog = result.dataStorage.eventLog;
 		FITNESS_MANAGER.achievements = result.dataStorage.achievements;
-		try{
+		try {
 			FITNESS_MANAGER.today = new Date(result.dataStorage.fitnessManager.today);
 			FITNESS_MANAGER.featuredExerciseId = result.dataStorage.fitnessManager.featuredExerciseId;
 		}
-		catch(e){
+		catch (e) {
 			logFile.log("fitnessManager property data failed to load", false, 0);
 		}
-		
+
 		USERS = result.dataStorage.users;
 
 		logFile.log("dataStorage Loaded", false, 0);
@@ -293,7 +293,7 @@ function fitnessManagerStartUpTasks(callback) {
 function saveDataStorage() {
 	let fitnessManagerStorage = {};
 	fitnessManagerStorage.today = FITNESS_MANAGER.today;
-	fitnessManagerStorage.featuredExerciseId= FITNESS_MANAGER.featuredExerciseId;
+	fitnessManagerStorage.featuredExerciseId = FITNESS_MANAGER.featuredExerciseId;
 
 	var dataStorage = {
 		exerciseList: FITNESS_MANAGER.exerciseList,
@@ -302,7 +302,7 @@ function saveDataStorage() {
 		eventLog: FITNESS_MANAGER.eventLog,
 		achievements: FITNESS_MANAGER.achievements,
 		users: USERS,
-		fitnessManager:fitnessManagerStorage
+		fitnessManager: fitnessManagerStorage
 	};
 
 	storageManager.put({ dataStorage: dataStorage, id: config.DATA_STORAGE_FILE_NAME.replace(".json", "") }).then(result => {
@@ -459,7 +459,7 @@ function startServer() {
 			});
 		});
 
-		
+
 		socket.on("requestGraphUpdate", function (data) {
 			var graph;
 
@@ -595,10 +595,10 @@ function startServer() {
 		socket.on('SignIn', function (data) {
 			isValidPassword(data, function (checkPasswortResult) {
 				if (checkPasswortResult.success) {
-					if(USERS[checkPasswortResult.username.toUpperCase()].allowEmail == undefined){
+					if (USERS[checkPasswortResult.username.toUpperCase()].allowEmail == undefined) {
 						USERS[checkPasswortResult.username.toUpperCase()].allowEmail = false;
 					}
-					if(USERS[checkPasswortResult.username.toUpperCase()].email == undefined){
+					if (USERS[checkPasswortResult.username.toUpperCase()].email == undefined) {
 						USERS[checkPasswortResult.username.toUpperCase()].email = "Nichts hinterlegt.";
 					}
 					FITNESS_MANAGER.addToEventLog(checkPasswortResult.username + " hat sich angemeldet!");
@@ -755,9 +755,18 @@ function startServer() {
 
 }
 
-
+let dailyWinner = "Keiner";
+let lastWinner = "Keiner";
 setInterval(function () {
 	var date = common.createViennaDate();
+	lastWinner = dailyWinner;
+	dailyWinner = FITNESS_MANAGER.getDailyWinner(date);
+	if (dailyWinner != lastWinner && dailyWinner != "Keiner" && lastWinner != "Keiner") {
+		if (USERS[lastWinner.toUpperCase()].email != undefined && USERS[lastWinner.toUpperCase()].allowEmail) {
+			mailer.sendEmail(USERS[lastWinner.toUpperCase()].email, "Tagessieg verloren!", "Dein heutiger Tagessieg wurde von " + dailyWinner + " eingestellt!");
+		}
+	}
+
 	logFile.logUploadTimer++;
 	FITNESS_MANAGER.uploadTimer++;
 	if (logFile.logUploadTimer === config.LOG_UPLOAD_INTERVAL) {
@@ -775,9 +784,9 @@ setInterval(function () {
 
 	if (common.daysBetween(date, FITNESS_MANAGER.today) > 0 || FITNESS_MANAGER.featuredExerciseId == 0) {
 		let exName = FITNESS_MANAGER.featureNewExercise();
-		for(let playerName in USERS){
-			if (USERS[playerName].email != undefined && USERS[playerName].allowEmail){
-				mailer.sendEmail(USERS[playerName].email,"Neue Double Time Übung!", "Die neue Double Time Übung ist: "+exName);
+		for (let playerName in USERS) {
+			if (USERS[playerName].email != undefined && USERS[playerName].allowEmail) {
+				mailer.sendEmail(USERS[playerName].email, "Neue Double Time Übung!", "Die neue Double Time Übung ist: " + exName);
 			}
 		}
 	}

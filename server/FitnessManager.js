@@ -98,6 +98,17 @@ class FitnessManager {
         }
     }
 
+    getDailyWinner(date){
+        let historyDate = common.getDateFormat(common.createZeroDate(date),"YYYY-MM-DD");
+        try{
+            return this.history[historyDate].dailyWinner;
+        }
+        catch(e){
+            return "Keiner";
+        }
+
+    }
+
     hideExercise(id, playerName, result) {
         if (this.exerciseList[id].isHidden[playerName] == undefined) {
             this.exerciseList[id].isHidden[playerName] = true;
