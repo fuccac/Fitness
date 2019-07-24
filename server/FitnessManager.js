@@ -4,15 +4,13 @@ Exercise = require("./Exercise");
 Calc = require("./calc");
 Common = require("../client/js/common");
 Log = require("./Log");
-EmailManager = require("./EmailManager");
-
 
 achievementList = require("../saves/config/achievementList");
 
 var logFile = new Log();
 calc = new Calc();
 common = new Common();
-var mailer = new EmailManager();
+
 
 class FitnessManager {
     constructor() {
@@ -26,6 +24,7 @@ class FitnessManager {
         this.loadingDone = false;
         this.totalHistoryEntries = 0;
         this.featuredExerciseId = 0;
+        this.featuredExerciseDate = common.createViennaDate();
 
         //BAR CHARTS
         this.monthlyData = {};
@@ -86,6 +85,7 @@ class FitnessManager {
             if (counter == randomNumber) {
                 if (this.exerciseList[exId].factor > 0) {
                     this.featuredExerciseId = exId;
+                    this.featuredExerciseDate = common.createViennaDate();
                     this.addToEventLog(common.HTMLBold(common.HTMLColor("EINE NEUE DOUBLE TIME ÜBUNG WURDE FESTGELEGT: " + this.exerciseList[this.featuredExerciseId].name, "red")));
                     return this.exerciseList[this.featuredExerciseId].name;
                 }
@@ -1805,7 +1805,7 @@ class FitnessManager {
                 }
                 else if (dailyWinner != "Keiner" && lastWinner != "Keiner") {
                     msg = common.HTMLColor("Der Tagessieg von " + common.HTMLBold(lastWinner) + " am " + common.HTMLBold(historyDate) + " geht nun an " + common.HTMLBold(dailyWinner), "red");
-                    this.addToEventLog();
+                    this.addToEventLog(msg);
                 }
             }
             this.history[historyDate].dailyWinner = dailyWinner;

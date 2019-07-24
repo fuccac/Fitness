@@ -27,6 +27,7 @@ var logFile = new Log();
 var common = new Common();
 var mailer = new EmailManager();
 
+
 //GLOBALS
 var USERS = {};
 var SOCKET_LIST = {};
@@ -44,9 +45,8 @@ var addUser;
 loadSaveFiles(function (loadSaveFilesResult) {
 	logFile.log(loadSaveFilesResult, false, 0);
 	startServer();
+	setInterval(cyclicAquisition, config.INTERVAL);
 });
-
-
 
 
 //************************************************************/
@@ -56,6 +56,45 @@ loadSaveFiles(function (loadSaveFilesResult) {
 //************************************************************/
 //************************************************************/
 //************************************************************/
+var dailyWinner = "Keiner";
+var lastWinner = "Keiner";
+function cyclicAquisition() {
+	var date = common.createViennaDate();
+	lastWinner = dailyWinner;
+	dailyWinner = FITNESS_MANAGER.getDailyWinner(date);
+	if (dailyWinner != lastWinner && dailyWinner != "Keiner" && lastWinner != "Keiner") {
+		if (USERS[lastWinner.toUpperCase()].email != undefined && USERS[lastWinner.toUpperCase()].allowEmail) {
+			mailer.sendEmail(USERS[lastWinner.toUpperCase()].email, "Tagessieg verloren!", "Dein heutiger Tagessieg wurde von " + dailyWinner + " eingestellt!");
+		}
+	}
+
+	logFile.logUploadTimer++;
+	FITNESS_MANAGER.uploadTimer++;
+	if (logFile.logUploadTimer === config.LOG_UPLOAD_INTERVAL) {
+		logFile.logUploadTimer = 0;
+		dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME, function (result) {
+			logFile.log(result.msg, false, result.sev);
+		});
+	}
+	if (FITNESS_MANAGER.uploadTimer === config.SAVE_UPLOAD_INTERVAL) {
+		FITNESS_MANAGER.uploadTimer = 0;
+		if (FITNESS_MANAGER.needsUpload.dataStorage) {
+			saveDataStorage();
+		}
+	}
+
+	if (common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) > 0 || FITNESS_MANAGER.featuredExerciseId == 0) {
+		let exName = FITNESS_MANAGER.featureNewExercise();
+		for (let playerName in USERS) {
+			if (USERS[playerName].email != undefined && USERS[playerName].allowEmail) {
+				mailer.sendEmail(USERS[playerName].email, "Neue Double Time Übung!", "Die neue Double Time Übung ist: " + exName);
+			}
+		}
+	}
+
+	FITNESS_MANAGER.today = date;
+}
+
 
 function refreshEventLog() {
 	for (var iPlayer in PLAYER_LIST) {
@@ -191,6 +230,7 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		try {
 			FITNESS_MANAGER.today = new Date(result.dataStorage.fitnessManager.today);
 			FITNESS_MANAGER.featuredExerciseId = result.dataStorage.fitnessManager.featuredExerciseId;
+			FITNESS_MANAGER.featuredExerciseDate =  new Date(result.dataStorage.fitnessManager.featuredExerciseDate);
 		}
 		catch (e) {
 			logFile.log("fitnessManager property data failed to load", false, 0);
@@ -294,6 +334,7 @@ function saveDataStorage() {
 	let fitnessManagerStorage = {};
 	fitnessManagerStorage.today = FITNESS_MANAGER.today;
 	fitnessManagerStorage.featuredExerciseId = FITNESS_MANAGER.featuredExerciseId;
+	fitnessManagerStorage.featuredExerciseDate = FITNESS_MANAGER.featuredExerciseDate
 
 	var dataStorage = {
 		exerciseList: FITNESS_MANAGER.exerciseList,
@@ -754,46 +795,6 @@ function startServer() {
 	};
 
 }
-
-let dailyWinner = "Keiner";
-let lastWinner = "Keiner";
-setInterval(function () {
-	var date = common.createViennaDate();
-	lastWinner = dailyWinner;
-	dailyWinner = FITNESS_MANAGER.getDailyWinner(date);
-	if (dailyWinner != lastWinner && dailyWinner != "Keiner" && lastWinner != "Keiner") {
-		if (USERS[lastWinner.toUpperCase()].email != undefined && USERS[lastWinner.toUpperCase()].allowEmail) {
-			mailer.sendEmail(USERS[lastWinner.toUpperCase()].email, "Tagessieg verloren!", "Dein heutiger Tagessieg wurde von " + dailyWinner + " eingestellt!");
-		}
-	}
-
-	logFile.logUploadTimer++;
-	FITNESS_MANAGER.uploadTimer++;
-	if (logFile.logUploadTimer === config.LOG_UPLOAD_INTERVAL) {
-		logFile.logUploadTimer = 0;
-		dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME, function (result) {
-			logFile.log(result.msg, false, result.sev);
-		});
-	}
-	if (FITNESS_MANAGER.uploadTimer === config.SAVE_UPLOAD_INTERVAL) {
-		FITNESS_MANAGER.uploadTimer = 0;
-		if (FITNESS_MANAGER.needsUpload.dataStorage) {
-			saveDataStorage();
-		}
-	}
-
-	if (common.daysBetween(date, FITNESS_MANAGER.today) > 0 || FITNESS_MANAGER.featuredExerciseId == 0) {
-		let exName = FITNESS_MANAGER.featureNewExercise();
-		for (let playerName in USERS) {
-			if (USERS[playerName].email != undefined && USERS[playerName].allowEmail) {
-				mailer.sendEmail(USERS[playerName].email, "Neue Double Time Übung!", "Die neue Double Time Übung ist: " + exName);
-			}
-		}
-	}
-
-	FITNESS_MANAGER.today = date;
-}, config.INTERVAL);
-
 
 
 
