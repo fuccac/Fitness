@@ -693,7 +693,18 @@ function startServer() {
 
 			logFile.log('socket connection lost (' + socket.id + ")", false, 0);
 		});
+
+		socket.on('connect_timeout', function (timeout) {
+			logFile.log('socket connection timeout (' + socket.id + ")", false, 0);
+		});
+
+		socket.on('reconnect', (attemptNumber) => {
+			logFile.log('socket reconnect number ' + attemptNumber + ' (' + socket.id + ")", false, 0);
+		});
+
 	};
+
+
 
 	/**
 	 * 
