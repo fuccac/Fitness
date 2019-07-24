@@ -44,8 +44,8 @@ var addUser;
 
 loadSaveFiles(function (loadSaveFilesResult) {
 	logFile.log(loadSaveFilesResult, false, 0);
-	startServer();
 	setInterval(cyclicAquisition, config.INTERVAL);
+	startServer();
 });
 
 
