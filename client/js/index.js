@@ -6,7 +6,8 @@
 *                                               HTML OBJECTS, INITS 
 *******************************************************************************************************************
 *******************************************************************************************************************
-******************************************************************************************************************/
+/******************************************************************************************************************/
+
 var Name = "";
 var exerciseTableSortMode = { cellIndex: 1 };
 var common = new Common();
@@ -121,6 +122,7 @@ var RUNTIME_CONFIG = {
 
 button_SignIn.onclick = function () {
     SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
+    
 };
 
 button_SignUp.onclick = function () {
@@ -457,6 +459,8 @@ SOCKET.on('signInResponse', function (data) {
 
         button_tabMainPage.click();
         div_navigation.style.display = 'inline-block';
+        
+
 
     }
     else
@@ -969,7 +973,7 @@ function generateMainGraph(data, canvas, ctx) {
 
         if (applyFilter) {
             for (let dataIterator = 0; dataIterator < datasets.length; dataIterator++) {
-                datasets[dataIterator].hidden = filterSettings[datasets[dataIterator].label]
+                datasets[dataIterator].hidden = filterSettings[datasets[dataIterator].label];
             }
         }
 
@@ -1369,10 +1373,11 @@ function generateExerciseList(data) {
     select_statisticsExercise.selectedIndex = selIndex;
 
     let end = Date.now();
-    //sendChatMessage(`exercise table generation took ${end - start} ms`);
+    sendChatMessage(`exercise table generation took ${end - start} ms`);
 }
 
 function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) {
+    let start = Date.now();
     name = name.toUpperCase();
     input_sumSelection.value = 0;
     input_avgSelection.value = 0;
@@ -1464,7 +1469,6 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                 }
             }
 
-
             if (!rowNotUsed) {
                 common.addToolTip(toolTipText, "tableTooltip", bodyRow);
                 let paceUnitOptions = common.getPaceUnitOptions(unit);
@@ -1530,22 +1534,18 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
         cell.onclick = function () {
             common.sortTable(this, table);
         };
-
-
-
     }
-
-
 
     input_sumSelection.value = common.translate(selectionSum);
     var selectionCount = dateDiff(minDate, maxDate);
     input_avgSelection.value = common.translate(Number(selectionSum) / (selectionCount + 1));
-
+    let end = Date.now();
+    sendChatMessage(`history table generation took ${end - start} ms`);
 
 }
 
 function generateCompetitionData(data) {
-
+    let start = Date.now();
     var theadDailyWinsTable = table_dailyWins.tHead;
     var tBodyDailyWinsTable = table_dailyWins.tBodies[0];
 
@@ -1598,8 +1598,6 @@ function generateCompetitionData(data) {
         common.sortTable(this, table_monthlyWins);
     };
 
-
-
     for (playerName in data.compInfoMonthly) {
         if (playerName == "Keiner") {
             continue;
@@ -1611,8 +1609,6 @@ function generateCompetitionData(data) {
         cell.innerHTML = data.compInfoMonthly[playerName];
 
         //month
-
-
     }
 
     var sortIndex = { cellIndex: 1 };
@@ -1620,16 +1616,14 @@ function generateCompetitionData(data) {
     common.sortTable(sortIndex, table_dailyWins);
     common.sortTable(sortIndex, table_monthlyWins);
     common.sortTable(sortIndex, table_dailyWins);
+
+    let end = Date.now();
+    sendChatMessage(`wins table generation took ${end - start} ms`);
 }
 
 function generateEventLog(data) {
-    div_eventLog.innerHTML = "";
-    for (var eventIterator = 0; eventIterator < data.eventLog.time.length; eventIterator++) {
-        div_eventLog.innerHTML = div_eventLog.innerHTML + "<li>" + data.eventLog.time[eventIterator] + " - " + data.eventLog.msg[eventIterator] + "</li>";
-    }
-
+    div_eventLog.innerHTML = data.eventLog.html;
     div_eventLog.scrollTop = div_eventLog.scrollHeight;
-
 }
 
 
@@ -1726,7 +1720,7 @@ function initialize() {
     thisMonthBegin = common.getDateFormat(thisMonthBegin, "YYYY-MM-DD");
     thisMonthEnd = common.getDateFormat(thisMonthEnd, "YYYY-MM-DD");
 
-    input_historyFromDate.value = thisMonthBegin;
+    input_historyFromDate.value = common.getDateFormat(common.createZeroDate(), "YYYY-MM-DD");
     input_historyToDate.value = thisMonthEnd;
 
     //Today

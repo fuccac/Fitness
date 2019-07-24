@@ -14,13 +14,13 @@ class EmailManager {
             this.transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: 'gags.fitness@gmail.com',
-                    pass: 'M@iTGMV5I;qmzB@y&cf44'
+                    user: "gags.fitness@gmail.com",
+                    pass: "M@iTGMV5I;qmzB@y&cf44"
                 }
             });
         }
-        else{
-             logFile.log('Emailservice not started - PROXY MODE ACTIVE', false, 1);
+        else {
+            logFile.log('Email service not started - PROXY MODE ACTIVE', false, 1);
         }
     }
 
