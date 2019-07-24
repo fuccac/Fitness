@@ -83,7 +83,7 @@ function cyclicAquisition() {
 		}
 	}
 
-	if (common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) > 0 || FITNESS_MANAGER.featuredExerciseId == 0) {
+	if (common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) >= 1 || FITNESS_MANAGER.featuredExerciseId == 0) {
 		let exName = FITNESS_MANAGER.featureNewExercise();
 		for (let playerName in USERS) {
 			if (USERS[playerName].email != undefined && USERS[playerName].allowEmail) {
@@ -230,7 +230,7 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		try {
 			FITNESS_MANAGER.today = new Date(result.dataStorage.fitnessManager.today);
 			FITNESS_MANAGER.featuredExerciseId = result.dataStorage.fitnessManager.featuredExerciseId;
-			FITNESS_MANAGER.featuredExerciseDate =  new Date(result.dataStorage.fitnessManager.featuredExerciseDate);
+			FITNESS_MANAGER.featuredExerciseDate = new Date(result.dataStorage.fitnessManager.featuredExerciseDate);
 		}
 		catch (e) {
 			logFile.log("fitnessManager property data failed to load", false, 0);
@@ -334,7 +334,7 @@ function saveDataStorage() {
 	let fitnessManagerStorage = {};
 	fitnessManagerStorage.today = FITNESS_MANAGER.today;
 	fitnessManagerStorage.featuredExerciseId = FITNESS_MANAGER.featuredExerciseId;
-	fitnessManagerStorage.featuredExerciseDate = FITNESS_MANAGER.featuredExerciseDate
+	fitnessManagerStorage.featuredExerciseDate = FITNESS_MANAGER.featuredExerciseDate;
 
 	var dataStorage = {
 		exerciseList: FITNESS_MANAGER.exerciseList,

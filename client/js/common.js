@@ -325,7 +325,7 @@ function Common() {
         var date1_ms = date1.getTime();
         var date2_ms = date2.getTime();
         var difference_ms = date2_ms - date1_ms;
-        return Math.abs(Math.round(difference_ms / one_day));
+        return Math.abs(difference_ms / one_day);
     };
 
     this.HTMLBold = function (string) {
