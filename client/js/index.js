@@ -122,7 +122,7 @@ var RUNTIME_CONFIG = {
 
 button_SignIn.onclick = function () {
     SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
-    
+
 };
 
 button_SignUp.onclick = function () {
@@ -459,7 +459,7 @@ SOCKET.on('signInResponse', function (data) {
 
         button_tabMainPage.click();
         div_navigation.style.display = 'inline-block';
-        
+
 
 
     }
@@ -955,10 +955,10 @@ function generateMainGraph(data, canvas, ctx) {
                 borderWidth: 1,
                 hidden: false,
             };
-            labels =data.graph.yAxis;
+            labels = data.graph.yAxis;
             datasets.push(dataset);
         }
-        else{
+        else {
             for (var playerGraphName in data.graph) {
                 dataset = {
                     label: playerGraphName,
@@ -968,20 +968,20 @@ function generateMainGraph(data, canvas, ctx) {
                     radius: 1,
                     borderColor: [
                         data.colors[playerGraphName],
-    
+
                     ],
                     borderWidth: 1,
                     hidden: false,
                 };
-    
+
                 datasets.push(dataset);
-                labels =data.graph[playerGraphName].yAxis;
-    
-    
+                labels = data.graph[playerGraphName].yAxis;
+
+
             }
-            
+
         }
-        
+
 
         datasets.sort(function (a, b) {
             var x = a.label.toLowerCase();
@@ -1393,7 +1393,7 @@ function generateExerciseList(data) {
     select_statisticsExercise.selectedIndex = selIndex;
 
     let end = Date.now();
-    sendChatMessage(`exercise table generation took ${end - start} ms`);
+    //sendChatMessage(`exercise table generation took ${end - start} ms`);
 }
 
 function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) {
@@ -1560,7 +1560,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
     var selectionCount = dateDiff(minDate, maxDate);
     input_avgSelection.value = common.translate(Number(selectionSum) / (selectionCount + 1));
     let end = Date.now();
-    sendChatMessage(`history table generation took ${end - start} ms`);
+    //sendChatMessage(`history table generation took ${end - start} ms`);
 
 }
 
@@ -1638,7 +1638,7 @@ function generateCompetitionData(data) {
     common.sortTable(sortIndex, table_dailyWins);
 
     let end = Date.now();
-    sendChatMessage(`wins table generation took ${end - start} ms`);
+    //sendChatMessage(`wins table generation took ${end - start} ms`);
 }
 
 function generateEventLog(data) {
