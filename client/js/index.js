@@ -828,9 +828,6 @@ function generateMainGraph(data, canvas, ctx) {
         }
         applyFilter = true;
 
-
-
-
         OverallChart.data.labels.pop();
         OverallChart.data.datasets.forEach((dataset) => {
             dataset.data.pop();
@@ -943,25 +940,48 @@ function generateMainGraph(data, canvas, ctx) {
         }
     }
     else {
-        for (var playerGraphName in data.graph) {
+        let labels;
+        if (select_graphSwitch.value == "line-day-group") {
             dataset = {
-                label: playerGraphName,
-                data: data.graph[playerGraphName].xAxis,
+                label: "Gruppe",
+                data: data.graph.xAxis,
                 fill: false,
                 pointStyle: 'cross',
                 radius: 1,
                 borderColor: [
-                    data.colors[playerGraphName],
+                    "red"
 
                 ],
                 borderWidth: 1,
                 hidden: false,
             };
-
+            labels =data.graph.yAxis;
             datasets.push(dataset);
-
-
         }
+        else{
+            for (var playerGraphName in data.graph) {
+                dataset = {
+                    label: playerGraphName,
+                    data: data.graph[playerGraphName].xAxis,
+                    fill: false,
+                    pointStyle: 'cross',
+                    radius: 1,
+                    borderColor: [
+                        data.colors[playerGraphName],
+    
+                    ],
+                    borderWidth: 1,
+                    hidden: false,
+                };
+    
+                datasets.push(dataset);
+                labels =data.graph[playerGraphName].yAxis;
+    
+    
+            }
+            
+        }
+        
 
         datasets.sort(function (a, b) {
             var x = a.label.toLowerCase();
@@ -981,7 +1001,7 @@ function generateMainGraph(data, canvas, ctx) {
             OverallChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: data.graph.caf.yAxis,
+                    labels: labels,
                     datasets: datasets,
                 },
 

@@ -238,6 +238,21 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 
 		USERS = result.dataStorage.users;
 
+		var colors = ["#008000", "#ff0000", "#0000ff", "#ffff00", "#a52a2a", "#808080", "#ff00ff", "#ffa500"];
+
+		colorIterator = 0;
+		for (var playerName in FITNESS_MANAGER.registeredPlayers) {
+			if (USERS[playerName.toUpperCase()].color != undefined) {
+				FITNESS_MANAGER.colorList[playerName] = USERS[playerName.toUpperCase()].color;
+			}
+			else {
+				USERS[playerName.toUpperCase()].color = colors[colorIterator];
+				FITNESS_MANAGER.colorList[playerName] = colors[colorIterator];
+			}
+			colorIterator++;
+		}
+
+		
 		logFile.log("dataStorage Loaded", false, 0);
 		fitnessManagerStartUpTasks(function (startUpResult) {
 			AddPropertiesToExercises(function (AddPropertiesToExerciseListResult) {
@@ -378,20 +393,7 @@ function startServer() {
  * @param {SocketIO.Socket} socket 
  */
 	OnPlayerConnection = function (socket) {
-		var colors = ["#008000", "#ff0000", "#0000ff", "#ffff00", "#a52a2a", "#808080", "#ff00ff", "#ffa500"];
-		var colorsForPlayers = {};
-
-		colorIterator = 0;
-		for (var playerName in FITNESS_MANAGER.registeredPlayers) {
-			if (USERS[playerName.toUpperCase()].color != undefined) {
-				colorsForPlayers[playerName] = USERS[playerName.toUpperCase()].color;
-			}
-			else {
-				USERS[playerName.toUpperCase()].color = colors[colorIterator];
-				colorsForPlayers[playerName] = colors[colorIterator];
-			}
-			colorIterator++;
-		}
+		
 		var newPlayer = new Player(socket.id);
 		PLAYER_LIST[newPlayer.id] = newPlayer;
 
@@ -406,8 +408,15 @@ function startServer() {
 			for (let key in data) {
 				USERS[newPlayer.name.toUpperCase()][key] = data[key];
 			}
-			colorsForPlayers[newPlayer.name] = USERS[newPlayer.name.toUpperCase()].color;
+			if(FITNESS_MANAGER.colorList[newPlayer.name] != USERS[newPlayer.name.toUpperCase()].color){
+				FITNESS_MANAGER.updateEventLogColor(newPlayer.name,USERS[newPlayer.name.toUpperCase()].color,FITNESS_MANAGER.colorList[newPlayer.name]);
+				
+			}
+			FITNESS_MANAGER.colorList[newPlayer.name] = USERS[newPlayer.name.toUpperCase()].color;
+			
 			FITNESS_MANAGER.needsUpload.dataStorage = true;
+			refreshEventLog();
+			logFile.log(newPlayer.name + " updates profile", true, 0);
 		});
 
 
@@ -522,8 +531,9 @@ function startServer() {
 
 			SOCKET_LIST[newPlayer.id].emit('refreshGraph', {
 				graph: graph,
-				colors: colorsForPlayers,
+				colors: FITNESS_MANAGER.colorList,
 			});
+			logFile.log(newPlayer.name + " gets Graph", false, 0);
 		});
 
 		socket.on("requestExerciseGraphUpdate", function (data) {
@@ -545,8 +555,9 @@ function startServer() {
 
 			SOCKET_LIST[newPlayer.id].emit('refreshExerciseGraph', {
 				graph: graphData,
-				colors: colorsForPlayers,
+				colors: FITNESS_MANAGER.colorList,
 			});
+			logFile.log(newPlayer.name + " gets Exercise Graph", false, 0);
 		});
 
 		socket.on("requestExerciseStatistic", function (data) {
@@ -592,6 +603,9 @@ function startServer() {
 				repsMonthly: repsMonthly,
 				category: FITNESS_MANAGER.exerciseList[data.id].achievementInfo.achievementCategory,
 			});
+
+			logFile.log(newPlayer.name + " gets Exercise Statistics", false, 0);
+			
 		});
 
 
@@ -613,9 +627,12 @@ function startServer() {
 				data.msg = data.msg.replace("[/IMG]", "\">");
 			}
 
-			FITNESS_MANAGER.addToEventLog(common.HTMLColor(data.name, USERS[newPlayer.name.toUpperCase()].color) + ": " + data.msg);
+			FITNESS_MANAGER.addToEventLog(data.name + ": " + data.msg);
 			refreshEventLog();
+			logFile.log(data.name + " sends chat message", false, 0);
 		});
+
+		logFile.log("OnPlayerConnection done", false, 0);
 	};
 
 	/** 
@@ -803,6 +820,7 @@ function startServer() {
 			FITNESS_MANAGER.needsUpload.dataStorage = true;
 			cb();
 		}, 10);
+		logFile.log(data.username + " was added to USERS", true, 0);
 	};
 
 }
