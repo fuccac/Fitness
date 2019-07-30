@@ -562,29 +562,7 @@ function startServer() {
 			logFile.log(newPlayer.name + " gets Exercise Graph", false, 0);
 		});
 
-		socket.on("requestExerciseGraphUpdate", function (data) {
-			let graphData = {};
-			for (let monthName in FITNESS_MANAGER.monthlyDataExercise) {
-				graphData[monthName] = FITNESS_MANAGER.monthlyDataExercise[monthName][data.id];
-
-				for (let playerName in FITNESS_MANAGER.registeredPlayers) {
-					if(graphData[monthName] == undefined){
-						graphData[monthName] = {};
-					}
-					if(graphData[monthName][playerName]==undefined){
-						graphData[monthName][playerName] = 0;
-					}
-					
-				}
-			}
-			
-
-			SOCKET_LIST[newPlayer.id].emit('refreshExerciseGraph', {
-				graph: graphData,
-				colors: colorsForPlayers,
-			});
-		});
-
+	
 		socket.on("requestExerciseStatistic", function (data) {
 			let repsDaily;
 			let repsMonthly;
