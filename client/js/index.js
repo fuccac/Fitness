@@ -6,7 +6,8 @@
 *                                               HTML OBJECTS, INITS 
 *******************************************************************************************************************
 *******************************************************************************************************************
-******************************************************************************************************************/
+/******************************************************************************************************************/
+
 var Name = "";
 var exerciseTableSortMode = { cellIndex: 1 };
 var common = new Common();
@@ -30,6 +31,9 @@ var button_link = document.getElementById('button_link');
 var button_img = document.getElementById('button_img');
 var button_hideExercise = document.getElementById('button_hideExercise');
 var button_showHiddenExercises = document.getElementById('button_showHiddenExercises');
+var button_tabProfile = document.getElementById('button_tabProfile');
+var button_saveProfileData = document.getElementById('button_saveProfileData');
+
 
 //DIVS
 var div_ExerciseOverview = document.getElementById('div_ExerciseOverview');
@@ -45,7 +49,7 @@ var div_competition = document.getElementById('div_competition');
 var div_events = document.getElementById('div_events');
 var div_eventLog = document.getElementById('div_eventLog');
 var div_graphExercise = document.getElementById('div_graphExercise');
-
+var div_profile = document.getElementById('div_profile');
 
 //INPUTS
 var input_exerciseName = document.getElementById('input_exerciseName');
@@ -64,13 +68,17 @@ var input_avgSelection = document.getElementById('input_avgSelection');
 var input_graphFromDate = document.getElementById('input_graphFromDate');
 var input_graphToDate = document.getElementById('input_graphToDate');
 var input_Password = document.getElementById('input_Password');
-var input_UserName = document.getElementById('input_Username');
+var input_Username = document.getElementById('input_Username');
 var input_exerciseID = document.getElementById('input_exerciseID');
 var input_onlineIndicator = document.getElementById('input_onlineIndicator');
 var input_RememberMe = document.getElementById('input_RememberMe');
 var input_chatText = document.getElementById('input_chatText');
 var input_doneExerciseAdditional = document.getElementById('input_doneExerciseAdditional');
 var input_paceConstant = document.getElementById('input_paceConstant');
+var input_personalEmailAddress = document.getElementById('input_personalEmailAddress');
+var input_personalColor = document.getElementById('input_personalColor');
+var input_allowEmails = document.getElementById('input_allowEmails');
+
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
@@ -111,12 +119,14 @@ var RUNTIME_CONFIG = {
 *******************************************************************************************************************
 ******************************************************************************************************************/
 
+
 button_SignIn.onclick = function () {
-    SOCKET.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
+    SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
+
 };
 
 button_SignUp.onclick = function () {
-    SOCKET.emit('SignUp', { username: input_UserName.value.toLowerCase(), password: input_Password.value });
+    SOCKET.emit('SignUp', { username: input_Username.value.toLowerCase(), password: input_Password.value });
 };
 
 input_historyFromDate.onchange = function () {
@@ -158,6 +168,7 @@ button_tabMainPage.onclick = function () {
     div_MainPage.style.display = "inline-block";
     div_competition.style.display = "none";
     div_events.style.display = "none";
+    div_profile.style.display = "none";
     requestGraphUpdate();
 };
 
@@ -168,6 +179,7 @@ button_tabPersonalOverview.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
     div_events.style.display = "none";
+    div_profile.style.display = "none";
     button_updateHistory.click();
 };
 
@@ -178,6 +190,7 @@ button_tabCompetition.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "inline-block";
     div_events.style.display = "none";
+    div_profile.style.display = "none";
 };
 
 button_tabStatistics.onclick = function () {
@@ -187,6 +200,7 @@ button_tabStatistics.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
     div_events.style.display = "none";
+    div_profile.style.display = "none";
     requestAchievementList();
 };
 
@@ -198,6 +212,7 @@ button_tabExerciseOverview.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
     div_events.style.display = "none";
+    div_profile.style.display = "none";
 };
 
 button_tabEventLog.onclick = function () {
@@ -207,7 +222,18 @@ button_tabEventLog.onclick = function () {
     div_MainPage.style.display = "none";
     div_competition.style.display = "none";
     div_events.style.display = "inline-block";
+    div_profile.style.display = "none";
     div_eventLog.scrollTop = div_eventLog.scrollHeight;
+};
+
+button_tabProfile.onclick = function () {
+    div_ExerciseOverview.style.display = "none";
+    div_PersonalOverview.style.display = "none";
+    div_statistics.style.display = "none";
+    div_MainPage.style.display = "none";
+    div_competition.style.display = "none";
+    div_events.style.display = "none";
+    div_profile.style.display = "inline-block";
 };
 
 button_deleteExercise.onclick = function () {
@@ -392,6 +418,11 @@ select_statisticsExercise.onchange = function () {
     requestExerciseGraphUpdate();
 };
 
+button_saveProfileData.onclick = function () {
+    sendPersonalProfileData();
+};
+
+
 initialize();
 /******************************************************************************************************************
 *******************************************************************************************************************
@@ -415,6 +446,7 @@ SOCKET.on('refreshExerciseList', function (data) {
     generateExerciseList(data);
 });
 
+
 SOCKET.on('signInResponse', function (data) {
     if (data.success) {
         div_login.style.display = "none";
@@ -423,8 +455,14 @@ SOCKET.on('signInResponse', function (data) {
             input_paceConstant.disabled = false;
         }
         select_historyShowName.value = Name;
+        input_personalEmailAddress.value = data.profileData.email;
+        input_personalColor.value = data.profileData.color;
+        input_allowEmails.checked = data.profileData.allowEmail;
+
         button_tabMainPage.click();
         div_navigation.style.display = 'inline-block';
+
+
 
     }
     else
@@ -516,14 +554,8 @@ SOCKET.on("refresh", function (data) {
 });
 
 SOCKET.on("refreshExerciseStatistics", function (data) {
-    if (data.reps == undefined || data.points == undefined || data.repsDaily == undefined || data.repsMonthly == undefined) {
-        data.reps = 0;
-        data.points = 0;
-        data.repsDaily = 0;
-        data.repsMonthly = 0;
-    }
-    paragraph_statisticsExercise.innerHTML = "";
 
+    paragraph_statisticsExercise.innerHTML = "";
     for (var key in data) {
         paragraph_statisticsExercise.innerHTML += " | " + common.HTMLBold(common.translate(key)) + ": " + common.translate(data[key]);
     }
@@ -548,6 +580,7 @@ function requestExerciseGraphUpdate() {
 function requestExerciseListUpdate() {
     SOCKET.emit("requestExerciseListUpdate", { data: true });
 }
+
 
 
 function sendChatMessage(msg) {
@@ -634,6 +667,14 @@ function modifyExercise(emitString) {
 function hideExercise(id) {
     SOCKET.emit("hideExercise", data = {
         id: id,
+    });
+}
+
+function sendPersonalProfileData() {
+    SOCKET.emit("requestProfileUpdate", data = {
+        email: input_personalEmailAddress.value,
+        allowEmail: input_allowEmails.checked,
+        color: input_personalColor.value,
     });
 }
 
@@ -791,9 +832,6 @@ function generateMainGraph(data, canvas, ctx) {
         }
         applyFilter = true;
 
-
-
-
         OverallChart.data.labels.pop();
         OverallChart.data.datasets.forEach((dataset) => {
             dataset.data.pop();
@@ -906,25 +944,48 @@ function generateMainGraph(data, canvas, ctx) {
         }
     }
     else {
-        for (var playerGraphName in data.graph) {
+        let labels;
+        if (select_graphSwitch.value == "line-day-group") {
             dataset = {
-                label: playerGraphName,
-                data: data.graph[playerGraphName].xAxis,
+                label: "Gruppe",
+                data: data.graph.xAxis,
                 fill: false,
                 pointStyle: 'cross',
                 radius: 1,
                 borderColor: [
-                    data.colors[playerGraphName],
+                    "red"
 
                 ],
                 borderWidth: 1,
                 hidden: false,
             };
-
+            labels = data.graph.yAxis;
             datasets.push(dataset);
+        }
+        else {
+            for (var playerGraphName in data.graph) {
+                dataset = {
+                    label: playerGraphName,
+                    data: data.graph[playerGraphName].xAxis,
+                    fill: false,
+                    pointStyle: 'cross',
+                    radius: 1,
+                    borderColor: [
+                        data.colors[playerGraphName],
 
+                    ],
+                    borderWidth: 1,
+                    hidden: false,
+                };
+
+                datasets.push(dataset);
+                labels = data.graph[playerGraphName].yAxis;
+
+
+            }
 
         }
+
 
         datasets.sort(function (a, b) {
             var x = a.label.toLowerCase();
@@ -936,7 +997,7 @@ function generateMainGraph(data, canvas, ctx) {
 
         if (applyFilter) {
             for (let dataIterator = 0; dataIterator < datasets.length; dataIterator++) {
-                datasets[dataIterator].hidden = filterSettings[datasets[dataIterator].label]
+                datasets[dataIterator].hidden = filterSettings[datasets[dataIterator].label];
             }
         }
 
@@ -944,7 +1005,7 @@ function generateMainGraph(data, canvas, ctx) {
             OverallChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: data.graph.caf.yAxis,
+                    labels: labels,
                     datasets: datasets,
                 },
 
@@ -1072,7 +1133,6 @@ function generatePlayerListTable(data) {
         }
         cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML += common.translate(playerid);
-
 
         for (var playerKeyName in player) {
             playerKeyContent = player[playerKeyName];
@@ -1340,6 +1400,7 @@ function generateExerciseList(data) {
 }
 
 function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) {
+    let start = Date.now();
     name = name.toUpperCase();
     input_sumSelection.value = 0;
     input_avgSelection.value = 0;
@@ -1431,7 +1492,6 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                 }
             }
 
-
             if (!rowNotUsed) {
                 common.addToolTip(toolTipText, "tableTooltip", bodyRow);
                 let paceUnitOptions = common.getPaceUnitOptions(unit);
@@ -1502,16 +1562,16 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
 
     }
 
-
-
     input_sumSelection.value = common.translate(selectionSum);
     var selectionCount = dateDiff(minDate, maxDate);
     input_avgSelection.value = common.translate(Number(selectionSum) / (selectionCount + 1));
-
+    let end = Date.now();
+    //sendChatMessage(`history table generation took ${end - start} ms`);
 
 }
 
 function generateCompetitionData(data) {
+    let start = Date.now();
 
     var theadDailyWinsTable = table_dailyWins.tHead;
     var tBodyDailyWinsTable = table_dailyWins.tBodies[0];
@@ -1565,8 +1625,6 @@ function generateCompetitionData(data) {
         common.sortTable(this, table_monthlyWins);
     };
 
-
-
     for (playerName in data.compInfoMonthly) {
         if (playerName == "Keiner") {
             continue;
@@ -1579,7 +1637,6 @@ function generateCompetitionData(data) {
 
         //month
 
-
     }
 
     var sortIndex = { cellIndex: 1 };
@@ -1587,16 +1644,15 @@ function generateCompetitionData(data) {
     common.sortTable(sortIndex, table_dailyWins);
     common.sortTable(sortIndex, table_monthlyWins);
     common.sortTable(sortIndex, table_dailyWins);
+
+    let end = Date.now();
+    //sendChatMessage(`wins table generation took ${end - start} ms`);
+
 }
 
 function generateEventLog(data) {
-    div_eventLog.innerHTML = "";
-    for (var eventIterator = 0; eventIterator < data.eventLog.time.length; eventIterator++) {
-        div_eventLog.innerHTML = div_eventLog.innerHTML + "<li>" + data.eventLog.time[eventIterator] + " - " + data.eventLog.msg[eventIterator] + "</li>";
-    }
-
+    div_eventLog.innerHTML = data.eventLog.html;
     div_eventLog.scrollTop = div_eventLog.scrollHeight;
-
 }
 
 
@@ -1693,7 +1749,7 @@ function initialize() {
     thisMonthBegin = common.getDateFormat(thisMonthBegin, "YYYY-MM-DD");
     thisMonthEnd = common.getDateFormat(thisMonthEnd, "YYYY-MM-DD");
 
-    input_historyFromDate.value = thisMonthBegin;
+    input_historyFromDate.value = common.getDateFormat(common.createZeroDate(), "YYYY-MM-DD");
     input_historyToDate.value = thisMonthEnd;
 
     //Today
@@ -1758,7 +1814,7 @@ setInterval(function () {
 }, 1000);
 
 if (LOGIN_COOKIE != "") {
-    SOCKET.emit('SignIn', { username: input_UserName.value.toLowerCase(), password: input_Password.value, remember: false, loginToken: LOGIN_COOKIE });
+    SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: false, loginToken: LOGIN_COOKIE });
 }
 
 function logout() {
@@ -1768,21 +1824,9 @@ function logout() {
 
 
 function resetExerciseEntryMask() {
-    input_exerciseName.value = "";
-    input_exerciseDifficulty.value = "";
-    input_exerciseDifficulty10.value = "";
-    input_exerciseDifficulty100.value = "";
-    input_paceConstant.value = "";
-    input_exerciseBaseWeight.value = "";
-    select_exerciseType.value = "";
-    select_exerciseUnit.value = "";
-    select_exerciseEquipment.value = "";
-    select_bothSides.value = "";
-    input_exerciseComment.value = "";
-    input_exerciseID.value = "";
+    $(".modifyExercise").val("");
     select_exerciseUnit.onchange();
     button_hideExercise.innerHTML = "Ausblenden";
-
 }
 
 function resetHistoryEntryMask() {
@@ -1850,6 +1894,8 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
         if (bodyRow.classList.contains("hiddenExercise")) {
             button_hideExercise.innerHTML = "Einblenden";
+            $("#button_hideExercise").html("Einblenden");
+
         }
         else {
             button_hideExercise.innerHTML = "Ausblenden";
