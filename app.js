@@ -15,6 +15,7 @@ Log = require("./server/Log");
 Common = require("./client/js/common");
 EmailManager = require("./server/EmailManager");
 
+
 //MODULE INITS
 var storageManager = new JSONFileStorage('./saves');
 var config = new Config();
@@ -28,12 +29,15 @@ var common = new Common();
 var mailer = new EmailManager();
 
 
+
 //GLOBALS
 var USERS = {};
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var FITNESS_MANAGER = new FitnessManager();
 var DB_TOKEN = config.DB_TOKEN;
+var DOCUMENT;
+
 
 var OnPlayerConnection;
 var OnSocketConnection;
@@ -47,6 +51,7 @@ loadSaveFiles(function (loadSaveFilesResult) {
 	setInterval(cyclicAquisition, config.INTERVAL);
 	startServer();
 });
+
 
 
 //************************************************************/
@@ -419,8 +424,6 @@ function startServer() {
 			logFile.log(newPlayer.name + " updates profile", true, 0);
 		});
 
-
-
 		socket.on("requestExerciseListUpdate", function (data) {
 			SOCKET_LIST[newPlayer.id].emit('refreshExerciseList', {
 				exercises: FITNESS_MANAGER.getSortedExerciseList(),
@@ -509,7 +512,6 @@ function startServer() {
 			});
 		});
 
-
 		socket.on("requestGraphUpdate", function (data) {
 			var graph;
 
@@ -558,6 +560,29 @@ function startServer() {
 				colors: FITNESS_MANAGER.colorList,
 			});
 			logFile.log(newPlayer.name + " gets Exercise Graph", false, 0);
+		});
+
+		socket.on("requestExerciseGraphUpdate", function (data) {
+			let graphData = {};
+			for (let monthName in FITNESS_MANAGER.monthlyDataExercise) {
+				graphData[monthName] = FITNESS_MANAGER.monthlyDataExercise[monthName][data.id];
+
+				for (let playerName in FITNESS_MANAGER.registeredPlayers) {
+					if(graphData[monthName] == undefined){
+						graphData[monthName] = {};
+					}
+					if(graphData[monthName][playerName]==undefined){
+						graphData[monthName][playerName] = 0;
+					}
+					
+				}
+			}
+			
+
+			SOCKET_LIST[newPlayer.id].emit('refreshExerciseGraph', {
+				graph: graphData,
+				colors: colorsForPlayers,
+			});
 		});
 
 		socket.on("requestExerciseStatistic", function (data) {
@@ -665,8 +690,6 @@ function startServer() {
 						logFile.log(loadPlayerResult, false, 0);
 						socket.emit('signInResponse', { success: true, name: checkPasswortResult.username, profileData: { color: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].color, allowEmail: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].allowEmail, email: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].email } });
 					});
-
-
 				}
 				else {
 					socket.emit('signInResponse', { success: false, name: checkPasswortResult.username });
@@ -824,6 +847,4 @@ function startServer() {
 	};
 
 }
-
-
 

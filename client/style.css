@@ -140,6 +140,7 @@ button:hover {
 
 #div_exerciseStatistics {
     height: 60%;
+
 }
 
 #div_exerciseHistory {
@@ -264,6 +265,7 @@ button:hover {
 }
 
 /* TABLES */
+
 
 .deleteButton:hover {
     background: rgb(202, 111, 95);

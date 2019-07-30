@@ -34,6 +34,7 @@ var button_showHiddenExercises = document.getElementById('button_showHiddenExerc
 var button_tabProfile = document.getElementById('button_tabProfile');
 var button_saveProfileData = document.getElementById('button_saveProfileData');
 
+
 //DIVS
 var div_ExerciseOverview = document.getElementById('div_ExerciseOverview');
 var div_navigation = document.getElementById('div_navigation');
@@ -77,6 +78,7 @@ var input_paceConstant = document.getElementById('input_paceConstant');
 var input_personalEmailAddress = document.getElementById('input_personalEmailAddress');
 var input_personalColor = document.getElementById('input_personalColor');
 var input_allowEmails = document.getElementById('input_allowEmails');
+
 //SELECTS
 var select_exerciseType = document.getElementById('select_exerciseType');
 var select_exerciseUnit = document.getElementById('select_exerciseUnit');
@@ -109,8 +111,6 @@ var PACE_INVERT = "";
 var RUNTIME_CONFIG = {
     showHiddenExercises: false,
 };
-
-
 
 /******************************************************************************************************************
 *******************************************************************************************************************
@@ -422,6 +422,7 @@ button_saveProfileData.onclick = function () {
     sendPersonalProfileData();
 };
 
+
 initialize();
 /******************************************************************************************************************
 *******************************************************************************************************************
@@ -444,6 +445,7 @@ SOCKET.on('configValues', function (data) {
 SOCKET.on('refreshExerciseList', function (data) {
     generateExerciseList(data);
 });
+
 
 SOCKET.on('signInResponse', function (data) {
     if (data.success) {
@@ -552,6 +554,7 @@ SOCKET.on("refresh", function (data) {
 });
 
 SOCKET.on("refreshExerciseStatistics", function (data) {
+
     paragraph_statisticsExercise.innerHTML = "";
     for (var key in data) {
         paragraph_statisticsExercise.innerHTML += " | " + common.HTMLBold(common.translate(key)) + ": " + common.translate(data[key]);
@@ -577,6 +580,7 @@ function requestExerciseGraphUpdate() {
 function requestExerciseListUpdate() {
     SOCKET.emit("requestExerciseListUpdate", { data: true });
 }
+
 
 
 function sendChatMessage(msg) {
@@ -1130,7 +1134,6 @@ function generatePlayerListTable(data) {
         cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML += common.translate(playerid);
 
-
         for (var playerKeyName in player) {
             playerKeyContent = player[playerKeyName];
             if (playerIterator == 0) {
@@ -1554,6 +1557,9 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
         cell.onclick = function () {
             common.sortTable(this, table);
         };
+
+
+
     }
 
     input_sumSelection.value = common.translate(selectionSum);
@@ -1566,6 +1572,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
 
 function generateCompetitionData(data) {
     let start = Date.now();
+
     var theadDailyWinsTable = table_dailyWins.tHead;
     var tBodyDailyWinsTable = table_dailyWins.tBodies[0];
 
@@ -1629,6 +1636,7 @@ function generateCompetitionData(data) {
         cell.innerHTML = data.compInfoMonthly[playerName];
 
         //month
+
     }
 
     var sortIndex = { cellIndex: 1 };
@@ -1639,6 +1647,7 @@ function generateCompetitionData(data) {
 
     let end = Date.now();
     //sendChatMessage(`wins table generation took ${end - start} ms`);
+
 }
 
 function generateEventLog(data) {
@@ -1818,7 +1827,6 @@ function resetExerciseEntryMask() {
     $(".modifyExercise").val("");
     select_exerciseUnit.onchange();
     button_hideExercise.innerHTML = "Ausblenden";
-
 }
 
 function resetHistoryEntryMask() {
@@ -1886,7 +1894,8 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
         if (bodyRow.classList.contains("hiddenExercise")) {
             button_hideExercise.innerHTML = "Einblenden";
-            $("#button_hideExercise").html("Next Step...");
+            $("#button_hideExercise").html("Einblenden");
+
         }
         else {
             button_hideExercise.innerHTML = "Ausblenden";
