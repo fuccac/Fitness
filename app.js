@@ -15,7 +15,6 @@ Log = require("./server/Log");
 Common = require("./client/js/common");
 EmailManager = require("./server/EmailManager");
 
-
 //MODULE INITS
 var storageManager = new JSONFileStorage('./saves');
 var config = new Config();
@@ -29,15 +28,12 @@ var common = new Common();
 var mailer = new EmailManager();
 
 
-
 //GLOBALS
 var USERS = {};
 var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var FITNESS_MANAGER = new FitnessManager();
 var DB_TOKEN = config.DB_TOKEN;
-var DOCUMENT;
-
 
 var OnPlayerConnection;
 var OnSocketConnection;
@@ -51,7 +47,6 @@ loadSaveFiles(function (loadSaveFilesResult) {
 	setInterval(cyclicAquisition, config.INTERVAL);
 	startServer();
 });
-
 
 
 //************************************************************/
@@ -424,6 +419,8 @@ function startServer() {
 			logFile.log(newPlayer.name + " updates profile", true, 0);
 		});
 
+
+
 		socket.on("requestExerciseListUpdate", function (data) {
 			SOCKET_LIST[newPlayer.id].emit('refreshExerciseList', {
 				exercises: FITNESS_MANAGER.getSortedExerciseList(),
@@ -512,6 +509,7 @@ function startServer() {
 			});
 		});
 
+
 		socket.on("requestGraphUpdate", function (data) {
 			var graph;
 
@@ -562,7 +560,6 @@ function startServer() {
 			logFile.log(newPlayer.name + " gets Exercise Graph", false, 0);
 		});
 
-	
 		socket.on("requestExerciseStatistic", function (data) {
 			let repsDaily;
 			let repsMonthly;
@@ -668,6 +665,8 @@ function startServer() {
 						logFile.log(loadPlayerResult, false, 0);
 						socket.emit('signInResponse', { success: true, name: checkPasswortResult.username, profileData: { color: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].color, allowEmail: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].allowEmail, email: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].email } });
 					});
+
+
 				}
 				else {
 					socket.emit('signInResponse', { success: false, name: checkPasswortResult.username });
@@ -706,7 +705,7 @@ function startServer() {
 				savePlayer(PLAYER_LIST[socket.id]);
 				delete PLAYER_LIST[socket.id];
 			}
-
+			
 			delete SOCKET_LIST[socket.id];
 
 			logFile.log('socket connection lost (' + socket.id + ")", false, 0);
@@ -720,6 +719,7 @@ function startServer() {
 			logFile.log('socket reconnect number ' + attemptNumber + ' (' + socket.id + ")", false, 0);
 		});
 
+		
 	};
 
 
@@ -739,9 +739,12 @@ function startServer() {
 					if (data.loginToken == USERS[name].loginToken) {
 						for (let playerId in PLAYER_LIST) {
 							if (PLAYER_LIST[playerId].name == name) {
+
+								SOCKET_LIST[playerId].disconnect(true);
+								
 								cb({
-									success: false,
-									username: "",
+									success: true, //ASS
+									username: name,
 								});
 								return;
 							}
@@ -763,9 +766,11 @@ function startServer() {
 			else {
 				for (let playerId in PLAYER_LIST) {
 					if (PLAYER_LIST[playerId].name == data.username) {
+
+						SOCKET_LIST[playerId].disconnect(true);
 						cb({
-							success: false,
-							username: "",
+							success: true,
+							username: data.username,
 						});
 						return;
 					}
@@ -825,4 +830,6 @@ function startServer() {
 	};
 
 }
+
+
 
