@@ -109,6 +109,7 @@ var PACE_INVERT = "";
 var RUNTIME_CONFIG = {
     showHiddenExercises: false,
 };
+var ONLINE_STATUS = {};
 
 
 
@@ -120,37 +121,47 @@ var RUNTIME_CONFIG = {
 ******************************************************************************************************************/
 
 
-button_SignIn.onclick = function () {
+$("#button_SignIn").click(function () {
     SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
     Name = input_Username.value.toLowerCase();
-};
+    if (Name.toLowerCase() != "caf") {
+        $("#adminInput_repsToGetOverall").prop("disabled", true);
+        $("#adminInput_repsToGetDaily").prop("disabled", true);
+        $("#adminInput_repsToGetMonthly").prop("disabled", true);
+        $("#adminInput_achievementCategory").prop("disabled", true);
+        $("#adminSelect_AchievementExercise").prop("disabled", true);
+        $("#adminButton_saveAchievement").prop("disabled", true);
+    }
 
-button_SignUp.onclick = function () {
+
+});
+
+$("#button_SignUp").click(function () {
     SOCKET.emit('SignUp', { username: input_Username.value.toLowerCase(), password: input_Password.value });
-};
+});
 
-input_historyFromDate.onchange = function () {
+$("#input_historyFromDate").change(function () {
     if (!common.isValidDate(common.createZeroDate(input_historyFromDate.value))) {
         input_historyFromDate.value = common.getDateFormat(common.createZeroDate(), "YYYY-MM-DD");
     }
-};
+});
 
-input_historyToDate.onchange = function () {
+$("#input_historyToDate").change(function () {
     if (!common.isValidDate(common.createZeroDate(input_historyToDate.value))) {
         input_historyToDate.value = common.getDateFormat(common.createZeroDate(), "YYYY-MM-DD");
     }
-};
+});
 
-select_historyShowName.onchange = function () {
+$("#select_historyShowName").change(function () {
     button_updateHistory.click();
-};
+});
 
 
-button_updateHistory.onclick = function () {
+$("#button_updateHistory").click(function () {
     SOCKET.emit("requestHistoryUpdate", { fromDate: input_historyFromDate.value, toDate: input_historyToDate.value });
-};
+});
 
-button_doneExerciseSend.onclick = function () {
+$("#button_doneExerciseSend").click(function () {
     if (checkForEmptyBoxesDoneExercise()) {
 
         exerciseDone('addDoneExercise');
@@ -159,93 +170,93 @@ button_doneExerciseSend.onclick = function () {
     else {
         alert("Nicht alle Inputboxen wurden ausgefüllt!");
     }
-};
+});
 
-button_tabMainPage.onclick = function () {
-    div_ExerciseOverview.style.display = "none";
-    div_PersonalOverview.style.display = "none";
-    div_statistics.style.display = "none";
-    div_MainPage.style.display = "inline-block";
-    div_competition.style.display = "none";
-    div_events.style.display = "none";
-    div_profile.style.display = "none";
+$("#button_tabMainPage").click(function () {
+    $("#div_ExerciseOverview").css("display", "none");
+    $("#div_PersonalOverview").css("display", "none");
+    $("#div_statistics").css("display", "none");
+    $("#div_MainPage").css("display", "inline-block");
+    $("#div_competition").css("display", "none");
+    $("#div_events").css("display", "none");
+    $("#div_profile").css("display", "none");
     requestGraphUpdate();
-};
+});
 
-button_tabPersonalOverview.onclick = function () {
-    div_ExerciseOverview.style.display = "none";
-    div_PersonalOverview.style.display = "inline-block";
-    div_statistics.style.display = "none";
-    div_MainPage.style.display = "none";
-    div_competition.style.display = "none";
-    div_events.style.display = "none";
-    div_profile.style.display = "none";
+$("#button_tabPersonalOverview").click(function () {
+    $("#div_ExerciseOverview").css("display", "none");
+    $("#div_PersonalOverview").css("display", "inline-block");
+    $("#div_statistics").css("display", "none");
+    $("#div_MainPage").css("display", "none");
+    $("#div_competition").css("display", "none");
+    $("#div_events").css("display", "none");
+    $("#div_profile").css("display", "none");
     button_updateHistory.click();
-};
+});
 
-button_tabCompetition.onclick = function () {
-    div_ExerciseOverview.style.display = "none";
-    div_PersonalOverview.style.display = "none";
-    div_statistics.style.display = "none";
-    div_MainPage.style.display = "none";
-    div_competition.style.display = "inline-block";
-    div_events.style.display = "none";
-    div_profile.style.display = "none";
-};
+$("#button_tabCompetition").click(function () {
+    $("#div_ExerciseOverview").css("display", "none");
+    $("#div_PersonalOverview").css("display", "none");
+    $("#div_statistics").css("display", "none");
+    $("#div_MainPage").css("display", "none");
+    $("#div_competition").css("display", "inline-block");
+    $("#div_events").css("display", "none");
+    $("#div_profile").css("display", "none");
+});
 
-button_tabStatistics.onclick = function () {
-    div_ExerciseOverview.style.display = "none";
-    div_PersonalOverview.style.display = "none";
-    div_statistics.style.display = "inline-block";
-    div_MainPage.style.display = "none";
-    div_competition.style.display = "none";
-    div_events.style.display = "none";
-    div_profile.style.display = "none";
+$("#button_tabStatistics").click(function () {
+    $("#div_ExerciseOverview").css("display", "none");
+    $("#div_PersonalOverview").css("display", "none");
+    $("#div_statistics").css("display", "inline-block");
+    $("#div_MainPage").css("display", "none");
+    $("#div_competition").css("display", "none");
+    $("#div_events").css("display", "none");
+    $("#div_profile").css("display", "none");
     requestAchievementList();
-};
+});
 
 
-button_tabExerciseOverview.onclick = function () {
-    div_ExerciseOverview.style.display = "inline-block";
-    div_PersonalOverview.style.display = "none";
-    div_statistics.style.display = "none";
-    div_MainPage.style.display = "none";
-    div_competition.style.display = "none";
-    div_events.style.display = "none";
-    div_profile.style.display = "none";
-};
+$("#button_tabExerciseOverview").click(function () {
+    $("#div_ExerciseOverview").css("display", "inline-block");
+    $("#div_PersonalOverview").css("display", "none");
+    $("#div_statistics").css("display", "none");
+    $("#div_MainPage").css("display", "none");
+    $("#div_competition").css("display", "none");
+    $("#div_events").css("display", "none");
+    $("#div_profile").css("display", "none");
+});
 
-button_tabEventLog.onclick = function () {
-    div_ExerciseOverview.style.display = "none";
-    div_PersonalOverview.style.display = "none";
-    div_statistics.style.display = "none";
-    div_MainPage.style.display = "none";
-    div_competition.style.display = "none";
-    div_events.style.display = "inline-block";
-    div_profile.style.display = "none";
+$("#button_tabEventLog").click(function () {
+    $("#div_ExerciseOverview").css("display", "none");
+    $("#div_PersonalOverview").css("display", "none");
+    $("#div_statistics").css("display", "none");
+    $("#div_MainPage").css("display", "none");
+    $("#div_competition").css("display", "none");
+    $("#div_events").css("display", "inline-block");
+    $("#div_profile").css("display", "none");
     div_eventLog.scrollTop = div_eventLog.scrollHeight;
-};
+});
 
-button_tabProfile.onclick = function () {
-    div_ExerciseOverview.style.display = "none";
-    div_PersonalOverview.style.display = "none";
-    div_statistics.style.display = "none";
-    div_MainPage.style.display = "none";
-    div_competition.style.display = "none";
-    div_events.style.display = "none";
-    div_profile.style.display = "inline-block";
-};
+$("#button_tabProfile").click(function () {
+    $("#div_ExerciseOverview").css("display", "none");
+    $("#div_PersonalOverview").css("display", "none");
+    $("#div_statistics").css("display", "none");
+    $("#div_MainPage").css("display", "none");
+    $("#div_competition").css("display", "none");
+    $("#div_events").css("display", "none");
+    $("#div_profile").css("display", "inline-block");
+});
 
-button_deleteExercise.onclick = function () {
+$("#button_deleteExercise").click(function () {
     if (checkForEmptyBoxesNewExercise()) {
         modifyExercise('deleteExercise');
     }
     else {
         alert("Nicht alle Inputboxen wurden ausgefüllt!");
     }
-};
+});
 
-button_createExercise.onclick = function () {
+$("#button_createExercise").click(function () {
     if (checkForEmptyBoxesNewExercise()) {
         modifyExercise('addExercise');
     }
@@ -253,9 +264,9 @@ button_createExercise.onclick = function () {
         alert("Nicht alle Inputboxen wurden ausgefüllt!");
     }
 
-};
+});
 
-button_modifyExercise.onclick = function () {
+$("#button_modifyExercise").click(function () {
     if (input_exerciseID.value == "") {
         alert("Keine Übung zum Bearbeiten ausgewählt");
     }
@@ -267,50 +278,50 @@ button_modifyExercise.onclick = function () {
             alert("Nicht alle Inputboxen wurden ausgefüllt!");
         }
     }
-};
+});
 
 
 
-select_graphSwitch.onchange = function () {
-    if (select_graphSwitch.value == "bar") {
-        input_graphFromDate.disabled = true;
-        input_graphToDate.disabled = true;
+$("#select_graphSwitch").change(function () {
+    if ($("#select_graphSwitch").val() == "bar") {
+        $("#input_graphFromDate").prop("disabled", true);
+        $("#input_graphToDate").prop("disabled", true);
     }
     else {
-        input_graphFromDate.disabled = false;
-        input_graphToDate.disabled = false;
+        $("#input_graphFromDate").prop("disabled", false);
+        $("#input_graphToDate").prop("disabled", false);
     }
     requestGraphUpdate();
-};
+});
 
-button_chatText.onclick = function () {
-    if (input_chatText.value != "") {
+$("#button_chatText").click(function () {
+    if ($("#input_chatText").val() != "") {
         sendChatMessage(input_chatText.value);
     }
-};
+});
 
-button_link.onclick = function () {
-    input_chatText.value += "[LINK][/LINK]";
-};
+$("#button_link").click(function () {
+    $("#input_chatText").val($("#input_chatText").val()+"[LINK][/LINK]");
+});
 
-button_img.onclick = function () {
-    input_chatText.value += "[IMG][/IMG]";
-};
+$("#button_img").click(function () {
+    $("#input_chatText").val($("#input_chatText").val()+"[IMG][/IMG]");
+});
 
-input_graphFromDate.onchange = function () {
+$("#input_graphFromDate").change(function () {
     requestGraphUpdate();
-};
-input_graphToDate.onchange = function () {
+});
+$("#input_graphToDate").change(function () {
     requestGraphUpdate();
-};
+});
 
-select_chartType.onchange = function () {
+$("#select_chartType").change(function () {
     requestGraphUpdate();
-};
+});
 
-input_exerciseID.onchange = function () {
+$("#input_exerciseID").change(function () {
     for (let tableIterator = 0, row; row = table_exerciseTable.rows[tableIterator]; tableIterator++) {
-        if (input_exerciseID.value == row.getElementsByTagName("td")[0].innerHTML) {
+        if ($("#input_exerciseID").val() == row.getElementsByTagName("td")[0].innerHTML) {
             //row.getElementsByTagName("td")[1].classList.add("selected");
             row.classList.add("selected");
         }
@@ -319,9 +330,9 @@ input_exerciseID.onchange = function () {
             row.classList.remove("selected");
         }
     }
-};
+});
 
-select_doneExercise.onchange = function () {
+$("#select_doneExercise").change(function () {
     let paceUnitsArray = PACE_UNITS.split(";");
     let selectedUnit = "";
     for (let iterator = 0; iterator < paceUnitsArray.length; iterator++) {
@@ -352,9 +363,9 @@ select_doneExercise.onchange = function () {
     }
 
 
-};
+});
 
-select_exerciseUnit.onchange = function () {
+$("#select_exerciseUnit").change(function () {
 
     let paceUnitOptions = common.getPaceUnitOptions(select_exerciseUnit.value);
 
@@ -396,13 +407,13 @@ select_exerciseUnit.onchange = function () {
         paragraph_paceUnitNotice.innerHTML = "Keine Auswahl getroffen";
         label_input_exerciseDifficulty.innerHTML = "Schwierigkeit (1,10,100):";
     }
-};
+});
 
-button_hideExercise.onclick = function () {
+$("#button_hideExercise").click(function () {
     hideExercise(input_exerciseID.value);
-};
+});
 
-button_showHiddenExercises.onclick = function () {
+$("#button_showHiddenExercises").click(function () {
     RUNTIME_CONFIG.showHiddenExercises = !RUNTIME_CONFIG.showHiddenExercises;
     if (RUNTIME_CONFIG.showHiddenExercises) {
         button_showHiddenExercises.style.backgroundColor = "green";
@@ -411,16 +422,33 @@ button_showHiddenExercises.onclick = function () {
         button_showHiddenExercises.style.backgroundColor = "";
     }
     requestExerciseListUpdate();
-};
+});
 
-select_statisticsExercise.onchange = function () {
+$("#select_statisticsExercise").change(function () {
     requestExerciseStatistic(select_statisticsExercise.value);
     requestExerciseGraphUpdate();
-};
+});
 
-button_saveProfileData.onclick = function () {
+$("#button_saveProfileData").click(function () {
     sendPersonalProfileData();
-};
+});
+
+$("#adminButton_saveAchievement").click(function () {
+    SOCKET.emit("addAchievementToExercise", exPack = {
+        id: $("#adminSelect_AchievementExercise").val(),
+        repsToGetOverall: $("#adminInput_repsToGetOverall").val(),
+        repsToGetDaily: $("#adminInput_repsToGetDaily").val(),
+        repsToGetMonthly: $("#adminInput_repsToGetMonthly").val(),
+        achievementCategory: $("#adminInput_achievementCategory").val(),
+        name: Name
+    });
+});
+
+$("#adminSelect_AchievementExercise").change(function () {
+    SOCKET.emit("requestAchievementDataForExercise", exPack = {
+        id: $("#adminSelect_AchievementExercise").val(),
+    });
+});
 
 initialize();
 /******************************************************************************************************************
@@ -557,6 +585,27 @@ SOCKET.on("refreshExerciseStatistics", function (data) {
         paragraph_statisticsExercise.innerHTML += " | " + common.HTMLBold(common.translate(key)) + ": " + common.translate(data[key]);
     }
 });
+
+SOCKET.on("sendAchievementDataForExercise", function (data) {
+
+    $("#adminInput_repsToGetOverall").val(data.overall.join(","));
+    $("#adminInput_repsToGetDaily").val(data.daily.join(","));
+    $("#adminInput_repsToGetMonthly").val(data.monthly.join(","));
+    $("#adminInput_achievementCategory").val(data.category);
+});
+
+SOCKET.on("OnlineStatus",function(data){
+    let strOnlineMsg = "Online: ";
+    
+    for (let name in data.online){
+        if(data.online[name]){
+            strOnlineMsg += name + ", ";
+        }
+    }
+    strOnlineMsg = strOnlineMsg.substring(0, strOnlineMsg.length - 2);
+    input_onlineIndicator.value = strOnlineMsg;
+});
+
 
 
 /******************************************************************************************************************
@@ -1199,6 +1248,7 @@ function generateExerciseList(data) {
     var selIndex = select_doneExercise.selectedIndex;
     select_doneExercise.innerHTML = "";
     select_statisticsExercise.innerHTML = "";
+    $("#adminSelect_AchievementExercise").html("");
     var exercisesInTable = 0;
     var isHiddenExercise = false;
 
@@ -1384,13 +1434,14 @@ function generateExerciseList(data) {
         };
     }
     if (exercisesInTable > 0) {
-        input_exerciseID.onchange();
+        $("#input_exerciseID").change();
     }
 
     common.sortSelect(document, select_doneExercise);
     select_statisticsExercise.innerHTML = select_doneExercise.innerHTML;
     select_doneExercise.selectedIndex = selIndex;
     select_statisticsExercise.selectedIndex = selIndex;
+    $("#adminSelect_AchievementExercise").html($("#select_doneExercise").html());
 
     let end = Date.now();
     //sendChatMessage(`exercise table generation took ${end - start} ms`);
@@ -1513,7 +1564,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
 
                         select_doneExercise.value = exId;
                         input_doneExerciseWeight.value = weight;
-                        select_doneExercise.onchange();
+                        $("#select_doneExercise").change();
 
                     }.bind(bodyRow);
                 }
@@ -1752,6 +1803,8 @@ function initialize() {
     input_doneExerciseAdditional.style.display = "none";
     input_doneExerciseAdditional.disabled = true;
 
+    $("#select_statisticsExercise").change();
+
 }
 
 function setCookie(cname, cvalue, exdays) {
@@ -1793,16 +1846,6 @@ function changeCSS(cssFile, cssLinkIndex) {
     document.getElementsByTagName("body").item(0).replaceChild(newlink, oldlink);
 }
 
-setInterval(function () {
-    if (SOCKET.connected) {
-        input_onlineIndicator.style.color = "green";
-        input_onlineIndicator.checked = true;
-    }
-    else {
-        input_onlineIndicator.style.color = "red";
-        input_onlineIndicator.checked = false;
-    }
-}, 1000);
 
 if (LOGIN_COOKIE != "") {
     SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: false, loginToken: LOGIN_COOKIE });
@@ -1816,7 +1859,7 @@ function logout() {
 
 function resetExerciseEntryMask() {
     $(".modifyExercise").val("");
-    select_exerciseUnit.onchange();
+    $("#select_exerciseUnit").change();
     button_hideExercise.innerHTML = "Ausblenden";
 
 }
@@ -1886,7 +1929,7 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
         if (bodyRow.classList.contains("hiddenExercise")) {
             button_hideExercise.innerHTML = "Einblenden";
-            $("#button_hideExercise").html("Next Step...");
+            //$("#button_hideExercise").html("Next Step...");
         }
         else {
             button_hideExercise.innerHTML = "Ausblenden";
@@ -1894,8 +1937,8 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
     }
 
-    input_exerciseID.onchange();
-    select_exerciseUnit.onchange();
+    $("#input_exerciseID").change();
+    $("#select_exerciseUnit").change();
 }
 
 

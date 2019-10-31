@@ -140,7 +140,6 @@ button:hover {
 
 #div_exerciseStatistics {
     height: 60%;
-
 }
 
 #div_exerciseHistory {
@@ -265,7 +264,6 @@ button:hover {
 }
 
 /* TABLES */
-
 
 .deleteButton:hover {
     background: rgb(202, 111, 95);
@@ -418,4 +416,10 @@ button:hover {
 
 #input_chatText {
     width: 50%;
+}
+
+#input_onlineIndicator{
+    width: 400px;
+    font-size: 10px;
+    color: rgb(12, 134, 12);
 }

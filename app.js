@@ -15,6 +15,8 @@ Log = require("./server/Log");
 Common = require("./client/js/common");
 EmailManager = require("./server/EmailManager");
 
+
+
 //MODULE INITS
 var storageManager = new JSONFileStorage('./saves');
 var config = new Config();
@@ -34,6 +36,7 @@ var SOCKET_LIST = {};
 var PLAYER_LIST = {};
 var FITNESS_MANAGER = new FitnessManager();
 var DB_TOKEN = config.DB_TOKEN;
+var ONLINE_STATE = {};
 
 var OnPlayerConnection;
 var OnSocketConnection;
@@ -49,6 +52,8 @@ loadSaveFiles(function (loadSaveFilesResult) {
 });
 
 
+
+
 //************************************************************/
 //************************************************************/
 //************************************************************/
@@ -56,6 +61,9 @@ loadSaveFiles(function (loadSaveFilesResult) {
 //************************************************************/
 //************************************************************/
 //************************************************************/
+
+
+
 var dailyWinner = "Keiner";
 var lastWinner = "Keiner";
 function cyclicAquisition() {
@@ -91,6 +99,17 @@ function cyclicAquisition() {
 			}
 		}
 	}
+
+	for (let iPlayer in PLAYER_LIST) {
+		player = PLAYER_LIST[iPlayer];
+		if (SOCKET_LIST[player.id] != undefined) {
+			SOCKET_LIST[player.id].emit('OnlineStatus', {
+				online: ONLINE_STATE, 
+			});
+		}
+	}
+
+
 
 	FITNESS_MANAGER.today = date;
 }
@@ -238,7 +257,6 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 
 		USERS = result.dataStorage.users;
 
-		var colors = ["#008000", "#ff0000", "#0000ff", "#ffff00", "#a52a2a", "#808080", "#ff00ff", "#ffa500"];
 
 		colorIterator = 0;
 		for (var playerName in FITNESS_MANAGER.registeredPlayers) {
@@ -246,13 +264,18 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 				FITNESS_MANAGER.colorList[playerName] = USERS[playerName.toUpperCase()].color;
 			}
 			else {
-				USERS[playerName.toUpperCase()].color = colors[colorIterator];
-				FITNESS_MANAGER.colorList[playerName] = colors[colorIterator];
+				var letters = '0123456789abcdef';
+				var color = '#';
+				for (var i = 0; i < 6; i++) {
+					color += letters[Math.floor(Math.random() * 16)];
+				}
+				USERS[playerName.toUpperCase()].color = color;
+				FITNESS_MANAGER.colorList[playerName] = color;
 			}
 			colorIterator++;
 		}
 
-		
+
 		logFile.log("dataStorage Loaded", false, 0);
 		fitnessManagerStartUpTasks(function (startUpResult) {
 			AddPropertiesToExercises(function (AddPropertiesToExerciseListResult) {
@@ -393,7 +416,7 @@ function startServer() {
  * @param {SocketIO.Socket} socket 
  */
 	OnPlayerConnection = function (socket) {
-		
+
 		var newPlayer = new Player(socket.id);
 		PLAYER_LIST[newPlayer.id] = newPlayer;
 
@@ -408,12 +431,12 @@ function startServer() {
 			for (let key in data) {
 				USERS[newPlayer.name.toUpperCase()][key] = data[key];
 			}
-			if(FITNESS_MANAGER.colorList[newPlayer.name] != USERS[newPlayer.name.toUpperCase()].color){
-				FITNESS_MANAGER.updateEventLogColor(newPlayer.name,USERS[newPlayer.name.toUpperCase()].color,FITNESS_MANAGER.colorList[newPlayer.name]);
-				
+			if (FITNESS_MANAGER.colorList[newPlayer.name] != USERS[newPlayer.name.toUpperCase()].color) {
+				FITNESS_MANAGER.updateEventLogColor(newPlayer.name, USERS[newPlayer.name.toUpperCase()].color, FITNESS_MANAGER.colorList[newPlayer.name]);
+
 			}
 			FITNESS_MANAGER.colorList[newPlayer.name] = USERS[newPlayer.name.toUpperCase()].color;
-			
+
 			FITNESS_MANAGER.needsUpload.dataStorage = true;
 			refreshEventLog();
 			logFile.log(newPlayer.name + " updates profile", true, 0);
@@ -427,7 +450,7 @@ function startServer() {
 			});
 		});
 
-
+		
 		socket.on("modifyExercise", function (data) {
 			var creator = PLAYER_LIST[newPlayer.id].name;
 			logFile.log(newPlayer.name + " " + "edits Exercise " + data.name, false, 0);
@@ -605,7 +628,7 @@ function startServer() {
 			});
 
 			logFile.log(newPlayer.name + " gets Exercise Statistics", false, 0);
-			
+
 		});
 
 
@@ -630,6 +653,39 @@ function startServer() {
 			FITNESS_MANAGER.addToEventLog(data.name + ": " + data.msg);
 			refreshEventLog();
 			logFile.log(data.name + " sends chat message", false, 0);
+		});
+
+		socket.on("addAchievementToExercise", function (data) {
+
+			if (data.name.toLowerCase() === "caf") {
+				if (data.achievementCategory != "" && data.achievementCategory != undefined) {
+					let repsToGetOverall = data.repsToGetOverall.split(",");
+					let repsToGetDaily = data.repsToGetDaily.split(",");
+					let repsToGetMonthly = data.repsToGetMonthly.split(",");
+					FITNESS_MANAGER.addExerciseAchievement(data.id, repsToGetOverall, repsToGetDaily, repsToGetMonthly, data.achievementCategory);
+				}
+				else {
+					socket.emit('alertMsg', { data: "achievementCategory leer oder ungültig." });
+				}
+
+			}
+			else {
+				socket.emit('alertMsg', { data: "Benötigt Admin Rechte." });
+			}
+
+			uiRefresh();
+		});
+
+		socket.on("requestAchievementDataForExercise", function (data) {
+			if (data.id != undefined && data.id != "") {
+				socket.emit('sendAchievementDataForExercise', {
+					daily: FITNESS_MANAGER.exerciseList[data.id].achievementInfo.repsToGetDaily,
+					monthly: FITNESS_MANAGER.exerciseList[data.id].achievementInfo.repsToGetMonthly,
+					overall: FITNESS_MANAGER.exerciseList[data.id].achievementInfo.repsToGetOverall,
+					category: FITNESS_MANAGER.exerciseList[data.id].achievementInfo.achievementCategory
+				});
+
+			}
 		});
 
 		logFile.log("OnPlayerConnection done", false, 0);
@@ -666,6 +722,8 @@ function startServer() {
 						socket.emit('signInResponse', { success: true, name: checkPasswortResult.username, profileData: { color: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].color, allowEmail: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].allowEmail, email: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].email } });
 					});
 
+					FITNESS_MANAGER.colorList[checkPasswortResult.username] = USERS[checkPasswortResult.username.toUpperCase()].color;
+					ONLINE_STATE[checkPasswortResult.username] = true;
 
 				}
 				else {
@@ -699,14 +757,18 @@ function startServer() {
 		//someone disconnects
 		socket.on('disconnect', function () {
 			//Save
+			
+			
 
 			if (PLAYER_LIST[socket.id] != undefined) {
+				ONLINE_STATE[PLAYER_LIST[socket.id].name] = false;
 				FITNESS_MANAGER.addToEventLog(PLAYER_LIST[socket.id].name + " hat sich abgemeldet.");
 				savePlayer(PLAYER_LIST[socket.id]);
 				delete PLAYER_LIST[socket.id];
 			}
-			
+
 			delete SOCKET_LIST[socket.id];
+			
 
 			logFile.log('socket connection lost (' + socket.id + ")", false, 0);
 		});
@@ -719,7 +781,7 @@ function startServer() {
 			logFile.log('socket reconnect number ' + attemptNumber + ' (' + socket.id + ")", false, 0);
 		});
 
-		
+
 	};
 
 
@@ -741,7 +803,7 @@ function startServer() {
 							if (PLAYER_LIST[playerId].name == name) {
 
 								SOCKET_LIST[playerId].disconnect(true);
-								
+
 								cb({
 									success: true, //ASS
 									username: name,
@@ -819,15 +881,26 @@ function startServer() {
 	addUser = function (data, cb) {
 		FITNESS_MANAGER.addNewPlayer(data.username);
 		setTimeout(function () {
+			var letters = '0123456789abcdef';
+			var color = '#';
+			for (var i = 0; i < 6; i++) {
+				color += letters[Math.floor(Math.random() * 16)];
+			}
+
 			USERS[data.username.toUpperCase()] = {
 				password: pwHash.generate(data.password),
 				loginToken: pwHash.generate(data.username + data.password),
+				color: color,
+				email: "Nichts hinterlegt",
+				allowEmail: false
 			};
 			FITNESS_MANAGER.needsUpload.dataStorage = true;
 			cb();
 		}, 10);
 		logFile.log(data.username + " was added to USERS", true, 0);
 	};
+
+	
 
 }
 

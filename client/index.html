@@ -21,10 +21,23 @@
 		<label for="input_RememberMe">Login merken</label>
 		<input id="input_RememberMe" type="checkbox"></input>
 		<div id="div_changeLog">
-			<p> Anmeldung = Name vom GoogleSheet + selbst ausgedachtes Passwort. Bitte das Passwort merken,
-				es kann nicht wiederhergestellt werden. Falls kein Googlesheetname vorhanden ist,
-				einen neuen ausdenken.
+			<p> Anmeldung = Reset am 31.10.2019 - Bitte neu registrieren. Name egal.
 
+			</p>
+			<p>
+				NEWS (31.10.2019) v1.81:
+				<li>
+					<span class="changeLog_Feature">RESET: </span>Alles wurde zurückgesetzt.
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Online Liste zeigt live an wer gerade Online ist.
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Achievement Maker: Achievements können (von mir) ohne Serverneustart hinzugefügt werden.
+				</li>
+				<li>
+					<span class="changeLog_Bug">Bug: </span>Diverse Bugs behoben, welche einen Betrieb ohne Initial Save Files unmöglich machen.
+				</li>
 			</p>
 			<p>
 				NEWS (01.10.2019) v1.80:
@@ -497,7 +510,25 @@
 		<label for="input_allowEmails">Erlaube Emails:</label>
 		<input id="input_allowEmails" type="checkbox" checked="false"></input><br><br>
 
-		<button id="button_saveProfileData">Speichern</button>
+		<button id="button_saveProfileData">Speichern</button><br>
+		
+		<p>Achievement Maker</p>
+		<label for="adminSelect_AchievementExercise" class="adminControls">Übung :</label>
+		<select id="adminSelect_AchievementExercise" class="adminControls"> </select><br>
+
+		<label for="adminInput_repsToGetOverall" class="adminControls">Gesamtanzahl:</label>
+		<input id="adminInput_repsToGetOverall" type="text" class="adminControls"><br>
+
+		<label for="adminInput_repsToGetDaily" class="adminControls">Täglich:</label>
+		<input id="adminInput_repsToGetDaily" type="text" class="adminControls"><br>
+
+		<label for="adminInput_repsToGetMonthly" class="adminControls">Monatlich:</label>
+		<input id="adminInput_repsToGetMonthly" type="text" class="adminControls"><br>
+
+		<label for="adminInput_achievementCategory" class="adminControls">Kategorie:</label>
+		<input id="adminInput_achievementCategory" type="text" class="adminControls"><br>
+
+		<button id="adminButton_saveAchievement" class="adminControls">Speichern</button>
 	</div>
 
 	<footer>
@@ -509,7 +540,7 @@
 			<button id="button_tabCompetition">Siege</button>
 			<button id="button_tabEventLog">Events</button>
 			<button id="button_tabProfile">Profil</button>
-			<input id="input_onlineIndicator" type="checkbox" disabled="true">Online Status</input>
+			<input id="input_onlineIndicator" type="textbox" disabled="true">
 			<a href="https://trello.com/invite/b/aZfDB1r0/d9bb40353771097cb89993e31baef54b/fitnessapp"
 				target="_blank">Feedback</a>
 			<a href="#" id="button_logOut" onclick="logout();">Ausloggen</a>
