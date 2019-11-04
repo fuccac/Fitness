@@ -104,7 +104,7 @@ function cyclicAquisition() {
 		player = PLAYER_LIST[iPlayer];
 		if (SOCKET_LIST[player.id] != undefined) {
 			SOCKET_LIST[player.id].emit('OnlineStatus', {
-				online: ONLINE_STATE, 
+				online: ONLINE_STATE,
 			});
 		}
 	}
@@ -450,7 +450,7 @@ function startServer() {
 			});
 		});
 
-		
+
 		socket.on("modifyExercise", function (data) {
 			var creator = PLAYER_LIST[newPlayer.id].name;
 			logFile.log(newPlayer.name + " " + "edits Exercise " + data.name, false, 0);
@@ -739,26 +739,39 @@ function startServer() {
 
 		//someone signs up
 		socket.on('SignUp', function (data) {
-			isUsernameTaken(data, function (res) {
-				if (res) {
-					socket.emit('signUpResponse', { success: false });
-					socket.on("Name", function (data) {
-						socket.emit("getName", PLAYER_LIST[socket.id].name);
-					});
-				}
-				else {
-					addUser(data, function () {
-						socket.emit('signUpResponse', { success: true });
-					});
-				}
-			});
+			if (data.username != undefined &&
+				data.username.length >= 3 &&
+				data.username != " " &&
+				data.username != "  " &&
+				data.username != "   ") {
+
+				isUsernameTaken(data, function (res) {
+					if (res) {
+						socket.emit('signUpResponse', { success: false });
+						socket.on("Name", function (data) {
+							socket.emit("getName", PLAYER_LIST[socket.id].name);
+						});
+					}
+					else {
+						addUser(data, function () {
+							socket.emit('signUpResponse', { success: true });
+						});
+					}
+				});
+
+			}
+			else
+			{
+				socket.emit('alertMsg', { data: 'Username "' + data.username + '" ist nicht gültig.' });
+			}
+
 		});
 
 		//someone disconnects
 		socket.on('disconnect', function () {
 			//Save
-			
-			
+
+
 
 			if (PLAYER_LIST[socket.id] != undefined) {
 				ONLINE_STATE[PLAYER_LIST[socket.id].name] = false;
@@ -768,7 +781,7 @@ function startServer() {
 			}
 
 			delete SOCKET_LIST[socket.id];
-			
+
 
 			logFile.log('socket connection lost (' + socket.id + ")", false, 0);
 		});
@@ -900,7 +913,7 @@ function startServer() {
 		logFile.log(data.username + " was added to USERS", true, 0);
 	};
 
-	
+
 
 }
 
