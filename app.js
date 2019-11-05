@@ -38,6 +38,7 @@ var FITNESS_MANAGER = new FitnessManager();
 var DB_TOKEN = config.DB_TOKEN;
 var ONLINE_STATE = {};
 
+
 var OnPlayerConnection;
 var OnSocketConnection;
 var isValidPassword;
@@ -108,8 +109,6 @@ function cyclicAquisition() {
 			});
 		}
 	}
-
-
 
 	FITNESS_MANAGER.today = date;
 }
@@ -310,8 +309,8 @@ function AddPropertiesToExercises(result) {
 	let addedPropertiesToVotes = 0;
 
 	let propertiesToAddDirectly = {
-		name: ["paceConstant", "isPaceExercise", "deleted", "isHidden"],
-		value: [1, false, false, {}],
+		name: ["paceConstant", "isPaceExercise", "deleted", "isHidden","calcMethod"],
+		value: [1, false, false, {},"Standard"],
 	};
 
 	let propertiesToAddVotes = {

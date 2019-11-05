@@ -133,7 +133,6 @@ $("#button_SignIn").click(function () {
         $("#adminButton_saveAchievement").prop("disabled", true);
     }
 
-
 });
 
 $("#button_SignUp").click(function () {
@@ -301,11 +300,11 @@ $("#button_chatText").click(function () {
 });
 
 $("#button_link").click(function () {
-    $("#input_chatText").val($("#input_chatText").val()+"[LINK][/LINK]");
+    $("#input_chatText").val($("#input_chatText").val() + "[LINK][/LINK]");
 });
 
 $("#button_img").click(function () {
-    $("#input_chatText").val($("#input_chatText").val()+"[IMG][/IMG]");
+    $("#input_chatText").val($("#input_chatText").val() + "[IMG][/IMG]");
 });
 
 $("#input_graphFromDate").change(function () {
@@ -577,6 +576,7 @@ SOCKET.on("refresh", function (data) {
     generateCompetitionData(data);
     generateEventLog(data);
 
+    generateFadeOutMessage("Refresh durchgeführt");
 });
 
 SOCKET.on("refreshExerciseStatistics", function (data) {
@@ -594,11 +594,11 @@ SOCKET.on("sendAchievementDataForExercise", function (data) {
     $("#adminInput_achievementCategory").val(data.category);
 });
 
-SOCKET.on("OnlineStatus",function(data){
+SOCKET.on("OnlineStatus", function (data) {
     let strOnlineMsg = "Online: ";
-    
-    for (let name in data.online){
-        if(data.online[name]){
+
+    for (let name in data.online) {
+        if (data.online[name]) {
             strOnlineMsg += name + ", ";
         }
     }
@@ -607,6 +607,22 @@ SOCKET.on("OnlineStatus",function(data){
 });
 
 
+
+function generateFadeOutMessage(msg,bottom,left) {
+    if (bottom == undefined){
+        bottom = "15vh";
+    }
+    if (left == undefined){
+        left = "10px";
+    }
+    let id = Math.random().toFixed(16).slice(2);
+    let name = 'refreshFadeOut_'+ id;
+    $("#"+name).remove();
+    $('body').append('<div id="'+name+'" style="bottom: '+bottom+'; left:'+left+'; width: 10vw; position: absolute; background-color: green;">'+msg+'</div>');
+    $("#"+name).fadeOut(5000, function () {
+        $(this).remove();
+    });
+}
 
 /******************************************************************************************************************
 *******************************************************************************************************************
@@ -705,6 +721,7 @@ function modifyExercise(emitString) {
         comment: input_exerciseComment.value,
         id: input_exerciseID.value,
         paceUnitOptions: paceUnitOptions,
+        calcMethod: $("#select_exerciseCalcMethod").val()
     });
     resetExerciseEntryMask();
 }
@@ -1400,6 +1417,30 @@ function generateExerciseList(data) {
         cell.innerHTML = exercise.isPaceExercise;
         cell.classList.add("isPaceExercise");
 
+        //calcMethod
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = exercise.calcMethod;
+        cell.classList.add("calcMethod");
+
+        //Video
+        cell = bodyRow.insertCell(bodyRow.cells.length);
+        cell.innerHTML = "";
+        let youtubeMatcher = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+        let videoIterator = 1;
+        for (playerName in exercise.votes) {
+            let comment = exercise.votes[playerName].comment;
+            if (comment.match(youtubeMatcher)) {
+                cell.innerHTML += common.createHTMLLink(comment,"V"+videoIterator);
+                videoIterator++;
+                cell.innerHTML += " ";
+            }
+        } 
+        if (cell.innerHTML == ""){
+            cell.innerHTML = "Kein Video";
+        }
+
+        cell.classList.add("video");
+
         //iterator
         cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML = exerciseIterator;
@@ -1910,6 +1951,7 @@ function exerciseTableBodyRowClick(bodyRow, data) {
         select_exerciseType.value = data.exercises[iterator].type;
         select_exerciseUnit.value = data.exercises[iterator].unit;
         select_bothSides.value = data.exercises[iterator].bothSides;
+        $("#select_exerciseCalcMethod").val(data.exercises[iterator].calcMethod);
 
         if (data.exercises[iterator].votes[Name] == undefined) {
             input_exerciseBaseWeight.value = data.exercises[iterator].baseWeight;

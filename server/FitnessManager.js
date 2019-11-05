@@ -185,7 +185,7 @@ class FitnessManager {
             let currentKey = exPack[exerciseKey];
             this.addToEventLog(common.HTMLBold(common.translate(exerciseKey)) + ": '" + common.HTMLBold(common.translate(currentKey)) + "'");
         }
-        result(this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.paceConstant, exPack.isPaceExercise, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides)));
+        result(this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.paceConstant, exPack.isPaceExercise, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides, exPack.calcMethod)));
     }
 
     editExercise(data, editor, result) {
@@ -202,6 +202,7 @@ class FitnessManager {
             type: false,
             equipment: false,
             paceConstant: false,
+            calcMethod:false,
         };
 
         var newVote = {
@@ -273,6 +274,7 @@ class FitnessManager {
         this.exerciseList[data.id].type = data.type;
         this.exerciseList[data.id].equipment = data.equipment;
         this.exerciseList[data.id].isPaceExercise = data.isPaceExercise;
+        this.exerciseList[data.id].calcMethod = data.calcMethod;
 
         calc.calculateNewFactor(this.exerciseList[data.id]);
         this.addToEventLog("Resultierender neuer Faktor: '" + common.HTMLBold(this.exerciseList[data.id].factor) + "'");
@@ -375,6 +377,10 @@ class FitnessManager {
     }
 
     addToHistory(id, playerName, exerciseId, weight, count, countAdditional, date, result) {
+        let calcMethod = "Standard";
+        if (this.exerciseList[exerciseId].calcMethod != undefined){
+            calcMethod = this.exerciseList[exerciseId].calcMethod;
+        }
 
         if (countAdditional == "" || countAdditional == undefined) {
             countAdditional = undefined;
@@ -398,7 +404,7 @@ class FitnessManager {
         if (this.history[date] != undefined) {
             for (let iterator in this.history[date].exerciseId) {
                 var exId = this.history[date].exerciseId[iterator];
-                if (exId === exerciseId && this.history[date].weight[iterator] == weight && this.history[date].playerName[iterator].toUpperCase() == playerName.toUpperCase() && countAdditional == undefined) {
+                if (exId === exerciseId && this.history[date].weight[iterator] == weight && this.history[date].playerName[iterator].toUpperCase() == playerName.toUpperCase() && countAdditional == undefined && calcMethod.toLowerCase() != "liegestütz") {
                     //HISTORY ENTRY IS AVAILABLE - AND NEW ENTRY IS STACKABLE! 
                     this.history[date].count[iterator] += Number(count);
                     this.history[date].points[iterator] += Number(points);
@@ -614,7 +620,13 @@ class FitnessManager {
     checkForAchievements(player, result) {
         let start = Date.now();
         //exercise Achievements
-        this.achievements[player.name] = {
+        /*this.achievements[player.name] = {
+            earnedAchievements: {},
+            notEarnedAchievements: {}
+        };
+        */
+        let newAchievements = {};
+        newAchievements[player.name] = {
             earnedAchievements: {},
             notEarnedAchievements: {}
         };
@@ -653,14 +665,14 @@ class FitnessManager {
             for (let levelOverallIterator = 0; levelOverallIterator < exercise.achievementInfo.repsToGetOverall.length; levelOverallIterator++) {
                 if (exercise.achievementInfo.repsToGetOverall[levelOverallIterator] > 0) {
                     if (playerReps >= exercise.achievementInfo.repsToGetOverall[levelOverallIterator]) {
-                        this.achievements[player.name].earnedAchievements["Overall" + exCat] = {
+                        newAchievements[player.name].earnedAchievements["Overall" + exCat] = {
                             level: (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
                             text: exercise.achievementInfo.textOverall,
                             progress: playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
                             percent: 100,
                         };
                         if (levelOverallIterator == exercise.achievementInfo.repsToGetOverall.length) {
-                            delete this.achievements[player.name].notEarnedAchievements["Overall" + exCat];
+                            delete newAchievements[player.name].notEarnedAchievements["Overall" + exCat];
                         }
                     }
                     else {
@@ -674,7 +686,7 @@ class FitnessManager {
                         else {
                             percent = playerReps / exercise.achievementInfo.repsToGetOverall[levelOverallIterator] * 100;
                         }
-                        this.achievements[player.name].notEarnedAchievements["Overall" + exCat] = {
+                        newAchievements[player.name].notEarnedAchievements["Overall" + exCat] = {
                             level: (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
                             text: exercise.achievementInfo.textOverall,
                             progress: playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
@@ -690,7 +702,7 @@ class FitnessManager {
             for (let levelMonthIterator = 0; levelMonthIterator < exercise.achievementInfo.repsToGetMonthly.length; levelMonthIterator++) {
                 if (exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] > 0) {
                     if (playerRepsMonthly >= exercise.achievementInfo.repsToGetMonthly[levelMonthIterator]) {
-                        this.achievements[player.name].earnedAchievements["Month" + exCat] = {
+                        newAchievements[player.name].earnedAchievements["Month" + exCat] = {
                             level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
                             text: exercise.achievementInfo.textMonthly,
                             progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
@@ -709,7 +721,7 @@ class FitnessManager {
                         else {
                             percent = playerRepsMonthly / exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] * 100;
                         }
-                        this.achievements[player.name].notEarnedAchievements["Month" + exCat] = {
+                        newAchievements[player.name].notEarnedAchievements["Month" + exCat] = {
                             level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
                             text: exercise.achievementInfo.textMonthly,
                             progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
@@ -725,7 +737,7 @@ class FitnessManager {
             for (let levelDayIterator = 0; levelDayIterator < exercise.achievementInfo.repsToGetDaily.length; levelDayIterator++) {
                 if (exercise.achievementInfo.repsToGetDaily[levelDayIterator] > 0) {
                     if (repsToGetDaily >= exercise.achievementInfo.repsToGetDaily[levelDayIterator]) {
-                        this.achievements[player.name].earnedAchievements["Day" + exCat] = {
+                        newAchievements[player.name].earnedAchievements["Day" + exCat] = {
                             level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
                             text: exercise.achievementInfo.textDaily,
                             progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
@@ -743,7 +755,7 @@ class FitnessManager {
                         else {
                             percent = repsToGetDaily / exercise.achievementInfo.repsToGetDaily[levelDayIterator] * 100;
                         }
-                        this.achievements[player.name].notEarnedAchievements["Day" + exCat] = {
+                        newAchievements[player.name].notEarnedAchievements["Day" + exCat] = {
                             level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
                             text: exercise.achievementInfo.textDaily,
                             progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
@@ -773,7 +785,7 @@ class FitnessManager {
 
                         for (let levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
                             if (this.registeredPlayers[player.name].points.dailyMax >= needArray[levelIterator]) {
-                                this.achievements[player.name].earnedAchievements[achievementName] = {
+                                newAchievements[player.name].earnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.registeredPlayers[player.name].points.dailyMax + "/" + needArray[levelIterator],
@@ -791,7 +803,7 @@ class FitnessManager {
                                 else {
                                     percent = this.registeredPlayers[player.name].points.dailyMax / needArray[levelIterator] * 100;
                                 }
-                                this.achievements[player.name].notEarnedAchievements[achievementName] = {
+                                newAchievements[player.name].notEarnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.registeredPlayers[player.name].points.dailyMax.toFixed(2) + "/" + needArray[levelIterator],
@@ -808,7 +820,7 @@ class FitnessManager {
 
                         for (let levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
                             if (this.registeredPlayers[player.name].points.monthlyMax >= needArray[levelIterator]) {
-                                this.achievements[player.name].earnedAchievements[achievementName] = {
+                                newAchievements[player.name].earnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.registeredPlayers[player.name].points.monthlyMax + "/" + needArray[levelIterator],
@@ -826,7 +838,7 @@ class FitnessManager {
                                 else {
                                     percent = this.registeredPlayers[player.name].points.monthlyMax / needArray[levelIterator] * 100;
                                 }
-                                this.achievements[player.name].notEarnedAchievements[achievementName] = {
+                                newAchievements[player.name].notEarnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.registeredPlayers[player.name].points.monthlyMax.toFixed(2) + "/" + needArray[levelIterator],
@@ -843,7 +855,7 @@ class FitnessManager {
 
                         for (let levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
                             if (this.registeredPlayers[player.name].points.total >= needArray[levelIterator]) {
-                                this.achievements[player.name].earnedAchievements[achievementName] = {
+                                newAchievements[player.name].earnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.registeredPlayers[player.name].points.total + "/" + needArray[levelIterator],
@@ -861,7 +873,7 @@ class FitnessManager {
                                 else {
                                     percent = this.registeredPlayers[player.name].points.total / needArray[levelIterator] * 100;
                                 }
-                                this.achievements[player.name].notEarnedAchievements[achievementName] = {
+                                newAchievements[player.name].notEarnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.registeredPlayers[player.name].points.total.toFixed(2) + "/" + needArray[levelIterator],
@@ -882,7 +894,7 @@ class FitnessManager {
 
                         for (let levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
                             if (this.dailyWins[player.name] >= needArray[levelIterator]) {
-                                this.achievements[player.name].earnedAchievements[achievementName] = {
+                                newAchievements[player.name].earnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.dailyWins[player.name] + "/" + needArray[levelIterator],
@@ -900,7 +912,7 @@ class FitnessManager {
                                 else {
                                     percent = this.dailyWins[player.name] / needArray[levelIterator] * 100;
                                 }
-                                this.achievements[player.name].notEarnedAchievements[achievementName] = {
+                                newAchievements[player.name].notEarnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.dailyWins[player.name] + "/" + needArray[levelIterator],
@@ -918,7 +930,7 @@ class FitnessManager {
 
                         for (let levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
                             if (this.monthlyWins[player.name] >= needArray[levelIterator]) {
-                                this.achievements[player.name].earnedAchievements[achievementName] = {
+                                newAchievements[player.name].earnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.monthlyWins[player.name] + "/" + needArray[levelIterator],
@@ -936,7 +948,7 @@ class FitnessManager {
                                 else {
                                     percent = this.monthlyWins[player.name] / needArray[levelIterator] * 100;
                                 }
-                                this.achievements[player.name].notEarnedAchievements[achievementName] = {
+                                newAchievements[player.name].notEarnedAchievements[achievementName] = {
                                     level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
                                     text: achievementText,
                                     progress: this.monthlyWins[player.name] + "/" + needArray[levelIterator],
@@ -950,6 +962,51 @@ class FitnessManager {
                 }
             }
         }
+        if (this.achievements[player.name] != undefined) {
+            let playerChanges = [];
+            let msg = "";
+
+            let earnedAchievements = newAchievements[player.name].earnedAchievements;
+            for (let achievementName in earnedAchievements) {
+                if (this.achievements[player.name].earnedAchievements[achievementName] != undefined) {
+                    //Exists, check level
+                    let oldLevel = Number(this.achievements[player.name].earnedAchievements[achievementName].level.split("/")[0]);
+                    let newLevel = Number(newAchievements[player.name].earnedAchievements[achievementName].level.split("/")[0]);
+                    if (oldLevel > newLevel) {
+                        //lost a level
+                        msg = player.name + " verringert sein Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
+                        playerChanges.push(msg);
+                    }
+                    else if (oldLevel < newLevel) {
+                        //gained a level
+                        msg = player.name + " erhöht sein Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
+                        playerChanges.push(msg);
+                    }
+                    else {
+                        //nothing happend
+                    }
+                }
+                else {
+                    let oldLevel = 0;
+                    let newLevel = Number(newAchievements[player.name].earnedAchievements[achievementName].level.split("/")[0]);
+                    msg = player.name + " erhöht sein Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
+                    playerChanges.push(msg);
+                    //was not there before
+                }
+            }
+
+            for (let i = 0; i < playerChanges.length; i++) {
+                playerChanges[i] = playerChanges[i].replace("Overall", "Gesamt ");
+                playerChanges[i] = playerChanges[i].replace("Day", "Täglich ");
+                playerChanges[i] = playerChanges[i].replace("Month", "Monatlich ");
+                this.addToEventLog(playerChanges[i]);
+            }
+        }
+
+
+
+
+        this.achievements = newAchievements;
         let end = Date.now();
         result(`checkForAchievements done in ${end - start} ms`);
     }

@@ -35,6 +35,10 @@ function Common() {
         element.innerHTML += "<span class=\"tooltiptext\">" + toolTipText + "</span>";
     };
 
+    this.createHTMLLink = function(url, placeholder){
+        return '<a href="'+url+'" target="_blank">'+placeholder+'</a>';
+    };
+
     this.addOption = function (doc, select, key, Name, group) {
         var option = doc.createElement('option');
 
@@ -474,6 +478,8 @@ function Common() {
                 return "Pace Konstante";
             case "isPaceExercise":
                 return "Pace Berechnung Aktiv";
+            case "video":
+                return "Video Links";
             default:
                 if (word.search("Overall") != -1) {
                     return word.replace("Overall", "[Gesamt] - ");

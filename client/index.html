@@ -21,8 +21,24 @@
 		<label for="input_RememberMe">Login merken</label>
 		<input id="input_RememberMe" type="checkbox"></input>
 		<div id="div_changeLog">
-			<p> Anmeldung = Reset am 31.10.2019 - Bitte neu registrieren. Name egal.
+			<p>
+				Anmeldung = Reset am 31.10.2019 - Bitte neu registrieren. Name egal.
 
+			</p>
+			<p>
+				NEWS (05.11.2019) v1.82:
+				<li>
+					<span class="changeLog_Bug">Bug: </span>Namen müssen mindestens 3 Zeichen haben.
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Refresh Anzeige.
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Berechnungsmethoden für individuelle Übungsberechnung
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Übungskommentare werden nach Youtube Links untersucht und in die Tabelle eingebettet.
+				</li>
 			</p>
 			<p>
 				NEWS (31.10.2019) v1.81:
@@ -33,22 +49,26 @@
 					<span class="changeLog_Feature">Feature: </span>Online Liste zeigt live an wer gerade Online ist.
 				</li>
 				<li>
-					<span class="changeLog_Feature">Feature: </span>Achievement Maker: Achievements können (von mir) ohne Serverneustart hinzugefügt werden.
+					<span class="changeLog_Feature">Feature: </span>Achievement Maker: Achievements können (von mir)
+					ohne Serverneustart hinzugefügt werden.
 				</li>
 				<li>
-					<span class="changeLog_Bug">Bug: </span>Diverse Bugs behoben, welche einen Betrieb ohne Initial Save Files unmöglich machen.
+					<span class="changeLog_Bug">Bug: </span>Diverse Bugs behoben, welche einen Betrieb ohne Initial Save
+					Files unmöglich machen.
 				</li>
 			</p>
 			<p>
 				NEWS (01.10.2019) v1.80:
 				<li>
-					<span class="changeLog_Bug">Bug: </span>Anmeldung nicht möglich, falls eine weitere Instanz der App mit dem selben Namen angemeldet ist.
+					<span class="changeLog_Bug">Bug: </span>Anmeldung nicht möglich, falls eine weitere Instanz der App
+					mit dem selben Namen angemeldet ist.
 				</li>
 			</p>
 			<p>
 				NEWS (01.08.2019) v1.79:
 				<li>
-					<span class="changeLog_Bug">Bug: </span>Die ausgeblendeten Übungen werden ordnungsgemäß ausgeblendet.
+					<span class="changeLog_Bug">Bug: </span>Die ausgeblendeten Übungen werden ordnungsgemäß
+					ausgeblendet.
 				</li>
 			</p>
 			<p>
@@ -395,6 +415,7 @@
 			<label for="select_exerciseUnit">Einheit:</label>
 			<label for="select_exerciseEquipment">Ausrüstung:</label>
 			<label for="input_exerciseComment">Kommentar:</label>
+			<label for="select_exerciseCalcMethod">Berechnungsmethode:</label>
 
 			<br><select id="select_exerciseUnit" class="modifyExercise">
 				<option value="km">km</option>
@@ -426,20 +447,26 @@
 				<optgroup label="Spezialgeräte/Großgeräte">
 					<option value="Rudergerät">Rudergerät</option>
 					<option value="Fahrrad">Fahrrad</option>
-					<option value="LegPress Maschine">LegPress Maschine</option>
-					<option value="Legextension">Legextension</option>
+					<option value="Leg Press Maschine">Leg Press Maschine</option>
+					<option value="Leg Extension">Leg Extension</option>
 					<option value="Lat Pull Down">Lat Pull Down</option>
 					<option value="Kabelzug">Kabelzug</option>
+					<option value="Sprungseil">Sprungseil</option>
 				</optgroup>
 				<optgroup label="Sonstiges">
-					<option value="Sprungseil">Sprungseil</option>
 					<option value="Körpergewicht">Körpergewicht</option>
+					<option value="Kein">Kein</option>
 					<option value="Strafe">Strafe</option>
 				</optgroup>
 			</select>
 
 
 			<input id="input_exerciseComment" class="modifyExercise" type="text" placeholder="Kommentarfeld"></input>
+			<select id="select_exerciseCalcMethod" class="modifyExercise">
+					<option value="Standard">Standard</option>
+					<option value="Laufen">Laufen</option>
+					<option value="Liegestütz">Liegestütz</option>
+			</select>
 			<br>
 			<br>
 			<button id="button_createExercise">Anlegen</button>
@@ -511,7 +538,7 @@
 		<input id="input_allowEmails" type="checkbox" checked="false"></input><br><br>
 
 		<button id="button_saveProfileData">Speichern</button><br>
-		
+
 		<p>Achievement Maker</p>
 		<label for="adminSelect_AchievementExercise" class="adminControls">Übung :</label>
 		<select id="adminSelect_AchievementExercise" class="adminControls"> </select><br>
