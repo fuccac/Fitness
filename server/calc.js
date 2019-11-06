@@ -101,6 +101,7 @@ function Calc() {
 						break;
 					}
 				}
+				pace[exercise.id] = Number(count) / Number(countAdditional);
 
 			}
 			else if (exercise.calcMethod.toLowerCase() == "liegestütz") {
@@ -138,7 +139,7 @@ function Calc() {
 			}
 
 		}
-		pace[exercise.id] = Number(count) / Number(countAdditional);
+		
 		exercise.points += Number(result);
 
 		return result;

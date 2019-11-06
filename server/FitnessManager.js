@@ -974,12 +974,12 @@ class FitnessManager {
                     let newLevel = Number(newAchievements[player.name].earnedAchievements[achievementName].level.split("/")[0]);
                     if (oldLevel > newLevel) {
                         //lost a level
-                        msg = player.name + " verringert sein Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
+                        msg = player.name + " verringert Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
                         playerChanges.push(msg);
                     }
                     else if (oldLevel < newLevel) {
                         //gained a level
-                        msg = player.name + " erhöht sein Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
+                        msg = player.name + " erhöht Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
                         playerChanges.push(msg);
                     }
                     else {
@@ -1006,7 +1006,7 @@ class FitnessManager {
 
 
 
-        this.achievements = newAchievements;
+        this.achievements[player.name] = newAchievements[player.name];
         let end = Date.now();
         result(`checkForAchievements done in ${end - start} ms`);
     }
