@@ -178,6 +178,9 @@ class FitnessManager {
 
     createExercise(exPack, usesWeight, creator, result) {
         this.addToEventLog(creator + " erstellt eine neue Übung: '" + common.HTMLBold(exPack.name) + "'");
+        if (exPack.calcMethod == "" || exPack.calcMethod == undefined) {
+            exPack.calcMethod = "Standard";
+        }
         for (let exerciseKey in exPack) {
             if (exerciseKey.toLowerCase() == "name" || exerciseKey.toLowerCase() == "id" || exerciseKey.toLowerCase() == "paceunitoptions") {
                 continue;
@@ -185,6 +188,7 @@ class FitnessManager {
             let currentKey = exPack[exerciseKey];
             this.addToEventLog(common.HTMLBold(common.translate(exerciseKey)) + ": '" + common.HTMLBold(common.translate(currentKey)) + "'");
         }
+
         result(this.addExercise(new Exercise(exPack.name, exPack.difficulty, exPack.difficulty10, exPack.difficulty100, exPack.paceConstant, exPack.isPaceExercise, exPack.equipment, usesWeight, exPack.baseWeight, exPack.comment, creator, exPack.type, exPack.unit, exPack.bothSides, exPack.calcMethod)));
     }
 
@@ -202,7 +206,7 @@ class FitnessManager {
             type: false,
             equipment: false,
             paceConstant: false,
-            calcMethod:false,
+            calcMethod: false,
         };
 
         var newVote = {
@@ -287,16 +291,29 @@ class FitnessManager {
     removeExercise(id) {
         delete this.exerciseList[id];
         this.exerciseCount--;
+
     }
 
     deleteExercise(id, result) {
-        if (this.exerciseList[id].points == 0) {
-            this.removeExercise(id);
+        let name =this.exerciseList[id].name;
+        if (this.exerciseList[id].points == undefined) {
+            delete this.exerciseList[id];
+            this.exerciseCount--;
         }
         else {
-            this.exerciseList[id].deleted = true;
-            result(" deleted Exercise" + this.exerciseList[id].name);
+            if (this.exerciseList[id].points == 0) {
+                delete this.exerciseList[id];
+                this.exerciseCount--;
+            }
+            else {
+                this.exerciseList[id].deleted = true;
+                
+            }
         }
+
+        result(name);
+
+
     }
 
     //************************************************************/
@@ -330,9 +347,6 @@ class FitnessManager {
                 this.addToEventLog(deleter + " entfernt einen Eintrag aus seiner History: " + exercise + " am " + date);
 
                 result("deleted History Entry: " + exerciseIdToRecalculate);
-
-
-
 
             }
         }
@@ -376,10 +390,14 @@ class FitnessManager {
         return historyChunk;
     }
 
-    addToHistory(id, playerName, exerciseId, weight, count, countAdditional, date, result) {
+    addToHistory(id, playerName, exerciseId, weight, count, countAdditional, date, atOnce, result) {
         let calcMethod = "Standard";
-        if (this.exerciseList[exerciseId].calcMethod != undefined){
+        if (this.exerciseList[exerciseId].calcMethod != undefined) {
             calcMethod = this.exerciseList[exerciseId].calcMethod;
+        }
+
+        if (calcMethod.toLowerCase().search("#") == -1) {
+            atOnce = false;
         }
 
         if (countAdditional == "" || countAdditional == undefined) {
@@ -392,7 +410,7 @@ class FitnessManager {
         }
         date = common.createZeroDate(date);
         date = common.getDateFormat(date, "YYYY-MM-DD");
-        var points = calc.calculatePoints(this.exerciseList[exerciseId], weight, count, countAdditional, pace);
+        var points = calc.calculatePoints(this.exerciseList[exerciseId], weight, count, countAdditional, pace, atOnce);
 
         let doubleTimeMessage = "";
         if (this.featuredExerciseId == exerciseId) {
@@ -404,7 +422,13 @@ class FitnessManager {
         if (this.history[date] != undefined) {
             for (let iterator in this.history[date].exerciseId) {
                 var exId = this.history[date].exerciseId[iterator];
-                if (exId === exerciseId && this.history[date].weight[iterator] == weight && this.history[date].playerName[iterator].toUpperCase() == playerName.toUpperCase() && countAdditional == undefined && calcMethod.toLowerCase() != "liegestütz") {
+                if (exId === exerciseId &&
+                    this.history[date].weight[iterator] == weight &&
+                    this.history[date].playerName[iterator].toUpperCase() == playerName.toUpperCase() &&
+                    countAdditional == undefined &&
+                    this.history[date].atOnce[iterator] == false &&
+                    atOnce == false) {
+
                     //HISTORY ENTRY IS AVAILABLE - AND NEW ENTRY IS STACKABLE! 
                     this.history[date].count[iterator] += Number(count);
                     this.history[date].points[iterator] += Number(points);
@@ -412,6 +436,7 @@ class FitnessManager {
                     this.history[date].countAdditional[iterator] = 0;
                     this.history[date].pace[iterator] = "-";
                     this.history[date].exUnit[iterator] = this.exerciseList[exerciseId].unit;
+                    this.history[date].atOnce[iterator] = false;
                     this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte " + doubleTimeMessage + ")");
 
                     result("added workout to existing history");
@@ -443,10 +468,13 @@ class FitnessManager {
             else {
                 this.history[date].dailySum[playerName] += Number(points);
             }
+
+            this.history[date].atOnce.push(atOnce);
+
         }
         else {
             //HISTORY ENTRY IS NOT AVAILABLE - CREATING
-            var newId = [], newDate = [], newPlayerName = [], newExName = [], newCount = [], newPoints = [], newWeight = [], newExerciseId = [], newDailySum = {}, newPace = [], newCountAdditional = [], newUnit = [];
+            var newId = [], newDate = [], newPlayerName = [], newExName = [], newCount = [], newPoints = [], newWeight = [], newExerciseId = [], newDailySum = {}, newPace = [], newCountAdditional = [], newUnit = [], newAtOnce = [];
             newId.push(id);
             newDate.push(date);
             newPlayerName.push(playerName);
@@ -464,6 +492,7 @@ class FitnessManager {
             else {
                 newCountAdditional.push(0);
             }
+            newAtOnce.push(atOnce);
 
             var newHistoryEntry = {
                 id: newId,
@@ -478,11 +507,17 @@ class FitnessManager {
                 pace: newPace,
                 countAdditional: newCountAdditional,
                 exUnit: newUnit,
+                atOnce: newAtOnce,
             };
             this.history[date] = newHistoryEntry;
         }
+        if (atOnce) {
+            this.addToEventLog(playerName + " hat etwas am " + date + common.HTMLBold(" -auf einmal- gemacht: ") + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte " + doubleTimeMessage + ")");
+        }
+        else {
+            this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte " + doubleTimeMessage + ")");
+        }
 
-        this.addToEventLog(playerName + " hat etwas am " + date + " gemacht: " + count + " " + this.exerciseList[exerciseId].name + " (" + Number(points).toFixed(2) + " Punkte " + doubleTimeMessage + ")");
         result("added workout to existing history");
 
 
@@ -1415,9 +1450,9 @@ class FitnessManager {
 
                 //set correct exercise names in history
                 if (this.exerciseList[exerciseId].deleted) {
-                    this.history[historyDate].exName[historyIteratorPerDate] += " [gelöscht]";
+                    this.history[historyDate].exName[historyIteratorPerDate] = this.exerciseList[exerciseId].name + common.HTMLColor(" [gelöscht]","red");
                 }
-                else {
+                else if (this.exerciseList[exerciseId].deleted == false){
                     this.history[historyDate].exName[historyIteratorPerDate] = this.exerciseList[exerciseId].name;
                 }
                 //MAINENANCE CODE - DELETE AFTER START UP
@@ -1426,6 +1461,13 @@ class FitnessManager {
                 }
                 else if (this.history[historyDate].exUnit[historyIteratorPerDate] == undefined) {
                     this.history[historyDate].exUnit.push(this.exerciseList[exerciseId].unit);
+                }
+
+                if (this.history[historyDate].atOnce == undefined) {
+                    this.history[historyDate].atOnce = [false];
+                }
+                else if (this.history[historyDate].atOnce[historyIteratorPerDate] == undefined) {
+                    this.history[historyDate].atOnce.push(false);
                 }
 
                 //MAINENANCE CODE - DELETE AFTER START UP

@@ -20,10 +20,19 @@
 		<br><br>
 		<label for="input_RememberMe">Login merken</label>
 		<input id="input_RememberMe" type="checkbox"></input>
+
+		
+
 		<div id="div_changeLog">
 			<p>
 				Anmeldung = Reset am 31.10.2019 - Bitte neu registrieren. Name egal.
 
+			</p>
+			<p>
+				NEWS (12.11.2019) v1.84:
+				<li>
+					<span class="changeLog_Bug">Bug: </span>Neue Berechnungsmethoden und "Auf einmal" Funktion falls eine "#" Berechnungsmethode hinterlegt ist.
+				</li>
 			</p>
 			<p>
 				NEWS (06.11.2019) v1.83:
@@ -348,6 +357,12 @@
 				oninput="validity.valid||(value='');"></input>
 			<input id="input_doneExerciseAdditional" class="addWorkOut" type="number" min="0" step="0.01"
 				placeholder="Anzahl Zusatz" oninput="validity.valid||(value='');" disabled="true"></input><br>
+				<label for="input_atOnce" class="checkboxLabel">Auf einmal?</label>
+				
+				<input id="input_atOnce" type="checkbox" class="addWorkOut checkboxLabel" checked="false"></input>
+				
+				
+				<br>
 			<label for="input_doneExerciseWeight">Übung Gewicht [kg]:</label>
 			<input id="input_doneExerciseWeight" class="addWorkOut" pattern="[0-9]+([\.,][0-9]+)?" step="0.1"
 				type="number" placeholder="Benutzes Gewicht" min="0" oninput="validity.valid||(value='');"></input><br>
@@ -384,13 +399,13 @@
 			<br><input id="input_exerciseName" class="modifyExercise" type="text" placeholder="Übungsname"
 				required></input><br>
 
-			<label id="label_input_exerciseDifficulty" for="input_exerciseDifficulty">Schwierigkeit (1,10,100):</label>
+			<label id="label_input_exerciseDifficulty" for="input_exerciseDifficulty">Schwierigkeit (F1,F2,F3):</label>
 			<br><input id="input_exerciseDifficulty" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01"
-				type="number" placeholder="Faktor für 1x" min="-50" max="5" oninput="validity.valid||(value='');">
+				type="number" placeholder="Faktor 1" min="-50" max="5" oninput="validity.valid||(value='');">
 			<input id="input_exerciseDifficulty10" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01"
-				type="number" placeholder="Faktor für 10x" min="-50" max="5" oninput="validity.valid||(value='');">
+				type="number" placeholder="Faktor 2" min="-50" max="5" oninput="validity.valid||(value='');">
 			<input id="input_exerciseDifficulty100" class="modifyExercise" pattern="[0-9]+([\.,][0-9]+)?" step="0.01"
-				type="number" placeholder="Faktor für 100x" min="-50" max="5"
+				type="number" placeholder="Faktor 3" min="-50" max="5"
 				oninput="validity.valid||(value='');"></input>
 			<input id="input_paceConstant" class="modifyExercise" disabled="true" pattern="[0-9]+([\.,][0-9]+)?"
 				step="0.001" type="number" placeholder="Pace Konstante" min="0"
@@ -458,6 +473,7 @@
 					<option value="Lat Pull Down">Lat Pull Down</option>
 					<option value="Kabelzug">Kabelzug</option>
 					<option value="Sprungseil">Sprungseil</option>
+					<option value="Sessel">Sessel</option>
 				</optgroup>
 				<optgroup label="Sonstiges">
 					<option value="Körpergewicht">Körpergewicht</option>
@@ -472,6 +488,15 @@
 					<option value="Standard">Standard</option>
 					<option value="Laufen">Laufen</option>
 					<option value="Liegestütz">Liegestütz</option>
+					<option value="#1,10,100">#1,10,100</option>
+					<option value="#100,1000,10000">#100,1000,10000</option>
+					<option value="#20,40,80">#20,40,80</option>
+					<option value="#1,10,50">#1,10,50</option>
+					<option value="#10,50,100">#10,50,100</option>
+					<option value="#100,1000,5000">#100,1000,5000</option>
+					<option value="#50,100,150">#50,100,150</option>
+					<option value="#2,20,40">#2,20,40</option>
+					<option value="#12,18,24">#12,18,24</option>
 			</select>
 			<br>
 			<br>

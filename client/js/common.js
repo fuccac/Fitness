@@ -377,7 +377,7 @@ function Common() {
             case "points":
                 return "Punkte";
             case "difficulty":
-                return "Schwierigkeit";
+                return "Faktor 1";
             case "type":
                 return "Typ";
             case "unit":
@@ -401,9 +401,9 @@ function Common() {
             case "0":
                 return "-";
             case "difficulty10":
-                return "Schwierigkeit für 10";
+                return "Faktor 2";
             case "difficulty100":
-                return "Schwierigkeit für 100";
+                return "Faktor 3";
             case "id":
                 return "Id-Nummer";
             case "active":
@@ -480,6 +480,10 @@ function Common() {
                 return "Pace Berechnung Aktiv";
             case "video":
                 return "Video Links";
+            case "calcMethod":
+                return "Berechnungsmethode";
+            case "atOnce":
+                return "Auf einmal";
             default:
                 if (word.search("Overall") != -1) {
                     return word.replace("Overall", "[Gesamt] - ");

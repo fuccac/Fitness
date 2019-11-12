@@ -488,8 +488,8 @@ function startServer() {
 		socket.on("deleteExercise", function (data) {
 			FITNESS_MANAGER.deleteExercise(data.id, function (result) {
 				PLAYER_LIST[newPlayer.id].deletedExercises++;
-				logFile.log(newPlayer.name + result, false, 0);
-				FITNESS_MANAGER.addToEventLog(common.HTMLBold(newPlayer.name) + " hat die Übung '" + common.HTMLBold(FITNESS_MANAGER.exerciseList[data.id].name) + "' gelöscht.");
+				logFile.log(newPlayer.name +" deleted "+ result, false, 0);
+				FITNESS_MANAGER.addToEventLog(common.HTMLBold(newPlayer.name) + " hat die Übung '" + common.HTMLBold(result) + "' gelöscht.");
 				uiRefresh();
 			});
 
@@ -499,7 +499,7 @@ function startServer() {
 		socket.on("addDoneExercise", function (data) {
 			logFile.log(newPlayer.name + " " + "adds Workout", false, 0);
 			var id = Math.random().toFixed(config.ID_LENGTH).slice(2);
-			FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.countAdditional, data.date, function (result) {
+			FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.countAdditional, data.date, data.atOnce, function (result) {
 				logFile.log(result, false, 0);
 				uiRefresh();
 			});

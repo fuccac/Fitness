@@ -361,6 +361,22 @@ $("#select_doneExercise").change(function () {
         input_doneExercise.placeholder = "Anzahl";
     }
 
+    let atOnce = $("#select_doneExercise").val().split(";")[1].toLowerCase() == "true";
+    if (atOnce == "" || atOnce == undefined){
+        atOnce = false;
+    }
+
+    if(atOnce){
+        $("#input_atOnce").prop("checked",false);
+        $("#input_atOnce").prop("disabled", false);
+        $("#input_atOnce").css("color","green");
+    }
+    else{
+        $("#input_atOnce").prop("checked",false);
+        $("#input_atOnce").prop("disabled", true);
+        $("#input_atOnce").css("color","red");
+    }
+
 
 });
 
@@ -394,8 +410,8 @@ $("#select_exerciseUnit").change(function () {
         input_exerciseDifficulty100.style.display = "inline-block";
         input_paceConstant.style.display = "none";
         paragraph_paceUnitNotice.innerHTML = "Die Einheit '" + select_exerciseUnit.value +
-            "' bewirkt folgende Berechnung: <b>([" + select_exerciseUnit.value + "] * ((Diff1 + Diff10 + Diff100) / 3)) * Gewichtsfaktor</b>";
-        label_input_exerciseDifficulty.innerHTML = "Schwierigkeit (1,10,100):";
+            "' bewirkt folgende Berechnung: <b>([" + select_exerciseUnit.value + "] * ((F1 + F2 + F3) / 3)) * Gewichtsfaktor</b>";
+        label_input_exerciseDifficulty.innerHTML = "Schwierigkeit (F1,F2,F3):";
     }
     else {
         input_exerciseDifficulty10.disabled = false;
@@ -404,7 +420,7 @@ $("#select_exerciseUnit").change(function () {
         input_exerciseDifficulty100.style.display = "inline-block";
         input_paceConstant.style.display = "none";
         paragraph_paceUnitNotice.innerHTML = "Keine Auswahl getroffen";
-        label_input_exerciseDifficulty.innerHTML = "Schwierigkeit (1,10,100):";
+        label_input_exerciseDifficulty.innerHTML = "Schwierigkeit (F1,F2,F3):";
     }
 });
 
@@ -448,6 +464,7 @@ $("#adminSelect_AchievementExercise").change(function () {
         id: $("#adminSelect_AchievementExercise").val(),
     });
 });
+
 
 initialize();
 /******************************************************************************************************************
@@ -608,18 +625,18 @@ SOCKET.on("OnlineStatus", function (data) {
 
 
 
-function generateFadeOutMessage(msg,bottom,left) {
-    if (bottom == undefined){
+function generateFadeOutMessage(msg, bottom, left) {
+    if (bottom == undefined) {
         bottom = "15vh";
     }
-    if (left == undefined){
+    if (left == undefined) {
         left = "10px";
     }
     let id = Math.random().toFixed(16).slice(2);
-    let name = 'refreshFadeOut_'+ id;
-    $("#"+name).remove();
-    $('body').append('<div id="'+name+'" style="bottom: '+bottom+'; left:'+left+'; width: 10vw; position: absolute; background-color: green;">'+msg+'</div>');
-    $("#"+name).fadeOut(5000, function () {
+    let name = 'refreshFadeOut_' + id;
+    $("#" + name).remove();
+    $('body').append('<div id="' + name + '" style="bottom: ' + bottom + '; left:' + left + '; width: 10vw; position: absolute; background-color: green;">' + msg + '</div>');
+    $("#" + name).fadeOut(5000, function () {
         $(this).remove();
     });
 }
@@ -682,11 +699,12 @@ function requestAchievementList() {
 
 function exerciseDone(emitString) {
     SOCKET.emit(emitString, exPack = {
-        exId: select_doneExercise.value,
+        exId: select_doneExercise.value.split(";")[0],
         date: input_doneExerciseDate.value,
         count: input_doneExercise.value,
         countAdditional: input_doneExerciseAdditional.value,
         weight: input_doneExerciseWeight.value,
+        atOnce: $("#input_atOnce").prop("checked")
     });
 }
 
@@ -1290,9 +1308,12 @@ function generateExerciseList(data) {
             }
         }
 
-        exercisesInTable++;
-        common.addOption(document, select_doneExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + common.translate(exercise.factor));
+        let atOncePossible = (exercise.calcMethod.toLowerCase().search("#") > -1);
 
+        exercisesInTable++;
+        common.addOption(document, select_doneExercise, exerciseId+";"+atOncePossible, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + common.translate(exercise.factor));
+        common.addOption(document, select_statisticsExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + common.translate(exercise.factor));
+        
         bodyRow = tBodyExerciseTable.insertRow(tBodyExerciseTable.rows.length);
         var toolTipText = "";
         var playerName;
@@ -1430,12 +1451,12 @@ function generateExerciseList(data) {
         for (playerName in exercise.votes) {
             let comment = exercise.votes[playerName].comment;
             if (comment.match(youtubeMatcher)) {
-                cell.innerHTML += common.createHTMLLink(comment,"V"+videoIterator);
+                cell.innerHTML += common.createHTMLLink(comment, "V" + videoIterator);
                 videoIterator++;
                 cell.innerHTML += " ";
             }
-        } 
-        if (cell.innerHTML == ""){
+        }
+        if (cell.innerHTML == "") {
             cell.innerHTML = "Kein Video";
         }
 
@@ -1479,10 +1500,11 @@ function generateExerciseList(data) {
     }
 
     common.sortSelect(document, select_doneExercise);
-    select_statisticsExercise.innerHTML = select_doneExercise.innerHTML;
+    common.sortSelect(document, select_statisticsExercise);
+    //select_statisticsExercise.innerHTML = select_doneExercise.innerHTML;
     select_doneExercise.selectedIndex = selIndex;
     select_statisticsExercise.selectedIndex = selIndex;
-    $("#adminSelect_AchievementExercise").html($("#select_doneExercise").html());
+    $("#adminSelect_AchievementExercise").html($("#select_statisticsExercise").html());
 
     let end = Date.now();
     //sendChatMessage(`exercise table generation took ${end - start} ms`);
@@ -1510,6 +1532,7 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
         var toolTipText = "";
         var pace = "-";
         var unit;
+        var atOnce;
         var countAdditional = 0;
         for (var historyItemsIterator = 0; historyItemsIterator < historyEntry.id.length; historyItemsIterator++) {
             if (!rowNotUsed) {
@@ -1544,6 +1567,10 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                 }
                 if (historyKeys == "exUnit") {
                     unit = key[historyItemsIterator];
+                    continue;
+                }
+                if (historyKeys == "atOnce") {
+                    atOnce = key[historyItemsIterator];
                     continue;
                 }
                 if (historyKeys == "countAdditional") {
@@ -1603,12 +1630,22 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                             input_doneExercise.value = count;
                         }
 
-                        select_doneExercise.value = exId;
+                        select_doneExercise.value = exId+";false";
+                        if (select_doneExercise.value == ""){
+                            select_doneExercise.value = exId+";true";
+                        }
                         input_doneExerciseWeight.value = weight;
                         $("#select_doneExercise").change();
 
                     }.bind(bodyRow);
                 }
+                let atOnceCell = bodyRow.insertCell(bodyRow.cells.length);
+                atOnceCell.classList.add("atOnceCell");
+                atOnceCell.innerHTML = common.translate(atOnce);
+                if (tBodyTable.rows.length == 1) {
+                    headerArray.push("atOnce");
+                }
+
                 let deleteCell = bodyRow.insertCell(bodyRow.cells.length);
                 deleteCell.classList.add("deleteButton");
                 deleteCell.innerHTML = common.translate("Löschen");
@@ -1774,6 +1811,7 @@ function checkForEmptyBoxesDoneExercise() {
     else {
         return false;
     }
+
 }
 
 function checkForEmptyBoxesNewExercise() {
@@ -1787,7 +1825,8 @@ function checkForEmptyBoxesNewExercise() {
             select_exerciseUnit.value != "" &&
             select_exerciseEquipment.value != "" &&
             select_bothSides.value != "" &&
-            input_exerciseComment.value != ""
+            input_exerciseComment.value != "" &&
+            $("#select_exerciseCalcMethod").val() != ""
         ) {
             return true;
         }
@@ -1803,7 +1842,8 @@ function checkForEmptyBoxesNewExercise() {
             select_exerciseUnit.value != "" &&
             select_exerciseEquipment.value != "" &&
             select_bothSides.value != "" &&
-            input_exerciseComment.value != ""
+            input_exerciseComment.value != "" &&
+            $("#select_exerciseCalcMethod").val() != ""
         ) {
             return true;
         }
@@ -1982,9 +2022,5 @@ function exerciseTableBodyRowClick(bodyRow, data) {
     $("#input_exerciseID").change();
     $("#select_exerciseUnit").change();
 }
-
-
-
-
 
 
