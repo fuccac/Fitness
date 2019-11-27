@@ -87,7 +87,7 @@ class FitnessManager {
         let counter = 0;
         for (let exId in this.exerciseList) {
             if (counter == randomNumber) {
-                if (this.exerciseList[exId].factor > 0) {
+                if (this.exerciseList[exId].factor > 0 && this.exerciseList[exId].deleted == false) {
                     this.featuredExerciseId = exId;
                     this.featuredExerciseDate = common.createViennaDate();
                     this.addToEventLog(common.HTMLBold(common.HTMLColor("EINE NEUE DOUBLE TIME ÜBUNG WURDE FESTGELEGT: " + this.exerciseList[this.featuredExerciseId].name, "red")));
