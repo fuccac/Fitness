@@ -78,7 +78,7 @@ function Calc() {
 		}
 
 		//STANDARD METHOD
-		if ((countAdditional == undefined && atOnce == false) || exercise.calcMethod.toLowerCase() == "standard" || exercise.calcMethod == undefined) {
+		if ((countAdditional == undefined && atOnce == false) || (countAdditional == undefined && exercise.calcMethod.toLowerCase() == "standard") || exercise.calcMethod == undefined) {
 			result = Number(exercise.factor) * Number(count) * Number(weightFactor);
 			pace[exercise.id] = "-";
 		}
@@ -145,16 +145,18 @@ function Calc() {
 				result = ((Number(exercise.paceConstant) / (Number(pace[exercise.id]) / Number(countAdditional))) * Number(exercise.factor)) * Number(weightFactor);
 			}
 			if (exercise.unit === "min/m") {
+				pace[exercise.id] = Number(count) / Number((countAdditional) / 1000);
+				result = ((Number(exercise.paceConstant) / (Number(pace[exercise.id]) / (Number(countAdditional) / 1000))) * Number(exercise.factor)) * Number(weightFactor);
 				pace[exercise.id] = Number(count) / Number((countAdditional));
-				result = ((Number(exercise.paceConstant) / ((Number(pace[exercise.id]) * 1000) / (Number(countAdditional) / 1000))) * Number(exercise.factor)) * Number(weightFactor);
 			}
 			if (exercise.unit === "Wdh/min") {
 				pace[exercise.id] = Number(count) / Number(countAdditional);
-				result = ((Number(exercise.paceConstant) / (1 / (Number(pace[exercise.id])) / Number(count))) * Number(exercise.factor)) * Number(weightFactor);
+				result = ((Number(exercise.paceConstanWt) / (1 / (Number(pace[exercise.id])) / Number(count))) * Number(exercise.factor)) * Number(weightFactor);
 			}
 			if (exercise.unit === "Wdh/sec") {
+				pace[exercise.id] = Number(count) / (Number(countAdditional)/60);
+				result = ((Number(exercise.paceConstanWt) / (1 / (Number(pace[exercise.id])) / Number(count))) * Number(exercise.factor)) * Number(weightFactor);
 				pace[exercise.id] = Number(count) / Number(countAdditional);
-				result = ((Number(exercise.paceConstant) / (1 / (Number(pace[exercise.id]) * 60) / Number(count))) * Number(exercise.factor)) * Number(weightFactor);
 			}
 		}
 

@@ -77,6 +77,8 @@ function cyclicAquisition() {
 		}
 	}
 
+	FITNESS_MANAGER.addEmptyHistoryEntry(date);
+
 	logFile.logUploadTimer++;
 	FITNESS_MANAGER.uploadTimer++;
 	if (logFile.logUploadTimer === config.LOG_UPLOAD_INTERVAL) {

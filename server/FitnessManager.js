@@ -295,7 +295,7 @@ class FitnessManager {
     }
 
     deleteExercise(id, result) {
-        let name =this.exerciseList[id].name;
+        let name = this.exerciseList[id].name;
         if (this.exerciseList[id].points == undefined) {
             delete this.exerciseList[id];
             this.exerciseCount--;
@@ -307,7 +307,7 @@ class FitnessManager {
             }
             else {
                 this.exerciseList[id].deleted = true;
-                
+
             }
         }
 
@@ -320,40 +320,95 @@ class FitnessManager {
     //*******************History Handling*************************/
     //************************************************************/
 
+    addEmptyHistoryEntry(date){
+
+        date = common.createZeroDate(date);
+        date = common.getDateFormat(date, "YYYY-MM-DD");
+        if (this.history[date] != undefined){
+            return;
+        }
+        var newHistoryEntry = {
+            id: [],
+            date: [],
+            playerName: [],
+            exName: [],
+            count: [],
+            points: [],
+            weight: [],
+            exerciseId: [],
+            dailySum: [],
+            pace: [],
+            countAdditional: [],
+            exUnit: [],
+            atOnce: [],
+            dailyWinner: "Keiner"
+        };
+
+        this.history[date] = newHistoryEntry;
+        this.needsUpload.dataStorage = true;
+    }
+
     deleteHistory(id, date, result) {
         var deleter = "";
         var exercise = "";
         var exerciseIdToRecalculate;
-        for (let historyEntryIterator in this.history[date].id) {
-            if (this.history[date].id[historyEntryIterator] == id) {
-                deleter = this.history[date].playerName[historyEntryIterator];
-                exercise = this.history[date].exName[historyEntryIterator];
-                exerciseIdToRecalculate = this.history[date].exerciseId[historyEntryIterator];
-                this.exerciseList[exerciseIdToRecalculate].repsPerPlayer[this.history[date].playerName[historyEntryIterator]] -= this.history[date].count[historyEntryIterator];
-                this.exerciseList[exerciseIdToRecalculate].pointsPerPlayer[this.history[date].playerName[historyEntryIterator]] -= this.history[date].points[historyEntryIterator];
-                this.exerciseList[exerciseIdToRecalculate].points -= this.history[date].points[historyEntryIterator];
-                this.history[date].dailySum[this.history[date].playerName[historyEntryIterator]] -= this.history[date].points[historyEntryIterator];
+        var debug = 0;
 
-                for (let historyEntry in this.history[date]) {
-                    if (historyEntry != "dailySum" && historyEntry != "dailyWinner") {
-                        this.history[date][historyEntry].splice(historyEntryIterator, 1);
+        if (!debug){
+            for (let historyEntryIterator in this.history[date].id) {
+                if (this.history[date].id[historyEntryIterator] == id) {
+                    deleter = this.history[date].playerName[historyEntryIterator];
+                    exercise = this.history[date].exName[historyEntryIterator];
+                    exerciseIdToRecalculate = this.history[date].exerciseId[historyEntryIterator];
+                    this.exerciseList[exerciseIdToRecalculate].repsPerPlayer[this.history[date].playerName[historyEntryIterator]] -= this.history[date].count[historyEntryIterator];
+                    this.exerciseList[exerciseIdToRecalculate].pointsPerPlayer[this.history[date].playerName[historyEntryIterator]] -= this.history[date].points[historyEntryIterator];
+                    this.exerciseList[exerciseIdToRecalculate].points -= this.history[date].points[historyEntryIterator];
+                    this.history[date].dailySum[this.history[date].playerName[historyEntryIterator]] -= this.history[date].points[historyEntryIterator];
+    
+                    for (let historyEntry in this.history[date]) {
+                        if (historyEntry != "dailySum" && historyEntry != "dailyWinner") {
+                            this.history[date][historyEntry].splice(historyEntryIterator, 1);
+                        }
                     }
+                    
+    
+                    this.addToEventLog(deleter + " entfernt einen Eintrag aus seiner/ihrer History: " + exercise + " am " + date);
+    
+                    result("deleted History Entry: " + exerciseIdToRecalculate);
+                    return;
+    
                 }
-                if (this.history[date].id.length == 0) {
-                    delete this.history[date];
-
-                }
-
-                this.addToEventLog(deleter + " entfernt einen Eintrag aus seiner History: " + exercise + " am " + date);
-
-                result("deleted History Entry: " + exerciseIdToRecalculate);
-
             }
         }
+        
 
+        //History Entry not found..  search through all dates
+        logFile.log("History Entry not found..  search through all dates", false, 0);
+        for (let historyDate in this.history) {
+            for (let historyEntryIterator in this.history[historyDate].id) {
+                if (this.history[historyDate].id[historyEntryIterator] == id) {
+                    deleter = this.history[historyDate].playerName[historyEntryIterator];
+                    exercise = this.history[historyDate].exName[historyEntryIterator];
+                    exerciseIdToRecalculate = this.history[historyDate].exerciseId[historyEntryIterator];
+                    this.exerciseList[exerciseIdToRecalculate].repsPerPlayer[this.history[historyDate].playerName[historyEntryIterator]] -= this.history[historyDate].count[historyEntryIterator];
+                    this.exerciseList[exerciseIdToRecalculate].pointsPerPlayer[this.history[historyDate].playerName[historyEntryIterator]] -= this.history[historyDate].points[historyEntryIterator];
+                    this.exerciseList[exerciseIdToRecalculate].points -= this.history[historyDate].points[historyEntryIterator];
+                    this.history[historyDate].dailySum[this.history[historyDate].playerName[historyEntryIterator]] -= this.history[historyDate].points[historyEntryIterator];
 
+                    for (let historyEntry in this.history[historyDate]) {
+                        if (historyEntry != "dailySum" && historyEntry != "dailyWinner") {
+                            this.history[historyDate][historyEntry].splice(historyEntryIterator, 1);
+                        }
+                    }
+                    
+                    this.addToEventLog(deleter + " entfernt einen Eintrag aus seiner/ihrer History: " + exercise + " am " + historyDate);
 
+                    result("deleted History Entry: " + exerciseIdToRecalculate);
+                    return;
 
+                }
+            }
+        }
     }
 
     getSortedExerciseList() {
@@ -1018,13 +1073,13 @@ class FitnessManager {
                         playerChanges.push(msg);
                     }
                     else {
-                        //nothing happend
+                        //nothing happend..yet
                     }
                 }
                 else {
                     let oldLevel = 0;
                     let newLevel = Number(newAchievements[player.name].earnedAchievements[achievementName].level.split("/")[0]);
-                    msg = player.name + " erhöht sein Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
+                    msg = player.name + " erhöht Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
                     playerChanges.push(msg);
                     //was not there before
                 }
@@ -1331,7 +1386,9 @@ class FitnessManager {
         for (let overallIterator = 0; overallIterator < chunk.length; overallIterator++) {
             var historyDate = chunk[overallIterator].date[0];
             var historyEntry = this.history[historyDate];
-
+            if (historyDate == undefined){
+                continue;
+            }
             //MAINENANCE CODE - DELETE AFTER START UP
             if (this.history[historyDate].pace == undefined) {
                 var newPace = [];
@@ -1450,9 +1507,9 @@ class FitnessManager {
 
                 //set correct exercise names in history
                 if (this.exerciseList[exerciseId].deleted) {
-                    this.history[historyDate].exName[historyIteratorPerDate] = this.exerciseList[exerciseId].name + common.HTMLColor(" [gelöscht]","red");
+                    this.history[historyDate].exName[historyIteratorPerDate] = this.exerciseList[exerciseId].name + common.HTMLColor(" [gelöscht]", "red");
                 }
-                else if (this.exerciseList[exerciseId].deleted == false){
+                else if (this.exerciseList[exerciseId].deleted == false) {
                     this.history[historyDate].exName[historyIteratorPerDate] = this.exerciseList[exerciseId].name;
                 }
                 //MAINENANCE CODE - DELETE AFTER START UP
@@ -2081,6 +2138,8 @@ class FitnessManager {
         let end = Date.now();
         result(`full refresh took ${end - start} ms`);
     }
+
+    
 
 }
 

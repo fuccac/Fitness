@@ -424,3 +424,18 @@ button:hover {
     font-size: 10px;
     color: rgb(12, 134, 12);
 }
+
+.inactive{
+    color: rgb(143, 151, 143);
+    font-style: italic;
+}
+
+.firstClass{
+    color: rgb(132, 49, 170);
+    font-weight: bolder;
+}
+
+.secondClass{
+    color: rgb(40, 49, 179);
+
+}

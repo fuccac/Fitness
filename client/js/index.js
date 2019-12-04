@@ -1202,21 +1202,57 @@ function generatePlayerListTable(data) {
     theadPlayersTable.innerHTML = "";
     tBodyPlayersTable.innerHTML = "";
     headerRow = theadPlayersTable.insertRow(0);
+   
 
+    var max = 100;
+    var winner = "Keiner";
 
-    for (var playerid in data.playerList) {
-        bodyRow = tBodyPlayersTable.insertRow(0);
+    for (let playerid in data.playerList) {
         player = data.playerList[playerid].points;
+        if (player.today > max){
+            max = player.today;
+            winner = playerid;
+        }
+    }
+    
+    for (let playerid in data.playerList) {
+        let nameAdd = "";
+        if (playerid == winner){
+            nameAdd = " ⭐";
+        }
+        player = data.playerList[playerid].points;
+        if (player.total == 0){
+            continue;
+        }
+        
+        bodyRow = tBodyPlayersTable.insertRow(0);
+
+        if (player.last5Days <= 0){
+            bodyRow.classList.add("inactive");
+        }
+        if (player.last5Days >= 1500 && player.last5Days < 2500){
+            bodyRow.classList.add("secondClass");
+        }
+        if (player.last5Days >= 2500){
+            bodyRow.classList.add("firstClass");
+        }
+
         if (playerIterator == 0) {
             cell = headerRow.insertCell(headerRow.cells.length);
             cell.innerHTML += common.translate("Name");
         }
         cell = bodyRow.insertCell(bodyRow.cells.length);
-        cell.innerHTML += common.translate(playerid);
+        cell.innerHTML += common.translate(playerid + nameAdd);
 
 
         for (var playerKeyName in player) {
+            if (playerKeyName == "negative"){
+                continue;
+            }
+            
             playerKeyContent = player[playerKeyName];
+
+            
             if (playerIterator == 0) {
                 cell = headerRow.insertCell(headerRow.cells.length);
                 cell.innerHTML += common.translate(playerKeyName);
