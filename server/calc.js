@@ -77,28 +77,13 @@ function Calc() {
 			weightFactor = 1;
 		}
 
-		//STANDARD METHOD
-		if ((countAdditional == undefined && atOnce == false) || (countAdditional == undefined && exercise.calcMethod.toLowerCase() == "standard") || exercise.calcMethod == undefined) {
-			result = Number(exercise.factor) * Number(count) * Number(weightFactor);
-			pace[exercise.id] = "-";
-		}
-
-		//AT ONCE IS CHECKED - USE #CALCMETHOD
-		else if (atOnce && countAdditional == undefined) {
-			if (exercise.calcMethod.toLowerCase().search("#") > -1) {
-				let countValues = exercise.calcMethod.replace("#", "");
-
-				countValues = countValues.split(",").map(Number);
-				let percent = [Math.min(Number(count) / countValues[0], 1), Math.min(Number(count) / countValues[1], 1), Math.min(Number(count) / countValues[2], 1)];
-				let combinedFactor = exercise.difficulty * percent[0] + exercise.difficulty10 * percent[1] + exercise.difficulty100 * percent[2];
-				if (combinedFactor < exercise.factor) {
-					combinedFactor = exercise.factor;
-				}
-				result = Number(count) * combinedFactor * Number(weightFactor);
-			}
-			pace[exercise.id] = "-";
-		}
 		//SPECIAL LAUFEN CALCMETHOD
+		if (exercise.calcMethod.toLowerCase() == "klettern") {
+			
+			result = Number(count) * (500/60);
+			pace[exercise.id] = "-";
+		}
+
 		else if (exercise.calcMethod.toLowerCase() == "laufen") {
 			let paces = [15, 14.8, 14.6, 14.4, 14.2, 14, 13.8, 13.6, 13.4, 13.2, 13, 12.8, 12.6, 12.4, 12.2, 12, 11.8, 11.6, 11.4, 11.2, 11, 10.8, 10.6, 10.4, 10.2, 10, 9.8, 9.6, 9.4, 9.2, 9, 8.8, 8.6, 8.4, 8.2, 8, 7.8, 7.6, 7.4, 7.2, 7, 6.8, 6.6, 6.4, 6.2, 6, 5.8, 5.6, 5.4, 5.2, 5, 4.8, 4.6, 4.4, 4.2, 4];
 			let bonusfactors = [0.035714286, 0.071428571, 0.107142857, 0.142857143, 0.178571429, 0.214285714, 0.25, 0.285714286, 0.321428571, 0.357142857, 0.392857143, 0.428571429, 0.464285714, 0.5, 0.535714286, 0.571428571, 0.607142857, 0.642857143, 0.678571429, 0.714285714, 0.75, 0.785714286, 0.821428571, 0.857142857, 0.892857143, 0.928571429, 0.964285714, 1, 1.035714286, 1.071428571, 1.107142857, 1.142857143, 1.178571429, 1.214285714, 1.25, 1.285714286, 1.321428571, 1.357142857, 1.392857143, 1.428571429, 1.464285714, 1.5, 1.535714286, 1.571428571, 1.607142857, 1.642857143, 1.678571429, 1.714285714, 1.75, 1.785714286, 1.821428571, 1.857142857, 1.892857143, 1.928571429, 1.964285714, 2];
@@ -121,6 +106,30 @@ function Calc() {
 			pace[exercise.id] = Number(count) / Number(countAdditional);
 
 		}
+
+		//STANDARD METHOD
+		else if ((countAdditional == undefined && atOnce == false) || (countAdditional == undefined && exercise.calcMethod.toLowerCase() == "standard") || exercise.calcMethod == undefined) {
+			result = Number(exercise.factor) * Number(count) * Number(weightFactor);
+			pace[exercise.id] = "-";
+		}
+
+		//AT ONCE IS CHECKED - USE #CALCMETHOD
+		else if (atOnce && countAdditional == undefined) {
+			if (exercise.calcMethod.toLowerCase().search("#") > -1) {
+				let countValues = exercise.calcMethod.replace("#", "");
+
+				countValues = countValues.split(",").map(Number);
+				let percent = [Math.min(Number(count) / countValues[0], 1), Math.min(Number(count) / countValues[1], 1), Math.min(Number(count) / countValues[2], 1)];
+				let combinedFactor = exercise.difficulty * percent[0] + exercise.difficulty10 * percent[1] + exercise.difficulty100 * percent[2];
+				if (combinedFactor < exercise.factor) {
+					combinedFactor = exercise.factor;
+				}
+				result = Number(count) * combinedFactor * Number(weightFactor);
+			}
+			pace[exercise.id] = "-";
+		}
+		
+		
 		//SPECIAL LIEGESTÜTZ CALCMETHOD - old
 		else if (exercise.calcMethod.toLowerCase() == "liegestütz") {
 			let repsAtOnce = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
