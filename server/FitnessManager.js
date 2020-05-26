@@ -1357,8 +1357,9 @@ class FitnessManager {
 
         //registered players
         for (let playerName in this.registeredPlayers) {
+            
             let seasonWins = this.registeredPlayers[playerName].points.seasonWins
-            if (seasonWins = undefined){
+            if (seasonWins == undefined){
                 seasonWins = 0;
             }
             
