@@ -66,7 +66,7 @@ function Calc() {
 		};
 
 
-	this.calculatePoints = function (exercise, weight, count, countAdditional, pace, atOnce) {
+	this.calculatePoints = function (exercise, weight, count, countAdditional, pace, atOnce,powerFactor) {
 		var weightFactor = 0;
 		var result;
 
@@ -172,8 +172,14 @@ function Calc() {
 
 
 		exercise.points += Number(result);
-
-		return result;
+		if (result == undefined){
+			result =0
+		}
+		if (pace[exercise.id] == undefined)
+		{
+			pace[exercise.id] = "-"
+		}
+		return result * powerFactor;
 
 	};
 

@@ -501,6 +501,8 @@ function Common() {
                 return "Berechnungsmethode";
             case "atOnce":
                 return "Auf einmal";
+            case "powerFactor":
+                return "Power Faktor";
             default:
                 if (word.search("Overall") != -1) {
                     return word.replace("Overall", "[Gesamt] - ");

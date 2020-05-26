@@ -466,7 +466,7 @@ class FitnessManager {
         }
         date = common.createZeroDate(date);
         date = common.getDateFormat(date, "YYYY-MM-DD");
-        var points = calc.calculatePoints(this.exerciseList[exerciseId], weight, count, countAdditional, pace, atOnce);
+        var points = calc.calculatePoints(this.exerciseList[exerciseId], weight, count, countAdditional, pace, atOnce, this.registeredPlayers[playerName].points.powerFactor);
 
         let doubleTimeMessage = "";
         if (this.featuredExerciseId == exerciseId) {
@@ -1273,6 +1273,7 @@ class FitnessManager {
                 monthlyMax: 0,
                 averageThisMonth: 0,
                 seasonWins:0,
+                powerFactor:1
             }
         };
         this.registeredPlayers[name] = data;
@@ -1362,6 +1363,11 @@ class FitnessManager {
             if (seasonWins == undefined){
                 seasonWins = 0;
             }
+
+            let powerFactor = this.registeredPlayers[playerName].points.powerFactor
+            if (powerFactor == undefined){
+                powerFactor = 1;
+            }
             
             var data = {
                 entries: 0,
@@ -1378,7 +1384,8 @@ class FitnessManager {
                     dailyMax: 0,
                     monthlyMax: 0,
                     averageThisMonth: 0,
-                    seasonWins:seasonWins
+                    seasonWins:seasonWins,
+                    powerFactor:powerFactor
                 }
             };
             this.registeredPlayers[playerName] = data;

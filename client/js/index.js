@@ -1251,7 +1251,7 @@ function generatePlayerListTable(data) {
 
 
         for (var playerKeyName in player) {
-            if (playerKeyName == "negative"){
+            if (playerKeyName == "negative" || playerKeyName == "seasonWins"){
                 continue;
             }
             

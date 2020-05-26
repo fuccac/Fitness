@@ -101,6 +101,23 @@ function cyclicAquisition() {
 				mailer.sendEmail(USERS[playerName].email, "Neue Double Time Übung!", "Die neue Double Time Übung ist: " + exName);
 			}
 		}
+
+		//check if players have done something last 5 days
+		for (let playerName in FITNESS_MANAGER.registeredPlayers) {
+			if (FITNESS_MANAGER.registeredPlayers[playerName].points.last5Days >= 500) {
+				if (FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor == undefined) {
+					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.01
+				}
+				else {
+					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor + 0.01
+				}
+			}
+			else
+			{
+				FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00
+			}
+		}
+
 	}
 
 	for (let iPlayer in PLAYER_LIST) {
@@ -311,8 +328,8 @@ function AddPropertiesToExercises(result) {
 	let addedPropertiesToVotes = 0;
 
 	let propertiesToAddDirectly = {
-		name: ["paceConstant", "isPaceExercise", "deleted", "isHidden","calcMethod"],
-		value: [1, false, false, {},"Standard"],
+		name: ["paceConstant", "isPaceExercise", "deleted", "isHidden", "calcMethod"],
+		value: [1, false, false, {}, "Standard"],
 	};
 
 	let propertiesToAddVotes = {
@@ -490,7 +507,7 @@ function startServer() {
 		socket.on("deleteExercise", function (data) {
 			FITNESS_MANAGER.deleteExercise(data.id, function (result) {
 				PLAYER_LIST[newPlayer.id].deletedExercises++;
-				logFile.log(newPlayer.name +" deleted "+ result, false, 0);
+				logFile.log(newPlayer.name + " deleted " + result, false, 0);
 				FITNESS_MANAGER.addToEventLog(common.HTMLBold(newPlayer.name) + " hat die Übung '" + common.HTMLBold(result) + "' gelöscht.");
 				uiRefresh();
 			});
@@ -761,8 +778,7 @@ function startServer() {
 				});
 
 			}
-			else
-			{
+			else {
 				socket.emit('alertMsg', { data: 'Username "' + data.username + '" ist nicht gültig.' });
 			}
 
