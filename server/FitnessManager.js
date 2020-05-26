@@ -1357,6 +1357,11 @@ class FitnessManager {
 
         //registered players
         for (let playerName in this.registeredPlayers) {
+            let seasonWins = this.registeredPlayers[playerName].points.seasonWins
+            if (seasonWins = undefined){
+                seasonWins = 0;
+            }
+            
             var data = {
                 entries: 0,
                 points: {
@@ -1372,7 +1377,7 @@ class FitnessManager {
                     dailyMax: 0,
                     monthlyMax: 0,
                     averageThisMonth: 0,
-                    seasonWins:0
+                    seasonWins:seasonWins
                 }
             };
             this.registeredPlayers[playerName] = data;
