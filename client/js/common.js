@@ -357,9 +357,26 @@ function Common() {
         return (typeof value == 'number');
     };
 
+    this.formatNumber = function (value){
+
+        if (Math.abs(value) < 1000 ){
+            return value.toFixed(3);     
+        }
+        else if (Math.abs(value) >= 1000 && Math.abs(value) <10000 ){
+            return value.toFixed(2);     
+        }
+        else if (Math.abs(value) >= 10000 && Math.abs(value) <100000 ){
+            return value.toFixed(1);     
+        }
+        else{
+            return value.toFixed(0);     
+        }
+        
+    };
+
     this.translate = function (word) {
         if (this.checkIfNumber(word)) {
-            return word.toFixed(2);
+            return this.formatNumber(word);
         }
         word = word.toString();
 

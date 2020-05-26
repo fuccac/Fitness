@@ -59,6 +59,7 @@ class FitnessManager {
         this.dailyWins = {};
         this.monthlyWins = {};
         this.featuredExerciseId = 0;
+        this.favoriteExercises = {};
 
 
         //WORK OBJECTS WITH SAVE FILE SUPPORT
@@ -1271,6 +1272,7 @@ class FitnessManager {
                 dailyMax: 0,
                 monthlyMax: 0,
                 averageThisMonth: 0,
+                seasonWins:0,
             }
         };
         this.registeredPlayers[name] = data;
@@ -1309,6 +1311,7 @@ class FitnessManager {
         var maxExerciseCountsCategoryOverall = {};
         this.exerciseEntryCount = {};
         this.exerciseRepsPerEntryAverage = {};
+        this.favoriteExercises = {};
 
         //points
         this.dailyWins = {};
@@ -1348,6 +1351,7 @@ class FitnessManager {
         this.monthlyDataExerciseCategory = {};
         this.dailyDataExercise = {};
         this.dailyDataExerciseCategory = {};
+        
 
 
 
@@ -1368,6 +1372,7 @@ class FitnessManager {
                     dailyMax: 0,
                     monthlyMax: 0,
                     averageThisMonth: 0,
+                    seasonWins:0
                 }
             };
             this.registeredPlayers[playerName] = data;

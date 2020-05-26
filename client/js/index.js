@@ -1224,6 +1224,11 @@ function generatePlayerListTable(data) {
         if (player.total == 0){
             continue;
         }
+        if (player.seasonWins != undefined){
+            if (player.seasonWins > 0) {
+                nameAdd = nameAdd + " (♛x" + player.seasonWins + ")"; 
+            }
+        }
         
         bodyRow = tBodyPlayersTable.insertRow(0);
 
