@@ -11,7 +11,7 @@ function Config() {
     this.SAVE_UPLOAD_INTERVAL = 15; //sec
     this.DB_TOKEN = "Ad3tLqqtKckAAAAAAACK_0aogsVnZrSmjMWjss79yxecm6jxPi3J3xBPy6YsOQNt";//MASTER
     //this.DB_TOKEN = "Ad3tLqqtKckAAAAAAACL0Mfuj93cnWjuWQSgTrxIsA4if-uhyjV3Ok_-AhzSYmx2"; //TESTSERVER
-    this.PROXY_MODE = 1;
+    this.PROXY_MODE = 0;
     this.LOG_FILE_NAME = "log.txt";
     this.DATA_STORAGE_FILE_NAME = "dataStorage.json";
     this.LOG_PATH = "./saves/log.txt";
