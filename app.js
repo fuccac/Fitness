@@ -95,7 +95,8 @@ function cyclicAquisition() {
 	}
 
 	if (common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) >= 1 || FITNESS_MANAGER.featuredExerciseId == 0) {
-		let exName = FITNESS_MANAGER.featureNewExercise();
+		FITNESS_MANAGER.fullRefresh(function (result) {
+			let exName = FITNESS_MANAGER.featureNewExercise();
 		for (let playerName in USERS) {
 			if (USERS[playerName].email != undefined && USERS[playerName].allowEmail) {
 				mailer.sendEmail(USERS[playerName].email, "Neue Double Time Übung!", "Die neue Double Time Übung ist: " + exName);
@@ -117,7 +118,7 @@ function cyclicAquisition() {
 				FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00
 			}
 		}
-
+		});
 	}
 
 	for (let iPlayer in PLAYER_LIST) {
