@@ -105,7 +105,7 @@ function cyclicAquisition() {
 
 		//check if players have done something last 5 days
 		for (let playerName in FITNESS_MANAGER.registeredPlayers) {
-			if (FITNESS_MANAGER.registeredPlayers[playerName].points.last5Days >= 500) {
+			if (FITNESS_MANAGER.registeredPlayers[playerName].points.last5Days >= config.POINTS_FOR_POWERFACTOR) {
 				if (FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor == undefined) {
 					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.01
 				}

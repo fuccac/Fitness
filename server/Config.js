@@ -16,6 +16,7 @@ function Config() {
     this.DATA_STORAGE_FILE_NAME = "dataStorage.json";
     this.LOG_PATH = "./saves/log.txt";
     this.RECALCULATE_HISTORY_ON_CHANGES = 0;
+    this.POINTS_FOR_POWERFACTOR = 500;
 }
 
 module.exports = Config;

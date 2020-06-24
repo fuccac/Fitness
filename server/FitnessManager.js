@@ -4,13 +4,15 @@ Exercise = require("./Exercise");
 Calc = require("./calc");
 Common = require("../client/js/common");
 Log = require("./Log");
+Config = require("./Config");
+
 
 achievementList = require("../saves/config/achievementList");
 
 var logFile = new Log();
 calc = new Calc();
 common = new Common();
-
+var config = new Config();
 
 class FitnessManager {
     constructor() {
@@ -1273,7 +1275,9 @@ class FitnessManager {
                 monthlyMax: 0,
                 averageThisMonth: 0,
                 seasonWins:0,
-                powerFactor:1
+                powerFactor:1,
+                toDoForFactor:0
+                
             }
         };
         this.registeredPlayers[name] = data;
@@ -1352,7 +1356,7 @@ class FitnessManager {
         this.monthlyDataExerciseCategory = {};
         this.dailyDataExercise = {};
         this.dailyDataExerciseCategory = {};
-        
+        var last4Days = {};
 
 
 
@@ -1368,6 +1372,8 @@ class FitnessManager {
             if (powerFactor == undefined){
                 powerFactor = 1;
             }
+
+            
             
             var data = {
                 entries: 0,
@@ -1385,7 +1391,8 @@ class FitnessManager {
                     monthlyMax: 0,
                     averageThisMonth: 0,
                     seasonWins:seasonWins,
-                    powerFactor:powerFactor
+                    powerFactor:powerFactor,
+                    toDoForFactor:0,
                 }
             };
             this.registeredPlayers[playerName] = data;
@@ -1940,6 +1947,23 @@ class FitnessManager {
                 if (currentDateInfo.isLast5Days) {
                     this.registeredPlayers[historyName].points.last5Days += Number(historyEntry.points[historyIteratorPerDate]);
                 }
+
+                if (last4Days[historyName] == undefined){
+                    last4Days[historyName] = 0
+                }
+                if (currentDateInfo.isLast4Days) {
+                    if( last4Days[historyName] != undefined){
+                        last4Days[historyName] += Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+                    else{
+                        last4Days[historyName] = Number(historyEntry.points[historyIteratorPerDate]);
+                    }
+                }
+
+                
+              
+                
+
                 if (currentDateInfo.isToday) {
                     this.registeredPlayers[historyName].points.today += Number(historyEntry.points[historyIteratorPerDate]);
                 }
@@ -2146,9 +2170,15 @@ class FitnessManager {
                     this.monthlyStrengthData[monthName][playerName] = 0;
                 }
             }
+            if (last4Days[playerName] == undefined){
+                last4Days[playerName] = 0;
+            }
 
             this.registeredPlayers[playerName].points.cardioStrengthRatio = calc.calculateCardioStrengthPercents(this.registeredPlayers[playerName].points.cardio, this.registeredPlayers[playerName].points.strength);
-
+            this.registeredPlayers[playerName].points.toDoForFactor  =  config.POINTS_FOR_POWERFACTOR - last4Days[playerName];
+            if (this.registeredPlayers[playerName].points.toDoForFactor < 0){
+                this.registeredPlayers[playerName].points.toDoForFactor = 0;
+            }
         }
 
         this.needsUpload.dataStorage = true;

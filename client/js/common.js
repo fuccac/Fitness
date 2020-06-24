@@ -202,6 +202,7 @@ function Common() {
     this.getDateInfo = function (date) {
         let dateInfo = {
             isToday: false,
+            isLast4Days:false,
             isLast5Days: false,
             isThisMonth: false,
             isLastMonth: false,
@@ -218,6 +219,9 @@ function Common() {
         let currentDate = new Date(date);
         let dateMinus5Days = this.createZeroDate(new Date());
         dateMinus5Days.setDate(dateMinus5Days.getDate() - 5);
+
+        let dateMinus4Days = this.createZeroDate(new Date());
+        dateMinus4Days.setDate(dateMinus4Days.getDate() - 4);
 
         lastMonth = this.createZeroDate(new Date());
         lastMonth.setMonth(lastMonth.getMonth() - 1);
@@ -236,6 +240,10 @@ function Common() {
 
         if (currentDate > dateMinus5Days) {
             dateInfo.isLast5Days = true;
+        }
+
+        if (currentDate > dateMinus4Days) {
+            dateInfo.isLast4Days = true;
         }
 
         if (currentDate.getMonth() == lastMonth && currentDate.getFullYear() == lastMonthYear) {
@@ -503,6 +511,8 @@ function Common() {
                 return "Auf einmal";
             case "powerFactor":
                 return "Power Faktor";
+            case "toDoForFactor":
+                return "Todo für Power Faktor (bis zum Check)"    
             default:
                 if (word.search("Overall") != -1) {
                     return word.replace("Overall", "[Gesamt] - ");
