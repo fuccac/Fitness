@@ -1363,12 +1363,12 @@ class FitnessManager {
         //registered players
         for (let playerName in this.registeredPlayers) {
             
-            let seasonWins = this.registeredPlayers[playerName].points.seasonWins
+            let seasonWins = this.registeredPlayers[playerName].points.seasonWins;
             if (seasonWins == undefined){
                 seasonWins = 0;
             }
 
-            let powerFactor = this.registeredPlayers[playerName].points.powerFactor
+            let powerFactor = this.registeredPlayers[playerName].points.powerFactor;
             if (powerFactor == undefined){
                 powerFactor = 1;
             }
@@ -1949,7 +1949,7 @@ class FitnessManager {
                 }
 
                 if (last4Days[historyName] == undefined){
-                    last4Days[historyName] = 0
+                    last4Days[historyName] = 0;
                 }
                 if (currentDateInfo.isLast4Days) {
                     if( last4Days[historyName] != undefined){
@@ -2175,7 +2175,7 @@ class FitnessManager {
             }
 
             this.registeredPlayers[playerName].points.cardioStrengthRatio = calc.calculateCardioStrengthPercents(this.registeredPlayers[playerName].points.cardio, this.registeredPlayers[playerName].points.strength);
-            this.registeredPlayers[playerName].points.toDoForFactor  =  config.POINTS_FOR_POWERFACTOR - last4Days[playerName];
+            this.registeredPlayers[playerName].points.toDoForFactor  =  (config.POINTS_FOR_POWERFACTOR*this.registeredPlayers[playerName].points.powerFactor) - last4Days[playerName];
             if (this.registeredPlayers[playerName].points.toDoForFactor < 0){
                 this.registeredPlayers[playerName].points.toDoForFactor = 0;
             }

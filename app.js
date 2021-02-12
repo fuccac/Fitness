@@ -105,17 +105,17 @@ function cyclicAquisition() {
 
 		//check if players have done something last 5 days
 		for (let playerName in FITNESS_MANAGER.registeredPlayers) {
-			if (FITNESS_MANAGER.registeredPlayers[playerName].points.last5Days >= config.POINTS_FOR_POWERFACTOR) {
+			if (FITNESS_MANAGER.registeredPlayers[playerName].points.last5Days >= (config.POINTS_FOR_POWERFACTOR*FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor) ) {
 				if (FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor == undefined) {
-					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.01
+					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.01;
 				}
 				else {
-					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor + 0.01
+					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor + 0.01;
 				}
 			}
 			else
 			{
-				FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00
+				FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00;
 			}
 		}
 		});
