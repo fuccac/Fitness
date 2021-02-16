@@ -221,6 +221,10 @@ function loadPlayer(name, id, cb) {
 		PLAYER_LIST[id].bestExercises = result.content.bestExercises;
 		PLAYER_LIST[id].online = result.content.online;
 
+		if (FITNESS_MANAGER.registeredPlayers[name] == undefined){
+			FITNESS_MANAGER.addNewPlayer(name);
+		}
+
 
 		uiRefresh();
 
@@ -229,6 +233,9 @@ function loadPlayer(name, id, cb) {
 		.catch((err) => {
 
 			PLAYER_LIST[id].name = name;
+			if (FITNESS_MANAGER.registeredPlayers[name] == undefined){
+				FITNESS_MANAGER.addNewPlayer(name);
+			}
 			uiRefresh();
 			cb("Player <" + name + ">: No Savestate.");
 		});
@@ -265,6 +272,12 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		FITNESS_MANAGER.registeredPlayers = result.dataStorage.registeredPlayers;
 		FITNESS_MANAGER.eventLog = result.dataStorage.eventLog;
 		FITNESS_MANAGER.achievements = result.dataStorage.achievements;
+
+		if(FITNESS_MANAGER.history = {}){
+			// empty history
+			FITNESS_MANAGER.cleanExerciseList();
+		}
+
 		try {
 			FITNESS_MANAGER.today = new Date(result.dataStorage.fitnessManager.today);
 			FITNESS_MANAGER.featuredExerciseId = result.dataStorage.fitnessManager.featuredExerciseId;
@@ -379,6 +392,15 @@ function AddPropertiesToExercises(result) {
 function fitnessManagerStartUpTasks(callback) {
 	FITNESS_MANAGER.fullRefresh(function (result) {
 		logFile.log(result, false, 0);
+		
+		//failsave
+		if (FITNESS_MANAGER.eventLog == {} ||  FITNESS_MANAGER.eventLog.time == undefined ||  FITNESS_MANAGER.eventLog.msg == undefined ||  FITNESS_MANAGER.eventLog.html == undefined){
+			FITNESS_MANAGER.eventLog = {
+				time: [],
+				msg: [],
+				html: ""
+			};
+		}
 		if (FITNESS_MANAGER.eventLog.time.length > 0 && (FITNESS_MANAGER.eventLog.html == "" || FITNESS_MANAGER.eventLog.html == undefined)) {
 			FITNESS_MANAGER.createHTMLEventLog();
 		}

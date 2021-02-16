@@ -85,6 +85,14 @@ class FitnessManager {
     //************************************************************/
     //*********************Exercise Handling**********************/
     //************************************************************/
+
+    cleanExerciseList(){
+        for (let exId in this.exerciseList) {
+            this.exerciseList[exId].points = 0;
+            this.exerciseList[exId].pointsPerPlayer = {};
+            this.exerciseList[exId].repsPerPlayer = {};
+        }
+    }
     featureNewExercise() {
         let randomNumber = Math.floor(Math.random() * Object.keys(this.exerciseList).length);
         let counter = 0;
