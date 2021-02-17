@@ -273,7 +273,7 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		FITNESS_MANAGER.eventLog = result.dataStorage.eventLog;
 		FITNESS_MANAGER.achievements = result.dataStorage.achievements;
 
-		if(FITNESS_MANAGER.history = {}){
+		if(FITNESS_MANAGER.history == {}){
 			// empty history
 			FITNESS_MANAGER.cleanExerciseList();
 		}
