@@ -386,6 +386,9 @@ function Common() {
         if (this.checkIfNumber(word)) {
             return this.formatNumber(word);
         }
+        if (word == null){
+            return "null"
+        }
         word = word.toString();
 
         switch (word) {

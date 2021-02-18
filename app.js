@@ -1,5 +1,6 @@
-// @ts-nocheck
+// @ts-check
 /*jshint esversion: 6 */
+
 
 //MODULES etc..
 var express = require('express');
@@ -11,9 +12,9 @@ var Config = require("./server/Config");
 var Player = require("./server/Player");
 var FitnessManager = require("./server/FitnessManager");
 var DropBoxHandler = require("./server/dropBoxHandler");
-Log = require("./server/Log");
-Common = require("./client/js/common");
-EmailManager = require("./server/EmailManager");
+let Log = require("./server/Log");
+let Common = require("./client/js/common");
+let EmailManager = require("./server/EmailManager");
 
 
 
@@ -122,7 +123,7 @@ function cyclicAquisition() {
 	}
 
 	for (let iPlayer in PLAYER_LIST) {
-		player = PLAYER_LIST[iPlayer];
+		let player = PLAYER_LIST[iPlayer];
 		if (SOCKET_LIST[player.id] != undefined) {
 			SOCKET_LIST[player.id].emit('OnlineStatus', {
 				online: ONLINE_STATE,
@@ -136,7 +137,7 @@ function cyclicAquisition() {
 
 function refreshEventLog() {
 	for (var iPlayer in PLAYER_LIST) {
-		player = PLAYER_LIST[iPlayer];
+		let player = PLAYER_LIST[iPlayer];
 		SOCKET_LIST[player.id].emit('refreshEventLog', {
 			eventLog: FITNESS_MANAGER.eventLog,
 		});
@@ -149,7 +150,7 @@ function uiRefresh() {
 	var player;
 	FITNESS_MANAGER.fullRefresh(function (result) {
 		logFile.log(result, false, 0);
-		sortedExList = FITNESS_MANAGER.getSortedExerciseList();
+		let sortedExList = FITNESS_MANAGER.getSortedExerciseList();
 		for (iPlayer in PLAYER_LIST) {
 			player = PLAYER_LIST[iPlayer];
 			FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
@@ -186,7 +187,7 @@ function uiRefresh() {
  */
 function savePlayer(player) {
 
-	playerData = {
+	let playerData = {
 		name: player.name,
 		active: player.active,
 		regDate: player.regDate,
@@ -290,7 +291,7 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		USERS = result.dataStorage.users;
 
 
-		colorIterator = 0;
+		let colorIterator = 0;
 		for (var playerName in FITNESS_MANAGER.registeredPlayers) {
 			if (USERS[playerName.toUpperCase()].color != undefined) {
 				FITNESS_MANAGER.colorList[playerName] = USERS[playerName.toUpperCase()].color;
@@ -373,7 +374,7 @@ function AddPropertiesToExercises(result) {
 			let currentVote = currentExercise.votes[voteName];
 			for (let iterator = 0; iterator < propertiesToAddVotes.name.length; iterator++) {
 				if (currentVote[propertiesToAddVotes.name[iterator]] == undefined) {
-					if (propertiesToAddVotes.value[iterator] == {}) {
+					if (Object.keys(propertiesToAddVotes.value[iterator]).length === 0) {
 						currentVote[propertiesToAddVotes.name[iterator]] = {};
 					}
 					else {
@@ -394,7 +395,7 @@ function fitnessManagerStartUpTasks(callback) {
 		logFile.log(result, false, 0);
 		
 		//failsave
-		if (FITNESS_MANAGER.eventLog == {} ||  FITNESS_MANAGER.eventLog.time == undefined ||  FITNESS_MANAGER.eventLog.msg == undefined ||  FITNESS_MANAGER.eventLog.html == undefined){
+		if (Object.keys(FITNESS_MANAGER.eventLog).length === 0 ||  FITNESS_MANAGER.eventLog.time == undefined ||  FITNESS_MANAGER.eventLog.msg == undefined ||  FITNESS_MANAGER.eventLog.html == undefined){
 			FITNESS_MANAGER.eventLog = {
 				time: [],
 				msg: [],
@@ -473,7 +474,7 @@ function startServer() {
 				USERS[newPlayer.name.toUpperCase()][key] = data[key];
 			}
 			if (FITNESS_MANAGER.colorList[newPlayer.name] != USERS[newPlayer.name.toUpperCase()].color) {
-				FITNESS_MANAGER.updateEventLogColor(newPlayer.name, USERS[newPlayer.name.toUpperCase()].color, FITNESS_MANAGER.colorList[newPlayer.name]);
+				FITNESS_MANAGER.updateEventLogColor(newPlayer.name, USERS[newPlayer.name.toUpperCase()].color);
 
 			}
 			FITNESS_MANAGER.colorList[newPlayer.name] = USERS[newPlayer.name.toUpperCase()].color;
@@ -841,8 +842,8 @@ function startServer() {
 
 	/**
 	 * 
-	 * @param {{}} data username and password
-	 * @param {function()} cb 
+	 * @param {{loginToken,username,password}} data username and password
+	 * @param {any} cb 
 	 */
 
 	isValidPassword = function (data, cb) {
@@ -917,8 +918,8 @@ function startServer() {
 
 	/**
 	 * 
-	 * @param {{}} data username and password
-	 * @param {function()} cb 
+	 * @param {{username}} data username and password
+	 * @param {any} cb 
 	 */
 	isUsernameTaken = function (data, cb) {
 		setTimeout(function () {
@@ -928,8 +929,8 @@ function startServer() {
 
 	/**
 	 * 
-	 * @param {{}} data username and password
-	 * @param {function(bool)} cb 
+	 * @param {{username,password}} data username and password
+	 * @param {any} cb 
 	 */
 	addUser = function (data, cb) {
 		FITNESS_MANAGER.addNewPlayer(data.username);

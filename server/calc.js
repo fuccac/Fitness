@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-check
 /*jshint esversion: 6 */
 
 function Calc() {
@@ -28,7 +28,7 @@ function Calc() {
 		};
 
 	this.calculateNewFactor = /**
-	 * @param {{ votes: { [x: string]: any; }; difficulty: number; difficulty10: number; difficulty100: number; baseWeight: number; usesWeight: boolean; factor: string | number; }} exercise
+	 * @param {{ votes: { [x: string]: any; }; difficulty: number; difficulty10: number; difficulty100: number; baseWeight: number; paceConstant:number, usesWeight: boolean; factor: string | number; }} exercise
 	 */
 		function (exercise) {
 			var difficultySum = 0;
@@ -171,7 +171,7 @@ function Calc() {
 
 
 
-		exercise.points += Number(result);
+		
 		if (result == undefined){
 			result =0
 		}
@@ -179,12 +179,23 @@ function Calc() {
 		{
 			pace[exercise.id] = "-"
 		}
+
+		if (isNaN(result)){
+			result = 0;
+		}
+
+		if (pace[exercise.id] != "-") {
+			if (isNaN(pace[exercise.id])){
+				pace[exercise.id] = "-"
+			}
+		}
+		exercise.points += Number(result);
 		return result * powerFactor;
 
 	};
 
 	this.calculateCardioStrengthPercents = function (cardioPoints, strengthPoints) {
-		let cardioPercent = cardioPoints / (cardioPoints + strengthPoints);
+		let cardioPercent = Number(cardioPoints / (cardioPoints + strengthPoints));
 		let strengthPercent = strengthPoints / (cardioPoints + strengthPoints);
 		cardioPercent = (cardioPercent * 100).toFixed(0);
 		strengthPercent = (strengthPercent * 100).toFixed(0);

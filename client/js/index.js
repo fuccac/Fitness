@@ -1845,7 +1845,8 @@ function dateDiff(date1, date2) {
 function checkForEmptyBoxesDoneExercise() {
     if (input_doneExercise.value != "" &&
         input_doneExerciseDate.value != "" &&
-        select_doneExercise.value != ""
+        select_doneExercise.value != "" &&
+        input_doneExerciseAdditional.value != ""
     ) {
         return true;
     }
