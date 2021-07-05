@@ -14,8 +14,8 @@ class EmailManager {
             this.transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: config.GAGS_USERNAME,
-                    pass: config.GAGS_PASSWORD
+                    user: process.env.GAGS_USERNAME,
+                    pass: process.env.GAGS_PASSWORD
                 }
             });
         }
