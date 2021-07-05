@@ -21,7 +21,7 @@
 		<label for="input_RememberMe">Login merken</label>
 		<input id="input_RememberMe" type="checkbox"></input>
 
-		
+		<hr>
 
 		<div id="div_changeLog">
 			<p>
@@ -340,9 +340,11 @@
 				<tbody></tbody>
 			</table>
 		</div>
+		<hr>
 		<div id="div_graph">
 
 		</div>
+		<hr>
 		<div id="div_GraphControl">
 			<br>
 			<label for="input_graphFromDate">Von :</label>
@@ -381,6 +383,7 @@
 				</table>
 			</div>
 		</div>
+		<hr>
 		<div id="div_addWorkout">
 			<label for="input_doneExerciseDate">Übung Datum:</label>
 			<input id="input_doneExerciseDate" type="date" class="addWorkOut"></input><br>
@@ -402,6 +405,7 @@
 				type="number" placeholder="Benutzes Gewicht" min="0" oninput="validity.valid||(value='');"></input><br>
 			<button id="button_doneExerciseSend">Anlegen</button>
 		</div>
+		<hr>
 		<div id="div_exerciseHistoryControl">
 			<label for="select_historyShowName">Name:</label>
 			<select id="select_historyShowName"></select><br>
@@ -415,6 +419,7 @@
 			<input id="input_avgSelection" type="text" placeholder="Auswertung starten..." disabled></input><br>
 			<button id="button_updateHistory">Update</button><br>
 		</div>
+		<hr>
 		<div id="div_exerciseHistory">
 			<table id="table_exerciseHistory" class="std_table">
 				<thead></thead>
@@ -543,7 +548,7 @@
 			<button id="button_showHiddenExercises">Zeige alle</button>
 
 		</div>
-
+		<hr>
 		<div id="div_exerciseTable">
 			<table id="table_exerciseTable" class="std_table">
 				<thead></thead>
@@ -558,6 +563,7 @@
 				<tbody></tbody>
 			</table>
 		</div>
+		<hr>
 		<div id="div_exerciseStatistics">
 			<br>
 			<label for="select_statisticsExercise">Übung :</label>
@@ -575,12 +581,47 @@
 				<tbody></tbody>
 			</table>
 		</div>
+		<hr>
 		<div id="div_MonthlyWins">
 			<table id="table_monthlyWins" class="std_table">
 				<thead></thead>
 				<tbody></tbody>
 			</table>
 		</div>
+		<hr>
+		<h2>Derzeitig aktive Challenges
+			<button id="button_showFinishedChallenges" class="challengeInput">Zeige beendete</button>
+		</h2>
+		<div id="div_CurrentChallenges">
+
+			
+			
+		</div>
+		<hr>
+		
+		<br>
+		
+		<div id="div_challengeControls">
+			
+			<label for="input_challengeName" class="challengeInput">Challenge Name:</label>
+			<input id="input_challengeName" type="text" class="challengeInput"></input>
+
+			<label for="input_challengeStartDate" class="challengeInput">Challenge Beginn:</label>
+			<input id="input_challengeStartDate" type="date" class="challengeInput"></input>
+
+			<label for="input_challengeEndDate" class="challengeInput">Challenge Ende:</label>
+			<input id="input_challengeEndDate" type="date" class="challengeInput"></input>
+
+			<label for="select_challengeExercise" class="challengeInput">Übung:</label>
+			<select id="select_challengeExercise" class="challengeInput"></select>
+
+			<label for="input_challengeToDo" class="challengeInput">Anzahl Ziel:</label>
+			<input id="input_challengeToDo" type="number" class="challengeInput"></input>
+
+			<button id="button_createChallenge" class="challengeInput">Anlegen</button>
+			
+		</div>
+		<br>
 	</div>
 	<div id="div_events" class="tab">
 		<div id="div_eventLog">
@@ -605,6 +646,7 @@
 		<input id="input_allowEmails" type="checkbox" checked="false"></input><br><br>
 
 		<button id="button_saveProfileData">Speichern</button><br>
+		<hr>
 
 		<p>Achievement Maker</p>
 		<label for="adminSelect_AchievementExercise" class="adminControls">Übung :</label>

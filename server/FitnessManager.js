@@ -1,17 +1,21 @@
-// @ts-nocheck
+// @ts-check
 /*jshint esversion: 6 */
-Exercise = require("./Exercise");
-Calc = require("./calc");
-Common = require("../client/js/common");
-Log = require("./Log");
-Config = require("./Config");
+
+const Challenge = require("./Challenge");
+
+/*jshint esversion: 6 */
+var Exercise = require("./Exercise");
+var Calc = require("./calc");
+var Common = require("../client/js/common");
+var Log = require("./Log");
+var Config = require("./Config");
 
 
-achievementList = require("../saves/config/achievementList");
+var achievementList = require("../saves/config/achievementList.json");
 
 var logFile = new Log();
-calc = new Calc();
-common = new Common();
+var calc = new Calc();
+var common = new Common();
 var config = new Config();
 
 class FitnessManager {
@@ -26,7 +30,6 @@ class FitnessManager {
         this.loadingDone = false;
         this.colorList = {};
         this.totalHistoryEntries = 0;
-        this.featuredExerciseId = 0;
         this.featuredExerciseDate = common.createViennaDate();
 
         //BAR CHARTS
@@ -60,11 +63,12 @@ class FitnessManager {
         this.maxExerciseCountsCategory = {};
         this.dailyWins = {};
         this.monthlyWins = {};
-        this.featuredExerciseId = 0;
+        this.featuredExerciseId = ""
         this.favoriteExercises = {};
 
 
         //WORK OBJECTS WITH SAVE FILE SUPPORT
+        this.challengeList = {};
         this.registeredPlayers = {};
         this.achievements = {};
         this.history = {};
@@ -78,8 +82,6 @@ class FitnessManager {
         this.paceInvert = "0;0;1;1";
 
     }
-
-
 
 
     //************************************************************/
@@ -182,6 +184,7 @@ class FitnessManager {
     addExercise(exercise) {
         this.exerciseList[exercise.id] = exercise;
         this.exerciseCount++;
+        this.needsUpload.dataStorage = true;
         return "add Exercise finished";
     }
 
@@ -869,6 +872,7 @@ class FitnessManager {
                     continue;
                 }
             }
+           
         }
 
         //player achievements
@@ -1118,13 +1122,15 @@ class FitnessManager {
         var notEarnedAchievements = [];
         var achievementIterator = 0;
         var currentLevel = 0;
-
+        
         var earned = this.achievements[player.name].earnedAchievements;
         var notEarned = this.achievements[player.name].notEarnedAchievements;
 
         achievementIterator = 0;
         for (let achievementCategory in notEarned) {
             currentLevel = 0;
+
+
             if (notEarned[achievementCategory].level.split("/").map(Number)[0] > 1) {
                 currentLevel = earned[achievementCategory].level;
             }
@@ -1143,10 +1149,14 @@ class FitnessManager {
 
         for (let achievementCategory in earned) {
             currentLevel = 0;
+            
+            
+
             if (earned[achievementCategory].level.split("/").map(Number)[0] == earned[achievementCategory].level.split("/").map(Number)[1]) {
                 currentLevel = earned[achievementCategory].level;
             }
             else {
+                
                 continue;
             }
 
@@ -1160,9 +1170,10 @@ class FitnessManager {
 
             };
             achievementIterator++;
+            
         }
 
-
+        
         var entry = {
             notEarnedAchievements: notEarnedAchievements
         };
@@ -1171,20 +1182,210 @@ class FitnessManager {
         result(achievementList);
     }
 
+    getAchievementListInternal(player) {
+        var achievementList = {};
+        var notEarnedAchievements = [];
+        var achievementIterator = 0;
+        var currentLevel = 0;
+        
+        var earned = this.achievements[player].earnedAchievements;
+        var notEarned = this.achievements[player].notEarnedAchievements;
+
+        achievementIterator = 0;
+        for (let achievementCategory in notEarned) {
+            currentLevel = 0;
+
+
+            if (notEarned[achievementCategory].level.split("/").map(Number)[0] > 1) {
+                currentLevel = earned[achievementCategory].level;
+            }
+
+            notEarnedAchievements[achievementIterator] = {
+                achievementCategory: achievementCategory,
+                achievementProgress: notEarned[achievementCategory].progress,
+                achievementText: notEarned[achievementCategory].text,
+                achievementPercent: notEarned[achievementCategory].percent,
+                achievementLevel: currentLevel,
+                achievementNextLevel: notEarned[achievementCategory].level,
+
+            };
+            achievementIterator++;
+        }
+
+        for (let achievementCategory in earned) {
+            currentLevel = 0;
+            
+            
+
+            if (earned[achievementCategory].level.split("/").map(Number)[0] == earned[achievementCategory].level.split("/").map(Number)[1]) {
+                currentLevel = earned[achievementCategory].level;
+            }
+            else {
+                
+                continue;
+            }
+
+            notEarnedAchievements[achievementIterator] = {
+                achievementCategory: achievementCategory,
+                achievementProgress: earned[achievementCategory].progress,
+                achievementText: earned[achievementCategory].text,
+                achievementPercent: earned[achievementCategory].percent,
+                achievementLevel: currentLevel,
+                achievementNextLevel: "-"
+
+            };
+            achievementIterator++;
+            
+        }
+
+        
+        var entry = {
+            notEarnedAchievements: notEarnedAchievements
+        };
+
+        achievementList[player] = entry;
+        return achievementList;
+    }
+
+    calculateAchievementPoints(player, result){
+        this.registeredPlayers[player.name].points.achievementPoints = 0
+        let achievementList = this.getAchievementListInternal(player.name)[player.name].notEarnedAchievements
+        //check worth of achievement
+        for(let i = 0; i< achievementList.length;i++){
+            let achievementFactor = 0
+            let exerciseCounter = 0
+            let modifiedCategory = achievementList[i].achievementCategory.replace("Overall","");
+            modifiedCategory = modifiedCategory.replace("Day","");
+            modifiedCategory = modifiedCategory.replace("Month","");
+
+            for(let exId in this.exerciseList){
+                if(this.exerciseList[exId].achievementInfo.achievementCategory == modifiedCategory){
+                    achievementFactor = achievementFactor + Number(this.exerciseList[exId].factor);
+                    exerciseCounter = exerciseCounter + 1
+                }
+            }
+
+            if(exerciseCounter>0){
+                achievementFactor = achievementFactor / exerciseCounter
+            }
+            else{
+                achievementFactor = 1
+            }
+            
+
+            if(achievementList[i].achievementLevel != 0) {
+                let toAdd = achievementList[i].achievementLevel.split("/").map(Number)[0]*achievementFactor;
+                this.registeredPlayers[player.name].points.achievementPoints = this.registeredPlayers[player.name].points.achievementPoints + toAdd;
+            }
+            
+        }   
+        result("calculateAchievementPoints done")
+        //achievement points check end
+    }
+
 
     //************************************************************/
     //*******************Other Handling***************************/
     //************************************************************/
 
+    createChallenge(id, dateStart, dateEnd, challengeName, toDo, creator) {
+        dateStart = common.createZeroDate(dateStart);
+        dateEnd = common.createZeroDate(dateEnd);
+        this.addChallenge(new Challenge(challengeName,id,dateStart,dateEnd,toDo, creator))
+	}
+
+    finishChallenge(id){
+        this.challengeList[id].finished = true
+        let currentMax = 0;
+        let currentWinner = "Keiner"
+        for(let playerName in  this.challengeList[id].progress){
+            if(this.challengeList[id].progress[playerName].done > currentMax && this.challengeList[id].progress[playerName].percent >= 75){
+                currentMax = this.challengeList[id].progress[playerName].done
+                currentWinner = playerName
+            }
+        }
+        if(currentWinner != "Keiner"){
+            this.registeredPlayers[currentWinner].challengeWins += 1;
+        }
+        
+
+    }
+
+    addChallenge(challenge) {
+        this.challengeList[challenge.id] = challenge;
+       
+        this.updateChallengeHTML(function (result) {
+            this.addToEventLog(challenge.creator + " hat eine neue Challenge eingetragen:");
+            this.addToEventLog("Name : " + challenge.name);
+            this.addToEventLog("Start: " + challenge.startDate);
+            this.addToEventLog("Ende : " + challenge.endDate);
+            this.addToEventLog("Anzahl : " + challenge.toDo);
+            this.addToEventLog("Viel Erfolg!");
+            logFile.log(result, false, 0);
+            return "add Challenge finished";
+        }.bind(this));
+    }
+
+    updateChallengeHTML(result){
+        let start = Date.now();
+        let part1 = "<div id=\"div_challengeId\"><h3>ChallengeName (Count - Exercises)</h3>"
+        let partPlayer = 	"<label>PlayerName: <progress id=\"PlayerNameProgress\" percentValue max=\"100\" class=\"challengeProgress\" style=\"background-color=playerColor\"></label><br>"
+        let partEnd = "</div>"
+        let html = ""
+
+        if (Object.keys(this.challengeList).length > 0){
+            for (let challengeId in this.challengeList) { //ASS
+                if(!this.challengeList[challengeId].finished){
+                
+                    html = part1.replace("challengeId",challengeId.toString())
+                    html = html.replace("ChallengeName",this.challengeList[challengeId].name.toString())
+                    html = html.replace("Count",this.challengeList[challengeId].toDo.toString())
+                    let exerciseText = ""
+                    for (let i = 0;i < this.challengeList[challengeId].exerciseList.length;i++){
+                        exerciseText = exerciseText + this.exerciseList[this.challengeList[challengeId].exerciseList[i]].name
+                        if(i+1 < this.challengeList[challengeId].exerciseList.length){
+                            exerciseText = exerciseText + ", "
+                        }
+                    }
+                    html = html.replace("Exercises",exerciseText)
+                    for (let playerName in this.challengeList[challengeId].progress){
+                        html = html + partPlayer
+                        html = html.replace("PlayerNameProgress", playerName+"Progress")
+                        html = html.replace("percentValue", "value=\""+this.challengeList[challengeId].progress[playerName].percent+"\"")
+                        html = html.replace("PlayerName",common.HTMLColor(playerName, this.colorList[playerName]) + " (" + this.challengeList[challengeId].progress[playerName].done.toString() + ")")
+                        html = html.replace("playerColor",this.colorList[playerName])
+                    }
+                    html = html + partEnd
+                    this.challengeList[challengeId].html = html
+                }
+            }
+            
+         }
+        
+        let end = Date.now();
+        this.needsUpload.dataStorage = true;
+        result(`updateChallengeHTML done in ${end - start}`);
+    }
+
+
+
     checkPlayerStuff(player, playerStuffResult) {
         //USAGE: After a clean calculation via FullRefresh
-        this.setBestExerciserNumber(player, function (result) {
+        this.updateChallengeHTML(function (result){
             logFile.log(result, false, 0);
-            this.checkForAchievements(player, function (result) {
+            this.setBestExerciserNumber(player, function (result) {
                 logFile.log(result, false, 0);
-                playerStuffResult("checkPlayerStuff done");
+                this.checkForAchievements(player, function (result) {
+                    logFile.log(result, false, 0);
+                    this.calculateAchievementPoints(player, function(result) {
+                        logFile.log(result, false, 0);
+                        playerStuffResult("checkPlayerStuff done");
+                    }.bind(this));
+                    
+                }.bind(this));
             }.bind(this));
         }.bind(this));
+        
     }
 
 
@@ -1197,17 +1398,17 @@ class FitnessManager {
         }
 
         var date = common.createViennaDate();
-        var seconds = date.getSeconds();
-        var minutes = date.getMinutes();
-        var hours = date.getHours();
+        var seconds = date.getSeconds().toString();
+        var minutes = date.getMinutes().toString();
+        var hours = date.getHours().toString();
 
-        if (seconds < 10) {
+        if (Number(seconds) < 10) {
             seconds = "0" + seconds.toString();
         }
-        if (minutes < 10) {
+        if (Number(minutes) < 10) {
             minutes = "0" + minutes.toString();
         }
-        if (hours < 10) {
+        if (Number(hours) < 10) {
             hours = "0" + hours.toString();
         }
 
@@ -1219,9 +1420,9 @@ class FitnessManager {
             FirstDateEntry = common.createZeroDate(common.getDateFormat(this.eventLog.time[0].split(" | ")[0], "YYYY-MM-DD", "DD.MM.YYYY")).getTime();
         }
 
-        let dateMinusThreeMonths = common.createZeroDate(date);
-        dateMinusThreeMonths.setMonth(date.getMonth() - 3);
-        dateMinusThreeMonths = dateMinusThreeMonths.getTime();
+        let dateMinusThreeMonthsDate = common.createZeroDate(date);
+        dateMinusThreeMonthsDate.setMonth(date.getMonth() - 3);
+        let dateMinusThreeMonths = dateMinusThreeMonthsDate.getTime();
 
         if (this.eventLog.time.length > 500 && FirstDateEntry < dateMinusThreeMonths) {
             this.eventLog.time = this.eventLog.time.slice(1);
@@ -1237,8 +1438,8 @@ class FitnessManager {
     }
 
     updateEventLogColor(name, newColor) {
-        let matcher = '<span style="color:#[a-zA-Z,0-9]{6}">' + name;
-        matcher = new RegExp(matcher, "g");
+        let regString = '<span style="color:#[a-zA-Z,0-9]{6}">' + name;
+        let matcher = new RegExp(regString, "g");
         let newTerm = common.HTMLColor(name, newColor);
         for (let eventIterator = 0; eventIterator < this.eventLog.msg.length; eventIterator++) {
             if (this.eventLog.msg[eventIterator].match(matcher)) {
@@ -1284,8 +1485,9 @@ class FitnessManager {
                 averageThisMonth: 0,
                 seasonWins:0,
                 powerFactor:1,
-                toDoForFactor:0
-                
+                toDoForFactor:0,
+                achievementPoints:0,
+                challengeWins:0
             }
         };
         this.registeredPlayers[name] = data;
@@ -1293,11 +1495,8 @@ class FitnessManager {
         this.needsUpload.dataStorage = true;
     }
 
-    /**
-     * 
-     * @param {function} result 
-     */
-    fullRefresh(result) {
+
+    fullRefresh(fullRefreshResult) {
         let start = Date.now();
         var chunk = this.getDefinedHistory(new Date("01/08/2000"), new Date("01/08/9999"));
 
@@ -1366,7 +1565,14 @@ class FitnessManager {
         this.dailyDataExerciseCategory = {};
         var last4Days = {};
 
-
+        //challenge reset
+        for (let challengeId in this.challengeList){    
+            let challenge = this.challengeList[challengeId];
+            for(let name in challenge.progress){
+                challenge.progress[name].done = 0;
+                challenge.progress[name].percent = 0;
+            }
+        }
 
         //registered players
         for (let playerName in this.registeredPlayers) {
@@ -1375,6 +1581,18 @@ class FitnessManager {
             if (seasonWins == undefined){
                 seasonWins = 0;
             }
+
+            let achievementPoints = this.registeredPlayers[playerName].points.achievementPoints;
+            if (achievementPoints == undefined){
+                achievementPoints = 0;
+            }
+
+            let challengeWins = this.registeredPlayers[playerName].points.challengeWins;
+            if (challengeWins == undefined){
+                challengeWins = 0;
+            }
+
+
 
             let powerFactor = this.registeredPlayers[playerName].points.powerFactor;
             if (powerFactor == undefined){
@@ -1401,6 +1619,8 @@ class FitnessManager {
                     seasonWins:seasonWins,
                     powerFactor:powerFactor,
                     toDoForFactor:0,
+                    achievementPoints:0,
+                    challengeWins:0
                 }
             };
             this.registeredPlayers[playerName] = data;
@@ -1411,7 +1631,7 @@ class FitnessManager {
 
 
         if (chunk.length == 0) {
-            result("chunk.length == 0 in 'full refresh - abort");
+            fullRefreshResult("chunk.length == 0 in 'full refresh - abort");
             return;
         }
         var lastDate = common.createZeroDate(chunk[0].date[0]);
@@ -1517,6 +1737,36 @@ class FitnessManager {
                 var historyName = historyEntry.playerName[historyIteratorPerDate];
                 var exerciseId = historyEntry.exerciseId[historyIteratorPerDate];
                 var exCategory = this.exerciseList[exerciseId].achievementInfo.achievementCategory;
+
+                //challenge check
+                for (let challengeId in this.challengeList){    
+                    let challenge = this.challengeList[challengeId];
+                    if(!challenge.finished){
+                        if(common.createZeroDate(challenge.startDate) <= currentDate && common.createZeroDate(challenge.endDate) >= currentDate){
+                            for(let i = 0; i < challenge.exerciseList.length;i++){
+                                if(exerciseId == challenge.exerciseList[i]){
+                                    //date and exercise valid for this challenge
+                                    if(challenge.progress[historyName] != undefined){
+                                        challenge.progress[historyName].done += Number(historyEntry.count[historyIteratorPerDate]);
+                                        challenge.progress[historyName].percent = (Number(challenge.progress[historyName].done) / Number(challenge.toDo))*100
+                                    }
+                                    else{
+                                        var newProgress = {
+                                            percent: (Number(historyEntry.count[historyIteratorPerDate])/Number(challenge.toDo))*100,
+                                            done: historyEntry.count[historyIteratorPerDate],
+                                        }
+                                        challenge.progress[historyName] = newProgress;
+                                    }
+                                    
+                                    if(challenge.progress[historyName].percent >= 100){
+                                        this.finishChallenge(challenge.id)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                currentDate
 
 
                 this.totalHistoryEntries++;
@@ -2158,6 +2408,8 @@ class FitnessManager {
 
             this.monthlyCardioData[currentDateInfo.currentMonthName] = monthlyCardioSum;
             this.monthlyStrengthData[currentDateInfo.currentMonthName] = monthlyStrengthSum;
+
+
         } //END FOR
 
         for (let playerName in this.registeredPlayers) {
@@ -2187,12 +2439,26 @@ class FitnessManager {
             if (this.registeredPlayers[playerName].points.toDoForFactor < 0){
                 this.registeredPlayers[playerName].points.toDoForFactor = 0;
             }
+
+
+            
+
+            
+        }
+        for (let playerName in this.registeredPlayers) {
+            let player = {
+                name:playerName,
+            }
+            this.checkPlayerStuff(player, function (result) {
+                logFile.log(result, false, 0);
+            }.bind(this));
         }
 
         this.needsUpload.dataStorage = true;
-
         let end = Date.now();
-        result(`full refresh took ${end - start} ms`);
+        fullRefreshResult(`full refresh took ${end - start} ms`);
+        
+
     }
 
     

@@ -1,11 +1,11 @@
-// @ts-nocheck
+// @ts-check
 /*jshint esversion: 6 */
-Calc = require("./calc");
-calc = new Calc();
+var Calc = require("./calc");
+var calc = new Calc();
 var Config = require("./Config");
 var config = new Config();
 var nodemailer = require('nodemailer');
-Log = require("./Log");
+var Log = require("./Log");
 var logFile = new Log();
 
 class EmailManager {
@@ -14,8 +14,8 @@ class EmailManager {
             this.transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: "gags.fitness@gmail.com",
-                    pass: "M@iTGMV5I;qmzB@y&cf44"
+                    user: config.GAGS_USERNAME,
+                    pass: config.GAGS_PASSWORD
                 }
             });
         }

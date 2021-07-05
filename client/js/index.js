@@ -103,14 +103,14 @@ var paragraph_paceUnitNotice = document.getElementById('paragraph_paceUnitNotice
 var label_input_exerciseDifficulty = document.getElementById('label_input_exerciseDifficulty');
 
 var SOCKET = io();
-var LOGIN_COOKIE = "";//getCookie("loginCookie");
+var LOGIN_COOKIE = getCookie("loginCookie").split("#")[0];
+Name = getCookie("loginCookie").split("#")[1];
 var PACE_UNITS = "";
 var PACE_INVERT = "";
 var RUNTIME_CONFIG = {
     showHiddenExercises: false,
 };
 var ONLINE_STATUS = {};
-
 
 
 /******************************************************************************************************************
@@ -465,8 +465,29 @@ $("#adminSelect_AchievementExercise").change(function () {
     });
 });
 
+$("#button_createChallenge").click(function () {
+    if (checkForEmptyBoxesChallenge()){
+        SOCKET.emit("addChallenge", exPack = {
+            id: $("#select_challengeExercise").val(),
+            dateStart: $("#input_challengeStartDate").val(),
+            dateEnd: $("#input_challengeEndDate").val(),
+            toDo: $("#input_challengeToDo").val(),
+            challengeName: $("#input_challengeName").val(),
+            creator: Name
+        }); 
+    }
+    else{
+        alert("Nicht alle Inputboxen wurden ausgefüllt!");
+    }
+    
+});
+
 
 initialize();
+
+
+
+
 /******************************************************************************************************************
 *******************************************************************************************************************
 *                                               SOCKET ON 
@@ -524,7 +545,7 @@ SOCKET.on('alertMsg', function (data) {
 });
 
 SOCKET.on('loginToken', function (data) {
-    setCookie("loginCookie", data.data, 1);
+    setCookie("loginCookie", data.data + "#" + Name, 1);
 });
 
 
@@ -591,6 +612,7 @@ SOCKET.on("refresh", function (data) {
     generateExerciseList(data);
     generatePlayerInfoTable(data);
     generateCompetitionData(data);
+    generateChallengeData(data);
     generateEventLog(data);
 
     generateFadeOutMessage("Refresh durchgeführt");
@@ -1325,6 +1347,7 @@ function generateExerciseList(data) {
     select_doneExercise.innerHTML = "";
     select_statisticsExercise.innerHTML = "";
     $("#adminSelect_AchievementExercise").html("");
+    $("#select_challengeExercise").html("");
     var exercisesInTable = 0;
     var isHiddenExercise = false;
 
@@ -1353,6 +1376,7 @@ function generateExerciseList(data) {
 
         exercisesInTable++;
         common.addOption(document, select_doneExercise, exerciseId+";"+atOncePossible, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + common.translate(exercise.factor));
+        //HERE
         common.addOption(document, select_statisticsExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + common.translate(exercise.factor));
         
         bodyRow = tBodyExerciseTable.insertRow(tBodyExerciseTable.rows.length);
@@ -1546,6 +1570,7 @@ function generateExerciseList(data) {
     select_doneExercise.selectedIndex = selIndex;
     select_statisticsExercise.selectedIndex = selIndex;
     $("#adminSelect_AchievementExercise").html($("#select_statisticsExercise").html());
+    $("#select_challengeExercise").html($("#select_statisticsExercise").html());
 
     let end = Date.now();
     //sendChatMessage(`exercise table generation took ${end - start} ms`);
@@ -1734,6 +1759,8 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
 
 }
 
+
+
 function generateCompetitionData(data) {
     let start = Date.now();
     var theadDailyWinsTable = table_dailyWins.tHead;
@@ -1811,6 +1838,17 @@ function generateCompetitionData(data) {
     //sendChatMessage(`wins table generation took ${end - start} ms`);
 }
 
+function generateChallengeData(data){
+    let challengeList = data.challengeList;
+    $("#div_CurrentChallenges").html("")
+
+    for (let challenge in challengeList){
+        if(!challengeList[challenge].finished){
+            $("#div_CurrentChallenges").html($("#div_CurrentChallenges").html() + challengeList[challenge].html)
+        }
+    }
+}
+
 function generateEventLog(data) {
     div_eventLog.innerHTML = data.eventLog.html;
     div_eventLog.scrollTop = div_eventLog.scrollHeight;
@@ -1854,6 +1892,20 @@ function checkForEmptyBoxesDoneExercise() {
     else {
         return false;
     }
+
+}
+
+function checkForEmptyBoxesChallenge(){
+    if( $("#select_challengeExercise").val() != "" && 
+        $("#input_challengeEndDate").val() != "" &&
+        $("#input_challengeStartDate").val() != "" &&
+        $("#input_challengeToDo").val() != "" &&
+        $("#input_challengeName").val() != ""){
+            return true;
+        }
+        else{
+            return false;
+        }
 
 }
 
@@ -1970,11 +2022,6 @@ function changeCSS(cssFile, cssLinkIndex) {
     document.getElementsByTagName("body").item(0).replaceChild(newlink, oldlink);
 }
 
-
-if (LOGIN_COOKIE != "") {
-    SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: false, loginToken: LOGIN_COOKIE });
-}
-
 function logout() {
     deleteCookie("loginCookie");
     location.reload();
@@ -2064,6 +2111,20 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
     $("#input_exerciseID").change();
     $("#select_exerciseUnit").change();
+}
+
+
+//autologin
+if(LOGIN_COOKIE != ""){
+    SOCKET.emit('SignIn', {loginToken:LOGIN_COOKIE, username: Name, password: input_Password.value, remember: input_RememberMe.checked });
+    if (Name.toLowerCase() != "caf") {
+        $("#adminInput_repsToGetOverall").prop("disabled", true);
+        $("#adminInput_repsToGetDaily").prop("disabled", true);
+        $("#adminInput_repsToGetMonthly").prop("disabled", true);
+        $("#adminInput_achievementCategory").prop("disabled", true);
+        $("#adminSelect_AchievementExercise").prop("disabled", true);
+        $("#adminButton_saveAchievement").prop("disabled", true);
+    }
 }
 
 

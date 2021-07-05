@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-check
 /*jshint esversion: 6 */
 function Common() {
 
@@ -61,13 +61,13 @@ function Common() {
 
     this.sortTable = function (n, table) {
         table.style.cursor = "wait";
-        m = n.cellIndex;
-        matcher = /(\d{2}).(\d{2}).(\d{4})/;
-        bestRepMatcher = /([a-zA-Z]+): (\d+).(\d{2})/;
-        var startOfRepX = 0;
-        var startOfRepY = 0;
+        var m = n.cellIndex;
+        var matcher = /(\d{2}).(\d{2}).(\d{4})/;
+        var bestRepMatcher = /([a-zA-Z]+): (\d+).(\d{2})/;
+        var startOfRepX = "";
+        var startOfRepY = "";
         var rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        var valX, valY = "";
+        var valX, valY;
         switching = true;
         dir = "asc";
         while (switching) {
@@ -97,8 +97,8 @@ function Common() {
                         valY = Number(y.innerHTML.substring(startOfRepY + 2));
                     }
                     else if (x.innerHTML.match(matcher) != null) {
-                        valX = createZeroDate(this.getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
-                        valY = createZeroDate(this.getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                        valX = this.createZeroDate(this.getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                        valY = this.createZeroDate(this.getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
                     }
                     else if (!isNaN(Number(x.innerHTML))) {
                         valX = Number(x.innerHTML);
@@ -133,8 +133,8 @@ function Common() {
                         valY = Number(y.innerHTML.substring(startOfRepY + 2));
                     }
                     else if (x.innerHTML.match(matcher) != null) {
-                        valX = createZeroDate(this.getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
-                        valY = createZeroDate(this.getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                        valX = this.createZeroDate(this.getDateFormat(x.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
+                        valY = this.createZeroDate(this.getDateFormat(y.innerHTML, "YYYY-MM-DD", "DD.MM.YYYY"));
                     }
                     else if (!isNaN(Number(x.innerHTML))) {
                         valX = Number(x.innerHTML);
@@ -223,10 +223,10 @@ function Common() {
         let dateMinus4Days = this.createZeroDate(new Date());
         dateMinus4Days.setDate(dateMinus4Days.getDate() - 4);
 
-        lastMonth = this.createZeroDate(new Date());
-        lastMonth.setMonth(lastMonth.getMonth() - 1);
-        let lastMonthYear = lastMonth.getFullYear();
-        lastMonth = lastMonth.getMonth();
+        let lastMonthDate = this.createZeroDate(new Date());
+        lastMonthDate.setMonth(lastMonthDate.getMonth() - 1);
+        let lastMonthYear = lastMonthDate.getFullYear();
+        let lastMonth = lastMonthDate.getMonth();
 
 
 
@@ -306,14 +306,15 @@ function Common() {
     };
 
     this.createViennaDate = function () {
-        viennaDate = new Date().toLocaleString("en-US", { timeZone: "Europe/Vienna" });
-        viennaDate = new Date(viennaDate);
+        let viennaDateString = new Date().toLocaleString("en-US", { timeZone: "Europe/Vienna" });
+        let viennaDate = new Date(viennaDateString);
         return viennaDate;
     };
 
 
 
     this.createZeroDate = function (date) {
+        let zeroDate;
         if (typeof date === 'undefined') {
             zeroDate = new Date();//.toLocaleString("en-US", {timeZone: "Europe/Vienna"});
             zeroDate = new Date(zeroDate);
@@ -323,7 +324,7 @@ function Common() {
         }
         else {
             zeroDate = new Date(date);
-            zeroDate.setHours(0);
+            zeroDate.setHours(2);
             zeroDate.setMinutes(0);
             zeroDate.setSeconds(0);
         }
@@ -515,7 +516,11 @@ function Common() {
             case "powerFactor":
                 return "Power Faktor";
             case "toDoForFactor":
-                return "Todo für Power Faktor (bis zum Check)"    
+                return "Todo für Power Faktor"    
+            case "achievementPoints":
+                return "Erfolgspunkte"
+            case "challengeWins":
+                return "Challenge Wins"
             default:
                 if (word.search("Overall") != -1) {
                     return word.replace("Overall", "[Gesamt] - ");

@@ -95,7 +95,7 @@ function cyclicAquisition() {
 		}
 	}
 
-	if (common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) >= 1 || FITNESS_MANAGER.featuredExerciseId == 0) {
+	if (common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) >= 1 || FITNESS_MANAGER.featuredExerciseId == "") {
 		FITNESS_MANAGER.fullRefresh(function (result) {
 			let exName = FITNESS_MANAGER.featureNewExercise();
 		for (let playerName in USERS) {
@@ -119,8 +119,17 @@ function cyclicAquisition() {
 				FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00;
 			}
 		}
+
+		for (let challengeId in FITNESS_MANAGER.challengeList){
+			if(date > common.createZeroDate(FITNESS_MANAGER.challengeList[challengeId].endDate)){
+				//challenge ends
+				FITNESS_MANAGER.finishChallenge(challengeId)
+			}
+		}
 		});
 	}
+
+ 
 
 	for (let iPlayer in PLAYER_LIST) {
 		let player = PLAYER_LIST[iPlayer];
@@ -153,7 +162,7 @@ function uiRefresh() {
 		let sortedExList = FITNESS_MANAGER.getSortedExerciseList();
 		for (iPlayer in PLAYER_LIST) {
 			player = PLAYER_LIST[iPlayer];
-			FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
+			//FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
 				logFile.log(result, false, 0);
 				if (SOCKET_LIST[player.id] != undefined) {
 					SOCKET_LIST[player.id].emit('refresh', {
@@ -172,11 +181,12 @@ function uiRefresh() {
 						compInfoDaily: FITNESS_MANAGER.dailyWins,
 						compInfoMonthly: FITNESS_MANAGER.monthlyWins,
 						eventLog: FITNESS_MANAGER.eventLog,
+						challengeList: FITNESS_MANAGER.challengeList,
 					});
 				}
 				let end = Date.now();
 				logFile.log(`full intervall refresh took ${end - start} ms`, false, 0);
-			});
+			//});
 		}
 	});
 
@@ -273,6 +283,15 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		FITNESS_MANAGER.registeredPlayers = result.dataStorage.registeredPlayers;
 		FITNESS_MANAGER.eventLog = result.dataStorage.eventLog;
 		FITNESS_MANAGER.achievements = result.dataStorage.achievements;
+		if (result.dataStorage.challengeList == undefined || Object.keys(result.dataStorage.challengeList).length === 0){
+			FITNESS_MANAGER.challengeList = {};
+		}
+		else
+		{
+			FITNESS_MANAGER.challengeList = result.dataStorage.challengeList;
+		}
+		
+
 
 		if(FITNESS_MANAGER.history == {}){
 			// empty history
@@ -423,7 +442,8 @@ function saveDataStorage() {
 		eventLog: FITNESS_MANAGER.eventLog,
 		achievements: FITNESS_MANAGER.achievements,
 		users: USERS,
-		fitnessManager: fitnessManagerStorage
+		fitnessManager: fitnessManagerStorage,
+		challengeList: FITNESS_MANAGER.challengeList
 	};
 
 	storageManager.put({ dataStorage: dataStorage, id: config.DATA_STORAGE_FILE_NAME.replace(".json", "") }).then(result => {
@@ -730,6 +750,16 @@ function startServer() {
 			}
 		});
 
+		socket.on("addChallenge", function(data){
+			if (data.id != undefined && data.id != "") {
+				FITNESS_MANAGER.createChallenge(data.id,data.dateStart,data.dateEnd,data.challengeName,data.toDo,data.creator)
+			}
+
+			uiRefresh();
+
+
+		});
+
 		logFile.log("OnPlayerConnection done", false, 0);
 	};
 
@@ -913,7 +943,7 @@ function startServer() {
 
 			}
 
-		}, 10);
+		}, 250);
 	};
 
 	/**

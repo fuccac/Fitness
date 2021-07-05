@@ -1,5 +1,24 @@
-
-@media only screen and (min-width: 1110px) {
+    :root {
+        --mainWidth: 98vw;
+        --mainColor: rgb(194, 214, 245);
+        --tableHeadColor: rgb(38, 78, 39);
+        --tableNthChildColor: rgb(240, 240, 240);
+        --mainFontColor: rgb(0, 0, 0);
+        --mainButtonColor: rgb(187, 198, 228);
+        --mainBorderColor: rgb(0, 0, 0);
+        --mainInputHeight: 1.5vh;
+        --mainInputWidth: 9vw;
+        --mainSelectHeight: 1.8vh;
+        --mainSelectWidth: 9.4vw;
+        --mainFontSize: 11px;
+        --stdTable_td_th_padding:6px;
+        --tab_labelWidth: 10em;
+        --mainButtonWidth: 100px;
+        --mainButtonHeight: 30px;
+        --tableFontsize:11px
+    }
+  
+@media only screen and (max-width: 991px) {
     :root {
         --mainWidth: 98vw;
         --mainColor: rgb(194, 214, 245);
@@ -17,10 +36,11 @@
         --tab_labelWidth: 10em;
         --mainButtonWidth: 100px;
         --mainButtonHeight: 30px;
+        --tableFontsize:10px
     }
   }
 
-  @media only screen and (max-width: 1109px) {
+  @media only screen and (max-width: 759px) {
     :root {
         --mainWidth: 98vw;
         --mainColor: rgb(194, 214, 245);
@@ -38,10 +58,11 @@
         --tab_labelWidth: 5em;
         --mainButtonWidth: 80px;
         --mainButtonHeight: 20px;
+        --tableFontsize:9px
     }
   }
 
-  @media only screen and (max-width: 808px) {
+  @media only screen and (max-width: 479px) {
     :root {
         --mainWidth: 98vw;
         --mainColor: rgb(194, 214, 245);
@@ -59,6 +80,7 @@
         --tab_labelWidth: 4em;
         --mainButtonWidth: 70px;
         --mainButtonHeight: 15px;
+        --tableFontsize:8px
     }
   }
 
@@ -93,6 +115,26 @@ button:hover {
     overflow-y: scroll;
 }
 
+#div_DailyWins{
+    max-height: 25%;
+}
+
+#div_MonthlyWins{
+    max-height: 25%;
+    
+}
+
+#div_challengeControls{
+    max-height: 20%;
+    padding-bottom: 5px;
+    bottom: 10%;
+}
+
+#div_CurrentChallenges{
+    overflow-y: auto;
+    max-height: 35%;
+}
+
 #div_login {
     color: rgb(0, 51, 0);
     background-color: var(--mainColor);
@@ -102,7 +144,7 @@ button:hover {
 }
 
 .tab div {
-    width: 100%;
+    width: 99%;
     padding: 1px;
     align-items: center;
     overflow: hidden;
@@ -117,14 +159,17 @@ button:hover {
 
 #div_allPlayersTable {
     max-height: 40%;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     padding-bottom: 5px;
+
 }
 
 #div_graph {
     background-color: var(--mainColor);
     height: 50%;
-    padding-bottom: 5px;
+    padding-left: 3vw;
+    width:93vw;
 }
 
 #div_graphExercise {
@@ -236,7 +281,6 @@ button:hover {
     font-size: var(--mainFontSize);
     width: var(--mainButtonWidth);
     height: var(--mainButtonHeight);
-    padding: 10px;
 }
 
 #div_navigation button {
@@ -296,6 +340,7 @@ button:hover {
     position: sticky;
     top: 0px;
     z-index: 1;
+    font-size: var(--tableFontsize);
 }
 
 .std_table thead tr td.hiddenCell {
@@ -328,6 +373,36 @@ button:hover {
 }
 
 /* OTHER CLASSES */
+
+.challengeInput button{
+    width: 10vw !important;
+    height: var(--mainInputHeight) !important;
+    margin: 1px !important;
+}
+
+.challengeInput select{
+    width: 10vw !important;
+    height: var(--mainInputHeight) !important;
+    margin: 1px !important;
+}
+
+
+.challengeInput input{
+    width: 10vw !important;
+    height: var(--mainInputHeight) !important;
+    margin: 1px !important;
+}
+
+.challengeInput label{
+    width: 9vw !important;
+    height: var(--mainInputHeight) !important;
+    margin: 1px !important;
+}
+
+.challengeProgress{
+    height: 2vh;
+    width: 40vw;
+}
 
 .headPara {
     font-size: 18px;

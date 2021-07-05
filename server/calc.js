@@ -197,8 +197,8 @@ function Calc() {
 	this.calculateCardioStrengthPercents = function (cardioPoints, strengthPoints) {
 		let cardioPercent = Number(cardioPoints / (cardioPoints + strengthPoints));
 		let strengthPercent = strengthPoints / (cardioPoints + strengthPoints);
-		cardioPercent = (cardioPercent * 100).toFixed(0);
-		strengthPercent = (strengthPercent * 100).toFixed(0);
+		cardioPercent = Number((cardioPercent * 100).toFixed(0));
+		strengthPercent = Number((strengthPercent * 100).toFixed(0));
 
 		if (isNaN(cardioPercent)) {
 			cardioPercent = 0;

@@ -1,11 +1,13 @@
 
-// @ts-nocheck
+// @ts-check
 /*jshint esversion: 6 */
-Config = require("./Config");
-config = new Config();
+var Config = require("./Config");
+var config = new Config();
 var fs = require('fs');
-Calc = require("./calc");
-calc = new Calc();
+var Calc = require("./calc");
+var calc = new Calc();
+var Common = require("../client/js/common");
+var common = new Common();
 
 class Log {
     constructor() {

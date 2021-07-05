@@ -1,7 +1,7 @@
-// @ts-nocheck
+// @ts-check
 /*jshint esversion: 6 */
-Calc = require("./calc");
-calc = new Calc();
+var Calc = require("./calc");
+var calc = new Calc();
 var Config = require("./Config");
 var config = new Config();
 

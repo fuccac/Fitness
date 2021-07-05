@@ -1,9 +1,9 @@
-// @ts-nocheck
+// @ts-check
 /*jshint esversion: 6 */
 var Dropbox = require('dropbox').Dropbox;
 var fs = require('fs');
 var path = require('path');
-fetch = require('isomorphic-fetch');
+var fetch = require('isomorphic-fetch');
 var Config = require("./Config");
 var config = new Config();
 

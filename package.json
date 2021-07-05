@@ -4,6 +4,7 @@
   "description": "track and funnify your workout like a boss",
   "main": "app.js",
   "dependencies": {
+    "debug": "^4.3.2",
     "dropbox": "^4.0.16",
     "es6-promise": "^4.2.6",
     "express": "^4.16.4",
@@ -13,7 +14,7 @@
     "nodemailer": "^6.3.0",
     "password-hash": "^1.2.2",
     "popper.js": "^1.15.0",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.4.1"
   },
   "engines": {
     "node": "10.15.0"
@@ -25,7 +26,10 @@
   "author": "caf",
   "license": "ISC",
   "keywords": [
-    "test"
-  ]
+    "Fitness, Workout, Sports, Challenge, Competition"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fuccac/Fitness.git"
+  }
 }
-
