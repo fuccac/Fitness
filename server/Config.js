@@ -9,8 +9,7 @@ function Config() {
     this.INTERVAL = 1000; //1sec
     this.LOG_UPLOAD_INTERVAL = 3600; //sec
     this.SAVE_UPLOAD_INTERVAL = 15; //sec
-    this.DB_TOKEN = process.env.DB_TOKEN //"Ad3tLqqtKckAAAAAAACK_0aogsVnZrSmjMWjss79yxecm6jxPi3J3xBPy6YsOQNt";//MASTER
-    //this.DB_TOKEN = "Ad3tLqqtKckAAAAAAACL0Mfuj93cnWjuWQSgTrxIsA4if-uhyjV3Ok_-AhzSYmx2"; //TESTSERVER
+    this.DB_TOKEN = process.env.DB_TOKEN 
     this.PROXY_MODE = 0;
     this.LOG_FILE_NAME = "log.txt";
     this.DATA_STORAGE_FILE_NAME = "dataStorage.json";
