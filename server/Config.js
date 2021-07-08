@@ -12,7 +12,7 @@ function Config() {
     this.DB_TOKEN = process.env.DB_TOKEN 
     this.GAGS_USERNAME = process.env.GAGS_USERNAME 
     this.GAGS_PASSWORD = process.env.GAGS_PASSWORD 
-    this.PROXY_MODE = 0;
+    this.PROXY_MODE = Number(process.env.PROXY_MODE);
     this.LOG_FILE_NAME = "log.txt";
     this.DATA_STORAGE_FILE_NAME = "dataStorage.json";
     this.LOG_PATH = "./saves/log.txt";
