@@ -514,3 +514,13 @@ button:hover {
     color: rgb(40, 49, 179);
 
 }
+
+.MOTD{
+    font-size: 2vh;
+    color: rgb(183, 50, 201);
+}
+
+.changelog{
+    font-size: 1vh;
+    color: rgb(0, 0, 0);
+}
