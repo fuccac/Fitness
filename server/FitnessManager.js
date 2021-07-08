@@ -1370,6 +1370,8 @@ class FitnessManager {
 
 
     checkPlayerStuff(player, playerStuffResult) {
+        let start = Date.now()
+        logFile.log("checkPlayerStuff started for player " + player.name, false, 0);
         //USAGE: After a clean calculation via FullRefresh
         this.updateChallengeHTML(function (result){
             logFile.log(result, false, 0);
@@ -1379,9 +1381,9 @@ class FitnessManager {
                     logFile.log(result, false, 0);
                     this.calculateAchievementPoints(player, function(result) {
                         logFile.log(result, false, 0);
-                        playerStuffResult("checkPlayerStuff done");
-                    }.bind(this));
-                    
+                        let end = Date.now();
+                        playerStuffResult(`checkPlayerStuff done in ${end - start}`);
+                    }.bind(this));  
                 }.bind(this));
             }.bind(this));
         }.bind(this));
@@ -2412,6 +2414,7 @@ class FitnessManager {
 
         } //END FOR
 
+        //Player specific stuff
         for (let playerName in this.registeredPlayers) {
             if (this.monthlyWins[playerName] == undefined) {
                 this.monthlyWins[playerName] = 0;
@@ -2440,19 +2443,17 @@ class FitnessManager {
                 this.registeredPlayers[playerName].points.toDoForFactor = 0;
             }
 
-
-            
-
-            
-        }
-        for (let playerName in this.registeredPlayers) {
             let player = {
                 name:playerName,
             }
             this.checkPlayerStuff(player, function (result) {
                 logFile.log(result, false, 0);
             }.bind(this));
+            
+
+            
         }
+
 
         this.needsUpload.dataStorage = true;
         let end = Date.now();
