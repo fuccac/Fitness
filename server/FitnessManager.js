@@ -1750,18 +1750,20 @@ class FitnessManager {
                                     //date and exercise valid for this challenge
                                     if(challenge.progress[historyName] != undefined){
                                         challenge.progress[historyName].done += Number(historyEntry.count[historyIteratorPerDate]);
-                                        challenge.progress[historyName].percent = (Number(challenge.progress[historyName].done) / Number(challenge.toDo))*100
+                                        challenge.progress[historyName].percent = Math.min((Number(challenge.progress[historyName].done) / Number(challenge.toDo))*100,100)
                                     }
                                     else{
                                         var newProgress = {
-                                            percent: (Number(historyEntry.count[historyIteratorPerDate])/Number(challenge.toDo))*100,
+                                            percent: Math.min((Number(historyEntry.count[historyIteratorPerDate])/Number(challenge.toDo))*100,100),
                                             done: historyEntry.count[historyIteratorPerDate],
                                         }
                                         challenge.progress[historyName] = newProgress;
                                     }
                                     
                                     if(challenge.progress[historyName].percent >= 100){
-                                        this.finishChallenge(challenge.id)
+                                        //this.finishChallenge(challenge.id)
+                                        //100% reached - 
+                                        challenge.progress[historyName].percent = 100
                                     }
                                 }
                             }
