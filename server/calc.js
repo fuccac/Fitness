@@ -107,6 +107,29 @@ function Calc() {
 
 		}
 
+		else if (exercise.calcMethod.toLowerCase() == "inlineskaten") {
+			let paces = [7.5,7.4,7.3,7.2,7.1,7,6.9,6.8,6.7,6.6,6.5,6.4,6.3,6.2,6.1,6,5.9,5.8,5.7,5.6,5.5,5.4,5.3,5.2,5.1,5,4.9,4.8,4.7,4.6,4.5,4.4,4.3,4.2,4.1,4,3.9,3.8,3.7,3.6,3.5,3.4,3.3,3.2,3.1,3,2.9,2.8,2.7,2.6,2.5,2.4,2.3,2.2,2.1,2];
+			let bonusfactors = [0.017857143,0.0357142855,0.0535714285,0.0714285715,0.0892857145,0.107142857,0.125,0.142857143,0.1607142855,0.1785714285,0.1964285715,0.2142857145,0.232142857,0.25,0.267857143,0.2857142855,0.3035714285,0.3214285715,0.3392857145,0.357142857,0.375,0.392857143,0.4107142855,0.4285714285,0.4464285715,0.4642857145,0.482142857,0.5,0.517857143,0.5357142855,0.5535714285,0.5714285715,0.5892857145,0.607142857,0.625,0.642857143,0.6607142855,0.6785714285,0.6964285715,0.7142857145,0.732142857,0.75,0.767857143,0.7857142855,0.8035714285,0.8214285715,0.8392857145,0.857142857,0.875,0.892857143,0.9107142855,0.9285714285,0.9464285715,0.9642857145,0.982142857,1];
+			let basePoints = 0;
+			if (exercise.unit === "min/km") {
+				pace[exercise.id] = Number(count) / Number(countAdditional);
+				basePoints = Number(countAdditional) * 10 * Number(exercise.factor);
+			}
+			if (exercise.unit === "min/m") {
+				pace[exercise.id] = Number(count) / (Number(countAdditional) / 1000);
+				basePoints = (Number(countAdditional) / 1000) * 10 * Number(exercise.factor);
+			}
+
+			for (let i = 1; i < paces.length; i++) {
+				if ((pace[exercise.id] > paces[i] && pace[exercise.id] <= paces[i - 1]) || i == paces.length - 1 || pace[exercise.id] > paces[0]) {
+					result = basePoints * bonusfactors[i];
+					break;
+				}
+			}
+			pace[exercise.id] = Number(count) / Number(countAdditional);
+
+		}
+
 		//STANDARD METHOD
 		else if ((countAdditional == undefined && atOnce == false) || (countAdditional == undefined && exercise.calcMethod.toLowerCase() == "standard") || exercise.calcMethod == undefined) {
 			result = Number(exercise.factor) * Number(count) * Number(weightFactor);
