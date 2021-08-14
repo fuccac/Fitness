@@ -560,20 +560,34 @@ function startServer() {
 
 
 		socket.on("addDoneExercise", function (data) {
+			var currentDateInfo = common.getDateInfo(data.date);
+			if(currentDateInfo.isLast30Days){
 			logFile.log(newPlayer.name + " " + "adds Workout", false, 0);
 			var id = Math.random().toFixed(config.ID_LENGTH).slice(2);
 			FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.countAdditional, data.date, data.atOnce, function (result) {
 				logFile.log(result, false, 0);
 				uiRefresh();
 			});
+		}
+		else{
+			socket.emit('alertMsg', { data: "Das ist länger als 30 Tage her - Ungültig!" });
+		}
 		});
 
 		socket.on("deleteHistory", function (data) {
-			logFile.log(newPlayer.name + " " + "deletes Workout", false, 0);
-			FITNESS_MANAGER.deleteHistory(data.id, data.date, function (result) {
+
+			var currentDateInfo = common.getDateInfo(data.date);
+			if(currentDateInfo.isLast30Days){
+				logFile.log(newPlayer.name + " " + "deletes Workout", false, 0);
+				FITNESS_MANAGER.deleteHistory(data.id, data.date, function (result) {
 				logFile.log(result, false, 0);
 				uiRefresh();
-			});
+				});
+			}
+			else{
+				socket.emit('alertMsg', { data: "Das ist länger als 30 Tage her - Ungültig!" });
+			}
+			
 		});
 
 

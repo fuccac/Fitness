@@ -204,6 +204,7 @@ function Common() {
             isToday: false,
             isLast4Days:false,
             isLast5Days: false,
+            isLast30Days: false,
             isThisMonth: false,
             isLastMonth: false,
             day: 0,
@@ -219,6 +220,9 @@ function Common() {
         let currentDate = new Date(date);
         let dateMinus5Days = this.createZeroDate(new Date());
         dateMinus5Days.setDate(dateMinus5Days.getDate() - 5);
+
+        let dateMinus30Days = this.createZeroDate(new Date());
+        dateMinus30Days.setDate(dateMinus30Days.getDate() - 30);
 
         let dateMinus4Days = this.createZeroDate(new Date());
         dateMinus4Days.setDate(dateMinus4Days.getDate() - 4);
@@ -240,6 +244,10 @@ function Common() {
 
         if (currentDate > dateMinus5Days) {
             dateInfo.isLast5Days = true;
+        }
+
+        if (currentDate > dateMinus30Days) {
+            dateInfo.isLast30Days = true;
         }
 
         if (currentDate > dateMinus4Days) {
