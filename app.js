@@ -98,38 +98,37 @@ function cyclicAquisition() {
 	if (common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) >= 1 || FITNESS_MANAGER.featuredExerciseId == "") {
 		FITNESS_MANAGER.fullRefresh(function (result) {
 			let exName = FITNESS_MANAGER.featureNewExercise();
-		for (let playerName in USERS) {
-			if (USERS[playerName].email != undefined && USERS[playerName].allowEmail) {
-				mailer.sendEmail(USERS[playerName].email, "Neue Double Time Übung!", "Die neue Double Time Übung ist: " + exName);
+			for (let playerName in USERS) {
+				if (USERS[playerName].email != undefined && USERS[playerName].allowEmail) {
+					mailer.sendEmail(USERS[playerName].email, "Neue Double Time Übung!", "Die neue Double Time Übung ist: " + exName);
+				}
 			}
-		}
 
-		//check if players have done something last 5 days
-		for (let playerName in FITNESS_MANAGER.registeredPlayers) {
-			if (FITNESS_MANAGER.registeredPlayers[playerName].points.last5Days >= (config.POINTS_FOR_POWERFACTOR*FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor) ) {
-				if (FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor == undefined) {
-					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.01;
+			//check if players have done something last 5 days
+			for (let playerName in FITNESS_MANAGER.registeredPlayers) {
+				if (FITNESS_MANAGER.registeredPlayers[playerName].points.last5Days >= (config.POINTS_FOR_POWERFACTOR * FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor)) {
+					if (FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor == undefined) {
+						FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.01;
+					}
+					else {
+						FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor + 0.01;
+					}
 				}
 				else {
-					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor + 0.01;
+					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00;
 				}
 			}
-			else
-			{
-				FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00;
-			}
-		}
 
-		for (let challengeId in FITNESS_MANAGER.challengeList){
-			if(date > common.createZeroDate(FITNESS_MANAGER.challengeList[challengeId].endDate)){
-				//challenge ends
-				FITNESS_MANAGER.finishChallenge(challengeId)
+			for (let challengeId in FITNESS_MANAGER.challengeList) {
+				if (date > common.createZeroDate(FITNESS_MANAGER.challengeList[challengeId].endDate)) {
+					//challenge ends
+					FITNESS_MANAGER.finishChallenge(challengeId)
+				}
 			}
-		}
 		});
 	}
 
- 
+
 
 	for (let iPlayer in PLAYER_LIST) {
 		let player = PLAYER_LIST[iPlayer];
@@ -163,29 +162,29 @@ function uiRefresh() {
 		for (iPlayer in PLAYER_LIST) {
 			player = PLAYER_LIST[iPlayer];
 			//FITNESS_MANAGER.checkPlayerStuff(player, function (result) {
-				logFile.log(result, false, 0);
-				if (SOCKET_LIST[player.id] != undefined) {
-					SOCKET_LIST[player.id].emit('refresh', {
-						exercises: sortedExList, //FITNESS_MANAGER.exerciseList,
-						player: {
-							points: FITNESS_MANAGER.registeredPlayers[player.name].points,
-							entries: FITNESS_MANAGER.registeredPlayers[player.name].entries,
-							active: player.active,
-							regDate: player.regDate,
-							addedExercises: player.addedExercises,
-							deletedExercises: player.deletedExercises,
-							modifiedExercises: player.modifiedExercises,
-							bestExercises: player.bestExercises,
-						},
-						playerList: FITNESS_MANAGER.registeredPlayers,
-						compInfoDaily: FITNESS_MANAGER.dailyWins,
-						compInfoMonthly: FITNESS_MANAGER.monthlyWins,
-						eventLog: FITNESS_MANAGER.eventLog,
-						challengeList: FITNESS_MANAGER.challengeList,
-					});
-				}
-				let end = Date.now();
-				logFile.log(`full intervall refresh took ${end - start} ms`, false, 0);
+			logFile.log(result, false, 0);
+			if (SOCKET_LIST[player.id] != undefined) {
+				SOCKET_LIST[player.id].emit('refresh', {
+					exercises: sortedExList, //FITNESS_MANAGER.exerciseList,
+					player: {
+						points: FITNESS_MANAGER.registeredPlayers[player.name].points,
+						entries: FITNESS_MANAGER.registeredPlayers[player.name].entries,
+						active: player.active,
+						regDate: player.regDate,
+						addedExercises: player.addedExercises,
+						deletedExercises: player.deletedExercises,
+						modifiedExercises: player.modifiedExercises,
+						bestExercises: player.bestExercises,
+					},
+					playerList: FITNESS_MANAGER.registeredPlayers,
+					compInfoDaily: FITNESS_MANAGER.dailyWins,
+					compInfoMonthly: FITNESS_MANAGER.monthlyWins,
+					eventLog: FITNESS_MANAGER.eventLog,
+					challengeList: FITNESS_MANAGER.challengeList,
+				});
+			}
+			let end = Date.now();
+			logFile.log(`full intervall refresh took ${end - start} ms`, false, 0);
 			//});
 		}
 	});
@@ -232,7 +231,7 @@ function loadPlayer(name, id, cb) {
 		PLAYER_LIST[id].bestExercises = result.content.bestExercises;
 		PLAYER_LIST[id].online = result.content.online;
 
-		if (FITNESS_MANAGER.registeredPlayers[name] == undefined){
+		if (FITNESS_MANAGER.registeredPlayers[name] == undefined) {
 			FITNESS_MANAGER.addNewPlayer(name);
 		}
 
@@ -244,7 +243,7 @@ function loadPlayer(name, id, cb) {
 		.catch((err) => {
 
 			PLAYER_LIST[id].name = name;
-			if (FITNESS_MANAGER.registeredPlayers[name] == undefined){
+			if (FITNESS_MANAGER.registeredPlayers[name] == undefined) {
 				FITNESS_MANAGER.addNewPlayer(name);
 			}
 			uiRefresh();
@@ -283,17 +282,16 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		FITNESS_MANAGER.registeredPlayers = result.dataStorage.registeredPlayers;
 		FITNESS_MANAGER.eventLog = result.dataStorage.eventLog;
 		FITNESS_MANAGER.achievements = result.dataStorage.achievements;
-		if (result.dataStorage.challengeList == undefined || Object.keys(result.dataStorage.challengeList).length === 0){
+		if (result.dataStorage.challengeList == undefined || Object.keys(result.dataStorage.challengeList).length === 0) {
 			FITNESS_MANAGER.challengeList = {};
 		}
-		else
-		{
+		else {
 			FITNESS_MANAGER.challengeList = result.dataStorage.challengeList;
 		}
-		
 
 
-		if(FITNESS_MANAGER.history == {}){
+
+		if (FITNESS_MANAGER.history == {}) {
 			// empty history
 			FITNESS_MANAGER.cleanExerciseList();
 		}
@@ -412,9 +410,9 @@ function AddPropertiesToExercises(result) {
 function fitnessManagerStartUpTasks(callback) {
 	FITNESS_MANAGER.fullRefresh(function (result) {
 		logFile.log(result, false, 0);
-		
+
 		//failsave
-		if (Object.keys(FITNESS_MANAGER.eventLog).length === 0 ||  FITNESS_MANAGER.eventLog.time == undefined ||  FITNESS_MANAGER.eventLog.msg == undefined ||  FITNESS_MANAGER.eventLog.html == undefined){
+		if (Object.keys(FITNESS_MANAGER.eventLog).length === 0 || FITNESS_MANAGER.eventLog.time == undefined || FITNESS_MANAGER.eventLog.msg == undefined || FITNESS_MANAGER.eventLog.html == undefined) {
 			FITNESS_MANAGER.eventLog = {
 				time: [],
 				msg: [],
@@ -561,33 +559,33 @@ function startServer() {
 
 		socket.on("addDoneExercise", function (data) {
 			var currentDateInfo = common.getDateInfo(data.date);
-			if(currentDateInfo.isLast30Days){
-			logFile.log(newPlayer.name + " " + "adds Workout", false, 0);
-			var id = Math.random().toFixed(config.ID_LENGTH).slice(2);
-			FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.countAdditional, data.date, data.atOnce, function (result) {
-				logFile.log(result, false, 0);
-				uiRefresh();
-			});
-		}
-		else{
-			socket.emit('alertMsg', { data: "Das ist länger als 30 Tage her - Ungültig!" });
-		}
+			if (currentDateInfo.isLast30Days) {
+				logFile.log(newPlayer.name + " " + "adds Workout", false, 0);
+				var id = Math.random().toFixed(config.ID_LENGTH).slice(2);
+				FITNESS_MANAGER.addToHistory(id, PLAYER_LIST[socket.id].name, data.exId, data.weight, data.count, data.countAdditional, data.date, data.atOnce, function (result) {
+					logFile.log(result, false, 0);
+					uiRefresh();
+				});
+			}
+			else {
+				socket.emit('alertMsg', { data: "Das ist länger als 30 Tage her - Ungültig!" });
+			}
 		});
 
 		socket.on("deleteHistory", function (data) {
 
 			var currentDateInfo = common.getDateInfo(data.date);
-			if(currentDateInfo.isLast30Days){
+			if (currentDateInfo.isLast30Days) {
 				logFile.log(newPlayer.name + " " + "deletes Workout", false, 0);
 				FITNESS_MANAGER.deleteHistory(data.id, data.date, function (result) {
-				logFile.log(result, false, 0);
-				uiRefresh();
+					logFile.log(result, false, 0);
+					uiRefresh();
 				});
 			}
-			else{
+			else {
 				socket.emit('alertMsg', { data: "Das ist länger als 30 Tage her - Ungültig!" });
 			}
-			
+
 		});
 
 
@@ -764,9 +762,9 @@ function startServer() {
 			}
 		});
 
-		socket.on("addChallenge", function(data){
+		socket.on("addChallenge", function (data) {
 			if (data.id != undefined && data.id != "") {
-				FITNESS_MANAGER.createChallenge(data.id,data.dateStart,data.dateEnd,data.challengeName,data.toDo,data.creator)
+				FITNESS_MANAGER.createChallenge(data.id, data.dateStart, data.dateEnd, data.challengeName, data.toDo, data.creator)
 			}
 
 			uiRefresh();

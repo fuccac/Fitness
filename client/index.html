@@ -25,7 +25,20 @@
 
 		<div id="div_changeLog" class="changelog">
 			<p class="MOTD">
-				MOTD: Happy Training! 
+				MOTD: Happy Training!
+			</p>
+			<p>
+				NEWS (14.08.2021) v1.90:
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Timerfunktion
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Berechnungsmethode Inlineskaten
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Grafische Überarbeitung der Achievements
+				</li>
+				
 			</p>
 			<p>
 				NEWS (08.07.2021) v1.89:
@@ -407,9 +420,14 @@
 			<input id="input_doneExerciseDate" type="date" class="addWorkOut"></input><br>
 			<label for="select_doneExercise">Übung:</label>
 			<select id="select_doneExercise" class="addWorkOut"></select><br>
-			<label for="input_doneExercise">Übung Anzahl:</label>
+			<label for="input_doneExercise">Übung Anzahl:</label>​
+			
+			
+			
 			<input id="input_doneExercise" class="addWorkOut" type="number" min="0" step="0.01" placeholder="Anzahl"
+
 				oninput="validity.valid||(value='');"></input>
+				<img id="png_timer" src="/client/pics/timer.png" class="timerimage" onoff="0" alt="timer">
 			<input id="input_doneExerciseAdditional" class="addWorkOut" type="number" min="0" step="0.01"
 				placeholder="Anzahl Zusatz" oninput="validity.valid||(value='');" disabled="true"></input><br>
 				<label for="input_atOnce" class="checkboxLabel">Auf einmal?</label>

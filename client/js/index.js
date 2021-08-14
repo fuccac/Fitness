@@ -101,6 +101,7 @@ var paragraph_statisticsExercise = document.getElementById('paragraph_statistics
 var paragraph_paceUnitNotice = document.getElementById('paragraph_paceUnitNotice');
 //label
 var label_input_exerciseDifficulty = document.getElementById('label_input_exerciseDifficulty');
+var png_timer = document.getElementById('png_timer')
 
 var SOCKET = io();
 var LOGIN_COOKIE = getCookie("loginCookie").split("#")[0];
@@ -111,7 +112,8 @@ var RUNTIME_CONFIG = {
     showHiddenExercises: false,
 };
 var ONLINE_STATUS = {};
-
+var timerStatus = false;
+var timer;
 
 /******************************************************************************************************************
 *******************************************************************************************************************
@@ -119,6 +121,21 @@ var ONLINE_STATUS = {};
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
+
+$("#png_timer").click(function () {
+    
+    if (timerStatus === false) {
+        timerStatus = true;
+        timer = setInterval(timerAdd, 1000);
+        $("#png_timer").prop("src","/client/pics/timerRunning.png")
+    }
+    else if (timerStatus === true){
+        timerStatus = false;
+        clearInterval(timer);      
+        $("#png_timer").prop("src","/client/pics/timer.png")  
+    }
+});
+
 
 
 $("#button_SignIn").click(function () {
@@ -362,19 +379,19 @@ $("#select_doneExercise").change(function () {
     }
 
     let atOnce = $("#select_doneExercise").val().split(";")[1].toLowerCase() == "true";
-    if (atOnce == "" || atOnce == undefined){
+    if (atOnce == "" || atOnce == undefined) {
         atOnce = false;
     }
 
-    if(atOnce){
-        $("#input_atOnce").prop("checked",false);
+    if (atOnce) {
+        $("#input_atOnce").prop("checked", false);
         $("#input_atOnce").prop("disabled", false);
-        $("#input_atOnce").css("color","green");
+        $("#input_atOnce").css("color", "green");
     }
-    else{
-        $("#input_atOnce").prop("checked",false);
+    else {
+        $("#input_atOnce").prop("checked", false);
         $("#input_atOnce").prop("disabled", true);
-        $("#input_atOnce").css("color","red");
+        $("#input_atOnce").css("color", "red");
     }
 
 
@@ -466,7 +483,7 @@ $("#adminSelect_AchievementExercise").change(function () {
 });
 
 $("#button_createChallenge").click(function () {
-    if (checkForEmptyBoxesChallenge()){
+    if (checkForEmptyBoxesChallenge()) {
         SOCKET.emit("addChallenge", exPack = {
             id: $("#select_challengeExercise").val(),
             dateStart: $("#input_challengeStartDate").val(),
@@ -474,12 +491,12 @@ $("#button_createChallenge").click(function () {
             toDo: $("#input_challengeToDo").val(),
             challengeName: $("#input_challengeName").val(),
             creator: Name
-        }); 
+        });
     }
-    else{
+    else {
         alert("Nicht alle Inputboxen wurden ausgefüllt!");
     }
-    
+
 });
 
 
@@ -1193,11 +1210,13 @@ function generateAchievementListTable(data, name) {
                     color = "green";
                 }
                 div = document.createElement("div");
+                var blankHTML = "Level " + achievementListPlayer.notEarnedAchievements[achievementIterator].achievementLevel + " - " + common.translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]) + '<br><progress id=\"PlayerNameProgress\" percentvalue max=\"100\" class=\"challengeProgress\" style=\"background-color=' + color + '\"></progress>'
+                div.innerHTML = blankHTML
+                div.innerHTML = div.innerHTML.replace("PlayerNameProgress", achievementIterator.toString() + "_Bar");
+                div.innerHTML = div.innerHTML.replace("percentvalue", "value=\"" + percent + "\"");
 
-                div.style = "background:" + color + ";position:relative;height:100%;width:" + percent + "%";
                 cell = bodyRow.insertCell(bodyRow.cells.length);
                 cell.appendChild(div);
-                div.innerHTML += "Level " + achievementListPlayer.notEarnedAchievements[achievementIterator].achievementLevel + " - " + common.translate(achievementListPlayer.notEarnedAchievements[achievementIterator][achievementKey]);
 
             }
             else {
@@ -1224,43 +1243,43 @@ function generatePlayerListTable(data) {
     theadPlayersTable.innerHTML = "";
     tBodyPlayersTable.innerHTML = "";
     headerRow = theadPlayersTable.insertRow(0);
-   
+
 
     var max = 100;
     var winner = "Keiner";
 
     for (let playerid in data.playerList) {
         player = data.playerList[playerid].points;
-        if (player.today > max){
+        if (player.today > max) {
             max = player.today;
             winner = playerid;
         }
     }
-    
+
     for (let playerid in data.playerList) {
         let nameAdd = "";
-        if (playerid == winner){
+        if (playerid == winner) {
             nameAdd = " ⭐";
         }
         player = data.playerList[playerid].points;
-        if (player.total == 0){
+        if (player.total == 0) {
             continue;
         }
-        if (player.seasonWins != undefined){
+        if (player.seasonWins != undefined) {
             if (player.seasonWins > 0) {
-                nameAdd = nameAdd + " (♛x" + player.seasonWins + ")"; 
+                nameAdd = nameAdd + " (♛x" + player.seasonWins + ")";
             }
         }
-        
+
         bodyRow = tBodyPlayersTable.insertRow(0);
 
-        if (player.last5Days <= 0){
+        if (player.last5Days <= 0) {
             bodyRow.classList.add("inactive");
         }
-        if (player.last5Days >= 1500 && player.last5Days < 2500){
+        if (player.last5Days >= 1500 && player.last5Days < 2500) {
             bodyRow.classList.add("secondClass");
         }
-        if (player.last5Days >= 2500){
+        if (player.last5Days >= 2500) {
             bodyRow.classList.add("firstClass");
         }
 
@@ -1273,13 +1292,13 @@ function generatePlayerListTable(data) {
 
 
         for (var playerKeyName in player) {
-            if (playerKeyName == "negative" || playerKeyName == "seasonWins"){
+            if (playerKeyName == "negative" || playerKeyName == "seasonWins") {
                 continue;
             }
-            
+
             playerKeyContent = player[playerKeyName];
 
-            
+
             if (playerIterator == 0) {
                 cell = headerRow.insertCell(headerRow.cells.length);
                 cell.innerHTML += common.translate(playerKeyName);
@@ -1375,10 +1394,10 @@ function generateExerciseList(data) {
         let atOncePossible = (exercise.calcMethod.toLowerCase().search("#") > -1);
 
         exercisesInTable++;
-        common.addOption(document, select_doneExercise, exerciseId+";"+atOncePossible, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + common.translate(exercise.factor));
+        common.addOption(document, select_doneExercise, exerciseId + ";" + atOncePossible, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + common.translate(exercise.factor));
         //HERE
         common.addOption(document, select_statisticsExercise, exerciseId, exercise.name + " (" + exercise.unit + ")" + " | " + exercise.equipment + " | " + common.translate(exercise.factor));
-        
+
         bodyRow = tBodyExerciseTable.insertRow(tBodyExerciseTable.rows.length);
         var toolTipText = "";
         var playerName;
@@ -1696,9 +1715,9 @@ function generateHistoryList(data, table, nameSpecific, name, fromDate, toDate) 
                             input_doneExercise.value = count;
                         }
 
-                        select_doneExercise.value = exId+";false";
-                        if (select_doneExercise.value == ""){
-                            select_doneExercise.value = exId+";true";
+                        select_doneExercise.value = exId + ";false";
+                        if (select_doneExercise.value == "") {
+                            select_doneExercise.value = exId + ";true";
                         }
                         input_doneExerciseWeight.value = weight;
                         $("#select_doneExercise").change();
@@ -1838,12 +1857,12 @@ function generateCompetitionData(data) {
     //sendChatMessage(`wins table generation took ${end - start} ms`);
 }
 
-function generateChallengeData(data){
+function generateChallengeData(data) {
     let challengeList = data.challengeList;
     $("#div_CurrentChallenges").html("")
 
-    for (let challenge in challengeList){
-        if(!challengeList[challenge].finished){
+    for (let challenge in challengeList) {
+        if (!challengeList[challenge].finished) {
             $("#div_CurrentChallenges").html($("#div_CurrentChallenges").html() + challengeList[challenge].html)
         }
     }
@@ -1883,7 +1902,7 @@ function dateDiff(date1, date2) {
 function checkForEmptyBoxesDoneExercise() {
     if (input_doneExercise.value != "" &&
         input_doneExerciseDate.value != "" &&
-        select_doneExercise.value != "" && 
+        select_doneExercise.value != "" &&
         (input_doneExerciseAdditional.value != "" || input_doneExerciseAdditional.disabled == true)
     ) {
 
@@ -1895,17 +1914,17 @@ function checkForEmptyBoxesDoneExercise() {
 
 }
 
-function checkForEmptyBoxesChallenge(){
-    if( $("#select_challengeExercise").val() != "" && 
+function checkForEmptyBoxesChallenge() {
+    if ($("#select_challengeExercise").val() != "" &&
         $("#input_challengeEndDate").val() != "" &&
         $("#input_challengeStartDate").val() != "" &&
         $("#input_challengeToDo").val() != "" &&
-        $("#input_challengeName").val() != ""){
-            return true;
-        }
-        else{
-            return false;
-        }
+        $("#input_challengeName").val() != "") {
+        return true;
+    }
+    else {
+        return false;
+    }
 
 }
 
@@ -2065,6 +2084,9 @@ function extractPaceCounts(extractString) {
     return result;
 }
 
+function timerAdd(){
+    $("#input_doneExercise").val(Number($("#input_doneExercise").val())+1)
+}
 
 function exerciseTableBodyRowClick(bodyRow, data) {
     var id = bodyRow.getElementsByTagName("td")[0].innerHTML;
@@ -2115,8 +2137,8 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
 
 //autologin
-if(LOGIN_COOKIE != ""){
-    SOCKET.emit('SignIn', {loginToken:LOGIN_COOKIE, username: Name, password: input_Password.value, remember: input_RememberMe.checked });
+if (LOGIN_COOKIE != "") {
+    SOCKET.emit('SignIn', { loginToken: LOGIN_COOKIE, username: Name, password: input_Password.value, remember: input_RememberMe.checked });
     if (Name.toLowerCase() != "caf") {
         $("#adminInput_repsToGetOverall").prop("disabled", true);
         $("#adminInput_repsToGetDaily").prop("disabled", true);

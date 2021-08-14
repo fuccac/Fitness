@@ -524,3 +524,8 @@ button:hover {
     font-size: 1vh;
     color: rgb(0, 0, 0);
 }
+
+.timerimage{
+    width: 2%;
+    height: 2%;
+}
