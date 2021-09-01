@@ -13,7 +13,7 @@ class Log {
     constructor() {
         this.LOG_PATH = config.LOG_PATH;
         this.logUploadTimer = 0;
-
+        this.size = 0;
     }
 
     log(str, showInConsole, severity) {
@@ -43,11 +43,23 @@ class Log {
 
         var date = common.createViennaDate();
         fs.appendFile(config.LOG_PATH, common.getDateFormat(date, "DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " - " + str + "\r\n", function (err) {
-
-        });
+            fs.stat(config.LOG_PATH, (err, stats) => {
+                if (err) {
+                    console.log(`LogFile doesn't exist.`);
+                } else {
+                    this.size = stats.size/1000000;
+                }
+            });
+        }.bind(this));
         if (showInConsole) {
             console.log(common.getDateFormat(date, "DD.MM.YYYY") + " | " + errorCode + " | " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " - " + str);
         }
+    }
+
+    newFile(){
+        fs.writeFile(config.LOG_PATH, '', function(){
+            this.size = 0;
+        }.bind(this));
     }
 
 }

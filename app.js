@@ -82,16 +82,42 @@ function cyclicAquisition() {
 
 	logFile.logUploadTimer++;
 	FITNESS_MANAGER.uploadTimer++;
+
+	//Check if logfile is uploadable
 	if (logFile.logUploadTimer === config.LOG_UPLOAD_INTERVAL) {
 		logFile.logUploadTimer = 0;
-		dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME, function (result) {
-			logFile.log(result.msg, false, result.sev);
-		});
+		if (logFile.size >= 3){
+			var date = new Date();
+			let strDate = date.getTime().toString();
+			dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME + strDate, function (result) {
+				logFile.log(result.msg, false, result.sev);
+				logFile.newFile();
+			});
+		}
+		else{
+			dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME, function (result) {
+				logFile.log(result.msg, false, result.sev);
+			});
+		}
+		
 	}
+
+	//Check if upload is pending
 	if (FITNESS_MANAGER.uploadTimer === config.SAVE_UPLOAD_INTERVAL) {
 		FITNESS_MANAGER.uploadTimer = 0;
 		if (FITNESS_MANAGER.needsUpload.dataStorage) {
 			saveDataStorage();
+		}
+	}
+
+	//Check for Challenge endings
+	for (let challengeId in FITNESS_MANAGER.challengeList) {
+		if (!FITNESS_MANAGER.challengeList[challengeId].finished){
+			let challengeDate = common.createZeroDate(FITNESS_MANAGER.challengeList[challengeId].endDate)
+			if (date >= challengeDate) {
+				//challenge ends
+				FITNESS_MANAGER.finishChallenge(challengeId)
+			}
 		}
 	}
 
@@ -117,14 +143,6 @@ function cyclicAquisition() {
 				}
 				else {
 					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00;
-				}
-			}
-
-			for (let challengeId in FITNESS_MANAGER.challengeList) {
-				let challengeDate = common.createZeroDate(FITNESS_MANAGER.challengeList[challengeId].endDate)
-				if (date >= challengeDate && !FITNESS_MANAGER.challengeList[challengeId].finished) {
-					//challenge ends
-					FITNESS_MANAGER.finishChallenge(challengeId)
 				}
 			}
 		});
@@ -474,9 +492,7 @@ function startServer() {
 		OnSocketConnection(socket);
 	});
 
-	/**
- * @param {SocketIO.Socket} socket 
- */
+	//PLAYER CONNECTS (LOGIN)
 	OnPlayerConnection = function (socket) {
 
 		var newPlayer = new Player(socket.id);
@@ -785,9 +801,7 @@ function startServer() {
 		logFile.log("OnPlayerConnection done", false, 0);
 	};
 
-	/** 
-	 * @param {SocketIO.Socket} socket 
-	 */
+	//NEW SOCKET CONNECTS (LOGIN)
 	OnSocketConnection = function (socket) {
 		//someone connects
 		socket.id = Math.random().toFixed(config.ID_LENGTH).slice(2);
