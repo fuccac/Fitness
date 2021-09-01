@@ -69,7 +69,7 @@ loadSaveFiles(function (loadSaveFilesResult) {
 var dailyWinner = "Keiner";
 var lastWinner = "Keiner";
 function cyclicAquisition() {
-	var date = common.createViennaDate();
+	var date = new Date();
 	lastWinner = dailyWinner;
 	dailyWinner = FITNESS_MANAGER.getDailyWinner(date);
 	if (dailyWinner != lastWinner && dailyWinner != "Keiner" && lastWinner != "Keiner") {
@@ -95,6 +95,7 @@ function cyclicAquisition() {
 		}
 	}
 
+	//NEW DAY CHECK
 	if (common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) >= 1 || FITNESS_MANAGER.featuredExerciseId == "") {
 		FITNESS_MANAGER.fullRefresh(function (result) {
 			let exName = FITNESS_MANAGER.featureNewExercise();
@@ -120,7 +121,8 @@ function cyclicAquisition() {
 			}
 
 			for (let challengeId in FITNESS_MANAGER.challengeList) {
-				if (date > common.createZeroDate(FITNESS_MANAGER.challengeList[challengeId].endDate)) {
+				let challengeDate = common.createZeroDate(FITNESS_MANAGER.challengeList[challengeId].endDate)
+				if (date >= challengeDate && !FITNESS_MANAGER.challengeList[challengeId].finished) {
 					//challenge ends
 					FITNESS_MANAGER.finishChallenge(challengeId)
 				}
@@ -480,6 +482,14 @@ function startServer() {
 		var newPlayer = new Player(socket.id);
 		PLAYER_LIST[newPlayer.id] = newPlayer;
 
+
+		socket.on("endChallenge", function (data) {
+			FITNESS_MANAGER.finishChallenge(data.data, function (endChallengeResult) {
+				logFile.log(endChallengeResult, false, 0);
+				uiRefresh();
+			});
+			
+		});
 		socket.on("hideExercise", function (data) {
 			FITNESS_MANAGER.hideExercise(data.id, newPlayer.name, function (hideExerciseResult) {
 				logFile.log(hideExerciseResult, false, 0);

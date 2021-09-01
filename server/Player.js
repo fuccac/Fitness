@@ -14,6 +14,7 @@ class Player {
         this.modifiedExercises = 0;
         this.bestExercises = 0;
         this.id = id;
+        this.isAdmin = false;
 
     }
 

@@ -332,7 +332,7 @@ function Common() {
         }
         else {
             zeroDate = new Date(date);
-            zeroDate.setHours(2);
+            zeroDate.setHours(0);
             zeroDate.setMinutes(0);
             zeroDate.setSeconds(0);
         }

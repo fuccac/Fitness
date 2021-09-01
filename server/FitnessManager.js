@@ -447,7 +447,7 @@ class FitnessManager {
             }
         }
         sortable.sort(function (a, b) {
-            return common.createZeroDate(a[0]) - common.createZeroDate(b[0]);
+            return common.createZeroDate(a[0]).getTime() - common.createZeroDate(b[0]).getTime();
         });
         for (let iterator = 0; iterator < sortable.length; iterator++) {
             historyChunk[iterator] = sortable[iterator][1];
@@ -1290,20 +1290,29 @@ class FitnessManager {
         this.addChallenge(new Challenge(challengeName, id, dateStart, dateEnd, toDo, creator))
     }
 
-    finishChallenge(id) {
+    finishChallenge(id,result) {
         this.challengeList[id].finished = true
-        let currentMax = 0;
-        let currentWinner = "Keiner"
+        let winners = []
+        
         for (let playerName in this.challengeList[id].progress) {
-            if (this.challengeList[id].progress[playerName].done > currentMax && this.challengeList[id].progress[playerName].percent >= 75) {
-                currentMax = this.challengeList[id].progress[playerName].done
-                currentWinner = playerName
+            if (this.challengeList[id].progress[playerName].percent >= 100) {
+                winners.push(playerName)
             }
         }
-        if (currentWinner != "Keiner") {
-            this.registeredPlayers[currentWinner].challengeWins += 1;
-        }
+        this.addToEventLog("#######################");
+        this.addToEventLog("Die Challenge '" + this.challengeList[id].name + "' wurde beendet." );
+        this.addToEventLog("Erfolgreich abgeschlossen haben:" );
 
+        for(let playerCount = 0;playerCount<winners.length;playerCount++){
+            this.addToEventLog(winners[playerCount]);
+            this.registeredPlayers[winners[playerCount]].points.challengeWins += 1;
+        }
+        
+        this.addToEventLog("#######################");
+       
+        this.needsUpload.dataStorage = true;
+        result("challenge" + id + " finished")
+        
 
     }
 
@@ -1326,11 +1335,11 @@ class FitnessManager {
         let start = Date.now();
         let part1 = "<div id=\"div_challengeId\"><h3>ChallengeName (Count - Exercises)</h3>"
         let partPlayer = "<label>PlayerName: <progress id=\"PlayerNameProgress\" percentValue max=\"100\" class=\"challengeProgress\" style=\"background-color=playerColor\"></label><br>"
-        let partEnd = "</div>"
+        let partEnd = "</div><button id=\"adminButton_endChallenge\" class=\"adminControls\" onclick=\"endChallenge(challengeId)\">Beenden</button>"
         let html = ""
 
         if (Object.keys(this.challengeList).length > 0) {
-            for (let challengeId in this.challengeList) { //ASS
+            for (let challengeId in this.challengeList) { 
                 if (!this.challengeList[challengeId].finished) {
 
                     html = part1.replace("challengeId", challengeId.toString())
@@ -1351,6 +1360,7 @@ class FitnessManager {
                         html = html.replace("PlayerName", common.HTMLColor(playerName, this.colorList[playerName]) + " (" + this.challengeList[challengeId].progress[playerName].done.toString() + ")")
                         html = html.replace("playerColor", this.colorList[playerName])
                     }
+                    partEnd = partEnd.replace("challengeId", "'"+challengeId.toString()+"'")
                     html = html + partEnd
                     this.challengeList[challengeId].html = html
                 }

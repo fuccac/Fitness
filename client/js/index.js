@@ -138,6 +138,7 @@ $("#png_timer").click(function () {
 
 
 
+
 $("#button_SignIn").click(function () {
     SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
     Name = input_Username.value.toLowerCase();
@@ -181,7 +182,7 @@ $("#button_doneExerciseSend").click(function () {
     if (checkForEmptyBoxesDoneExercise()) {
 
         exerciseDone('addDoneExercise');
-        button_updateHistory.click();//ARSCH
+        button_updateHistory.click();
     }
     else {
         alert("Nicht alle Inputboxen wurden ausgefüllt!");
@@ -686,6 +687,9 @@ function generateFadeOutMessage(msg, bottom, left) {
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
+function endChallenge(id){
+    SOCKET.emit("endChallenge", { data: id });
+}
 
 function requestGraphUpdate() {
     SOCKET.emit("requestGraphUpdate", { fromDate: input_graphFromDate.value, toDate: input_graphToDate.value, type: select_graphSwitch.value, pointType: select_chartType.value });
@@ -698,6 +702,7 @@ function requestExerciseGraphUpdate() {
 function requestExerciseListUpdate() {
     SOCKET.emit("requestExerciseListUpdate", { data: true });
 }
+
 
 
 function sendChatMessage(msg) {
@@ -1807,13 +1812,17 @@ function generateCompetitionData(data) {
         if (playerName == "Keiner") {
             continue;
         }
+        if(data.compInfoDaily[playerName]==0){
+            continue;
+        }
+
 
         bodyRow = tBodyDailyWinsTable.insertRow(tBodyDailyWinsTable.rows.length);
         cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML = playerName;
         cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML = data.compInfoDaily[playerName];
-        //month
+        //day
     }
 
     var theadMonthlyWinsTable = table_monthlyWins.tHead;
@@ -1838,6 +1847,10 @@ function generateCompetitionData(data) {
         if (playerName == "Keiner") {
             continue;
         }
+        if(data.compInfoMonthly[playerName]==0){
+            continue;
+        }
+
         bodyRow = tBodyMonthlyWinsTable.insertRow(tBodyMonthlyWinsTable.rows.length);
         cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML = playerName;
