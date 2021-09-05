@@ -948,12 +948,14 @@ function startServer() {
 			else {
 				for (let playerId in PLAYER_LIST) {
 					if (PLAYER_LIST[playerId].name == data.username) {
-
-						SOCKET_LIST[playerId].disconnect(true);
-						cb({
-							success: true,
-							username: data.username,
-						});
+						if(SOCKET_LIST[playerId].disconnect != undefined){
+							SOCKET_LIST[playerId].disconnect(true);
+							cb({
+								success: true,
+								username: data.username,
+							});
+						}
+						
 						return;
 					}
 				}
