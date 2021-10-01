@@ -116,7 +116,9 @@ function cyclicAquisition() {
 			let challengeDate = common.createZeroDate(FITNESS_MANAGER.challengeList[challengeId].endDate)
 			if (date >= challengeDate) {
 				//challenge ends
-				FITNESS_MANAGER.finishChallenge(challengeId)
+				FITNESS_MANAGER.finishChallenge(challengeId,function (result) {
+					logFile.log(result, false, 0);
+				});
 			}
 		}
 	}
