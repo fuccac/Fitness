@@ -11,7 +11,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jshint": "^2.10.1",
     "jsonfile-storage": "0.0.16",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.1.1",
     "nodemailer": "^6.3.0",
     "password-hash": "^1.2.2",
     "popper.js": "^1.15.0",
