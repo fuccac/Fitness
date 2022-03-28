@@ -44,6 +44,7 @@ struct TeamMemberProfile extends MemberProfile
         membership_type = full
         joined_on = "2015-05-12T15:50:38Z"
         member_folder_id = "20"
+        profile_photo_url = "https://dl-web.dropbox.com/account_photo/get/dbaphid%3AAAHWGmIXV3sUuOmBfTz0wPsiqHUpBWvv3ZA?vers=1556069330102&size=128x128"
 
 union_closed MemberSelectorError extends UserSelectorError
     user_not_in_team
@@ -472,7 +473,6 @@ struct MembersRemoveArg extends MembersDeactivateArg
         "If provided, errors during the transfer process will be sent via
         email to this user. If the transfer_dest_id argument was provided,
         then this argument must be provided as well."
-
     keep_account Boolean = false
         "Downgrade the member to a Basic account. The user will retain the email address associated with their Dropbox
          account and data in their account that is not restricted to team members. In order to keep the account the argument wipe_data should be set to False."

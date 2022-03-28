@@ -4,7 +4,7 @@
 function Config() {
 
     //BASE PREFS
-    this.LOCAL_PORT = 2000;
+    this.LOCAL_PORT = 3000;
     this.ID_LENGTH = 16;
     this.INTERVAL = 1000; //1sec
     this.LOG_UPLOAD_INTERVAL = 3600; //sec

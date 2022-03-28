@@ -27,6 +27,10 @@ union QuickActionType
     "Quick action type."
 
     delete_shared_link
+    reset_password
+    restore_file_or_folder
+    unlink_app
+    unlink_session
 
     example default
         delete_shared_link = null
@@ -82,6 +86,7 @@ union MemberRemoveActionType
     delete
     offboard
     leave
+    offboard_and_retain_team_folders
 
 struct JoinTeamDetails 
     "Additional information relevant when a new member joins the team."
@@ -297,10 +302,16 @@ union IdentifierType
     email
     facebook_profile_name
 
+union IntegrationPolicy
+    "Policy for controlling whether a service integration is enabled for the team."
+    disabled
+    enabled
+
 union LoginMethod
     password
     two_factor_authentication
     saml
+    google_oauth
 
 union MemberRequestsPolicy
     auto_accept
@@ -334,6 +345,16 @@ union PaperAccessType
     commenter
     editor
 
+union PaperDefaultFolderPolicy
+    "Policy to set default access for newly created Paper folders."
+    everyone_in_team
+    invite_only
+
+union PaperDesktopPolicy
+    "Policy for controlling if team members can use Paper Desktop"
+    disabled
+    enabled
+
 union PaperDownloadFormat
     docx
     html
@@ -352,7 +373,9 @@ union PassPolicy
     disabled
 
 union PlacementRestriction
+    australia_only
     europe_only
+    japan_only
     none
 
 struct RelocateAssetReferencesLogInfo 
@@ -370,6 +393,11 @@ struct RelocateAssetReferencesLogInfo
     example default2
         src_asset_index = 4
         dest_asset_index = 4
+
+union ResellerSupportPolicy
+    "Policy for controlling if reseller can access the admin console as administrator"
+    disabled
+    enabled
 
 union SecondaryMailsPolicy
     disabled
@@ -454,9 +482,190 @@ union SpaceLimitsStatus
     near_quota
     over_quota
 
+union TeamExtensionsPolicy
+    "Policy for controlling whether App Integrations are enabled for the team."
+    disabled
+    enabled
+
 union TeamMembershipType
     free
     full
+
+union TeamMergeRequestAcceptedExtraDetails
+    "Team merge request acceptance details"
+
+    primary_team PrimaryTeamRequestAcceptedDetails
+        "Team merge request accepted details shown to the primary team."
+    secondary_team SecondaryTeamRequestAcceptedDetails
+        "Team merge request accepted details shown to the secondary team."
+
+    example default
+        primary_team = default
+
+    example default2
+        primary_team = default2
+
+struct SecondaryTeamRequestAcceptedDetails 
+    "Team merge request acceptance details shown to the secondary team"
+
+    primary_team String
+        "The primary team name."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        primary_team = "IT Department"
+        sent_by = "Dan Eveninglily"
+
+    example default2
+        primary_team = "IT Department"
+        sent_by = "Dan Eveninglily"
+
+struct PrimaryTeamRequestAcceptedDetails 
+    "Team merge request acceptance details shown to the primary team"
+
+    secondary_team String
+        "The secondary team name."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        secondary_team = "IT Department"
+        sent_by = "Dan Eveninglily"
+
+    example default2
+        secondary_team = "IT Department"
+        sent_by = "Dan Eveninglily"
+
+union TeamMergeRequestCanceledExtraDetails
+    "Team merge request cancellation details"
+
+    primary_team PrimaryTeamRequestCanceledDetails
+        "Team merge request cancellation details shown to the primary team."
+    secondary_team SecondaryTeamRequestCanceledDetails
+        "Team merge request cancellation details shown to the secondary team."
+
+    example default
+        primary_team = default
+
+    example default2
+        primary_team = default2
+
+struct SecondaryTeamRequestCanceledDetails 
+    "Team merge request cancellation details shown to the secondary team"
+
+    sent_to String
+        "The email of the primary team admin that the request was sent to."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        sent_to = "admin@it_department.com"
+        sent_by = "Dan Eveninglily"
+
+    example default2
+        sent_to = "admin@it_department.com"
+        sent_by = "Dan Eveninglily"
+
+struct PrimaryTeamRequestCanceledDetails 
+    "Team merge request cancellation details shown to the primary team"
+
+    secondary_team String
+        "The secondary team name."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        secondary_team = "IT Department"
+        sent_by = "Dan Eveninglily"
+
+    example default2
+        secondary_team = "IT Department"
+        sent_by = "Dan Eveninglily"
+
+union TeamMergeRequestExpiredExtraDetails
+    "Team merge request expiration details"
+
+    primary_team PrimaryTeamRequestExpiredDetails
+        "Team merge request canceled details shown to the primary team."
+    secondary_team SecondaryTeamRequestExpiredDetails
+        "Team merge request canceled details shown to the secondary team."
+
+    example default
+        primary_team = default
+
+    example default2
+        primary_team = default2
+
+struct SecondaryTeamRequestExpiredDetails 
+    "Team merge request expiration details shown to the secondary team"
+
+    sent_to String
+        "The email of the primary team admin the request was sent to."
+
+    example default
+        sent_to = "admin@it_department.com"
+
+    example default2
+        sent_to = "admin@it_department.com"
+
+struct PrimaryTeamRequestExpiredDetails 
+    "Team merge request expiration details shown to the primary team"
+
+    secondary_team String
+        "The secondary team name."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        secondary_team = "IT Department"
+        sent_by = "Dan Eveninglily"
+
+    example default2
+        secondary_team = "IT Department"
+        sent_by = "Dan Eveninglily"
+
+union TeamMergeRequestReminderExtraDetails
+    "Team merge request reminder details"
+
+    primary_team PrimaryTeamRequestReminderDetails
+        "Team merge request reminder details shown to the primary team."
+    secondary_team SecondaryTeamRequestReminderDetails
+        "Team merge request reminder details shown to the secondary team."
+
+    example default
+        primary_team = default
+
+    example default2
+        primary_team = default2
+
+struct SecondaryTeamRequestReminderDetails 
+    "Team merge request reminder details shown to the secondary team"
+
+    sent_to String
+        "The email of the primary team admin the request was sent to."
+
+    example default
+        sent_to = "admin@it_department.com"
+
+    example default2
+        sent_to = "admin@it_department.com"
+
+struct PrimaryTeamRequestReminderDetails 
+    "Team merge request reminder details shown to the primary team"
+
+    secondary_team String
+        "The secondary team name."
+    sent_to String
+        "The name of the primary team admin the request was sent to."
+
+    example default
+        secondary_team = "IT Department"
+        sent_to = "Dan Eveninglily"
+
+    example default2
+        secondary_team = "IT Department"
+        sent_to = "Dan Eveninglily"
 
 struct TeamName 
     "Team name details"
@@ -516,6 +725,18 @@ struct TrustedNonTeamMemberLogInfo extends UserLogInfo
 
 union TrustedNonTeamMemberType
     multi_instance_admin
+
+union TrustedTeamsRequestAction
+    invited
+    expired
+    revoked
+    accepted
+    declined
+
+union TrustedTeamsRequestState
+    invited
+    linked
+    unlinked
 
 union TwoAccountPolicy
     "Policy for pairing personal account to work account"
@@ -1143,7 +1364,7 @@ union AssetLogInfo
     folder FolderLogInfo
         "Folder's details."
     paper_document PaperDocumentLogInfo
-        "Paper docuement's details."
+        "Paper document's details."
     paper_folder PaperFolderLogInfo
         "Paper folder's details."
     showcase_document ShowcaseDocumentLogInfo
@@ -1230,6 +1451,8 @@ union EventCategory
         "Events that involve a change in the team profile."
     tfa
         "Events that involve using or configuring two factor authentication as well as administrative policies concerning two factor authentication."
+    trusted_teams
+        "Events that apply to cross-team trust establishment."
 
     example default
         sharing = null
@@ -1273,6 +1496,24 @@ struct AppUnlinkUserDetails
 
     example default
         app_info = default
+
+struct IntegrationConnectedDetails
+    "Connected integration for member."
+
+    integration_name String
+        "Name of the third-party integration."
+
+    example default
+        integration_name = "abc"
+
+struct IntegrationDisconnectedDetails
+    "Disconnected integration for member."
+
+    integration_name String
+        "Name of the third-party integration."
+
+    example default
+        integration_name = "abc"
 
 struct FileAddCommentDetails
     "Added file comment."
@@ -1449,7 +1690,7 @@ struct DeviceUnlinkDetails
         delete_data = true
 
 struct EmmRefreshAuthTokenDetails
-    "Refreshed auth token used for setting up enterprise mobility management."
+    "Refreshed auth token used for setting up EMM."
 
 struct AccountCaptureChangeAvailabilityDetails
     "Granted/revoked option to enable account capture on team domains."
@@ -1664,6 +1905,18 @@ struct FileRequestCreateDetails
         file_request_id = "oaCAVmEyrqYnkZX9955Y"
         request_details = default
 
+struct FileRequestDeleteDetails
+    "Delete file request."
+
+    file_request_id file_requests.FileRequestId?
+        "File request id. Might be missing due to historical data gap."
+    previous_details FileRequestDetails?
+        "Previous file request details. Might be missing due to historical data gap."
+
+    example default
+        file_request_id = "oaCAVmEyrqYnkZX9955Y"
+        previous_details = default
+
 struct FileRequestReceiveFileDetails
     "Received files for file request."
 
@@ -1808,6 +2061,30 @@ struct EmmErrorDetails
     example default
         error_details = default
 
+struct GuestAdminSignedInViaTrustedTeamsDetails
+    "Started trusted team admin session."
+
+    team_name String?
+        "Host team name."
+    trusted_team_name String?
+        "Trusted team name."
+
+    example default
+        team_name = "abc"
+        trusted_team_name = "abc"
+
+struct GuestAdminSignedOutViaTrustedTeamsDetails
+    "Ended trusted team admin session."
+
+    team_name String?
+        "Host team name."
+    trusted_team_name String?
+        "Trusted team name."
+
+    example default
+        team_name = "abc"
+        trusted_team_name = "abc"
+
 struct LoginFailDetails
     "Failed to sign in."
 
@@ -1859,6 +2136,15 @@ struct SsoErrorDetails
     example default
         error_details = default
 
+struct MemberAddExternalIdDetails
+    "Added an external ID for team member."
+
+    new_value team_common.MemberExternalId
+        "Current external id."
+
+    example default
+        new_value = "ADSYNC S-1-5-21-1004296348-1135238915-682003432-1224"
+
 struct MemberAddNameDetails
     "Added team member name."
 
@@ -1891,6 +2177,18 @@ struct MemberChangeEmailDetails
     example default
         new_value = "john_smith@acmecorp.com"
         previous_value = "john_smith@acmecorp.com"
+
+struct MemberChangeExternalIdDetails
+    "Changed the external ID for team member."
+
+    new_value team_common.MemberExternalId
+        "Current external id."
+    previous_value team_common.MemberExternalId
+        "Old external id."
+
+    example default
+        new_value = "ADSYNC S-1-5-21-1004296348-1135238915-682003432-1224"
+        previous_value = "ADSYNC S-1-5-21-1004296348-1135238915-682003432-1224"
 
 struct MemberChangeMembershipTypeDetails
     "Changed membership type (limited/full) of member."
@@ -1937,6 +2235,15 @@ struct MemberDeleteManualContactsDetails
 
 struct MemberPermanentlyDeleteAccountContentsDetails
     "Permanently deleted contents of deleted team member account."
+
+struct MemberRemoveExternalIdDetails
+    "Removed the external ID for team member."
+
+    previous_value team_common.MemberExternalId
+        "Old external id."
+
+    example default
+        previous_value = "ADSYNC S-1-5-21-1004296348-1135238915-682003432-1224"
 
 struct MemberSpaceLimitsAddCustomQuotaDetails
     "Set custom member space limit."
@@ -2388,6 +2695,33 @@ struct PaperFolderTeamInviteDetails
     example default
         event_uuid = "abc"
 
+struct PaperPublishedLinkCreateDetails
+    "Published doc."
+
+    event_uuid String
+        "Event unique identifier."
+
+    example default
+        event_uuid = "abc"
+
+struct PaperPublishedLinkDisabledDetails
+    "Unpublished doc."
+
+    event_uuid String
+        "Event unique identifier."
+
+    example default
+        event_uuid = "abc"
+
+struct PaperPublishedLinkViewDetails
+    "Viewed published doc."
+
+    event_uuid String
+        "Event unique identifier."
+
+    example default
+        event_uuid = "abc"
+
 struct PasswordChangeDetails
     "Changed password."
 
@@ -2423,6 +2757,15 @@ struct TeamActivityCreateReportDetails
     example default
         start_date = "2017-01-25T15:51:30Z"
         end_date = "2017-01-25T15:51:30Z"
+
+struct TeamActivityCreateReportFailDetails
+    "Couldn't generate team activity report."
+
+    failure_reason team.TeamReportFailureReason
+        "Failure reason."
+
+    example default
+        failure_reason = temporary_error
 
 struct CollectionShareDetails
     "Shared album."
@@ -3627,6 +3970,21 @@ struct GroupUserManagementChangePolicyDetails
         new_value = admins_and_members
         previous_value = admins_and_members
 
+struct IntegrationPolicyChangedDetails
+    "Changed integration policy for team."
+
+    integration_name String
+        "Name of the third-party integration."
+    new_value IntegrationPolicy
+        "New integration policy."
+    previous_value IntegrationPolicy
+        "Previous integration policy."
+
+    example default
+        integration_name = "abc"
+        new_value = disabled
+        previous_value = disabled
+
 struct MemberRequestsChangePolicyDetails
     "Changed whether users can find team when not invited."
 
@@ -3750,6 +4108,30 @@ struct PaperChangePolicyDetails
         new_value = unspecified
         previous_value = unspecified
 
+struct PaperDefaultFolderPolicyChangedDetails
+    "Changed Paper Default Folder Policy setting for team."
+
+    new_value PaperDefaultFolderPolicy
+        "New Paper Default Folder Policy."
+    previous_value PaperDefaultFolderPolicy
+        "Previous Paper Default Folder Policy."
+
+    example default
+        new_value = everyone_in_team
+        previous_value = everyone_in_team
+
+struct PaperDesktopPolicyChangedDetails
+    "Enabled/disabled Paper Desktop for team."
+
+    new_value PaperDesktopPolicy
+        "New Paper Desktop policy."
+    previous_value PaperDesktopPolicy
+        "Previous Paper Desktop policy."
+
+    example default
+        new_value = disabled
+        previous_value = disabled
+
 struct PaperEnabledUsersGroupAdditionDetails
     "Added users to Paper-enabled users list."
 
@@ -3763,6 +4145,18 @@ struct PermanentDeleteChangePolicyDetails
         "New permanent delete content policy."
     previous_value ContentPermanentDeletePolicy?
         "Previous permanent delete content policy. Might be missing due to historical data gap."
+
+    example default
+        new_value = disabled
+        previous_value = disabled
+
+struct ResellerSupportChangePolicyDetails
+    "Enabled/disabled reseller support."
+
+    new_value ResellerSupportPolicy
+        "New Reseller support policy."
+    previous_value ResellerSupportPolicy
+        "Previous Reseller support policy."
 
     example default
         new_value = disabled
@@ -3883,6 +4277,18 @@ struct SsoChangePolicyDetails
         "New single sign-on policy."
     previous_value team_policies.SsoPolicy?
         "Previous single sign-on policy. Might be missing due to historical data gap."
+
+    example default
+        new_value = disabled
+        previous_value = disabled
+
+struct TeamExtensionsPolicyChangedDetails
+    "Changed App Integrations setting for team."
+
+    new_value TeamExtensionsPolicy
+        "New Extensions policy."
+    previous_value TeamExtensionsPolicy
+        "Previous Extensions policy."
 
     example default
         new_value = disabled
@@ -4044,6 +4450,216 @@ struct TfaRemoveSecurityKeyDetails
 struct TfaResetDetails
     "Reset two-step verification for team member."
 
+struct GuestAdminChangeStatusDetails
+    "Changed guest team admin status."
+
+    is_guest Boolean
+        "True for guest, false for host."
+    guest_team_name String?
+        "The name of the guest team."
+    host_team_name String?
+        "The name of the host team."
+    previous_value TrustedTeamsRequestState
+        "Previous request state."
+    new_value TrustedTeamsRequestState
+        "New request state."
+    action_details TrustedTeamsRequestAction
+        "Action details."
+
+    example default
+        is_guest = true
+        guest_team_name = "abc"
+        host_team_name = "abc"
+        previous_value = invited
+        new_value = invited
+        action_details = invited
+
+struct TeamMergeRequestAcceptedDetails
+    "Accepted a team merge request."
+
+    request_accepted_details TeamMergeRequestAcceptedExtraDetails
+        "Team merge request acceptance details."
+
+    example default
+        request_accepted_details = default
+
+struct TeamMergeRequestAcceptedShownToPrimaryTeamDetails
+    "Accepted a team merge request."
+
+    secondary_team String
+        "The secondary team name."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        secondary_team = "abc"
+        sent_by = "abc"
+
+struct TeamMergeRequestAcceptedShownToSecondaryTeamDetails
+    "Accepted a team merge request."
+
+    primary_team String
+        "The primary team name."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        primary_team = "abc"
+        sent_by = "abc"
+
+struct TeamMergeRequestAutoCanceledDetails
+    "Automatically canceled team merge request."
+
+    details String?
+        "The cancellation reason."
+
+    example default
+        details = "Canceled by Dropbox Support"
+
+struct TeamMergeRequestCanceledDetails
+    "Canceled a team merge request."
+
+    request_canceled_details TeamMergeRequestCanceledExtraDetails
+        "Team merge request cancellation details."
+
+    example default
+        request_canceled_details = default
+
+struct TeamMergeRequestCanceledShownToPrimaryTeamDetails
+    "Canceled a team merge request."
+
+    secondary_team String
+        "The secondary team name."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        secondary_team = "abc"
+        sent_by = "abc"
+
+struct TeamMergeRequestCanceledShownToSecondaryTeamDetails
+    "Canceled a team merge request."
+
+    sent_to String
+        "The email of the primary team admin that the request was sent to."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        sent_to = "abc"
+        sent_by = "abc"
+
+struct TeamMergeRequestExpiredDetails
+    "Team merge request expired."
+
+    request_expired_details TeamMergeRequestExpiredExtraDetails
+        "Team merge request expiration details."
+
+    example default
+        request_expired_details = default
+
+struct TeamMergeRequestExpiredShownToPrimaryTeamDetails
+    "Team merge request expired."
+
+    secondary_team String
+        "The secondary team name."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        secondary_team = "abc"
+        sent_by = "abc"
+
+struct TeamMergeRequestExpiredShownToSecondaryTeamDetails
+    "Team merge request expired."
+
+    sent_to String
+        "The email of the primary team admin the request was sent to."
+
+    example default
+        sent_to = "abc"
+
+struct TeamMergeRequestRejectedShownToPrimaryTeamDetails
+    "Rejected a team merge request."
+
+    secondary_team String
+        "The secondary team name."
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        secondary_team = "abc"
+        sent_by = "abc"
+
+struct TeamMergeRequestRejectedShownToSecondaryTeamDetails
+    "Rejected a team merge request."
+
+    sent_by String
+        "The name of the secondary team admin who sent the request originally."
+
+    example default
+        sent_by = "abc"
+
+struct TeamMergeRequestReminderDetails
+    "Sent a team merge request reminder."
+
+    request_reminder_details TeamMergeRequestReminderExtraDetails
+        "Team merge request reminder details."
+
+    example default
+        request_reminder_details = default
+
+struct TeamMergeRequestReminderShownToPrimaryTeamDetails
+    "Sent a team merge request reminder."
+
+    secondary_team String
+        "The secondary team name."
+    sent_to String
+        "The name of the primary team admin the request was sent to."
+
+    example default
+        secondary_team = "abc"
+        sent_to = "abc"
+
+struct TeamMergeRequestReminderShownToSecondaryTeamDetails
+    "Sent a team merge request reminder."
+
+    sent_to String
+        "The email of the primary team admin the request was sent to."
+
+    example default
+        sent_to = "abc"
+
+struct TeamMergeRequestRevokedDetails
+    "Canceled the team merge."
+
+    team String
+        "The name of the other team."
+
+    example default
+        team = "IT Department"
+
+struct TeamMergeRequestSentShownToPrimaryTeamDetails
+    "Requested to merge their Dropbox team into yours."
+
+    secondary_team String
+        "The secondary team name."
+    sent_to String
+        "The name of the primary team admin the request was sent to."
+
+    example default
+        secondary_team = "BAU IT Department"
+        sent_to = "Saffron Eveninglily"
+
+struct TeamMergeRequestSentShownToSecondaryTeamDetails
+    "Requested to merge your team into another Dropbox team."
+
+    sent_to String
+        "The email of the primary team admin the request was sent to."
+
+    example default
+        sent_to = "admin@it_department.com"
+
 #################
 # Event Details
 #################
@@ -4055,6 +4671,8 @@ union EventDetails
     app_link_user_details AppLinkUserDetails
     app_unlink_team_details AppUnlinkTeamDetails
     app_unlink_user_details AppUnlinkUserDetails
+    integration_connected_details IntegrationConnectedDetails
+    integration_disconnected_details IntegrationDisconnectedDetails
     file_add_comment_details FileAddCommentDetails
     file_change_comment_subscription_details FileChangeCommentSubscriptionDetails
     file_delete_comment_details FileDeleteCommentDetails
@@ -4107,6 +4725,7 @@ union EventDetails
     file_request_change_details FileRequestChangeDetails
     file_request_close_details FileRequestCloseDetails
     file_request_create_details FileRequestCreateDetails
+    file_request_delete_details FileRequestDeleteDetails
     file_request_receive_file_details FileRequestReceiveFileDetails
     group_add_external_id_details GroupAddExternalIdDetails
     group_add_member_details GroupAddMemberDetails
@@ -4122,6 +4741,8 @@ union EventDetails
     group_remove_member_details GroupRemoveMemberDetails
     group_rename_details GroupRenameDetails
     emm_error_details EmmErrorDetails
+    guest_admin_signed_in_via_trusted_teams_details GuestAdminSignedInViaTrustedTeamsDetails
+    guest_admin_signed_out_via_trusted_teams_details GuestAdminSignedOutViaTrustedTeamsDetails
     login_fail_details LoginFailDetails
     login_success_details LoginSuccessDetails
     logout_details LogoutDetails
@@ -4130,14 +4751,17 @@ union EventDetails
     sign_in_as_session_end_details SignInAsSessionEndDetails
     sign_in_as_session_start_details SignInAsSessionStartDetails
     sso_error_details SsoErrorDetails
+    member_add_external_id_details MemberAddExternalIdDetails
     member_add_name_details MemberAddNameDetails
     member_change_admin_role_details MemberChangeAdminRoleDetails
     member_change_email_details MemberChangeEmailDetails
+    member_change_external_id_details MemberChangeExternalIdDetails
     member_change_membership_type_details MemberChangeMembershipTypeDetails
     member_change_name_details MemberChangeNameDetails
     member_change_status_details MemberChangeStatusDetails
     member_delete_manual_contacts_details MemberDeleteManualContactsDetails
     member_permanently_delete_account_contents_details MemberPermanentlyDeleteAccountContentsDetails
+    member_remove_external_id_details MemberRemoveExternalIdDetails
     member_space_limits_add_custom_quota_details MemberSpaceLimitsAddCustomQuotaDetails
     member_space_limits_change_custom_quota_details MemberSpaceLimitsChangeCustomQuotaDetails
     member_space_limits_change_status_details MemberSpaceLimitsChangeStatusDetails
@@ -4182,6 +4806,9 @@ union EventDetails
     paper_folder_deleted_details PaperFolderDeletedDetails
     paper_folder_followed_details PaperFolderFollowedDetails
     paper_folder_team_invite_details PaperFolderTeamInviteDetails
+    paper_published_link_create_details PaperPublishedLinkCreateDetails
+    paper_published_link_disabled_details PaperPublishedLinkDisabledDetails
+    paper_published_link_view_details PaperPublishedLinkViewDetails
     password_change_details PasswordChangeDetails
     password_reset_details PasswordResetDetails
     password_reset_all_details PasswordResetAllDetails
@@ -4191,6 +4818,7 @@ union EventDetails
     paper_admin_export_start_details PaperAdminExportStartDetails
     smart_sync_create_admin_privilege_report_details SmartSyncCreateAdminPrivilegeReportDetails
     team_activity_create_report_details TeamActivityCreateReportDetails
+    team_activity_create_report_fail_details TeamActivityCreateReportFailDetails
     collection_share_details CollectionShareDetails
     note_acl_invite_only_details NoteAclInviteOnlyDetails
     note_acl_link_details NoteAclLinkDetails
@@ -4317,6 +4945,7 @@ union EventDetails
     file_requests_emails_restricted_to_team_only_details FileRequestsEmailsRestrictedToTeamOnlyDetails
     google_sso_change_policy_details GoogleSsoChangePolicyDetails
     group_user_management_change_policy_details GroupUserManagementChangePolicyDetails
+    integration_policy_changed_details IntegrationPolicyChangedDetails
     member_requests_change_policy_details MemberRequestsChangePolicyDetails
     member_space_limits_add_exception_details MemberSpaceLimitsAddExceptionDetails
     member_space_limits_change_caps_type_policy_details MemberSpaceLimitsChangeCapsTypePolicyDetails
@@ -4329,9 +4958,12 @@ union EventDetails
     paper_change_member_link_policy_details PaperChangeMemberLinkPolicyDetails
     paper_change_member_policy_details PaperChangeMemberPolicyDetails
     paper_change_policy_details PaperChangePolicyDetails
+    paper_default_folder_policy_changed_details PaperDefaultFolderPolicyChangedDetails
+    paper_desktop_policy_changed_details PaperDesktopPolicyChangedDetails
     paper_enabled_users_group_addition_details PaperEnabledUsersGroupAdditionDetails
     paper_enabled_users_group_removal_details PaperEnabledUsersGroupRemovalDetails
     permanent_delete_change_policy_details PermanentDeleteChangePolicyDetails
+    reseller_support_change_policy_details ResellerSupportChangePolicyDetails
     sharing_change_folder_join_policy_details SharingChangeFolderJoinPolicyDetails
     sharing_change_link_policy_details SharingChangeLinkPolicyDetails
     sharing_change_member_policy_details SharingChangeMemberPolicyDetails
@@ -4342,6 +4974,7 @@ union EventDetails
     smart_sync_not_opt_out_details SmartSyncNotOptOutDetails
     smart_sync_opt_out_details SmartSyncOptOutDetails
     sso_change_policy_details SsoChangePolicyDetails
+    team_extensions_policy_changed_details TeamExtensionsPolicyChangedDetails
     team_selective_sync_policy_changed_details TeamSelectiveSyncPolicyChangedDetails
     tfa_change_policy_details TfaChangePolicyDetails
     two_account_change_policy_details TwoAccountChangePolicyDetails
@@ -4362,6 +4995,25 @@ union EventDetails
     tfa_remove_backup_phone_details TfaRemoveBackupPhoneDetails
     tfa_remove_security_key_details TfaRemoveSecurityKeyDetails
     tfa_reset_details TfaResetDetails
+    guest_admin_change_status_details GuestAdminChangeStatusDetails
+    team_merge_request_accepted_details TeamMergeRequestAcceptedDetails
+    team_merge_request_accepted_shown_to_primary_team_details TeamMergeRequestAcceptedShownToPrimaryTeamDetails
+    team_merge_request_accepted_shown_to_secondary_team_details TeamMergeRequestAcceptedShownToSecondaryTeamDetails
+    team_merge_request_auto_canceled_details TeamMergeRequestAutoCanceledDetails
+    team_merge_request_canceled_details TeamMergeRequestCanceledDetails
+    team_merge_request_canceled_shown_to_primary_team_details TeamMergeRequestCanceledShownToPrimaryTeamDetails
+    team_merge_request_canceled_shown_to_secondary_team_details TeamMergeRequestCanceledShownToSecondaryTeamDetails
+    team_merge_request_expired_details TeamMergeRequestExpiredDetails
+    team_merge_request_expired_shown_to_primary_team_details TeamMergeRequestExpiredShownToPrimaryTeamDetails
+    team_merge_request_expired_shown_to_secondary_team_details TeamMergeRequestExpiredShownToSecondaryTeamDetails
+    team_merge_request_rejected_shown_to_primary_team_details TeamMergeRequestRejectedShownToPrimaryTeamDetails
+    team_merge_request_rejected_shown_to_secondary_team_details TeamMergeRequestRejectedShownToSecondaryTeamDetails
+    team_merge_request_reminder_details TeamMergeRequestReminderDetails
+    team_merge_request_reminder_shown_to_primary_team_details TeamMergeRequestReminderShownToPrimaryTeamDetails
+    team_merge_request_reminder_shown_to_secondary_team_details TeamMergeRequestReminderShownToSecondaryTeamDetails
+    team_merge_request_revoked_details TeamMergeRequestRevokedDetails
+    team_merge_request_sent_shown_to_primary_team_details TeamMergeRequestSentShownToPrimaryTeamDetails
+    team_merge_request_sent_shown_to_secondary_team_details TeamMergeRequestSentShownToSecondaryTeamDetails
     missing_details MissingDetails
         "Hints that this event was returned with missing details due to an internal error."
 
@@ -4396,6 +5048,18 @@ struct AppUnlinkUserType
 
     example default
         description = "(apps) Unlinked app for member"
+
+struct IntegrationConnectedType
+    description String
+
+    example default
+        description = "(apps) Connected integration for member"
+
+struct IntegrationDisconnectedType
+    description String
+
+    example default
+        description = "(apps) Disconnected integration for member"
 
 struct FileAddCommentType
     description String
@@ -4509,7 +5173,7 @@ struct EmmRefreshAuthTokenType
     description String
 
     example default
-        description = "(devices) Refreshed auth token used for setting up enterprise mobility management"
+        description = "(devices) Refreshed auth token used for setting up EMM"
 
 struct AccountCaptureChangeAvailabilityType
     description String
@@ -4709,6 +5373,12 @@ struct FileRequestCreateType
     example default
         description = "(file_requests) Created file request"
 
+struct FileRequestDeleteType
+    description String
+
+    example default
+        description = "(file_requests) Delete file request"
+
 struct FileRequestReceiveFileType
     description String
 
@@ -4799,6 +5469,18 @@ struct EmmErrorType
     example default
         description = "(logins) Failed to sign in via EMM (deprecated, replaced by 'Failed to sign in')"
 
+struct GuestAdminSignedInViaTrustedTeamsType
+    description String
+
+    example default
+        description = "(logins) Started trusted team admin session"
+
+struct GuestAdminSignedOutViaTrustedTeamsType
+    description String
+
+    example default
+        description = "(logins) Ended trusted team admin session"
+
 struct LoginFailType
     description String
 
@@ -4847,6 +5529,12 @@ struct SsoErrorType
     example default
         description = "(logins) Failed to sign in via SSO (deprecated, replaced by 'Failed to sign in')"
 
+struct MemberAddExternalIdType
+    description String
+
+    example default
+        description = "(members) Added an external ID for team member"
+
 struct MemberAddNameType
     description String
 
@@ -4864,6 +5552,12 @@ struct MemberChangeEmailType
 
     example default
         description = "(members) Changed team member email"
+
+struct MemberChangeExternalIdType
+    description String
+
+    example default
+        description = "(members) Changed the external ID for team member"
 
 struct MemberChangeMembershipTypeType
     description String
@@ -4894,6 +5588,12 @@ struct MemberPermanentlyDeleteAccountContentsType
 
     example default
         description = "(members) Permanently deleted contents of deleted team member account"
+
+struct MemberRemoveExternalIdType
+    description String
+
+    example default
+        description = "(members) Removed the external ID for team member"
 
 struct MemberSpaceLimitsAddCustomQuotaType
     description String
@@ -5159,6 +5859,24 @@ struct PaperFolderTeamInviteType
     example default
         description = "(paper) Shared Paper folder with member (deprecated, no longer logged)"
 
+struct PaperPublishedLinkCreateType
+    description String
+
+    example default
+        description = "(paper) Published doc"
+
+struct PaperPublishedLinkDisabledType
+    description String
+
+    example default
+        description = "(paper) Unpublished doc"
+
+struct PaperPublishedLinkViewType
+    description String
+
+    example default
+        description = "(paper) Viewed published doc"
+
 struct PasswordChangeType
     description String
 
@@ -5212,6 +5930,12 @@ struct TeamActivityCreateReportType
 
     example default
         description = "(reports) Created team activity report"
+
+struct TeamActivityCreateReportFailType
+    description String
+
+    example default
+        description = "(reports) Couldn't generate team activity report"
 
 struct CollectionShareType
     description String
@@ -5969,6 +6693,12 @@ struct GroupUserManagementChangePolicyType
     example default
         description = "(team_policies) Changed who can create groups"
 
+struct IntegrationPolicyChangedType
+    description String
+
+    example default
+        description = "(team_policies) Changed integration policy for team"
+
 struct MemberRequestsChangePolicyType
     description String
 
@@ -6041,6 +6771,18 @@ struct PaperChangePolicyType
     example default
         description = "(team_policies) Enabled/disabled Dropbox Paper for team"
 
+struct PaperDefaultFolderPolicyChangedType
+    description String
+
+    example default
+        description = "(team_policies) Changed Paper Default Folder Policy setting for team"
+
+struct PaperDesktopPolicyChangedType
+    description String
+
+    example default
+        description = "(team_policies) Enabled/disabled Paper Desktop for team"
+
 struct PaperEnabledUsersGroupAdditionType
     description String
 
@@ -6058,6 +6800,12 @@ struct PermanentDeleteChangePolicyType
 
     example default
         description = "(team_policies) Enabled/disabled ability of team members to permanently delete content"
+
+struct ResellerSupportChangePolicyType
+    description String
+
+    example default
+        description = "(team_policies) Enabled/disabled reseller support"
 
 struct SharingChangeFolderJoinPolicyType
     description String
@@ -6118,6 +6866,12 @@ struct SsoChangePolicyType
 
     example default
         description = "(team_policies) Changed single sign-on setting for team"
+
+struct TeamExtensionsPolicyChangedType
+    description String
+
+    example default
+        description = "(team_policies) Changed App Integrations setting for team"
 
 struct TeamSelectiveSyncPolicyChangedType
     description String
@@ -6239,6 +6993,120 @@ struct TfaResetType
     example default
         description = "(tfa) Reset two-step verification for team member"
 
+struct GuestAdminChangeStatusType
+    description String
+
+    example default
+        description = "(trusted_teams) Changed guest team admin status"
+
+struct TeamMergeRequestAcceptedType
+    description String
+
+    example default
+        description = "(trusted_teams) Accepted a team merge request"
+
+struct TeamMergeRequestAcceptedShownToPrimaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Accepted a team merge request (deprecated, replaced by 'Accepted a team merge request')"
+
+struct TeamMergeRequestAcceptedShownToSecondaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Accepted a team merge request (deprecated, replaced by 'Accepted a team merge request')"
+
+struct TeamMergeRequestAutoCanceledType
+    description String
+
+    example default
+        description = "(trusted_teams) Automatically canceled team merge request"
+
+struct TeamMergeRequestCanceledType
+    description String
+
+    example default
+        description = "(trusted_teams) Canceled a team merge request"
+
+struct TeamMergeRequestCanceledShownToPrimaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Canceled a team merge request (deprecated, replaced by 'Canceled a team merge request')"
+
+struct TeamMergeRequestCanceledShownToSecondaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Canceled a team merge request (deprecated, replaced by 'Canceled a team merge request')"
+
+struct TeamMergeRequestExpiredType
+    description String
+
+    example default
+        description = "(trusted_teams) Team merge request expired"
+
+struct TeamMergeRequestExpiredShownToPrimaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Team merge request expired (deprecated, replaced by 'Team merge request expired')"
+
+struct TeamMergeRequestExpiredShownToSecondaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Team merge request expired (deprecated, replaced by 'Team merge request expired')"
+
+struct TeamMergeRequestRejectedShownToPrimaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Rejected a team merge request (deprecated, no longer logged)"
+
+struct TeamMergeRequestRejectedShownToSecondaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Rejected a team merge request (deprecated, no longer logged)"
+
+struct TeamMergeRequestReminderType
+    description String
+
+    example default
+        description = "(trusted_teams) Sent a team merge request reminder"
+
+struct TeamMergeRequestReminderShownToPrimaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Sent a team merge request reminder (deprecated, replaced by 'Sent a team merge request reminder')"
+
+struct TeamMergeRequestReminderShownToSecondaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Sent a team merge request reminder (deprecated, replaced by 'Sent a team merge request reminder')"
+
+struct TeamMergeRequestRevokedType
+    description String
+
+    example default
+        description = "(trusted_teams) Canceled the team merge"
+
+struct TeamMergeRequestSentShownToPrimaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Requested to merge their Dropbox team into yours"
+
+struct TeamMergeRequestSentShownToSecondaryTeamType
+    description String
+
+    example default
+        description = "(trusted_teams) Requested to merge your team into another Dropbox team"
+
 
 union EventType
     "The type of the event."
@@ -6251,6 +7119,10 @@ union EventType
         "(apps) Unlinked app for team"
     app_unlink_user AppUnlinkUserType
         "(apps) Unlinked app for member"
+    integration_connected IntegrationConnectedType
+        "(apps) Connected integration for member"
+    integration_disconnected IntegrationDisconnectedType
+        "(apps) Disconnected integration for member"
     file_add_comment FileAddCommentType
         "(comments) Added file comment"
     file_change_comment_subscription FileChangeCommentSubscriptionType
@@ -6288,7 +7160,7 @@ union EventType
     device_unlink DeviceUnlinkType
         "(devices) Disconnected device"
     emm_refresh_auth_token EmmRefreshAuthTokenType
-        "(devices) Refreshed auth token used for setting up enterprise mobility management"
+        "(devices) Refreshed auth token used for setting up EMM"
     account_capture_change_availability AccountCaptureChangeAvailabilityType
         "(domains) Granted/revoked option to enable account capture on team domains"
     account_capture_migrate_account AccountCaptureMigrateAccountType
@@ -6355,6 +7227,8 @@ union EventType
         "(file_requests) Closed file request"
     file_request_create FileRequestCreateType
         "(file_requests) Created file request"
+    file_request_delete FileRequestDeleteType
+        "(file_requests) Delete file request"
     file_request_receive_file FileRequestReceiveFileType
         "(file_requests) Received files for file request"
     group_add_external_id GroupAddExternalIdType
@@ -6385,6 +7259,10 @@ union EventType
         "(groups) Renamed group"
     emm_error EmmErrorType
         "(logins) Failed to sign in via EMM (deprecated, replaced by 'Failed to sign in')"
+    guest_admin_signed_in_via_trusted_teams GuestAdminSignedInViaTrustedTeamsType
+        "(logins) Started trusted team admin session"
+    guest_admin_signed_out_via_trusted_teams GuestAdminSignedOutViaTrustedTeamsType
+        "(logins) Ended trusted team admin session"
     login_fail LoginFailType
         "(logins) Failed to sign in"
     login_success LoginSuccessType
@@ -6401,12 +7279,16 @@ union EventType
         "(logins) Started admin sign-in-as session"
     sso_error SsoErrorType
         "(logins) Failed to sign in via SSO (deprecated, replaced by 'Failed to sign in')"
+    member_add_external_id MemberAddExternalIdType
+        "(members) Added an external ID for team member"
     member_add_name MemberAddNameType
         "(members) Added team member name"
     member_change_admin_role MemberChangeAdminRoleType
         "(members) Changed team member admin role"
     member_change_email MemberChangeEmailType
         "(members) Changed team member email"
+    member_change_external_id MemberChangeExternalIdType
+        "(members) Changed the external ID for team member"
     member_change_membership_type MemberChangeMembershipTypeType
         "(members) Changed membership type (limited/full) of member (deprecated, no longer logged)"
     member_change_name MemberChangeNameType
@@ -6417,6 +7299,8 @@ union EventType
         "(members) Cleared manually added contacts"
     member_permanently_delete_account_contents MemberPermanentlyDeleteAccountContentsType
         "(members) Permanently deleted contents of deleted team member account"
+    member_remove_external_id MemberRemoveExternalIdType
+        "(members) Removed the external ID for team member"
     member_space_limits_add_custom_quota MemberSpaceLimitsAddCustomQuotaType
         "(members) Set custom member space limit"
     member_space_limits_change_custom_quota MemberSpaceLimitsChangeCustomQuotaType
@@ -6505,6 +7389,12 @@ union EventType
         "(paper) Followed Paper folder (deprecated, replaced by 'Followed/unfollowed Paper folder')"
     paper_folder_team_invite PaperFolderTeamInviteType
         "(paper) Shared Paper folder with member (deprecated, no longer logged)"
+    paper_published_link_create PaperPublishedLinkCreateType
+        "(paper) Published doc"
+    paper_published_link_disabled PaperPublishedLinkDisabledType
+        "(paper) Unpublished doc"
+    paper_published_link_view PaperPublishedLinkViewType
+        "(paper) Viewed published doc"
     password_change PasswordChangeType
         "(passwords) Changed password"
     password_reset PasswordResetType
@@ -6523,6 +7413,8 @@ union EventType
         "(reports) Created Smart Sync non-admin devices report"
     team_activity_create_report TeamActivityCreateReportType
         "(reports) Created team activity report"
+    team_activity_create_report_fail TeamActivityCreateReportFailType
+        "(reports) Couldn't generate team activity report"
     collection_share CollectionShareType
         "(sharing) Shared album"
     note_acl_invite_only NoteAclInviteOnlyType
@@ -6775,6 +7667,8 @@ union EventType
         "(team_policies) Enabled/disabled Google single sign-on for team"
     group_user_management_change_policy GroupUserManagementChangePolicyType
         "(team_policies) Changed who can create groups"
+    integration_policy_changed IntegrationPolicyChangedType
+        "(team_policies) Changed integration policy for team"
     member_requests_change_policy MemberRequestsChangePolicyType
         "(team_policies) Changed whether users can find team when not invited"
     member_space_limits_add_exception MemberSpaceLimitsAddExceptionType
@@ -6799,12 +7693,18 @@ union EventType
         "(team_policies) Changed whether members can share Paper docs outside team, and if docs are accessible only by team members or anyone by default"
     paper_change_policy PaperChangePolicyType
         "(team_policies) Enabled/disabled Dropbox Paper for team"
+    paper_default_folder_policy_changed PaperDefaultFolderPolicyChangedType
+        "(team_policies) Changed Paper Default Folder Policy setting for team"
+    paper_desktop_policy_changed PaperDesktopPolicyChangedType
+        "(team_policies) Enabled/disabled Paper Desktop for team"
     paper_enabled_users_group_addition PaperEnabledUsersGroupAdditionType
         "(team_policies) Added users to Paper-enabled users list"
     paper_enabled_users_group_removal PaperEnabledUsersGroupRemovalType
         "(team_policies) Removed users from Paper-enabled users list"
     permanent_delete_change_policy PermanentDeleteChangePolicyType
         "(team_policies) Enabled/disabled ability of team members to permanently delete content"
+    reseller_support_change_policy ResellerSupportChangePolicyType
+        "(team_policies) Enabled/disabled reseller support"
     sharing_change_folder_join_policy SharingChangeFolderJoinPolicyType
         "(team_policies) Changed whether team members can join shared folders owned outside team"
     sharing_change_link_policy SharingChangeLinkPolicyType
@@ -6825,6 +7725,8 @@ union EventType
         "(team_policies) Opted team out of Smart Sync"
     sso_change_policy SsoChangePolicyType
         "(team_policies) Changed single sign-on setting for team"
+    team_extensions_policy_changed TeamExtensionsPolicyChangedType
+        "(team_policies) Changed App Integrations setting for team"
     team_selective_sync_policy_changed TeamSelectiveSyncPolicyChangedType
         "(team_policies) Enabled/disabled Team Selective Sync for team"
     tfa_change_policy TfaChangePolicyType
@@ -6865,6 +7767,44 @@ union EventType
         "(tfa) Removed security key for two-step verification"
     tfa_reset TfaResetType
         "(tfa) Reset two-step verification for team member"
+    guest_admin_change_status GuestAdminChangeStatusType
+        "(trusted_teams) Changed guest team admin status"
+    team_merge_request_accepted TeamMergeRequestAcceptedType
+        "(trusted_teams) Accepted a team merge request"
+    team_merge_request_accepted_shown_to_primary_team TeamMergeRequestAcceptedShownToPrimaryTeamType
+        "(trusted_teams) Accepted a team merge request (deprecated, replaced by 'Accepted a team merge request')"
+    team_merge_request_accepted_shown_to_secondary_team TeamMergeRequestAcceptedShownToSecondaryTeamType
+        "(trusted_teams) Accepted a team merge request (deprecated, replaced by 'Accepted a team merge request')"
+    team_merge_request_auto_canceled TeamMergeRequestAutoCanceledType
+        "(trusted_teams) Automatically canceled team merge request"
+    team_merge_request_canceled TeamMergeRequestCanceledType
+        "(trusted_teams) Canceled a team merge request"
+    team_merge_request_canceled_shown_to_primary_team TeamMergeRequestCanceledShownToPrimaryTeamType
+        "(trusted_teams) Canceled a team merge request (deprecated, replaced by 'Canceled a team merge request')"
+    team_merge_request_canceled_shown_to_secondary_team TeamMergeRequestCanceledShownToSecondaryTeamType
+        "(trusted_teams) Canceled a team merge request (deprecated, replaced by 'Canceled a team merge request')"
+    team_merge_request_expired TeamMergeRequestExpiredType
+        "(trusted_teams) Team merge request expired"
+    team_merge_request_expired_shown_to_primary_team TeamMergeRequestExpiredShownToPrimaryTeamType
+        "(trusted_teams) Team merge request expired (deprecated, replaced by 'Team merge request expired')"
+    team_merge_request_expired_shown_to_secondary_team TeamMergeRequestExpiredShownToSecondaryTeamType
+        "(trusted_teams) Team merge request expired (deprecated, replaced by 'Team merge request expired')"
+    team_merge_request_rejected_shown_to_primary_team TeamMergeRequestRejectedShownToPrimaryTeamType
+        "(trusted_teams) Rejected a team merge request (deprecated, no longer logged)"
+    team_merge_request_rejected_shown_to_secondary_team TeamMergeRequestRejectedShownToSecondaryTeamType
+        "(trusted_teams) Rejected a team merge request (deprecated, no longer logged)"
+    team_merge_request_reminder TeamMergeRequestReminderType
+        "(trusted_teams) Sent a team merge request reminder"
+    team_merge_request_reminder_shown_to_primary_team TeamMergeRequestReminderShownToPrimaryTeamType
+        "(trusted_teams) Sent a team merge request reminder (deprecated, replaced by 'Sent a team merge request reminder')"
+    team_merge_request_reminder_shown_to_secondary_team TeamMergeRequestReminderShownToSecondaryTeamType
+        "(trusted_teams) Sent a team merge request reminder (deprecated, replaced by 'Sent a team merge request reminder')"
+    team_merge_request_revoked TeamMergeRequestRevokedType
+        "(trusted_teams) Canceled the team merge"
+    team_merge_request_sent_shown_to_primary_team TeamMergeRequestSentShownToPrimaryTeamType
+        "(trusted_teams) Requested to merge their Dropbox team into yours"
+    team_merge_request_sent_shown_to_secondary_team TeamMergeRequestSentShownToSecondaryTeamType
+        "(trusted_teams) Requested to merge your team into another Dropbox team"
 
     example default
         shared_content_download = default

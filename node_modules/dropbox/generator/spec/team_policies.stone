@@ -126,6 +126,12 @@ union TwoStepVerificationPolicy
     require_tfa_disable
         "Disabled require two factor authorization."
 
+union TwoStepVerificationState
+    required
+        "Enabled require two factor authorization."
+    optional
+        "Optional require two factor authorization."
+
 union SmartSyncPolicy
     local
         "The specified content will be synced as local files by default."
@@ -161,3 +167,15 @@ union CameraUploadsPolicyState
         "Background camera uploads are disabled."
     enabled
         "Background camera uploads are allowed."
+
+union PaperDefaultFolderPolicy
+    everyone_in_team
+        "Everyone in team will be the default option when creating a folder in Paper."
+    invite_only
+        "Invite only will be the default option when creating a folder in Paper."
+
+union PaperDesktopPolicy
+    disabled
+        "Do not allow team members to use Paper Desktop."
+    enabled
+        "Allow team members to use Paper Desktop."
