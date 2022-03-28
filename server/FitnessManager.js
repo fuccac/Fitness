@@ -78,8 +78,8 @@ class FitnessManager {
             msg: [],
             html: ""
         };
-        this.paceUnits = "min/km;min/m;Wdh/min;Wdh/sec;Höhenmeter/min";
-        this.paceInvert = "0;0;1;1;0";
+        this.paceUnits = "min/km;min/m;Wdh/min;Wdh/sec";
+        this.paceInvert = "0;0;1;1";
 
     }
 
