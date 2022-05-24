@@ -1284,8 +1284,11 @@ function generatePlayerListTable(data) {
         if (player.last5Days >= 1500 && player.last5Days < 2500) {
             bodyRow.classList.add("secondClass");
         }
-        if (player.last5Days >= 2500) {
+        if (player.last5Days >= 2500 && player.last5Days < 5000) {
             bodyRow.classList.add("firstClass");
+        }
+        if (player.last5Days >= 5000) {
+            bodyRow.classList.add("eliteClass");
         }
 
         if (playerIterator == 0) {
@@ -1294,10 +1297,18 @@ function generatePlayerListTable(data) {
         }
         cell = bodyRow.insertCell(bodyRow.cells.length);
         cell.innerHTML += common.translate(playerid + nameAdd);
+        
+      
 
 
         for (var playerKeyName in player) {
-            if (playerKeyName == "negative" || playerKeyName == "seasonWins") {
+            if (playerKeyName == "negative" || 
+                playerKeyName == "seasonWins" ||
+                playerKeyName == "challengeWins" ||
+                playerKeyName == "cardio" ||
+                playerKeyName == "strength" ||
+                playerKeyName == "achievementPoints")
+                {
                 continue;
             }
 
@@ -1314,6 +1325,14 @@ function generatePlayerListTable(data) {
 
             cell = bodyRow.insertCell(bodyRow.cells.length);
             cell.innerHTML += common.translate(playerKeyContent);
+            if (playerKeyName === "toDoForFactor"){
+                if(player.toDoForFactor > 0){
+                    cell.classList.add("powerFactorNotice");
+                }
+                else{
+                    cell.classList.remove("powerFactorNotice");
+                }
+            }
             cell.classList.add(playerKeyName);
 
         }
@@ -2005,7 +2024,7 @@ function initialize() {
     //Today
     today = common.createZeroDate();
     input_doneExerciseDate.value = common.getDateFormat(today, "YYYY-MM-DD");
-    input_graphFromDate.value = "2018-08-01";
+    input_graphFromDate.value = "2022-01-01";
     input_graphToDate.value = common.getDateFormat(today, "YYYY-MM-DD");
 
     input_doneExerciseAdditional.style.display = "none";

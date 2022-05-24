@@ -510,6 +510,16 @@ button:hover {
     font-weight: bolder;
 }
 
+.eliteClass{
+    color: rgb(252, 149, 31);
+    font-weight: bolder;
+}
+
+.powerFactorNotice{
+    color: rgb(252, 31, 31);
+    font-weight: bolder;
+}
+
 .secondClass{
     color: rgb(40, 49, 179);
 

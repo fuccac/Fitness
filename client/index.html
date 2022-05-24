@@ -27,7 +27,16 @@
 
 		<div id="div_changeLog" class="changelog">
 			<p class="MOTD">
-				MOTD: Happy Training!
+				MOTD: So gehet hin in Frieden und trainieret!
+			</p>
+			<p>
+				NEWS (24.05.2022) v1.91:
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Aufgeräumte Tabelle - Rotes Todo, Rudern Berechnungsmethode
+				</li>
+				<li>
+					<span class="changeLog_Bug">Bug: </span> Klettern, Yoga, Crash gefixt
+				</li>				
 			</p>
 			<p>
 				NEWS (14.08.2021) v1.90:
@@ -426,11 +435,11 @@
 			
 			
 			
-			<input id="input_doneExercise" class="addWorkOut" type="number" min="0" step="0.01" placeholder="Anzahl"
+			<input id="input_doneExercise" class="addWorkOut" type="number" min="0" step="0.001" placeholder="Anzahl"
 
 				oninput="validity.valid||(value='');"></input>
 				<img id="png_timer" src="/client/pics/timer.png" class="timerimage" onoff="0" alt="timer">
-			<input id="input_doneExerciseAdditional" class="addWorkOut" type="number" min="0" step="0.01"
+			<input id="input_doneExerciseAdditional" class="addWorkOut" type="number" min="0" step="0.001"
 				placeholder="Anzahl Zusatz" oninput="validity.valid||(value='');" disabled="true"></input><br>
 				<label for="input_atOnce" class="checkboxLabel">Auf einmal?</label>
 				
@@ -569,6 +578,7 @@
 					<option value="Liegestütz">Liegestütz</option>
 					<option value="Klettern">Klettern</option>
 					<option value="Yoga">Yoga</option>
+					<option value="Rudern">Rudern</option>
 					<option value="#1,10,100">#1,10,100</option>
 					<option value="#100,1000,10000">#100,1000,10000</option>
 					<option value="#20,40,80">#20,40,80</option>
@@ -579,7 +589,7 @@
 					<option value="#2,20,40">#2,20,40</option>
 					<option value="#12,18,24">#12,18,24</option>
 					<option value="#1,5,10">#1,5,10</option>
-					<option value="#5,10,15">#5,10,15</option>
+					<option value="#1,8,12">#5,10,15</option>
 			</select>
 			<br>
 			<br>

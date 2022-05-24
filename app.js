@@ -949,17 +949,23 @@ function startServer() {
 			}
 			else {
 				for (let playerId in PLAYER_LIST) {
-					if (PLAYER_LIST[playerId].name == data.username) {
-						if(SOCKET_LIST[playerId].disconnect != undefined){
-							SOCKET_LIST[playerId].disconnect(true);
-							cb({
-								success: true,
-								username: data.username,
-							});
+					try{
+						if (PLAYER_LIST[playerId].name == data.username) {
+							if(SOCKET_LIST[playerId] != undefined){
+								if(SOCKET_LIST[playerId].disconnect != undefined){
+									SOCKET_LIST[playerId].disconnect(true);
+									cb({
+										success: true,
+										username: data.username,
+									});
+								}
+							}
+							return;
+							}
 						}
-						
-						return;
-					}
+				catch(e){
+					logFile.log("user not available", true, 0);
+				}
 				}
 				try {
 					if (USERS[data.username.toUpperCase()].password == undefined && pwHash.verify(data.password, USERS[data.username.toUpperCase()])) {
