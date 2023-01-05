@@ -70,7 +70,6 @@ class FitnessManager {
         //WORK OBJECTS WITH SAVE FILE SUPPORT
         this.challengeList = {};
         this.registeredPlayers = {};
-        this.achievements = {};
         this.history = {};
         this.exerciseList = {};
         this.eventLog = {
@@ -599,7 +598,7 @@ class FitnessManager {
         var resultGraph = {};
         var firstIndex = -1;
         var lastIndex = -1;
-        var usedGraph;
+        var usedGraph = {};
         if (type == "line") {
             if (pointType == "cardio") {
                 usedGraph = this.fullCardioGraph;
@@ -717,569 +716,6 @@ class FitnessManager {
         result(`setBestExerciserNumber done in ${end - start}`);
     }
 
-    checkForAchievements(player, result) {
-        let start = Date.now();
-        //exercise Achievements
-        /*this.achievements[player.name] = {
-            earnedAchievements: {},
-            notEarnedAchievements: {}
-        };
-        */
-        let newAchievements = {};
-        newAchievements[player.name] = {
-            earnedAchievements: {},
-            notEarnedAchievements: {}
-        };
-
-        var endLastLevel;
-        var endThisLevel;
-        var diff;
-        var percent;
-
-        for (let exId in this.exerciseList) {
-            var exercise = this.exerciseList[exId];
-
-            if (!exercise.achievementInfo.achievementActive) {
-                continue;
-            }
-            var exCat = this.exerciseList[exId].achievementInfo.achievementCategory;
-
-            //this.getMaxExerciseCounts(exId, player.name, false);
-            var playerReps;
-            var playerRepsMonthly;
-            var repsToGetDaily;
-            if (this.maxExerciseCountsCategory[exCat] == undefined) {
-                playerReps = 0;
-                playerRepsMonthly = 0;
-                repsToGetDaily = 0;
-            }
-            else {
-                playerReps = this.maxExerciseCountsCategory[exCat].overall[player.name] == undefined ? 0 : this.maxExerciseCountsCategory[exCat].overall[player.name];
-                playerRepsMonthly = this.maxExerciseCountsCategory[exCat].monthly[player.name] == undefined ? 0 : this.maxExerciseCountsCategory[exCat].monthly[player.name];
-                repsToGetDaily = this.maxExerciseCountsCategory[exCat].daily[player.name] == undefined ? 0 : this.maxExerciseCountsCategory[exCat].daily[player.name];
-            }
-
-            var repsThisLevel;
-
-
-            for (let levelOverallIterator = 0; levelOverallIterator < exercise.achievementInfo.repsToGetOverall.length; levelOverallIterator++) {
-                if (exercise.achievementInfo.repsToGetOverall[levelOverallIterator] > 0) {
-                    if (playerReps >= exercise.achievementInfo.repsToGetOverall[levelOverallIterator]) {
-                        newAchievements[player.name].earnedAchievements["Overall" + exCat] = {
-                            level: (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
-                            text: exercise.achievementInfo.textOverall,
-                            progress: playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
-                            percent: 100,
-                        };
-                        if (levelOverallIterator == exercise.achievementInfo.repsToGetOverall.length) {
-                            delete newAchievements[player.name].notEarnedAchievements["Overall" + exCat];
-                        }
-                    }
-                    else {
-                        if (levelOverallIterator > 0) {
-                            endLastLevel = exercise.achievementInfo.repsToGetOverall[levelOverallIterator - 1];
-                            endThisLevel = exercise.achievementInfo.repsToGetOverall[levelOverallIterator];
-                            diff = endThisLevel - endLastLevel;
-                            repsThisLevel = playerReps - endLastLevel;
-                            percent = repsThisLevel / diff * 100;
-                        }
-                        else {
-                            percent = playerReps / exercise.achievementInfo.repsToGetOverall[levelOverallIterator] * 100;
-                        }
-                        newAchievements[player.name].notEarnedAchievements["Overall" + exCat] = {
-                            level: (levelOverallIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetOverall),
-                            text: exercise.achievementInfo.textOverall,
-                            progress: playerReps + "/" + exercise.achievementInfo.repsToGetOverall[levelOverallIterator],
-                            percent: percent,
-                        };
-                        break;
-                    }
-                }
-                else {
-                    continue;
-                }
-            }
-            for (let levelMonthIterator = 0; levelMonthIterator < exercise.achievementInfo.repsToGetMonthly.length; levelMonthIterator++) {
-                if (exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] > 0) {
-                    if (playerRepsMonthly >= exercise.achievementInfo.repsToGetMonthly[levelMonthIterator]) {
-                        newAchievements[player.name].earnedAchievements["Month" + exCat] = {
-                            level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
-                            text: exercise.achievementInfo.textMonthly,
-                            progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
-                            percent: 100,
-                        };
-
-                    }
-                    else {
-                        if (levelMonthIterator > 0) {
-                            endLastLevel = exercise.achievementInfo.repsToGetMonthly[levelMonthIterator - 1];
-                            endThisLevel = exercise.achievementInfo.repsToGetMonthly[levelMonthIterator];
-                            diff = endThisLevel - endLastLevel;
-                            repsThisLevel = playerRepsMonthly - endLastLevel;
-                            percent = repsThisLevel / diff * 100;
-                        }
-                        else {
-                            percent = playerRepsMonthly / exercise.achievementInfo.repsToGetMonthly[levelMonthIterator] * 100;
-                        }
-                        newAchievements[player.name].notEarnedAchievements["Month" + exCat] = {
-                            level: (levelMonthIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetMonthly),
-                            text: exercise.achievementInfo.textMonthly,
-                            progress: playerRepsMonthly + "/" + exercise.achievementInfo.repsToGetMonthly[levelMonthIterator],
-                            percent: percent,
-                        };
-                        break;
-                    }
-                }
-                else {
-                    continue;
-                }
-            }
-            for (let levelDayIterator = 0; levelDayIterator < exercise.achievementInfo.repsToGetDaily.length; levelDayIterator++) {
-                if (exercise.achievementInfo.repsToGetDaily[levelDayIterator] > 0) {
-                    if (repsToGetDaily >= exercise.achievementInfo.repsToGetDaily[levelDayIterator]) {
-                        newAchievements[player.name].earnedAchievements["Day" + exCat] = {
-                            level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
-                            text: exercise.achievementInfo.textDaily,
-                            progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
-                            percent: 100,
-                        };
-                    }
-                    else {
-                        if (levelDayIterator > 0) {
-                            endLastLevel = exercise.achievementInfo.repsToGetDaily[levelDayIterator - 1];
-                            endThisLevel = exercise.achievementInfo.repsToGetDaily[levelDayIterator];
-                            diff = endThisLevel - endLastLevel;
-                            repsThisLevel = repsToGetDaily - endLastLevel;
-                            percent = repsThisLevel / diff * 100;
-                        }
-                        else {
-                            percent = repsToGetDaily / exercise.achievementInfo.repsToGetDaily[levelDayIterator] * 100;
-                        }
-                        newAchievements[player.name].notEarnedAchievements["Day" + exCat] = {
-                            level: (levelDayIterator + 1) + "/" + calc.getNonZeroValuesOfArray(exercise.achievementInfo.repsToGetDaily),
-                            text: exercise.achievementInfo.textDaily,
-                            progress: repsToGetDaily + "/" + exercise.achievementInfo.repsToGetDaily[levelDayIterator],
-                            percent: percent,
-                        };
-                        break;
-                    }
-                }
-                else {
-                    continue;
-                }
-            }
-
-        }
-
-        //player achievements
-        var needArray;
-        var achievementName;
-        var achievementText;
-        var pointsThisLevel;
-        for (let achievementCategory in achievementList.content) {
-            if (achievementCategory === "pointAchievements") {
-                for (let pointAchievementCategory in achievementList.content[achievementCategory]) {
-                    if (pointAchievementCategory === "daily") {
-                        needArray = achievementList.content[achievementCategory][pointAchievementCategory].need;
-                        achievementName = achievementList.content[achievementCategory][pointAchievementCategory].name;
-                        achievementText = achievementList.content[achievementCategory][pointAchievementCategory].text;
-
-                        for (let levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
-                            if (this.registeredPlayers[player.name].points.dailyMax >= needArray[levelIterator]) {
-                                newAchievements[player.name].earnedAchievements[achievementName] = {
-                                    level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
-                                    text: achievementText,
-                                    progress: this.registeredPlayers[player.name].points.dailyMax + "/" + needArray[levelIterator],
-                                    percent: 100,
-                                };
-                            }
-                            else {
-                                if (levelIterator > 0) {
-                                    endLastLevel = needArray[levelIterator - 1];
-                                    endThisLevel = needArray[levelIterator];
-                                    diff = endThisLevel - endLastLevel;
-                                    pointsThisLevel = this.registeredPlayers[player.name].points.dailyMax - endLastLevel;
-                                    percent = pointsThisLevel / diff * 100;
-                                }
-                                else {
-                                    percent = this.registeredPlayers[player.name].points.dailyMax / needArray[levelIterator] * 100;
-                                }
-                                newAchievements[player.name].notEarnedAchievements[achievementName] = {
-                                    level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
-                                    text: achievementText,
-                                    progress: this.registeredPlayers[player.name].points.dailyMax.toFixed(2) + "/" + needArray[levelIterator],
-                                    percent: percent,
-                                };
-                                break;
-                            }
-                        }
-                    }
-                    if (pointAchievementCategory === "monthly") {
-                        needArray = achievementList.content[achievementCategory][pointAchievementCategory].need;
-                        achievementName = achievementList.content[achievementCategory][pointAchievementCategory].name;
-                        achievementText = achievementList.content[achievementCategory][pointAchievementCategory].text;
-
-                        for (let levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
-                            if (this.registeredPlayers[player.name].points.monthlyMax >= needArray[levelIterator]) {
-                                newAchievements[player.name].earnedAchievements[achievementName] = {
-                                    level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
-                                    text: achievementText,
-                                    progress: this.registeredPlayers[player.name].points.monthlyMax + "/" + needArray[levelIterator],
-                                    percent: 100,
-                                };
-                            }
-                            else {
-                                if (levelIterator > 0) {
-                                    endLastLevel = needArray[levelIterator - 1];
-                                    endThisLevel = needArray[levelIterator];
-                                    diff = endThisLevel - endLastLevel;
-                                    pointsThisLevel = this.registeredPlayers[player.name].points.monthlyMax - endLastLevel;
-                                    percent = pointsThisLevel / diff * 100;
-                                }
-                                else {
-                                    percent = this.registeredPlayers[player.name].points.monthlyMax / needArray[levelIterator] * 100;
-                                }
-                                newAchievements[player.name].notEarnedAchievements[achievementName] = {
-                                    level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
-                                    text: achievementText,
-                                    progress: this.registeredPlayers[player.name].points.monthlyMax.toFixed(2) + "/" + needArray[levelIterator],
-                                    percent: percent,
-                                };
-                                break;
-                            }
-                        }
-                    }
-                    if (pointAchievementCategory === "overall") {
-                        needArray = achievementList.content[achievementCategory][pointAchievementCategory].need;
-                        achievementName = achievementList.content[achievementCategory][pointAchievementCategory].name;
-                        achievementText = achievementList.content[achievementCategory][pointAchievementCategory].text;
-
-                        for (let levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
-                            if (this.registeredPlayers[player.name].points.total >= needArray[levelIterator]) {
-                                newAchievements[player.name].earnedAchievements[achievementName] = {
-                                    level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
-                                    text: achievementText,
-                                    progress: this.registeredPlayers[player.name].points.total + "/" + needArray[levelIterator],
-                                    percent: 100,
-                                };
-                            }
-                            else {
-                                if (levelIterator > 0) {
-                                    endLastLevel = needArray[levelIterator - 1];
-                                    endThisLevel = needArray[levelIterator];
-                                    diff = endThisLevel - endLastLevel;
-                                    pointsThisLevel = this.registeredPlayers[player.name].points.total - endLastLevel;
-                                    percent = pointsThisLevel / diff * 100;
-                                }
-                                else {
-                                    percent = this.registeredPlayers[player.name].points.total / needArray[levelIterator] * 100;
-                                }
-                                newAchievements[player.name].notEarnedAchievements[achievementName] = {
-                                    level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
-                                    text: achievementText,
-                                    progress: this.registeredPlayers[player.name].points.total.toFixed(2) + "/" + needArray[levelIterator],
-                                    percent: percent,
-                                };
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            if (achievementCategory === "winAchievements") {
-                for (let winAchievementCategory in achievementList.content[achievementCategory]) {
-                    if (winAchievementCategory === "daily") {
-                        needArray = achievementList.content[achievementCategory][winAchievementCategory].need;
-                        achievementName = achievementList.content[achievementCategory][winAchievementCategory].name;
-                        achievementText = achievementList.content[achievementCategory][winAchievementCategory].text;
-
-                        for (let levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
-                            if (this.dailyWins[player.name] >= needArray[levelIterator]) {
-                                newAchievements[player.name].earnedAchievements[achievementName] = {
-                                    level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
-                                    text: achievementText,
-                                    progress: this.dailyWins[player.name] + "/" + needArray[levelIterator],
-                                    percent: 100,
-                                };
-                            }
-                            else {
-                                if (levelIterator > 0) {
-                                    endLastLevel = needArray[levelIterator - 1];
-                                    endThisLevel = needArray[levelIterator];
-                                    diff = endThisLevel - endLastLevel;
-                                    pointsThisLevel = this.dailyWins[player.name] - endLastLevel;
-                                    percent = pointsThisLevel / diff * 100;
-                                }
-                                else {
-                                    percent = this.dailyWins[player.name] / needArray[levelIterator] * 100;
-                                }
-                                newAchievements[player.name].notEarnedAchievements[achievementName] = {
-                                    level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
-                                    text: achievementText,
-                                    progress: this.dailyWins[player.name] + "/" + needArray[levelIterator],
-                                    percent: percent,
-                                };
-
-                                break;
-                            }
-                        }
-                    }
-                    if (winAchievementCategory === "monthly") {
-                        needArray = achievementList.content[achievementCategory][winAchievementCategory].need;
-                        achievementName = achievementList.content[achievementCategory][winAchievementCategory].name;
-                        achievementText = achievementList.content[achievementCategory][winAchievementCategory].text;
-
-                        for (let levelIterator = 0; levelIterator < needArray.length; levelIterator++) {
-                            if (this.monthlyWins[player.name] >= needArray[levelIterator]) {
-                                newAchievements[player.name].earnedAchievements[achievementName] = {
-                                    level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
-                                    text: achievementText,
-                                    progress: this.monthlyWins[player.name] + "/" + needArray[levelIterator],
-                                    percent: 100,
-                                };
-                            }
-                            else {
-                                if (levelIterator > 0) {
-                                    endLastLevel = needArray[levelIterator - 1];
-                                    endThisLevel = needArray[levelIterator];
-                                    diff = endThisLevel - endLastLevel;
-                                    pointsThisLevel = this.monthlyWins[player.name] - endLastLevel;
-                                    percent = pointsThisLevel / diff * 100;
-                                }
-                                else {
-                                    percent = this.monthlyWins[player.name] / needArray[levelIterator] * 100;
-                                }
-                                newAchievements[player.name].notEarnedAchievements[achievementName] = {
-                                    level: (levelIterator + 1) + "/" + calc.getNonZeroValuesOfArray(needArray),
-                                    text: achievementText,
-                                    progress: this.monthlyWins[player.name] + "/" + needArray[levelIterator],
-                                    percent: percent,
-                                };
-
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (this.achievements[player.name] != undefined) {
-            let playerChanges = [];
-            let msg = "";
-
-            let earnedAchievements = newAchievements[player.name].earnedAchievements;
-            for (let achievementName in earnedAchievements) {
-                if (this.achievements[player.name].earnedAchievements[achievementName] != undefined) {
-                    //Exists, check level
-                    let oldLevel = Number(this.achievements[player.name].earnedAchievements[achievementName].level.split("/")[0]);
-                    let newLevel = Number(newAchievements[player.name].earnedAchievements[achievementName].level.split("/")[0]);
-                    if (oldLevel > newLevel) {
-                        //lost a level
-                        msg = player.name + " verringert Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
-                        playerChanges.push(msg);
-                    }
-                    else if (oldLevel < newLevel) {
-                        //gained a level
-                        msg = player.name + " erhöht Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
-                        playerChanges.push(msg);
-                    }
-                    else {
-                        //nothing happend..yet
-                    }
-                }
-                else {
-                    let oldLevel = 0;
-                    let newLevel = Number(newAchievements[player.name].earnedAchievements[achievementName].level.split("/")[0]);
-                    msg = player.name + " erhöht Level im Achievement " + achievementName + " von " + oldLevel + " auf " + newLevel;
-                    playerChanges.push(msg);
-                    //was not there before
-                }
-            }
-
-            for (let i = 0; i < playerChanges.length; i++) {
-                playerChanges[i] = playerChanges[i].replace("Overall", "Gesamt ");
-                playerChanges[i] = playerChanges[i].replace("Day", "Täglich ");
-                playerChanges[i] = playerChanges[i].replace("Month", "Monatlich ");
-                this.addToEventLog(playerChanges[i]);
-            }
-        }
-
-
-
-
-        this.achievements[player.name] = newAchievements[player.name];
-        let end = Date.now();
-        result(`checkForAchievements done in ${end - start} ms`);
-    }
-
-
-    getAchievementList(player, result) {
-        var achievementList = {};
-        var notEarnedAchievements = [];
-        var achievementIterator = 0;
-        var currentLevel = 0;
-
-        var earned = this.achievements[player.name].earnedAchievements;
-        var notEarned = this.achievements[player.name].notEarnedAchievements;
-
-        achievementIterator = 0;
-        for (let achievementCategory in notEarned) {
-            currentLevel = 0;
-
-
-            if (notEarned[achievementCategory].level.split("/").map(Number)[0] > 1) {
-                currentLevel = earned[achievementCategory].level;
-            }
-
-            notEarnedAchievements[achievementIterator] = {
-                achievementCategory: achievementCategory,
-                achievementProgress: notEarned[achievementCategory].progress,
-                achievementText: notEarned[achievementCategory].text,
-                achievementPercent: notEarned[achievementCategory].percent,
-                achievementLevel: currentLevel,
-                achievementNextLevel: notEarned[achievementCategory].level,
-
-            };
-            achievementIterator++;
-        }
-
-        for (let achievementCategory in earned) {
-            currentLevel = 0;
-
-
-
-            if (earned[achievementCategory].level.split("/").map(Number)[0] == earned[achievementCategory].level.split("/").map(Number)[1]) {
-                currentLevel = earned[achievementCategory].level;
-            }
-            else {
-
-                continue;
-            }
-
-            notEarnedAchievements[achievementIterator] = {
-                achievementCategory: achievementCategory,
-                achievementProgress: earned[achievementCategory].progress,
-                achievementText: earned[achievementCategory].text,
-                achievementPercent: earned[achievementCategory].percent,
-                achievementLevel: currentLevel,
-                achievementNextLevel: "-"
-
-            };
-            achievementIterator++;
-
-        }
-
-
-        var entry = {
-            notEarnedAchievements: notEarnedAchievements
-        };
-
-        achievementList[player.name] = entry;
-        result(achievementList);
-    }
-
-    getAchievementListInternal(player) {
-        var achievementList = {};
-        var notEarnedAchievements = [];
-        var achievementIterator = 0;
-        var currentLevel = 0;
-
-        var earned = this.achievements[player].earnedAchievements;
-        var notEarned = this.achievements[player].notEarnedAchievements;
-
-        achievementIterator = 0;
-        for (let achievementCategory in notEarned) {
-            currentLevel = 0;
-
-
-            if (notEarned[achievementCategory].level.split("/").map(Number)[0] > 1) {
-                currentLevel = earned[achievementCategory].level;
-            }
-
-            notEarnedAchievements[achievementIterator] = {
-                achievementCategory: achievementCategory,
-                achievementProgress: notEarned[achievementCategory].progress,
-                achievementText: notEarned[achievementCategory].text,
-                achievementPercent: notEarned[achievementCategory].percent,
-                achievementLevel: currentLevel,
-                achievementNextLevel: notEarned[achievementCategory].level,
-
-            };
-            achievementIterator++;
-        }
-
-        for (let achievementCategory in earned) {
-            currentLevel = 0;
-
-
-
-            if (earned[achievementCategory].level.split("/").map(Number)[0] == earned[achievementCategory].level.split("/").map(Number)[1]) {
-                currentLevel = earned[achievementCategory].level;
-            }
-            else {
-
-                continue;
-            }
-
-            notEarnedAchievements[achievementIterator] = {
-                achievementCategory: achievementCategory,
-                achievementProgress: earned[achievementCategory].progress,
-                achievementText: earned[achievementCategory].text,
-                achievementPercent: earned[achievementCategory].percent,
-                achievementLevel: currentLevel,
-                achievementNextLevel: "-"
-
-            };
-            achievementIterator++;
-
-        }
-
-
-        var entry = {
-            notEarnedAchievements: notEarnedAchievements
-        };
-
-        achievementList[player] = entry;
-        return achievementList;
-    }
-
-    calculateAchievementPoints(player, result) {
-        this.registeredPlayers[player.name].points.achievementPoints = 0
-        let achievementList = this.getAchievementListInternal(player.name)[player.name].notEarnedAchievements
-        //check worth of achievement
-        for (let i = 0; i < achievementList.length; i++) {
-            let achievementFactor = 0
-            let exerciseCounter = 0
-            let modifiedCategory = achievementList[i].achievementCategory.replace("Overall", "");
-            modifiedCategory = modifiedCategory.replace("Day", "");
-            modifiedCategory = modifiedCategory.replace("Month", "");
-
-            for (let exId in this.exerciseList) {
-                if (this.exerciseList[exId].achievementInfo.achievementCategory == modifiedCategory) {
-                    achievementFactor = achievementFactor + Number(this.exerciseList[exId].factor);
-                    exerciseCounter = exerciseCounter + 1
-                }
-            }
-
-            if (exerciseCounter > 0) {
-                achievementFactor = achievementFactor / exerciseCounter
-            }
-            else {
-                achievementFactor = 1
-            }
-
-
-            if (achievementList[i].achievementLevel != 0) {
-                let toAdd = achievementList[i].achievementLevel.split("/").map(Number)[0] * achievementFactor;
-                this.registeredPlayers[player.name].points.achievementPoints = this.registeredPlayers[player.name].points.achievementPoints + toAdd;
-            }
-
-        }
-        result("calculateAchievementPoints done")
-        //achievement points check end
-    }
-
-
     //************************************************************/
     //*******************Other Handling***************************/
     //************************************************************/
@@ -1290,29 +726,29 @@ class FitnessManager {
         this.addChallenge(new Challenge(challengeName, id, dateStart, dateEnd, toDo, creator))
     }
 
-    finishChallenge(id,result) {
+    finishChallenge(id, result) {
         this.challengeList[id].finished = true
         let winners = []
-        
+
         for (let playerName in this.challengeList[id].progress) {
             if (this.challengeList[id].progress[playerName].percent >= 100) {
                 winners.push(playerName)
             }
         }
         this.addToEventLog("#######################");
-        this.addToEventLog("Die Challenge '" + this.challengeList[id].name + "' wurde beendet." );
-        this.addToEventLog("Erfolgreich abgeschlossen haben:" );
+        this.addToEventLog("Die Challenge '" + this.challengeList[id].name + "' wurde beendet.");
+        this.addToEventLog("Erfolgreich abgeschlossen haben:");
 
-        for(let playerCount = 0;playerCount<winners.length;playerCount++){
+        for (let playerCount = 0; playerCount < winners.length; playerCount++) {
             this.addToEventLog(winners[playerCount]);
             this.registeredPlayers[winners[playerCount]].points.challengeWins += 1;
         }
-        
+
         this.addToEventLog("#######################");
-       
+
         this.needsUpload.dataStorage = true;
         result("challenge" + id + " finished")
-        
+
 
     }
 
@@ -1339,7 +775,7 @@ class FitnessManager {
         let html = ""
 
         if (Object.keys(this.challengeList).length > 0) {
-            for (let challengeId in this.challengeList) { 
+            for (let challengeId in this.challengeList) {
                 if (!this.challengeList[challengeId].finished) {
 
                     html = part1.replace("challengeId", challengeId.toString())
@@ -1360,7 +796,7 @@ class FitnessManager {
                         html = html.replace("PlayerName", common.HTMLColor(playerName, this.colorList[playerName]) + " (" + this.challengeList[challengeId].progress[playerName].done.toString() + ")")
                         html = html.replace("playerColor", this.colorList[playerName])
                     }
-                    partEnd = partEnd.replace("challengeId", "'"+challengeId.toString()+"'")
+                    partEnd = partEnd.replace("challengeId", "'" + challengeId.toString() + "'")
                     html = html + partEnd
                     this.challengeList[challengeId].html = html
                 }
@@ -1383,14 +819,6 @@ class FitnessManager {
             logFile.log(result, false, 0);
             this.setBestExerciserNumber(player, function (result) {
                 logFile.log(result, false, 0);
-                this.checkForAchievements(player, function (result) {
-                    logFile.log(result, false, 0);
-                    this.calculateAchievementPoints(player, function (result) {
-                        logFile.log(result, false, 0);
-                        let end = Date.now();
-                        playerStuffResult(`checkPlayerStuff done in ${end - start}`);
-                    }.bind(this));
-                }.bind(this));
             }.bind(this));
         }.bind(this));
 
@@ -1420,27 +848,15 @@ class FitnessManager {
             hours = "0" + hours.toString();
         }
 
-        let FirstDateEntry;
-        if (this.eventLog.time[0] == undefined) {
-            FirstDateEntry = common.createZeroDate();
-        }
-        else {
-            FirstDateEntry = common.createZeroDate(common.getDateFormat(this.eventLog.time[0].split(" | ")[0], "YYYY-MM-DD", "DD.MM.YYYY")).getTime();
-        }
-
-        let dateMinusThreeMonthsDate = common.createZeroDate(date);
-        dateMinusThreeMonthsDate.setMonth(date.getMonth() - 3);
-        let dateMinusThreeMonths = dateMinusThreeMonthsDate.getTime();
-
-        if (this.eventLog.time.length > 500 && FirstDateEntry < dateMinusThreeMonths) {
-            this.eventLog.time = this.eventLog.time.slice(1);
-            this.eventLog.msg = this.eventLog.msg.slice(1);
+        if ((this.eventLog.time.length > config.EVENTLOG_MAX || this.eventLog.msg.length > config.EVENTLOG_MAX)) {
+            this.eventLog.time = this.eventLog.time.slice(this.eventLog.time.length - config.EVENTLOG_MAX + 1);
+            this.eventLog.msg = this.eventLog.msg.slice(this.eventLog.msg.length - config.EVENTLOG_MAX + 1);
+            this.eventLog.html = ""
+            this.createHTMLEventLog()
         }
         this.eventLog.time.push(common.getDateFormat(date, "DD.MM.YYYY") + " | " + hours + ":" + minutes + ":" + seconds);
         this.eventLog.msg.push(msg);
         this.eventLog.html = this.eventLog.html + "<li>" + this.eventLog.time[this.eventLog.time.length - 1] + " - " + this.eventLog.msg[this.eventLog.msg.length - 1] + "</li>";
-
-
 
         this.needsUpload.dataStorage = true;
     }
@@ -1555,8 +971,8 @@ class FitnessManager {
         this.dailyDataExerciseCategory = {};
 
         var todayDate = common.createZeroDate();
-        var currentMonth;
-        var currentYear;
+        var currentMonth = 0;
+        var currentYear = 0;
 
         var sumPointsLastMonth = {};
         var monthlySum = {};
@@ -2328,7 +1744,9 @@ class FitnessManager {
             }
 
             this.registeredPlayers[playerName].points.cardioStrengthRatio = calc.calculateCardioStrengthPercents(this.registeredPlayers[playerName].points.cardio, this.registeredPlayers[playerName].points.strength);
+            
             this.registeredPlayers[playerName].points.toDoForFactor = (config.POINTS_FOR_POWERFACTOR * this.registeredPlayers[playerName].points.powerFactor) - last4Days[playerName];
+            
             if (this.registeredPlayers[playerName].points.toDoForFactor < 0) {
                 this.registeredPlayers[playerName].points.toDoForFactor = 0;
             }

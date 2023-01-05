@@ -82,11 +82,12 @@ function cyclicAquisition() {
 
 	logFile.logUploadTimer++;
 	FITNESS_MANAGER.uploadTimer++;
+	let currentDate = new Date()
 
 	//Check if logfile is uploadable
-	if (logFile.logUploadTimer === config.LOG_UPLOAD_INTERVAL) {
+	if (logFile.logUploadTimer >= config.LOG_UPLOAD_INTERVAL) {
 		logFile.logUploadTimer = 0;
-		if (logFile.size >= 3){
+		if (Number(logFile.size) >= 3) {
 			var date = new Date();
 			let strDate = date.getTime().toString();
 			dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME + strDate, function (result) {
@@ -94,12 +95,12 @@ function cyclicAquisition() {
 				logFile.newFile();
 			});
 		}
-		else{
+		else {
 			dropbox.uploadFile(DB_TOKEN, config.LOG_FILE_NAME, function (result) {
 				logFile.log(result.msg, false, result.sev);
 			});
 		}
-		
+
 	}
 
 	//Check if upload is pending
@@ -112,11 +113,11 @@ function cyclicAquisition() {
 
 	//Check for Challenge endings
 	for (let challengeId in FITNESS_MANAGER.challengeList) {
-		if (!FITNESS_MANAGER.challengeList[challengeId].finished){
+		if (!FITNESS_MANAGER.challengeList[challengeId].finished) {
 			let challengeDate = common.createZeroDate(FITNESS_MANAGER.challengeList[challengeId].endDate)
 			if (date >= challengeDate) {
 				//challenge ends
-				FITNESS_MANAGER.finishChallenge(challengeId,function (result) {
+				FITNESS_MANAGER.finishChallenge(challengeId, function (result) {
 					logFile.log(result, false, 0);
 				});
 			}
@@ -124,7 +125,10 @@ function cyclicAquisition() {
 	}
 
 	//NEW DAY CHECK
-	if (common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) >= 1 || FITNESS_MANAGER.featuredExerciseId == "") {
+	//common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) >= 1 
+	
+	
+	if ((currentDate.getHours() == 0 && currentDate.getMinutes() == 0 && currentDate.getSeconds() == 0) || FITNESS_MANAGER.featuredExerciseId == "") {
 		FITNESS_MANAGER.fullRefresh(function (result) {
 			let exName = FITNESS_MANAGER.featureNewExercise();
 			for (let playerName in USERS) {
@@ -144,7 +148,7 @@ function cyclicAquisition() {
 					}
 				}
 				else {
-					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00;
+					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor - 0.05;
 				}
 			}
 		});
@@ -303,7 +307,6 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		FITNESS_MANAGER.history = result.dataStorage.history;
 		FITNESS_MANAGER.registeredPlayers = result.dataStorage.registeredPlayers;
 		FITNESS_MANAGER.eventLog = result.dataStorage.eventLog;
-		FITNESS_MANAGER.achievements = result.dataStorage.achievements;
 		if (result.dataStorage.challengeList == undefined || Object.keys(result.dataStorage.challengeList).length === 0) {
 			FITNESS_MANAGER.challengeList = {};
 		}
@@ -312,8 +315,8 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		}
 
 
-
-		if (FITNESS_MANAGER.history == {}) {
+		
+		if (Object.keys(FITNESS_MANAGER.history).length === 0) {
 			// empty history
 			FITNESS_MANAGER.cleanExerciseList();
 		}
@@ -394,11 +397,11 @@ function AddPropertiesToExercises(result) {
 
 	for (let exId in FITNESS_MANAGER.exerciseList) {
 		let currentExercise = FITNESS_MANAGER.exerciseList[exId];
-
+		
 		//Directly
 		for (let iterator = 0; iterator < propertiesToAddDirectly.name.length; iterator++) {
 			if (currentExercise[propertiesToAddDirectly.name[iterator]] == undefined) {
-				if (propertiesToAddDirectly.value[iterator] == {}) {
+				if (Object.keys(propertiesToAddDirectly.value[iterator]).length === 0) {
 					currentExercise[propertiesToAddDirectly.name[iterator]] = {};
 				}
 				else {
@@ -460,7 +463,6 @@ function saveDataStorage() {
 		history: FITNESS_MANAGER.history,
 		registeredPlayers: FITNESS_MANAGER.registeredPlayers,
 		eventLog: FITNESS_MANAGER.eventLog,
-		achievements: FITNESS_MANAGER.achievements,
 		users: USERS,
 		fitnessManager: fitnessManagerStorage,
 		challengeList: FITNESS_MANAGER.challengeList
@@ -506,7 +508,7 @@ function startServer() {
 				logFile.log(endChallengeResult, false, 0);
 				uiRefresh();
 			});
-			
+
 		});
 		socket.on("hideExercise", function (data) {
 			FITNESS_MANAGER.hideExercise(data.id, newPlayer.name, function (hideExerciseResult) {
@@ -514,6 +516,17 @@ function startServer() {
 				uiRefresh();
 			});
 		});
+
+		socket.on("savePersonalPrefs", function (data) {
+			if (data.prefName === "hideInactivePlayers"){
+				USERS[newPlayer.name.toUpperCase()].hideInactivePlayers = data.value;
+			}
+
+			FITNESS_MANAGER.needsUpload.dataStorage = true;
+			
+		});
+
+		
 
 		socket.on("requestProfileUpdate", function (data) {
 			for (let key in data) {
@@ -624,16 +637,6 @@ function startServer() {
 				history: historyChunk,
 			});
 		});
-
-		socket.on("requestAchievements", function (data) {
-			logFile.log(newPlayer.name + " " + "requests Achievement update", false, 0);
-			FITNESS_MANAGER.getAchievementList(newPlayer, function (achievementList) {
-				SOCKET_LIST[newPlayer.id].emit('refreshAchievements', {
-					achievementList: achievementList,
-				});
-			});
-		});
-
 
 		socket.on("requestGraphUpdate", function (data) {
 			var graph;
@@ -829,7 +832,13 @@ function startServer() {
 					OnPlayerConnection(socket);
 					loadPlayer(checkPasswortResult.username, socket.id, function (loadPlayerResult) {
 						logFile.log(loadPlayerResult, false, 0);
-						socket.emit('signInResponse', { success: true, name: checkPasswortResult.username, profileData: { color: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].color, allowEmail: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].allowEmail, email: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].email } });
+						socket.emit('signInResponse', { success: true, 
+														name: checkPasswortResult.username, 
+														profileData: { color: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].color, 
+														allowEmail: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].allowEmail, 
+														email: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].email, 
+														hideInactivePlayers: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].hideInactivePlayers
+													} });
 					});
 
 					FITNESS_MANAGER.colorList[checkPasswortResult.username] = USERS[checkPasswortResult.username.toUpperCase()].color;
@@ -849,11 +858,22 @@ function startServer() {
 
 		//someone signs up
 		socket.on('SignUp', function (data) {
+			let secret_check = false
+			let username_check = false
+
 			if (data.username != undefined &&
 				data.username.length >= 3 &&
 				data.username != " " &&
 				data.username != "  " &&
-				data.username != "   ") {
+				data.username != "   "
+				) {
+					username_check = true				
+			}
+
+			if (data.secret === "thisisthespecialgagssecretandyoucantregisterwithoutit"){
+				secret_check = true
+			}
+			if (username_check && secret_check)	{
 
 				isUsernameTaken(data, function (res) {
 					if (res) {
@@ -871,7 +891,8 @@ function startServer() {
 
 			}
 			else {
-				socket.emit('alertMsg', { data: 'Username "' + data.username + '" ist nicht gültig.' });
+
+				socket.emit('alertMsg', { data: 'Username "' + data.username + '" ist nicht gültig oder Registrierungsschlüssel falsch.' });
 			}
 
 		});
@@ -949,10 +970,10 @@ function startServer() {
 			}
 			else {
 				for (let playerId in PLAYER_LIST) {
-					try{
+					try {
 						if (PLAYER_LIST[playerId].name == data.username) {
-							if(SOCKET_LIST[playerId] != undefined){
-								if(SOCKET_LIST[playerId].disconnect != undefined){
+							if (SOCKET_LIST[playerId] != undefined) {
+								if (SOCKET_LIST[playerId].disconnect != undefined) {
 									SOCKET_LIST[playerId].disconnect(true);
 									cb({
 										success: true,
@@ -961,11 +982,11 @@ function startServer() {
 								}
 							}
 							return;
-							}
 						}
-				catch(e){
-					logFile.log("user not available", true, 0);
-				}
+					}
+					catch (e) {
+						logFile.log("user not available", true, 0);
+					}
 				}
 				try {
 					if (USERS[data.username.toUpperCase()].password == undefined && pwHash.verify(data.password, USERS[data.username.toUpperCase()])) {

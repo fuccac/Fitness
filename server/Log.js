@@ -47,7 +47,7 @@ class Log {
                 if (err) {
                     console.log(`LogFile doesn't exist.`);
                 } else {
-                    this.size = stats.size/1000000;
+                    this.size = stats.size / 1000000;
                 }
             });
         }.bind(this));
@@ -56,8 +56,8 @@ class Log {
         }
     }
 
-    newFile(){
-        fs.writeFile(config.LOG_PATH, '', function(){
+    newFile() {
+        fs.writeFile(config.LOG_PATH, '', function () {
             this.size = 0;
         }.bind(this));
     }

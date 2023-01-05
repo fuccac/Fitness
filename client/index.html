@@ -17,6 +17,8 @@
 		<br><input id="input_Username" type="text" placeholder="Username"></input><br>
 		<label for="input_Password">Passwort:</label>
 		<br><input id="input_Password" type="password" placeholder="Passwort"></input><br><br>
+		<label for="input_regSecret">Registrierungsschlüssel:</label>
+		<br><input id="input_regSecret" type="password" placeholder="Passwort"></input><br><br>
 		<button id="button_SignIn">Anmelden</button>
 		<button id="button_SignUp">Registrieren</button>
 		<br><br>
@@ -27,7 +29,22 @@
 
 		<div id="div_changeLog" class="changelog">
 			<p class="MOTD">
-				MOTD: So gehet hin in Frieden und trainieret!
+				MOTD: EIN NEUES JAHR BEGINNT! 2023 - Bedenkt 
+			</p>
+			<p>
+				NEWS (05.01.2023) v1.92:
+				<li>
+					<span class="changeLog_Feature">RESET: </span>Reset für 2023
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Neue Berechnung des Powerfaktors: Bei Versagen -0.05 statt zurück auf 1
+				</li>
+				<li>
+					<span class="changeLog_Feature">Feature: </span>Zeige/Verberge inaktive Teilnehmer
+				</li>
+				<li>
+					<span class="changeLog_Bug">Bug: </span> Viele Interne Bugs gefixt/hinzugefügt
+				</li>				
 			</p>
 			<p>
 				NEWS (24.05.2022) v1.91:
@@ -381,6 +398,8 @@
 				<thead></thead>
 				<tbody></tbody>
 			</table>
+			<label for="input_HideInactive" class="checkboxLabel">Inaktive ausblenden</label>
+			<input id="input_HideInactive" type="checkbox" checked="false"></input>
 		</div>
 		<hr>
 		<div id="div_graph">
@@ -609,13 +628,6 @@
 		</div>
 	</div>
 	<div id="div_statistics" class="tab">
-		<div id="div_achievementsDone">
-			<table id="table_achievementsDone" class="std_table">
-				<thead></thead>
-				<tbody></tbody>
-			</table>
-		</div>
-		<hr>
 		<div id="div_exerciseStatistics">
 			<br>
 			<label for="select_statisticsExercise">Übung :</label>

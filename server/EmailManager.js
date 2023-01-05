@@ -40,7 +40,7 @@ class EmailManager {
             if (error) {
                 logFile.log(error, false, 2);
             } else {
-                logFile.log('Email sent: ' + info.response, false, 2);
+                logFile.log('Email sent: ' + info.response, false, 0);
             }
         });
     }
