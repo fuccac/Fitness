@@ -149,6 +149,9 @@ function cyclicAquisition() {
 				}
 				else {
 					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor - 0.05;
+					if (FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor < 0.95) {
+						FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 0.95
+					}
 				}
 			}
 		});
