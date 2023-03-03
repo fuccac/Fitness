@@ -6,6 +6,7 @@ on:
       - "**"
       - "!master"
       - "!dev"
+      - "!mr/docker"
 
 jobs:
   build-only:
@@ -15,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: docker build
-        run: docker build --file Dockerfile --tag ${{ github.repository }}:${{ github.sha }} .
+        run: docker build --file Dockerfile --tag fitness:${{ github.sha }} .
       # - name: trivy scan
       #   uses: aquasecurity/trivy-action@master
       #   with:
