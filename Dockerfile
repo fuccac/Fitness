@@ -56,7 +56,7 @@ WORKDIR /app
 # copy only required files
 COPY --chown=node:node --from=builder /app/client /app/client
 COPY --chown=node:node --from=builder /app/node_modules /app/node_modules
-COPY --chown=node:node --from=builder /app/saves/config/achievementList.json /app/saves/config/achievementList.json
+# COPY --chown=node:node --from=builder /app/saves/config/achievementList.json /app/saves/config/achievementList.json
 COPY --chown=node:node --from=builder /app/server /app/server
 COPY --chown=node:node --from=builder /app/app.js /app/app.js
 
