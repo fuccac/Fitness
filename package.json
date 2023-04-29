@@ -15,7 +15,7 @@
     "nodemailer": "^6.3.0",
     "password-hash": "^1.2.2",
     "popper.js": "^1.15.0",
-    "socket.io": "^2.4.1"
+    "socket.io": "^2.5.0"
   },
   "engines": {
     "node": "10.15.0"
