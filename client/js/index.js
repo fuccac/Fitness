@@ -106,7 +106,10 @@ var png_timer = document.getElementById('png_timer')
 
 var SOCKET = io();
 var LOGIN_COOKIE = getCookie("loginCookie").split("#")[0];
+
+console.log("LOGIN_COOKIE: " + LOGIN_COOKIE);
 Name = getCookie("loginCookie").split("#")[1];
+console.log("Name: " + Name);
 var PACE_UNITS = "";
 var PACE_INVERT = "";
 var RUNTIME_CONFIG = {
@@ -2094,16 +2097,20 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
 
 //autologin
-if (LOGIN_COOKIE != "") {
-    SOCKET.emit('SignIn', { loginToken: LOGIN_COOKIE, username: Name, password: input_Password.value, remember: input_RememberMe.checked });
-    if (Name.toLowerCase() != "caf") {
-        $("#adminInput_repsToGetOverall").prop("disabled", true);
-        $("#adminInput_repsToGetDaily").prop("disabled", true);
-        $("#adminInput_repsToGetMonthly").prop("disabled", true);
-        $("#adminInput_achievementCategory").prop("disabled", true);
-        $("#adminSelect_AchievementExercise").prop("disabled", true);
-        $("#adminButton_saveAchievement").prop("disabled", true);
+SOCKET.on("connect", () => {
+    if (LOGIN_COOKIE != "") {
+        console.log("emit SignIn with LOGIN_COOKIE");
+        SOCKET.emit('SignIn', { loginToken: LOGIN_COOKIE, username: Name, password: input_Password.value, remember: input_RememberMe.checked });
+        if (Name.toLowerCase() != "caf") {
+            $("#adminInput_repsToGetOverall").prop("disabled", true);
+            $("#adminInput_repsToGetDaily").prop("disabled", true);
+            $("#adminInput_repsToGetMonthly").prop("disabled", true);
+            $("#adminInput_achievementCategory").prop("disabled", true);
+            $("#adminSelect_AchievementExercise").prop("disabled", true);
+            $("#adminButton_saveAchievement").prop("disabled", true);
+        }
     }
-}
+});
+
 
 
