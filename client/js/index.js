@@ -106,7 +106,10 @@ var png_timer = document.getElementById('png_timer')
 
 var SOCKET = io();
 var LOGIN_COOKIE = getCookie("loginCookie").split("#")[0];
+
+console.log("LOGIN_COOKIE: " + LOGIN_COOKIE);
 Name = getCookie("loginCookie").split("#")[1];
+console.log("Name: " + Name);
 var PACE_UNITS = "";
 var PACE_INVERT = "";
 var RUNTIME_CONFIG = {
@@ -524,6 +527,7 @@ initialize();
 *******************************************************************************************************************
 ******************************************************************************************************************/
 SOCKET.on('configValues', function (data) {
+    console.log("configValues", data);
     PACE_UNITS = data.paceUnits;
     PACE_INVERT = data.paceInvert;
     var paceUnitsArray = PACE_UNITS.split(";");
@@ -536,10 +540,12 @@ SOCKET.on('configValues', function (data) {
 
 
 SOCKET.on('refreshExerciseList', function (data) {
+    console.log("refreshExerciseList", data);
     generateExerciseList(data);
 });
 
 SOCKET.on('signInResponse', function (data) {
+    console.log("signInResponse", data);
     if (data.success) {
         div_login.style.display = "none";
         Name = data.name;
@@ -563,6 +569,7 @@ SOCKET.on('signInResponse', function (data) {
 });
 
 SOCKET.on('signUpResponse', function (data) {
+    console.log("signUpResponse", data);
     if (data.success) {
         alert("Sign Up successful");
     }
@@ -571,26 +578,31 @@ SOCKET.on('signUpResponse', function (data) {
 });
 
 SOCKET.on('alertMsg', function (data) {
+    console.log("alertMsg", data);
     alert(data.data);
 });
 
 SOCKET.on('loginToken', function (data) {
+    console.log("loginToken", data);
     setCookie("loginCookie", data.data + "#" + Name, 1);
 });
 
 
 
 SOCKET.on('refreshEventLog', function (data) {
+    console.log("refreshEventLog", data);
     generateEventLog(data);
 });
 
 SOCKET.on("refreshHistory", function (data) {
+    console.log("refreshHistory", data);
     fromDate = common.createZeroDate(input_historyFromDate.value);
     toDate = common.createZeroDate(input_historyToDate.value);
     generateHistoryList(data, table_exerciseHistory, true, select_historyShowName.value, fromDate, toDate);
 });
 
 SOCKET.on("refreshGraph", function (data) {
+    console.log("refreshGraph", data);
     var border = 2;
     if (document.getElementById("canvas_graphHistory")) {
         canvas_graphHistory = document.getElementById("canvas_graphHistory");
@@ -606,6 +618,7 @@ SOCKET.on("refreshGraph", function (data) {
 });
 
 SOCKET.on("refreshExerciseGraph", function (data) {
+    console.log("refreshExerciseGraph", data);
     var border = 2;
     if (document.getElementById("canvas_graphExercise")) {
         canvas_graphExercise = document.getElementById("canvas_graphExercise");
@@ -621,6 +634,7 @@ SOCKET.on("refreshExerciseGraph", function (data) {
 });
 
 SOCKET.on("refresh", function (data) {
+    console.log("refresh", data);
     var selIndex = select_historyShowName.selectedIndex;
     select_historyShowName.innerHTML = "";
     for (var names in data.playerList) {
@@ -645,6 +659,7 @@ SOCKET.on("refresh", function (data) {
 });
 
 SOCKET.on("refreshExerciseStatistics", function (data) {
+    console.log("refreshExerciseStatistics", data);
     paragraph_statisticsExercise.innerHTML = "";
     for (var key in data) {
         paragraph_statisticsExercise.innerHTML += " | " + common.HTMLBold(common.translate(key)) + ": " + common.translate(data[key]);
@@ -652,6 +667,7 @@ SOCKET.on("refreshExerciseStatistics", function (data) {
 });
 
 SOCKET.on("sendAchievementDataForExercise", function (data) {
+    console.log("sendAchievementDataForExercise", data);
 
     $("#adminInput_repsToGetOverall").val(data.overall.join(","));
     $("#adminInput_repsToGetDaily").val(data.daily.join(","));
@@ -660,6 +676,7 @@ SOCKET.on("sendAchievementDataForExercise", function (data) {
 });
 
 SOCKET.on("OnlineStatus", function (data) {
+    console.log("OnlineStatus", data);
     let strOnlineMsg = "Online: ";
 
     for (let name in data.online) {
@@ -2094,16 +2111,20 @@ function exerciseTableBodyRowClick(bodyRow, data) {
 
 
 //autologin
-if (LOGIN_COOKIE != "") {
-    SOCKET.emit('SignIn', { loginToken: LOGIN_COOKIE, username: Name, password: input_Password.value, remember: input_RememberMe.checked });
-    if (Name.toLowerCase() != "caf") {
-        $("#adminInput_repsToGetOverall").prop("disabled", true);
-        $("#adminInput_repsToGetDaily").prop("disabled", true);
-        $("#adminInput_repsToGetMonthly").prop("disabled", true);
-        $("#adminInput_achievementCategory").prop("disabled", true);
-        $("#adminSelect_AchievementExercise").prop("disabled", true);
-        $("#adminButton_saveAchievement").prop("disabled", true);
+SOCKET.once("connect", () => {
+    if (LOGIN_COOKIE != "") {
+        console.log("emit SignIn with LOGIN_COOKIE");
+        SOCKET.emit('SignIn', { loginToken: LOGIN_COOKIE, username: Name, password: input_Password.value, remember: input_RememberMe.checked });
+        if (Name.toLowerCase() != "caf") {
+            $("#adminInput_repsToGetOverall").prop("disabled", true);
+            $("#adminInput_repsToGetDaily").prop("disabled", true);
+            $("#adminInput_repsToGetMonthly").prop("disabled", true);
+            $("#adminInput_achievementCategory").prop("disabled", true);
+            $("#adminSelect_AchievementExercise").prop("disabled", true);
+            $("#adminButton_saveAchievement").prop("disabled", true);
+        }
     }
-}
+});
+
 
 

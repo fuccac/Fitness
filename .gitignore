@@ -1,3 +1,5 @@
 /saves/*.json
 /saves/*.txt
 saves/.dropbox
+.env
+node_modules

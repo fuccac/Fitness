@@ -855,7 +855,7 @@ function startServer() {
 				else {
 					socket.emit('signInResponse', { success: false, name: checkPasswortResult.username });
 				}
-				if (data.remember) {
+				if (data.remember && USERS[checkPasswortResult.username.toUpperCase()]) {
 					socket.emit('loginToken', { data: USERS[checkPasswortResult.username.toUpperCase()].loginToken });
 				}
 

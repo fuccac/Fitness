@@ -11,7 +11,7 @@ var Log = require("./Log");
 var Config = require("./Config");
 
 
-var achievementList = require("../saves/config/achievementList.json");
+// var achievementList = require("../saves/config/achievementList.json");
 
 var logFile = new Log();
 var calc = new Calc();

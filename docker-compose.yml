@@ -1,0 +1,33 @@
+version: "3.4"
+services:
+  service:
+    build:
+      context: .
+      target: development
+    ports:
+      - "2000:2000" # development
+      - "9229:9229" # profiler
+    working_dir: &PROJECT_ROOT_DIR /app
+    # linux permissions: we must explicitly run as the node user
+    user: node
+    volumes:
+      # mount working directory
+      # https://docs.docker.com/docker-for-mac/osxfs-caching/#delegated
+      # the container’s view is authoritative (permit delays before updates on the container appear in the host)
+      - .:/app:delegated
+
+    environment:
+      # You may set these in the .gitignored local .env file
+      # See .env.sample
+      PROXY_MODE: ${PROXY_MODE}
+      DB_TOKEN: ${DB_TOKEN}
+      GAGS_USERNAME: ${GAGS_USERNAME}
+      GAGS_PASSWORD: ${GAGS_PASSWORD}
+
+    # Overrides default command so things don't shut down after the process ends.
+    command:
+      - /bin/sh
+      - -c
+      - |
+        git config --global --add safe.directory /app
+        while sleep 1000; do :; done
