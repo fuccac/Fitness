@@ -1,5 +1,13 @@
 # https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
-name: Create and publish fitness
+name: Create, publish and deploy project
+
+# Deployment requires the following secrets:
+# Kubernetes contexts:
+# KUBE_CONFIG_DEV
+# KUBE_CONFIG_PROD
+# Tailscale:
+# TS_OAUTH_CLIENT_ID
+# TS_OAUTH_SECRET
 
 on:
   push:
@@ -7,14 +15,13 @@ on:
     branches:
       - "master"
       - "dev"
-      - "mr/docker"
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: majodev/fitness
 
 jobs:
-  build-and-push-image:
+  build-publish-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -42,5 +49,32 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Connect to tailscale network
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Set image on dev cluster
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' }}
+        uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DEV }}
+          NAMESPACE: fitness-dev
+        with:
+          args: -n ${{ env.NAMESPACE }} set image deployment/app app=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Set image on prod cluster
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_PROD }}
+          NAMESPACE: fitness-prod
+        with:
+          args: -n ${{ env.NAMESPACE }} set image deployment/app app=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
