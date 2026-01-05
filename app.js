@@ -126,8 +126,8 @@ function cyclicAquisition() {
 
 	//NEW DAY CHECK
 	//common.daysBetween(date, FITNESS_MANAGER.featuredExerciseDate) >= 1 
-	
-	
+
+
 	if ((currentDate.getHours() == 0 && currentDate.getMinutes() == 0 && currentDate.getSeconds() == 0) || FITNESS_MANAGER.featuredExerciseId == "") {
 		FITNESS_MANAGER.fullRefresh(function (result) {
 			let exName = FITNESS_MANAGER.featureNewExercise();
@@ -138,23 +138,29 @@ function cyclicAquisition() {
 			}
 
 			//check if players have done something last 5 days
+
 			for (let playerName in FITNESS_MANAGER.registeredPlayers) {
-				if (FITNESS_MANAGER.registeredPlayers[playerName].points.last5Days >= (config.POINTS_FOR_POWERFACTOR * FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor)) {
-					if (FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor == undefined) {
-						FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.01;
+				if (config.POWER_FACTOR_ACTIVE) {
+					if (FITNESS_MANAGER.registeredPlayers[playerName].points.last5Days >= (config.POINTS_FOR_POWERFACTOR * FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor)) {
+						if (FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor == undefined) {
+							FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.01;
+						}
+						else {
+							FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor + 0.01;
+						}
 					}
 					else {
-						FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor + 0.01;
+						FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor - 0.05;
+
+					}
+					if (FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor < 0.95) {
+						FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 0.95
+					}
+					if (FITNESS_MANAGER.registeredPlayers[playerName].points.total === 0) {
+						FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00
 					}
 				}
 				else {
-					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor - 0.05;
-					
-				}
-				if (FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor < 0.95) {
-					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 0.95
-				}
-				if (FITNESS_MANAGER.registeredPlayers[playerName].points.total === 0){
 					FITNESS_MANAGER.registeredPlayers[playerName].points.powerFactor = 1.00
 				}
 			}
@@ -322,7 +328,7 @@ function loadFitnessManager(fitnessManagerLoadingResult) {
 		}
 
 
-		
+
 		if (Object.keys(FITNESS_MANAGER.history).length === 0) {
 			// empty history
 			FITNESS_MANAGER.cleanExerciseList();
@@ -404,7 +410,7 @@ function AddPropertiesToExercises(result) {
 
 	for (let exId in FITNESS_MANAGER.exerciseList) {
 		let currentExercise = FITNESS_MANAGER.exerciseList[exId];
-		
+
 		//Directly
 		for (let iterator = 0; iterator < propertiesToAddDirectly.name.length; iterator++) {
 			if (currentExercise[propertiesToAddDirectly.name[iterator]] == undefined) {
@@ -525,15 +531,15 @@ function startServer() {
 		});
 
 		socket.on("savePersonalPrefs", function (data) {
-			if (data.prefName === "hideInactivePlayers"){
+			if (data.prefName === "hideInactivePlayers") {
 				USERS[newPlayer.name.toUpperCase()].hideInactivePlayers = data.value;
 			}
 
 			FITNESS_MANAGER.needsUpload.dataStorage = true;
-			
+
 		});
 
-		
+
 
 		socket.on("requestProfileUpdate", function (data) {
 			for (let key in data) {
@@ -839,13 +845,16 @@ function startServer() {
 					OnPlayerConnection(socket);
 					loadPlayer(checkPasswortResult.username, socket.id, function (loadPlayerResult) {
 						logFile.log(loadPlayerResult, false, 0);
-						socket.emit('signInResponse', { success: true, 
-														name: checkPasswortResult.username, 
-														profileData: { color: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].color, 
-														allowEmail: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].allowEmail, 
-														email: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].email, 
-														hideInactivePlayers: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].hideInactivePlayers
-													} });
+						socket.emit('signInResponse', {
+							success: true,
+							name: checkPasswortResult.username,
+							profileData: {
+								color: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].color,
+								allowEmail: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].allowEmail,
+								email: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].email,
+								hideInactivePlayers: USERS[PLAYER_LIST[socket.id].name.toUpperCase()].hideInactivePlayers
+							}
+						});
 					});
 
 					FITNESS_MANAGER.colorList[checkPasswortResult.username] = USERS[checkPasswortResult.username.toUpperCase()].color;
@@ -873,14 +882,14 @@ function startServer() {
 				data.username != " " &&
 				data.username != "  " &&
 				data.username != "   "
-				) {
-					username_check = true				
+			) {
+				username_check = true
 			}
 
-			if (data.secret === "thisisthespecialgagssecretandyoucantregisterwithoutit"){
+			if (data.secret === "thisisthespecialgagssecretandyoucantregisterwithoutit") {
 				secret_check = true
 			}
-			if (username_check && secret_check)	{
+			if (username_check && secret_check) {
 
 				isUsernameTaken(data, function (res) {
 					if (res) {

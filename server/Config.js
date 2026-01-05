@@ -18,6 +18,7 @@ function Config() {
     this.LOG_PATH = "./saves/log.txt";
     this.RECALCULATE_HISTORY_ON_CHANGES = 0;
     this.POINTS_FOR_POWERFACTOR = 500;
+    this.POWER_FACTOR_ACTIVE = 0;
     this.EVENTLOG_MAX = 1200;
 }
 
