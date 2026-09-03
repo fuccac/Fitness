@@ -15,7 +15,8 @@
         --tab_labelWidth: 10em;
         --mainButtonWidth: 100px;
         --mainButtonHeight: 30px;
-        --tableFontsize:11px
+        --tableFontsize:11px;
+        --icon-info: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4a1.25 1.25 0 1 1 0 2.5A1.25 1.25 0 0 1 12 6zm2 12h-4v-2h1v-4h-1v-2h3v6h1v2z'/%3E%3C/svg%3E");
     }
   
 @media only screen and (max-width: 991px) {
@@ -36,7 +37,7 @@
         --tab_labelWidth: 10em;
         --mainButtonWidth: 100px;
         --mainButtonHeight: 30px;
-        --tableFontsize:10px
+        --tableFontsize:10px;
     }
   }
 
@@ -110,8 +111,33 @@ button:hover {
     align-self: center;
 }
 
+.legal-info {
+    overflow-y: auto;
+}
+
+.tab .legal-info__content {
+    box-sizing: border-box;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.5;
+}
+
+.tab .legal-info__content h1,
+.tab .legal-info__content h2 {
+    color: rgb(0, 51, 0);
+}
+
+.tab .legal-info__content h2 {
+    margin-top: 1.5rem;
+}
+
+.tab .legal-info__content a {
+    color: inherit;
+}
+
 #div_changeLog {
-    height: 70%;
+    height: calc(100vh - var(--height-div-login-form) - 60px);
     overflow-y: scroll;
 }
 
@@ -140,7 +166,7 @@ button:hover {
     background-color: var(--mainColor);
     border: 1px solid var(--mainBorderColor);
     padding-left: 8px;
-    height: 90vh;
+    height: calc(100vh - 20px);
 }
 
 .tab div {
@@ -417,6 +443,11 @@ button:hover {
     color: rgb(42, 136, 29);
 }
 
+.changeLog_Maintenance {
+    font-weight: bold;
+    color: rgb(136, 86, 29);
+}
+
 .changeLog_Bug {
     font-weight: bold;
     color: rgb(179, 49, 49);
@@ -538,4 +569,12 @@ button:hover {
 .timerimage{
     width: 2%;
     height: 2%;
+}
+
+.v-hidden {
+    visibility: hidden !important;
+}
+
+.d-none {
+    display: none !important;
 }

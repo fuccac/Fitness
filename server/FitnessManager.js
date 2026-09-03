@@ -329,6 +329,15 @@ class FitnessManager {
     //*******************History Handling*************************/
     //************************************************************/
 
+    getHistoryEntryOwner(id, date) {
+        const day = this.history[date];
+        if (!day || !Array.isArray(day.id)) {
+            return null;
+        }
+        const index = day.id.findIndex(entryId => entryId === id);
+        return index === -1 ? null : day.playerName[index];
+    }
+
     addEmptyHistoryEntry(date) {
 
         date = common.createZeroDate(date);

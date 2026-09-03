@@ -2,28 +2,75 @@
 <html lang="de">
 
 <head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>💪 G A G S 💪</title>
+	<link rel="icon" type="image/png" href="/client/pics/fav.png">
+	<link rel="stylesheet" href="style.css" />
+	<noscript>
+		For full functionality of this site it is necessary to enable JavaScript.
+		Here are the <a href="https://www.enablejavascript.io/">
+		instructions how to enable JavaScript in your web browser</a>.
+	</noscript>
 </head>
-<link rel="icon" 
-      type="image/png" 
-      href="/client/pics/fav.png">
 
 <body>
-	<link rel="stylesheet" href="style.css" />
-
 	<div id="div_login">
-		<h1>Welcome to <b>GAGS</b> (Geile App zum gemeinsamen Sporteln)</h1> <br><br>
-		<label for="input_Username">Name:</label>
-		<br><input id="input_Username" type="text" placeholder="Username"></input><br>
-		<label for="input_Password">Passwort:</label>
-		<br><input id="input_Password" type="password" placeholder="Passwort"></input><br><br>
-		<label for="input_regSecret">Registrierungsschlüssel:</label>
-		<br><input id="input_regSecret" type="password" placeholder="Passwort"></input><br><br>
-		<button id="button_SignIn">Anmelden</button>
-		<button id="button_SignUp">Registrieren</button>
-		<br><br>
-		<label for="input_RememberMe">Login merken</label>
-		<input id="input_RememberMe" type="checkbox" checked></input>
+		<div id="div_login--form">
+			<h1>Welcome to <b>GAGS</b> (Geile App zum gemeinsamen Sporteln)</h1>
+			<form class="v-hidden" id="login__form" method="post" action="/signin">
+				<div
+					style="
+						color: #721c24;
+						background-color: #f8d7da;
+						border-color: #f5c6cb;
+						position: relative;
+						padding: 0.75rem 1.25rem;
+						margin-bottom: 1rem;
+						border: 1px solid transparent;
+						border-radius: 0.25rem;
+						width: fit-content;
+					"
+					class="d-none"
+					id="login__form-error"
+				>
+					Fehler beim Einloggen. Bitte versuchen Sie es erneut.
+				</div>
+
+				<div style="color: #0c5460;
+							background-color: #d1ecf1;
+							border-color: #bee5eb;position: relative;
+							padding: .75rem 1.25rem;
+							margin-bottom: 1rem;
+							border: 1px solid transparent;
+							border-radius: .25rem;
+							width: fit-content;
+					"
+				>
+					<h3 style="display:flex; gap: 0.2rem">
+						<span style="background-image: var(--icon-info);background-color: transparent;color: #333;outline: none;width: 16px;height: 16px;display: inline-block"></span> Migration
+					</h3>
+					<p style="max-width: 500px;">Um die aktuellen Daten zu laden, bei der Neu-Registrierung bei "Anzeige Name" den bisherigen Usernamen verwenden.
+						Dadurch sollten automatisch die bisherigen Daten geladen werden. Bei Fehlern bitte an den Admin wenden.
+					</p>
+				</div>
+				<label for="login__form-btn">Einloggen oder Registrieren</label>
+				<button id="login__form-btn" type="submit">Login</button>
+			</form>
+
+			<div class="v-hidden" id="account-info">
+				<div>
+					<strong>Eingeloggt als:</strong><span class="d-none" id="account-info__id"></span>
+					<span id="account-info__email"></span>
+					<span class="d-none" id="account-info__username"></span>
+					<form id="logout__form" method="post" action="/signout">
+						<button id="logout__form-btn" type="submit">logout</button>
+					</form>
+				</div>
+			</div>
+
+			<a id="button_showLegalInfo" href="#">Impressum</a>
+		</div>
 
 		<hr>
 
@@ -32,373 +79,474 @@
 				MOTD: EIN NEUES JAHR BEGINNT! 2026 - Bedenkt 
 			</p>
 			<p>
+				NEWS (01.09.2026) v2.00:
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Neues Authentication System (App Ready)
+					</li>	
+					<li>
+						<span class="changeLog_Maintenance">Maintenance: </span>Upgrade NodeJS
+					</li>
+				</ul>
+			</p>
+			<p>
 				NEWS (05.01.2026) v1.93:
-				<li>
-					<span class="changeLog_Feature">RESET: </span>Reset für 2025
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Entfernung des Powerfaktors
-				</li>	
+				<ul>
+					<li>
+						<span class="changeLog_Feature">RESET: </span>Reset für 2025
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Entfernung des Powerfaktors
+					</li>	
+				</ul>
 			</p>
 			<p>
 				NEWS (05.01.2023) v1.92:
-				<li>
-					<span class="changeLog_Feature">RESET: </span>Reset für 2023
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Neue Berechnung des Powerfaktors: Bei Versagen -0.05 statt zurück auf 1
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Zeige/Verberge inaktive Teilnehmer
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span> Viele Interne Bugs gefixt/hinzugefügt
-				</li>				
+				<ul>
+					<li>
+						<span class="changeLog_Feature">RESET: </span>Reset für 2023
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Neue Berechnung des Powerfaktors: Bei Versagen -0.05 statt zurück auf 1
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Zeige/Verberge inaktive Teilnehmer
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span> Viele Interne Bugs gefixt/hinzugefügt
+					</li>		
+				</ul>		
 			</p>
 			<p>
 				NEWS (24.05.2022) v1.91:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Aufgeräumte Tabelle - Rotes Todo, Rudern Berechnungsmethode
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span> Klettern, Yoga, Crash gefixt
-				</li>				
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Aufgeräumte Tabelle - Rotes Todo, Rudern Berechnungsmethode
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span> Klettern, Yoga, Crash gefixt
+					</li>		
+				</ul>		
 			</p>
 			<p>
 				NEWS (14.08.2021) v1.90:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Timerfunktion
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Berechnungsmethode Inlineskaten
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Grafische Überarbeitung der Achievements
-				</li>
-				
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Timerfunktion
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Berechnungsmethode Inlineskaten
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Grafische Überarbeitung der Achievements
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (08.07.2021) v1.89:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Diverse Separator eingefügt für bessere "Visuals".
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Erfolgspunktesystem eingeführt. (Verdient mit Erfolgen)
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Erste Testversion der Challenges eingeführt.
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>"Login Merken" funktioniert nun wie es soll.
-				</li>
-				<li>
-					<b>Usability: </b> Diverse CSS Anpassungen
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Diverse Separator eingefügt für bessere "Visuals".
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Erfolgspunktesystem eingeführt. (Verdient mit Erfolgen)
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Erste Testversion der Challenges eingeführt.
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>"Login Merken" funktioniert nun wie es soll.
+					</li>
+					<li>
+						<b>Usability: </b> Diverse CSS Anpassungen
+					</li>
+				</ul>
 				
 			</p>
 			<p>
 				NEWS (24.06.2020) v1.88:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Was man bis zum Powerfactorcheck noch tun muss steht nun in einer eigenen Spalte auf der Übersicht.
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Was man bis zum Powerfactorcheck noch tun muss steht nun in einer eigenen Spalte auf der Übersicht.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (26.05.2020) v1.87:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Season Wins werden anerkannt!
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Season Wins werden anerkannt!
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (04.12.2019) v1.86:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Neue Anzeigefunktion: 0-Punkte Accounts werden ausgeblendet. <br>
-					<BLOCKQUOTE>Wenn Letzte 5 Tage 0 ist gilt man als "inaktiv". <br>
-						Wenn Letzte 5 Tage >= 1500 ist wird man BLAU markiert. <br>
-						Wenn Letzte 5 Tage >=2500 ist wird man LILA markiert. <br>
-					</BLOCKQUOTE>
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Löschbutton funktioniert wieder in einer anderen Zeitzone.
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Paceberechnungen ohne Berechnungsmethode funktionieren wieder richtig.
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Neue Anzeigefunktion: 0-Punkte Accounts werden ausgeblendet. <br>
+						<BLOCKQUOTE>Wenn Letzte 5 Tage 0 ist gilt man als "inaktiv". <br>
+							Wenn Letzte 5 Tage >= 1500 ist wird man BLAU markiert. <br>
+							Wenn Letzte 5 Tage >=2500 ist wird man LILA markiert. <br>
+						</BLOCKQUOTE>
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Löschbutton funktioniert wieder in einer anderen Zeitzone.
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Paceberechnungen ohne Berechnungsmethode funktionieren wieder richtig.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (27.11.2019) v1.85:
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Gelöschte Übungen können keine Double Time Übungen mehr sein.
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Gelöschte Übungen können keine Double Time Übungen mehr sein.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (12.11.2019) v1.84:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Neue Berechnungsmethoden und "Auf einmal" Funktion (Checkbox) falls eine "#" Berechnungsmethode hinterlegt ist. Aktiviere die Checkbox, wenn die Übung hintereinander abgeschlossen wurde.
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Neue Berechnungsmethoden und "Auf einmal" Funktion (Checkbox) falls eine "#" Berechnungsmethode hinterlegt ist. Aktiviere die Checkbox, wenn die Übung hintereinander abgeschlossen wurde.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (06.11.2019) v1.83:
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Achievementlisten Bug bei mehr als 1 Person online.
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Achievementlisten Bug bei mehr als 1 Person online.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (05.11.2019) v1.82:
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Namen müssen mindestens 3 Zeichen haben.
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Refresh Anzeige.
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Berechnungsmethoden für individuelle Übungsberechnung
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Übungskommentare werden nach Youtube Links untersucht und in die Tabelle eingebettet.
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Namen müssen mindestens 3 Zeichen haben.
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Refresh Anzeige.
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Berechnungsmethoden für individuelle Übungsberechnung
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Übungskommentare werden nach Youtube Links untersucht und in die Tabelle eingebettet.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (31.10.2019) v1.81:
-				<li>
-					<span class="changeLog_Feature">RESET: </span>Alles wurde zurückgesetzt.
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Online Liste zeigt live an wer gerade Online ist.
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Achievement Maker: Achievements können (von mir)
-					ohne Serverneustart hinzugefügt werden.
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Diverse Bugs behoben, welche einen Betrieb ohne Initial Save
-					Files unmöglich machen.
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">RESET: </span>Alles wurde zurückgesetzt.
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Online Liste zeigt live an wer gerade Online ist.
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Achievement Maker: Achievements können (von mir)
+						ohne Serverneustart hinzugefügt werden.
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Diverse Bugs behoben, welche einen Betrieb ohne Initial Save
+						Files unmöglich machen.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (01.10.2019) v1.80:
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Anmeldung nicht möglich, falls eine weitere Instanz der App
-					mit dem selben Namen angemeldet ist.
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Anmeldung nicht möglich, falls eine weitere Instanz der App
+						mit dem selben Namen angemeldet ist.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (01.08.2019) v1.79:
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Die ausgeblendeten Übungen werden ordnungsgemäß
-					ausgeblendet.
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Die ausgeblendeten Übungen werden ordnungsgemäß
+						ausgeblendet.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (29.07.2019) v1.78:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Double Time: Jeden Tag wird eine neue Übung
-					ausgewählt, welche dann doppelt zählt!
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Neues Diagramm: Gruppenpunkte
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Profilseite wurde eingerichtet - dort wählt man
-					Profiltechnische Dinge aus.
-				</li>
-				<li>
-					<b>Usability: </b>Bessere Eventlogperformance und mehr Logspeicher
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Double Time: Jeden Tag wird eine neue Übung
+						ausgewählt, welche dann doppelt zählt!
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Neues Diagramm: Gruppenpunkte
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Profilseite wurde eingerichtet - dort wählt man
+						Profiltechnische Dinge aus.
+					</li>
+					<li>
+						<b>Usability: </b>Bessere Eventlogperformance und mehr Logspeicher
 
-				</li>
-				<li>
-					<b>Usability: </b>Manche Nachrichten im Eventlog werden ROT markiert für bessere Übersicht.
-				</li>
-				<li>
-					<b>Usability: </b>Persönliche Farbauswahl
-				</li>
-				<li>
-					<b>Usability: </b>Anzeige für kleinere Displays mittlels dynamischem CSS lesbarer gemacht.
+					</li>
+					<li>
+						<b>Usability: </b>Manche Nachrichten im Eventlog werden ROT markiert für bessere Übersicht.
+					</li>
+					<li>
+						<b>Usability: </b>Persönliche Farbauswahl
+					</li>
+					<li>
+						<b>Usability: </b>Anzeige für kleinere Displays mittlels dynamischem CSS lesbarer gemacht.
 
-				</li>
-				<li>
-					<b>Usability: </b>Eventlog wurde erweitert um 3 Monate und serverseitig generiert.
+					</li>
+					<li>
+						<b>Usability: </b>Eventlog wurde erweitert um 3 Monate und serverseitig generiert.
 
-				</li>
+					</li>
+				</ul>
 
 			</p>
 			<p>
 				NEWS (17.07.2019) v1.76:
 
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Einheitensystem erweitert
-					(min/km,min/m,Wdh/min,Wdh/sec) - für mehr Info Ing. Fuchs direkt ansprechen.
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Neues Diagramm im Statistik Tab
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Neue Buttons in Tab Übungen: "Ausblenden" und "Zeige
-					alle". Damit blendet man Übungen die uninteressant sind aus.
-				</li>
-				<li>
-					<b>Usability: </b>Löschen von eingetragenen Übungen funktioniert jetzt anders - Benutzerfreundlicher
-					mit einem "BIG DELETE BUTTON" in der Zeile.
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Einheitensystem erweitert
+						(min/km,min/m,Wdh/min,Wdh/sec) - für mehr Info Ing. Fuchs direkt ansprechen.
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Neues Diagramm im Statistik Tab
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Neue Buttons in Tab Übungen: "Ausblenden" und "Zeige
+						alle". Damit blendet man Übungen die uninteressant sind aus.
+					</li>
+					<li>
+						<b>Usability: </b>Löschen von eingetragenen Übungen funktioniert jetzt anders - Benutzerfreundlicher
+						mit einem "BIG DELETE BUTTON" in der Zeile.
 
-				</li>
-				<li>
-					<b>Usability: </b>Markierte Übungen werden anschaulicher markiert.
+					</li>
+					<li>
+						<b>Usability: </b>Markierte Übungen werden anschaulicher markiert.
 
-				</li>
-				<li>
-					<b>Usability: </b>Übungstabelle wird serverseitig vorsortiert und anders generiert - bessere
-					Performance (150ms statt 900ms)
-				</li>
-				<li>
-					<b>Usability: </b>Niemand liest dieses Changelog - aber Hauptsache deppat fragen.
-				</li>
+					</li>
+					<li>
+						<b>Usability: </b>Übungstabelle wird serverseitig vorsortiert und anders generiert - bessere
+						Performance (150ms statt 900ms)
+					</li>
+					<li>
+						<b>Usability: </b>Niemand liest dieses Changelog - aber Hauptsache deppat fragen.
+					</li>
+				</ul>
 
 			</p>
 			<p>
 				NEWS (08.07.2019) v1.71:
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Das Namesfeld im Historytab wird wieder ordnunggemäß
-					befüllt.
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Das Namesfeld im Historytab wird wieder ordnunggemäß
+						befüllt.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (04.07.2019) v1.68:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>"Login merken" funktioniert nun wie geplant. <-
-						FUNKTIONIERT NICHT </li> </p> <p>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>"Login merken" funktioniert nun wie geplant. <-
+							FUNKTIONIERT NICHT </li> </p> <p>
 
-						NEWS (03.07.2019) v1.67:
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Notfallfix - Manchmal crashed der Server beim entfernen der
-					letzten Übung eines Tages.
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Falsche Berechnung Tagesdiagramm (Cardio, Kraft)
-				</li>
-				<li>
-					<b>Sonstiges: </b>Usersavefilesänderung - keine Punkte mehr in persönlichen Savefiles speichern.
-				</li>
+							NEWS (03.07.2019) v1.67:
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Notfallfix - Manchmal crashed der Server beim entfernen der
+						letzten Übung eines Tages.
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Falsche Berechnung Tagesdiagramm (Cardio, Kraft)
+					</li>
+					<li>
+						<b>Sonstiges: </b>Usersavefilesänderung - keine Punkte mehr in persönlichen Savefiles speichern.
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (02.07.2019) v1.64:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Neues Diagramm: Tagesdaten (Linie)
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Cardio/Stärke Prozentuelle Aufteilung - Player Daten
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Um eine bereits gemachte Übung nochmal zu machen,
-					kann man sie in der History einfach anklicken und die Boxen werden befüllt.
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Markierungsindikation: Die Übung die für die
-					Bearbeitung ausgewählt ist wird ROT markiert in der Übungsliste.
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Der heutige Tag wurde im Graph abgeschnitten - korrigiert.
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Tage an denen NIEMAND etwas eingetragen haben werden nun im
-					Graph korrekt angezeigt
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Neues Diagramm: Tagesdaten (Linie)
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Cardio/Stärke Prozentuelle Aufteilung - Player Daten
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Um eine bereits gemachte Übung nochmal zu machen,
+						kann man sie in der History einfach anklicken und die Boxen werden befüllt.
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Markierungsindikation: Die Übung die für die
+						Bearbeitung ausgewählt ist wird ROT markiert in der Übungsliste.
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Der heutige Tag wurde im Graph abgeschnitten - korrigiert.
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Tage an denen NIEMAND etwas eingetragen haben werden nun im
+						Graph korrekt angezeigt
+					</li>
 
-				<li>
-					<b>Usability: </b>Standardauswahl beim Diagramm: "Alles", anstatt "Cardio", um Verwirrungen zu
-					vermeiden.
-				</li>
-				<li>
-					<b>Usability: </b>Diagrammkontrolle aufgeräumt - Dropdown statt Checkbox. Vorbereitet für zukünftige
-					Diagramme.
-				</li>
-				<li>
-					<b>Usability: </b>Hervorhebung der HEUTIGEN Punktzahl
-				</li>
-				<li>
-					<b>Sonstiges: </b>Unnütze On-Click Events entfernt..
-				</li>
-				<li>
-					<b>Sonstiges: </b>Changelog Neugestaltung
-				</li>
+					<li>
+						<b>Usability: </b>Standardauswahl beim Diagramm: "Alles", anstatt "Cardio", um Verwirrungen zu
+						vermeiden.
+					</li>
+					<li>
+						<b>Usability: </b>Diagrammkontrolle aufgeräumt - Dropdown statt Checkbox. Vorbereitet für zukünftige
+						Diagramme.
+					</li>
+					<li>
+						<b>Usability: </b>Hervorhebung der HEUTIGEN Punktzahl
+					</li>
+					<li>
+						<b>Sonstiges: </b>Unnütze On-Click Events entfernt..
+					</li>
+					<li>
+						<b>Sonstiges: </b>Changelog Neugestaltung
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (28.06.2019) v1.63:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Eventlog - Minimalistischer Chat
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Monatssiege
-				</li>
-				<li>
-					<b>Usability: </b>Chart Handling massiv optimiert - Cardio und Kraft Einteilung. Mehr
-					Nutzerfreundlichkeit, Button
-					entfernt.
-				</li>
-				<li>
-					<b>Sonstiges: </b>Nur noch 1 JSON File für alles. (Weniger Uploads, weniger Fehleranfällig)
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Eventlog - Minimalistischer Chat
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Monatssiege
+					</li>
+					<li>
+						<b>Usability: </b>Chart Handling massiv optimiert - Cardio und Kraft Einteilung. Mehr
+						Nutzerfreundlichkeit, Button
+						entfernt.
+					</li>
+					<li>
+						<b>Sonstiges: </b>Nur noch 1 JSON File für alles. (Weniger Uploads, weniger Fehleranfällig)
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (26.06.2019) v1.62:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Mehr Statistiken auf Erfolgseite
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span>User-Save-Files werden ordnungsgemäß geladen. (Die wurden
-					nur gepeichert bis jetzt - Hab die LoadUser
-					Funktion vergessen.)
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Monatsdurchschnitt wird korrekt berechnet.
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Monatsbestleistung wird korrekt berechnet.
-				</li>
-				<li>
-					<b>Sonstiges: </b>Hunderte Zeilen Useless-Code entfernt. Nur mehr eine Refreshfunktion, statt 1000.
-					Es sollte alles was
-					Save-Files verändert zügiger ablaufen.
-				</li>
-				<li>
-					<b>Sonstiges: </b>Achievements bekommen eigenes Save-File
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Mehr Statistiken auf Erfolgseite
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>User-Save-Files werden ordnungsgemäß geladen. (Die wurden
+						nur gepeichert bis jetzt - Hab die LoadUser
+						Funktion vergessen.)
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Monatsdurchschnitt wird korrekt berechnet.
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Monatsbestleistung wird korrekt berechnet.
+					</li>
+					<li>
+						<b>Sonstiges: </b>Hunderte Zeilen Useless-Code entfernt. Nur mehr eine Refreshfunktion, statt 1000.
+						Es sollte alles was
+						Save-Files verändert zügiger ablaufen.
+					</li>
+					<li>
+						<b>Sonstiges: </b>Achievements bekommen eigenes Save-File
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (21.06.2019) v1.61:
-				<li>
-					<b>Sonstiges: </b>Eventlog - Savefile Unterstützung - Maximal 50 Lines of Events
-				</li>
+				<ul>
+					<li>
+						<b>Sonstiges: </b>Eventlog - Savefile Unterstützung - Maximal 50 Lines of Events
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (19.06.2019) v1.60:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Erfolge für Tägliche, Monatliche und Gesamtpunkte
-					erweitert (Mehr Levels)
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Event Tab (Button Events), Sie an was die anderen
-					gemacht haben
-				</li>
-				<li>
-					<span class="changeLog_Bug">Bug: </span>Bugfixes die sowieso nur i mitkrieg
-				</li>
-
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Erfolge für Tägliche, Monatliche und Gesamtpunkte
+						erweitert (Mehr Levels)
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Event Tab (Button Events), Sie an was die anderen
+						gemacht haben
+					</li>
+					<li>
+						<span class="changeLog_Bug">Bug: </span>Bugfixes die sowieso nur i mitkrieg
+					</li>
+				</ul>
 			</p>
 			<p>
 				NEWS (18.06.2019) v1.59:
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Erfolge für Tägliche, Monatliche und Gesamtpunkte
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Erfolge für Tagessiege
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Balkendiagramm: Nutze die Checkbox auf der
-					Hauptseite!
-				</li>
-				<li>
-					<span class="changeLog_Feature">Feature: </span>Seite "Siege" - dort finden sich Tagessiege!
-				</li>
+				<ul>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Erfolge für Tägliche, Monatliche und Gesamtpunkte
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Erfolge für Tagessiege
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Balkendiagramm: Nutze die Checkbox auf der
+						Hauptseite!
+					</li>
+					<li>
+						<span class="changeLog_Feature">Feature: </span>Seite "Siege" - dort finden sich Tagessiege!
+					</li>
+				</ul>
 			</p>
+		</div>
+	</div>
+	<div id="div_legalInfo" class="tab legal-info">
+		<div class="legal-info__content">
+			<h1>Impressum</h1>
+			<p>Angaben gemäß <a href="https://www.ris.bka.gv.at/Dokument.wxe?Abfrage=Bundesnormen&Dokumentnummer=NOR40134353">Mediengesetz Austria §25</a>.</p>
+
+			<h2>Betreiber</h2>
+			<p>
+				<strong>Christian Fuchs</strong><br>
+				8313 Breitenfeld an der Rittschein<br>
+				Österreich
+			</p>
+
+			<h2>Kontakt</h2>
+			<p>E-Mail: <a id="legal-email-contact" href="mailto:[E-Mail-Adresse]">[E-Mail-Adresse]</a></p>
+
+			<h2>Haftung für Inhalte</h2>
+			<p>
+				Die Inhalte dieser Anwendung wurden mit größtmöglicher Sorgfalt erstellt. Für die
+				Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr
+				übernommen werden.
+			</p>
+
+			<h2>Haftung für Links</h2>
+			<p>
+				Diese Anwendung kann Links zu externen Websites Dritter enthalten. Auf deren Inhalte
+				besteht kein Einfluss. Für die Inhalte der verlinkten Seiten ist stets der jeweilige
+				Betreiber verantwortlich.
+			</p>
+
+			<h2>Cookies</h2>
+			<p>
+				Diese Anwendung verwendet nur funktionelle Cookies, welche keine Zustimmung laut DSGVO benötigen.
+			</p>
+
+			<h2>Löschung des Accounts</h2>
+			<p>
+				Bitte ein formloses E-Mail an den oben angegebenen Kontakt mit dem Betreff "Löschen" von der registrierten E-Mail Adresse.
+			</p>
+
+			<button id="button_backFromLegalInfo" type="button">Zurück</button>
 		</div>
 	</div>
 	<div id="div_MainPage" class="tab">
@@ -752,19 +900,21 @@
 			<button id="button_tabCompetition">Siege</button>
 			<button id="button_tabEventLog">Events</button>
 			<button id="button_tabProfile">Profil</button>
+			<button id="button_tabLegalInfo">Impressum</button>
 			<input id="input_onlineIndicator" type="textbox" disabled="true">
 			<a href="https://trello.com/invite/b/aZfDB1r0/d9bb40353771097cb89993e31baef54b/fitnessapp"
 				target="_blank">Feedback</a>
-			<a href="#" id="button_logOut" onclick="logout();">Ausloggen</a>
+			<form style="display: inline-block;" id="logout__form-logged-in" method="post" action="/signout">
+				<button style="color: red; padding: 4px; width: 100%;" id="logout__form-logged-in-btn" type="submit">logout</button>
+			</form>
 		</div>
 	</footer>
 
-
+	<script type="text/javascript" src="./vendor/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="./vendor/socket.io.min.js"></script>
+	<script type="text/javascript" src="./vendor/Chart.js"></script>
+	<script type="text/javascript" src="./js/common.js"></script>
+	<script type="text/javascript" src="./js/index.js"></script>
 </body>
 
 </html>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
-<script type="text/javascript" src="./js/common.js"></script>
-<script type="text/javascript" src="./js/index.js"></script>

@@ -13,8 +13,6 @@ var exerciseTableSortMode = { cellIndex: 1 };
 var common = new Common();
 
 //BUTTONS
-var button_SignIn = document.getElementById('button_SignIn');
-var button_SignUp = document.getElementById('button_SignUp');
 var button_createExercise = document.getElementById('button_createExercise');
 var button_deleteExercise = document.getElementById('button_deleteExercise');
 var button_tabExerciseOverview = document.getElementById('button_tabExerciseOverview');
@@ -33,6 +31,10 @@ var button_hideExercise = document.getElementById('button_hideExercise');
 var button_showHiddenExercises = document.getElementById('button_showHiddenExercises');
 var button_tabProfile = document.getElementById('button_tabProfile');
 var button_saveProfileData = document.getElementById('button_saveProfileData');
+var button_showLegalInfo = document.getElementById('button_showLegalInfo');
+var button_tabLegalInfo = document.getElementById('button_tabLegalInfo');
+var button_backFromLegalInfo = document.getElementById('button_backFromLegalInfo');
+var button_link_mail_contact = document.getElementById('legal-email-contact');
 
 //DIVS
 var div_ExerciseOverview = document.getElementById('div_ExerciseOverview');
@@ -49,6 +51,8 @@ var div_events = document.getElementById('div_events');
 var div_eventLog = document.getElementById('div_eventLog');
 var div_graphExercise = document.getElementById('div_graphExercise');
 var div_profile = document.getElementById('div_profile');
+var div_legalInfo = document.getElementById('div_legalInfo');
+var div_loginForm = document.getElementById('div_login--form');
 
 //INPUTS
 var input_exerciseName = document.getElementById('input_exerciseName');
@@ -66,12 +70,8 @@ var input_sumSelection = document.getElementById('input_sumSelection');
 var input_avgSelection = document.getElementById('input_avgSelection');
 var input_graphFromDate = document.getElementById('input_graphFromDate');
 var input_graphToDate = document.getElementById('input_graphToDate');
-var input_Password = document.getElementById('input_Password');
-var input_regSecret = document.getElementById('input_regSecret');
-var input_Username = document.getElementById('input_Username');
 var input_exerciseID = document.getElementById('input_exerciseID');
 var input_onlineIndicator = document.getElementById('input_onlineIndicator');
-var input_RememberMe = document.getElementById('input_RememberMe');
 var input_chatText = document.getElementById('input_chatText');
 var input_doneExerciseAdditional = document.getElementById('input_doneExerciseAdditional');
 var input_paceConstant = document.getElementById('input_paceConstant');
@@ -104,12 +104,7 @@ var paragraph_paceUnitNotice = document.getElementById('paragraph_paceUnitNotice
 var label_input_exerciseDifficulty = document.getElementById('label_input_exerciseDifficulty');
 var png_timer = document.getElementById('png_timer')
 
-var SOCKET = io();
-var LOGIN_COOKIE = getCookie("loginCookie").split("#")[0];
-
-console.log("LOGIN_COOKIE: " + LOGIN_COOKIE);
-Name = getCookie("loginCookie").split("#")[1];
-console.log("Name: " + Name);
+var SOCKET = io({ withCredentials: true });
 var PACE_UNITS = "";
 var PACE_INVERT = "";
 var RUNTIME_CONFIG = {
@@ -121,10 +116,211 @@ var timer;
 
 /******************************************************************************************************************
 *******************************************************************************************************************
+*                                               ONLOAD
+*******************************************************************************************************************
+*******************************************************************************************************************
+******************************************************************************************************************/
+$(function () {
+    let csrfToken = null;
+    window.showLoginError = function (message) {
+        const error = $('#login__form-error');
+        error.text(message || 'Die Anmeldung ist derzeit nicht möglich. Bitte versuchen Sie es später erneut.');
+        error.removeClass('d-none');
+    };
+    calculateHeightDivLoginContainer();
+    getConfig();
+    checkErrorOnLoad();
+
+    function calculateHeightDivLoginContainer() {
+        const resizeObserver = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                const height = entry.target.getBoundingClientRect().height;
+                document.documentElement.style.setProperty('--height-div-login-form', `${height}px`);
+            }
+        });
+        resizeObserver.observe(div_loginForm);
+    }
+
+    function getConfig() {
+        loadConfig()
+            .done(function (json) {
+                if (json.contactEmail) {
+                    $(button_link_mail_contact)
+                        .text(json.contactEmail)
+                        .attr('href', 'mailto:' + json.contactEmail);
+                }
+            })
+    }
+
+    function checkErrorOnLoad() {
+        const currentUrl = new URL(window.location.href);
+        if (currentUrl.searchParams.has('error') && currentUrl.searchParams.has('message')) {
+            showLoginError(currentUrl.searchParams.get('message'));
+        }
+    }
+
+    function showLoginForm() {
+        $('#login__form').removeClass('v-hidden');
+    }
+
+    function showAccountInfo(json) {
+        $('#account-info').removeClass('v-hidden');
+        $('#account-info__id').text(json.user.id);
+        $('#account-info__email').text(json.user.email);
+        $('#account-info__username').text(json.user.username);
+    }
+
+    function loadProfile() {
+        return $.ajax({
+            url: '/profile',
+            method: 'GET',
+            dataType: 'json'
+        });
+    }
+
+    function loadConfig() {
+        return $.ajax({
+            url: '/config',
+            method: 'GET',
+            dataType: 'json'
+        });
+    }
+
+    function csrfAjax(options) {
+        options = options || {};
+        options.headers = options.headers || {};
+        options.headers['X-CSRF-Token'] = csrfToken;
+        return $.ajax(options);
+    }
+
+    function refreshToken() {
+        return csrfAjax({
+            url: '/profile/refresh',
+            method: 'POST',
+            dataType: 'json'
+        });
+    }
+
+    function handleProfileLoadFailure(xhr, errorThrown) {
+        const error = xhr.responseJSON || {};
+        const errorCode = String(error.code || '').toLowerCase();
+
+        if (!errorCode.includes('expire')) {
+            showLoginForm();
+            return;
+        }
+
+        console.log('Trying to refresh token after token has expired...');
+
+        refreshToken()
+            .done(function (refreshResponse) {
+                if (!refreshResponse.success) {
+                    showLoginForm();
+                    showLoginError('Ihre Anmeldung ist abgelaufen. Bitte melden Sie sich erneut an.');
+                    return;
+                }
+
+                loadProfile()
+                    .done(function (json) {
+                        showAccountInfo(json);
+                    })
+                    .fail(function (profileXhr, profileTextStatus, profileError) {
+                        showLoginForm();
+                        showLoginError('Die Anmeldung konnte nicht erneuert werden. Bitte melden Sie sich erneut an.');
+                    });
+            })
+            .fail(function (refreshXhr, refreshTextStatus, refreshError) {
+                showLoginForm();
+                showLoginError('Die Anmeldung konnte nicht erneuert werden. Bitte melden Sie sich erneut an.');
+            });
+    }
+
+    $('#logout__form').on('submit', function (event) {
+        event.preventDefault();
+
+        csrfAjax({
+            url: '/signout',
+            method: 'POST'
+        }).done(function (response) {
+            window.location.href = response.logoutEndpoint;
+        });
+    });
+
+    $('#logout__form-logged-in').on('submit', function (event) {
+        event.preventDefault();
+
+        csrfAjax({
+            url: '/signout',
+            method: 'POST'
+        }).done(function (response) {
+            window.location.href = response.logoutEndpoint;
+        });
+    });
+
+    // Load the CSRF token before making a request that may refresh authentication.
+    $.getJSON('/csrf-token')
+        .done(function (response) {
+            csrfToken = response.csrfToken;
+
+            loadProfile()
+                .done(function (json) {
+                    showAccountInfo(json);
+                })
+                .fail(handleProfileLoadFailure);
+        })
+        .fail(function (xhr, textStatus, errorThrown) {
+            showLoginForm();
+            showLoginError('Der Login-Dienst ist derzeit nicht erreichbar. Bitte versuchen Sie es später erneut.');
+        });
+
+    if (typeof SOCKET !== 'undefined') {
+        SOCKET.on('connect_error', function () {
+            showLoginForm();
+            showLoginError('Die Anmeldung konnte nicht geprüft werden. Bitte melden Sie sich erneut an.');
+        });
+        SOCKET.on('usernameUnavailable', function (response) {
+            showLoginForm();
+            showLoginError(response && response.message || 'Dieser Username wird bereits verwendet. Bitte wählen Sie einen anderen Username.');
+        });
+    }
+});
+
+
+/******************************************************************************************************************
+*******************************************************************************************************************
 *                                               ONCLICK, ONCHANGE 
 *******************************************************************************************************************
 *******************************************************************************************************************
 ******************************************************************************************************************/
+
+$("#login__form").on("submit", function (event) {
+    event.preventDefault();
+
+    var form = this;
+
+    $.ajax({
+        url: form.action,
+        method: form.method
+    })
+    .done(function (response) {
+        if (response.authUrl) {
+            window.location.href = response.authUrl;
+        } else {
+            showLoginError('Der Login-Dienst ist derzeit nicht erreichbar. Bitte versuchen Sie es später erneut.');
+
+            setTimeout(function () {
+                $("#login__form-error").addClass("d-none");
+            }, 5000);
+        }
+    })
+    .fail(function (xhr) {
+        showLoginError('Der Login-Dienst ist derzeit nicht erreichbar. Bitte versuchen Sie es später erneut.');
+
+        setTimeout(function () {
+            $("#login__form-error").addClass("d-none");
+        }, 5000);
+    });
+});
 
 $("#input_HideInactive").change(function(){
    //todo
@@ -151,24 +347,6 @@ $("#png_timer").click(function () {
         clearInterval(timer);
         $("#png_timer").prop("src", "/client/pics/timer.png")
     }
-});
-
-$("#button_SignIn").click(function () {
-    SOCKET.emit('SignIn', { username: input_Username.value.toLowerCase(), password: input_Password.value, remember: input_RememberMe.checked });
-    Name = input_Username.value.toLowerCase();
-    if (Name.toLowerCase() != "caf") {
-        $("#adminInput_repsToGetOverall").prop("disabled", true);
-        $("#adminInput_repsToGetDaily").prop("disabled", true);
-        $("#adminInput_repsToGetMonthly").prop("disabled", true);
-        $("#adminInput_achievementCategory").prop("disabled", true);
-        $("#adminSelect_AchievementExercise").prop("disabled", true);
-        $("#adminButton_saveAchievement").prop("disabled", true);
-    }
-
-});
-
-$("#button_SignUp").click(function () {
-    SOCKET.emit('SignUp', { username: input_Username.value.toLowerCase(), password: input_Password.value, secret: input_regSecret.value });
 });
 
 $("#input_historyFromDate").change(function () {
@@ -203,7 +381,32 @@ $("#button_doneExerciseSend").click(function () {
     }
 });
 
+var legalInfoOpenedFromLogin = false;
+
+function showLegalInfo() {
+    legalInfoOpenedFromLogin = div_login.style.display !== "none";
+    div_login.style.display = "none";
+    $(".tab").css("display", "none");
+    div_legalInfo.style.display = "inline-block";
+}
+
+$("#button_showLegalInfo, #button_tabLegalInfo").click(function(event) {
+    event.preventDefault();
+    showLegalInfo();
+});
+
+$("#button_backFromLegalInfo").click(function () {
+    div_legalInfo.style.display = "none";
+
+    if (legalInfoOpenedFromLogin) {
+        div_login.style.display = "block";
+    } else {
+        $("#button_tabMainPage").click();
+    }
+});
+
 $("#button_tabMainPage").click(function () {
+    div_legalInfo.style.display = "none";
     $("#div_ExerciseOverview").css("display", "none");
     $("#div_PersonalOverview").css("display", "none");
     $("#div_statistics").css("display", "none");
@@ -544,8 +747,8 @@ SOCKET.on('refreshExerciseList', function (data) {
     generateExerciseList(data);
 });
 
-SOCKET.on('signInResponse', function (data) {
-    console.log("signInResponse", data);
+SOCKET.on('authenticated', function (data) {
+    console.log("authenticated", data);
     if (data.success) {
         div_login.style.display = "none";
         Name = data.name;
@@ -559,32 +762,20 @@ SOCKET.on('signInResponse', function (data) {
         $("#input_HideInactive").prop("checked",data.profileData.hideInactivePlayers);
         $("#input_HideInactive").change();
         button_tabMainPage.click();
-        div_navigation.style.display = 'inline-block';
+        div_navigation.style.display = 'flex';
+        div_navigation.style.placeItems = 'center';
+        div_navigation.style.gap = '1rem';
 
 
 
     }
     else
-        alert("Sign in unsuccessful");
-});
-
-SOCKET.on('signUpResponse', function (data) {
-    console.log("signUpResponse", data);
-    if (data.success) {
-        alert("Sign Up successful");
-    }
-    else
-        alert("Sign Up unsuccessful");
+        showLoginError("Die Anmeldung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.");
 });
 
 SOCKET.on('alertMsg', function (data) {
     console.log("alertMsg", data);
     alert(data.data);
-});
-
-SOCKET.on('loginToken', function (data) {
-    console.log("loginToken", data);
-    setCookie("loginCookie", data.data + "#" + Name, 1);
 });
 
 
@@ -727,9 +918,6 @@ function requestExerciseGraphUpdate() {
 function requestExerciseListUpdate() {
     SOCKET.emit("requestExerciseListUpdate", { data: true });
 }
-
-
-
 function sendChatMessage(msg) {
 
     SOCKET.emit("sendChatMessage", data = {
@@ -827,10 +1015,6 @@ function sendPersonalProfileData() {
         color: input_personalColor.value,
     });
 }
-
-
-
-
 /******************************************************************************************************************
 *******************************************************************************************************************
 *                                               TABLE/CONTENT GENERATION 
@@ -1976,33 +2160,6 @@ function initialize() {
 
 }
 
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function deleteCookie(cname) {
-    document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
 function changeCSS(cssFile, cssLinkIndex) {
 
     var oldlink = document.getElementsByTagName("link").item(cssLinkIndex);
@@ -2016,7 +2173,6 @@ function changeCSS(cssFile, cssLinkIndex) {
 }
 
 function logout() {
-    deleteCookie("loginCookie");
     location.reload();
 }
 
@@ -2108,23 +2264,3 @@ function exerciseTableBodyRowClick(bodyRow, data) {
     $("#input_exerciseID").change();
     $("#select_exerciseUnit").change();
 }
-
-
-//autologin
-SOCKET.once("connect", () => {
-    if (LOGIN_COOKIE != "") {
-        console.log("emit SignIn with LOGIN_COOKIE");
-        SOCKET.emit('SignIn', { loginToken: LOGIN_COOKIE, username: Name, password: input_Password.value, remember: input_RememberMe.checked });
-        if (Name.toLowerCase() != "caf") {
-            $("#adminInput_repsToGetOverall").prop("disabled", true);
-            $("#adminInput_repsToGetDaily").prop("disabled", true);
-            $("#adminInput_repsToGetMonthly").prop("disabled", true);
-            $("#adminInput_achievementCategory").prop("disabled", true);
-            $("#adminSelect_AchievementExercise").prop("disabled", true);
-            $("#adminButton_saveAchievement").prop("disabled", true);
-        }
-    }
-});
-
-
-

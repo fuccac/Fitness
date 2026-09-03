@@ -22,8 +22,7 @@ function DropboxFunctions() {
                     }
                 })
                 .catch(function (err) {
-
-                    callback({ msg: 'Error downloading file using the Dropbox API: ' + err, sev: 2 });
+                    callback({ msg: 'Error downloading file using the Dropbox API: ' + (typeof err?.error === 'string' ? err.error : err), sev: 2 });
                 });
         }
         else {

@@ -1,6 +1,7 @@
-name: Build project
+name: Validate and build project
 
 on:
+  pull_request:
   push:
     branches: 
       - "**"
@@ -13,13 +14,30 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          for file in app.js server/*.js client/js/*.js; do
+            node --check "$file"
+          done
 
       - name: Downcase GITHUB_REPOSITORY and set as REPO (for docker image name)
         run: |
           echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
 
-      - name: docker build
+      - name: Build Docker image
         run: docker build --file Dockerfile --tag ${{ env.REPO }}:${{ github.sha }} .
       # - name: trivy scan
       #   uses: aquasecurity/trivy-action@master
